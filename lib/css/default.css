@@ -1,0 +1,145 @@
+/**
+ * Flash datas
+ */
+.flashdata {
+	background-position: 10px center;
+    background-repeat: no-repeat;
+    border: 1px solid;
+    margin: 10px 0px 5px;
+    padding: 15px 10px 15px 50px;
+}
+
+.error {
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('../images/icons/alerts/error.png');
+}
+
+.notice {
+	color: #006CFF;
+	background-color: #BFE3F2;
+	background-image: url('../images/icons/alerts/notice.png');
+}
+
+.success {
+	color: #4F8A10;
+	background-color: #DFF2BF; 
+	background-image: url('../images/icons/alerts/success.png');
+}
+
+.success a {
+	color: #4F8A10;
+}
+
+.success a:hover {
+	color: #64b70b;
+}
+
+.warning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('../images/icons/alerts/warning.png');
+}
+
+/**
+ * Text classes
+ */
+.center {
+	text-align: center;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
+
+.justify {
+	text-align: justify;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.italic {
+	font-style: italic;
+}
+
+.small { 
+	font-size: smaller; 
+}
+
+.underline { 
+	text-decoration: underline; 
+}
+
+.stroke { 
+	text-decoration:line-through; 
+}
+
+.code { 
+	font: "Courier New", Courier, monospace; 
+	font-size: 12px; 
+	color: #09C; 
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+/**
+ * Lists
+ */
+.blue {
+	color: #0088d9;
+}
+
+.grey {
+	color: #555;
+}
+
+/**
+ * Lists
+ */
+.no-list-style {
+	list-style: none;
+}
+
+/**
+ * Floats
+ */
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+/**
+ * Fixes
+ */
+.clear {
+	clear: both;
+}
+
+/**
+ * General
+ */
+.no-display {
+	display: none;
+}
+
+.pointer {
+	cursor:pointer;
+}
+
+.extra {
+	width:740px;
+}
+
+.no-border {
+	border: none;
+}
