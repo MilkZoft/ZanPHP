@@ -8,6 +8,10 @@ if(!defined("_access")) {
 
 function translation($text) {
 	switch($text) {
+		case "Name": return "Nombre"; break;
+		case "Email": return "Correo electrónico"; break;
+		case "Phone": return "Teléfono"; break;
+		
 		case "January": return "Enero"; break;
 		case "February": return "Febrero"; break;
 		case "March": return "Marzo"; break;

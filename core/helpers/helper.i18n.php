@@ -56,7 +56,7 @@ function __($text) {
 		$Load->language("English");
 	}
 	
-	return encode(translation($text)); 
+	return translation($text); 
 }
 
 /**

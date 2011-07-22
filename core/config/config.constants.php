@@ -10,12 +10,15 @@ if(!defined("_access")) {
  * Basics
  */
 define("_webURL", "http://localhost/zanphp");
+define("_webName", "ZanPHP");
+define("_webTheme", "zanphp");
 define("_domain", FALSE);
 define("_modRewrite", FALSE);
 define("_webCharacters", TRUE);
 define("_defaultApplication", "default");
 define("_webState", "Active");
 define("_webLanguage", "English");
+define("_webLang", "en");
 
 /**
  * Languages:
@@ -109,3 +112,9 @@ define("_URL", "URL");
 define("_sh", "/");
 define("_dot", ".");
 define("_PHP", ".php");
+
+if(_modRewrite === FALSE) {
+	define("_webBase", _webURL . _sh . _index);
+} else {
+	define("_webBase", _webURL);
+}
