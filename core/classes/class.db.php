@@ -87,13 +87,6 @@ class ZP_Db extends ZP_Load {
 	 * @var private $encode
 	 */
 	private $encode = FALSE;
-	
-	/**
-	 * Contains the values of the query
-	 * 
-	 * @var private $values
-	 */
-	private $logs = _dbLogs;
 		
     /**
      * Load Database class
@@ -106,10 +99,6 @@ class ZP_Db extends ZP_Load {
 	
 	public function encode($encode = FALSE) {
 		$this->encode = $encode;
-	}
-	
-	public function logs($logs = FALSE) {
-		$this->logs = $logs;
 	}
 	
     /**
@@ -172,11 +161,7 @@ class ZP_Db extends ZP_Load {
 			return TRUE;
 		} else {
 			$insertID = $this->Database->insertID();
-			
-			if($this->logs) {	
-				$this->setLog($insertID, $this->table, "Insert");
-			}
-			
+					
 			return $insertID;
 		}
 	}
@@ -220,10 +205,6 @@ class ZP_Db extends ZP_Load {
      */
 	public function delete($ID) {
 		$query = $this->Database->delete($this->table, $ID, $this->primaryKey);
-
-		if($this->logs) {
-			$this->setLog($ID, $this->table, "Delete");
-		}
 		
 		return $query;
 	}
@@ -238,10 +219,6 @@ class ZP_Db extends ZP_Load {
 	public function deleteBy($field, $value) {	
 		$query = $this->Database->deleteBy($this->table, $field, $value);	
 		
-		if($this->logs) {
-			$this->setLog(0, $this->table, "DeleteBy", "$field = '$value'");
-		}
-		
 		return $query;
 	}	
 	
@@ -252,11 +229,7 @@ class ZP_Db extends ZP_Load {
      * @return boolean value
      */
 	public function deleteBySQL($SQL) {
-		$query = $this->Database->deleteBySQL($this->table, $SQL);
-		
-		if($this->logs) {
-			$this->setLog(0, $this->table, "DeleteBySQL", $SQL);
-		}		
+		$query = $this->Database->deleteBySQL($this->table, $SQL);		
 		
 		return $query;
 	}	
@@ -299,9 +272,9 @@ class ZP_Db extends ZP_Load {
 		$this->Database->free();
 		
 		if($this->encode) {
-			return $this->encoding($rows);
+			return isset($rows) ? $this->encoding($rows) : FALSE;
 		} else {
-			return $rows;
+			return isset($rows) ? $rows : FALSE;
 		}				
 	}
 		
@@ -351,9 +324,9 @@ class ZP_Db extends ZP_Load {
 		$this->Database->free();
 		
 		if($this->encode) {
-			return $this->encoding($rows);
+			return isset($rows) ? $this->encoding($rows) : FALSE;
 		} else {
-			return $rows;
+			return isset($rows) ? $rows : FALSE;
 		}
 	}
 	
@@ -384,7 +357,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";		
-		#
+		
 		$rs = $this->Database->query($query);
 		
 		if($this->Database->rows() === 0) {
