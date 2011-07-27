@@ -152,22 +152,30 @@ class ZP_Load {
      * @param string $name
      * @return object value
      */
-	public function controller($name) {
-		$parts = explode("_", $name);
+	public function controller($controller, $application = FALSE) {
+		$parts = explode("_", $controller);
 		
-		if(count($parts) === 2) {
-			$file = _applications . _sh . strtolower($parts[0]) . _sh . strtolower($parts[1]) . _dot . strtolower($parts[0]) . _PHP;
+		if(!$application) {
+			if(count($parts) === 2) {
+				$file = _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;						
+			}		
+		} else {
+			if(count($parts) === 2) {
+				$file = _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
+			}
+		}
+		
+		if(file_exists($file)) {							
+			if(class_exists($controller)) {
+				return ZP_Singleton::instance($controller);
+			}
 			
-			if(file_exists($file)) {							
-				if(class_exists($name)) {
-					return ZP_Singleton::instance($name);
-				}
-				
-				include $file;
-				
-				return ZP_Singleton::instance($name);
-			}							
-		}		
+			include $file;
+			
+			return ZP_Singleton::instance($controller);
+		}	
+		
+		return FALSE;
 	}
 	
     /**

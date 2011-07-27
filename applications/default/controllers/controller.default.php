@@ -12,7 +12,11 @@ class Default_Controller extends ZP_Load {
 	
 	}
 	
-	public function run() {		
+	public function index() {		
 		print __("Hi, I'm the default application");
+	}
+	
+	public function prueba($p1, $p2, $p3) {
+		print $p1 . $p2 . $p3;	
 	}
 }

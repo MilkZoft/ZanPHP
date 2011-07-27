@@ -43,29 +43,171 @@ function execute() {
 	global $Load;
 	
 	if(!segment(0)) {
-		$control = _defaultApplication;	
+		$application = _defaultApplication;	
 	} elseif(segment(0) and !segment(1)) {
-		$control = _defaultApplication;
+		if(isLang()) {
+			$application = _defaultApplication;
+		} else {
+			$application = segment(0);	
+		}
 	} else {
-		$control = segment(1);	
+		$applicationController = FALSE;
+		
+		if(isLang()) {
+			$application = segment(1);
+			
+			if(segment(2)) {
+				if(isController(segment(2), segment(1))) {
+					$applicationController = segment(2);
+					$method = segment(3);
+				} else {
+					$method = segment(2);
+				}
+			}
+			
+			if($applicationController) {
+				if(segments() > 4) {
+					$j = 4;
+					
+					for($i = 0; $i < segments(); $i++) {
+						if(segment($j)) {
+							$p[$i] = segment($j);
+						
+							$j++;	
+						}
+					}
+				}			
+			} else {
+				if(segments() > 3) {
+					$j = 3;
+					
+					for($i = 0; $i < segments(); $i++) {
+						if(segment($j)) {
+							$p[$i] = segment($j);
+						
+							$j++;	
+						}
+					}
+				}	
+			}
+		} else {
+			$application = segment(0);
+			
+			if(segment(1)) {
+				if(isController(segment(1), segment(0))) {
+					$applicationController = segment(1);
+					
+					if(segment(2)) {
+						$method = segment(2);
+					}
+				} else {
+					$method = segment(1);
+				}	
+			}
+			
+			if($applicationController) {
+				if(segments() > 3) {
+					$j = 3;
+					
+					for($i = 0; $i <= segments() - 1; $i++) {
+						if(segment($j)) {
+							$p[$i] = segment($j);
+							
+							$j++;
+						}	
+					} 
+				}			
+			} else {
+				if(segments() > 2) {
+					$j = 2;
+					
+					for($i = 0; $i <= segments() - 1; $i++) {
+						if(segment($j)) {
+							$p[$i] = segment($j);
+							
+							$j++;
+						}	
+					} 
+				}
+			}
+
+		}
 	}
-	
-	if(segment(0) === _URL) {
-		$control = _URL;
-	} 
 	
 	if(_webState === "Inactive" and !SESSION("ZanUserID") and $control !== _cpanel) {
 		die(_webMessage);
 	}
 	
-	$controller 	= ucfirst($control) . "_Controller";
-	$controllerFile = _applications . _sh . strtolower($control) . _sh . _controller . _dot . strtolower($control) . _PHP;
+	if(isController($applicationController, $application)) {
+		$controller 	= ucfirst($applicationController) . "_Controller";
+		$controllerFile = _applications . _sh . strtolower($application) . _sh . _controllers . _sh . _controller . _dot . strtolower($applicationController) . _PHP;
+		
+		$$controller = $Load->controller($controller, $application);
+	} else { 
+		$controller 	= ucfirst($application) . "_Controller";
+		$controllerFile = _applications . _sh . strtolower($application) . _sh . _controllers . _sh . _controller . _dot . strtolower($application) . _PHP;
 	
-	$$controller = $Load->controller($controller);
+		$$controller = $Load->controller($controller);
+	}
 	
 	if(file_exists($controllerFile)) {
-		$$controller->run();
+		if(isset($method) and isset($p)) {
+			if(method_exists($$controller, $method)) {
+				if(count($p) === 10) {
+					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6], $p[7], $p[8], $p[9]);	
+				} elseif(count($p) === 9) {
+					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6], $p[7], $p[8]);
+				} elseif(count($p) === 8) {
+					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6], $p[7]);
+				} elseif(count($p) === 7) {
+					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6]);
+				} elseif(count($p) === 6) {
+					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5]);
+				} elseif(count($p) === 5) {
+					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4]);
+				} elseif(count($p) === 4) {
+					$$controller->$method($p[0], $p[1], $p[2], $p[3]);
+				} elseif(count($p) === 3) {
+					$$controller->$method($p[0], $p[1], $p[2]);
+				} elseif(count($p) === 2) {
+					$$controller->$method($p[0], $p[1]);
+				} elseif(count($p) === 1) {
+					$$controller->$method($p[0]);
+				} else {
+					$$controller->$method();
+				}
+			} else {
+				$$controller->index();
+			}
+		} elseif(isset($method)) {
+			if(method_exists($$controller, $method)) {
+				$$controller->$method();
+			} else {
+				die("Method $method does not exists in $controller class");	
+			}
+		} else {
+			$$controller->index();	
+		}
 	}
+}
+
+function isController($controller, $application) {
+	$file = _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . $controller . _PHP;
+	
+	
+	if(file_exists($file)) {
+		return TRUE;	
+	}
+	
+	return FALSE;
+}
+
+function isLang() {
+	if(segment(0) === "en" or segment(0) === "es" or segment(0) === "fr" or segment(0) === "pt") {
+		return TRUE;	
+	}
+	
+	return FALSE;
 }
 
 /**

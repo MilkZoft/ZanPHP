@@ -17,6 +17,6 @@ class Otro_Controller extends ZP_Load {
 	}
 	
 	public function prueba2($p1, $p2, $p3) {
-		print $p3 . $p2 . $p2;	
+		print $p3 . $p2 . $p1;	
 	}
 }
