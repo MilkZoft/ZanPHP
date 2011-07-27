@@ -42,6 +42,8 @@ if(!defined("_access")) {
 function execute() {		
 	global $Load;
 	
+	$applicationController = FALSE;
+	
 	if(!segment(0)) {
 		$application = _defaultApplication;	
 	} elseif(segment(0) and !segment(1)) {
@@ -50,9 +52,7 @@ function execute() {
 		} else {
 			$application = segment(0);	
 		}
-	} else {
-		$applicationController = FALSE;
-		
+	} else {	
 		if(isLang()) {
 			$application = segment(1);
 			
