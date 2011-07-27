@@ -112,15 +112,23 @@ function whichLanguage($invert = TRUE) {
 	global $Load;
 	
 	$Load->helper("router");
-		
-	if(segment(0) and $invert === FALSE) {
-		return segment(0);
-	} elseif(segment(0) and getXMLang(segment(0), TRUE) != FALSE) {
-		return getXMLang(segment(0), TRUE);
-	} elseif($invert === FALSE) {
-		return getXMLang(_webLanguage, FALSE);
+	
+	if(segment(0) === "en" or segment(0) === "es" or segment(0) === "fr" or segment(0) === "pt") {
+		if(segment(0) and $invert === FALSE) {
+			return segment(0);
+		} elseif(segment(0) and getXMLang(segment(0), TRUE) != FALSE) {
+			return getXMLang(segment(0), TRUE);
+		} elseif($invert === FALSE) {
+			return getXMLang(_webLanguage, FALSE);
+		} else {
+			return _webLanguage;
+		}	
 	} else {
-		return _webLanguage;
+		if($invert === FALSE) {
+			return getXMLang(_webLanguage, FALSE);
+		} else {
+			return _webLanguage;
+		}	
 	}
 }
 
