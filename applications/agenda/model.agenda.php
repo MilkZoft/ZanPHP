@@ -27,7 +27,7 @@ class Agenda_Model extends ZP_Load {
 	
 	public function getContacts() {
 		$this->Db->table($this->table);
-		//$this->Db->encode(TRUE);
+		$this->Db->encode(TRUE);
 		
 		$data = $this->Db->findAll();
 		

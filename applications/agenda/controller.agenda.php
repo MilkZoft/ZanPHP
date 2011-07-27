@@ -44,8 +44,8 @@ class Agenda_Controller extends ZP_Load {
 			$vars["view"] = $this->view("contact", $this->application, TRUE);
 			$this->template("content", $vars);
 		} else {
-			$this->view("error404", $this->application);
-			//$this->template("error404");
+			//$this->view("error404", $this->application);
+			$this->template("error404");
 		}
 		
 		$this->render();
@@ -53,23 +53,23 @@ class Agenda_Controller extends ZP_Load {
 	
 	private function contacts() {
 		$this->title("Contacts");
-		$this->CSS("contacts2", $this->application);
+		$this->CSS("contacts2", $this->application, TRUE);
 		
 		$data = $this->Agenda_Model->getContacts();
 		
 		if($data) {
 			$vars["contacts"] = $data;
 			
-			//$this->view("contacts", $this->application, $vars);
+			$this->view("contacts", $this->application, $vars);
 			
 			//Cargando una vista con template:
-			$vars["view"] = $this->view("contacts", $this->application, TRUE);
-			$this->template("content", $vars);
+			//$vars["view"] = $this->view("contacts", $this->application, TRUE);
+			//$this->template("content", $vars);
 		} else {
 			//$this->view("error404", $this->application);
 			$this->template("error404");
 		}
 		
-		$this->render();
+		//$this->render();
 	}
 }
