@@ -100,17 +100,69 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$this->Database = $this->core("Database");	
+		$this->config("database");
+		$this->connect();	
+	}
+	
+    /**
+     * Select database driver and make connection
+     *
+     * @return void
+     */
+	public function connect() {
+		if(self::$connection != TRUE) {
+			$this->library("AdoDB");
+			 
+			if(_dbController === "odbc_mssql") {
+				$this->Database = ADONewConnection("odbc_mssql");
+				
+				self::$connection = $this->Database->connect("Driver={SQL Server}; Server=". _dbHost .", ". _dbPort ."; Database=". _dbName .";", _dbUser, _dbPwd);
+			} elseif(_dbController === "mysql") {
+				$this->Database = ADONewConnection("mysql");
+				
+				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);	
+			} elseif(_dbController === "mysqli") {
+				$this->Database = ADONewConnection("mysqli");
+				
+				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);	
+			} elseif(_dbController === "postgres") {
+				$this->Database = ADONewConnection("postgres");
+				
+				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);	
+			} elseif(_dbController === "oci8") {
+				$this->Database = ADONewConnection("oci8");
+				
+				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);			
+			}
+		}									
+	}
+	
+    /**
+     * Exec free SQL query
+     *
+     * @param string $query
+     * @return mixed (object or boolean) value
+     */
+	public function query($query) {	
+		if($this->fetch === "assoc") {
+			$this->Database->setFetchMode(ADODB_FETCH_ASSOC);
+		} elseif($this->fetch === "array") {
+			$this->Database->setFetchMode(ADODB_FETCH_NUM); 	
+		}
+		
+		if(isset($query)) {
+			$this->Rs = $this->Database->_query($query);
+		}
+		
+		return ($this->Rs) ? $this->Rs : FALSE;
 	}
 	
 	public function encode($encode = FALSE) {
 		$this->encode = $encode;
 	}
 	
-	public function setFetch($fetch = "assoc") {
-		$this->fetch = $fetch;
-		
-		$this->Database->fetch = $fetch;	
+	public function fetchMode($fetch = "assoc") {
+		$this->fetchMode = $fetch;	
 	}
 	
     /**
@@ -368,101 +420,239 @@ class ZP_Db extends ZP_Load {
 	}
 		 
     /**
-     * Calls ZP_Database::insert to make an insert query
+     * Performs a SQL insert
      *
-     * @return string "RollBack" / boolean value / integer insert ID
-     */
-	public function insert($table = FALSE, $data = FALSE) {
-		if(!$table and !$fields) {
-			$query = $this->Database->insert($this->table, $this->fields, $this->values);
+     * @param string $table
+     * @param string $fields
+     * @param string $values
+     * @return object or boolean value
+     */		
+	public function insert($table, $fields = FALSE, $values = FALSE) {
+		if(!$table or !$fields) {
+			return FALSE;
+		}
+		
+		$data = $fields;
+			
+		if(is_array($data)) {
+			$total   = count($data);
+			$_fields = NULL;
+			$_values = NULL;
+			$i 		 = 0;
+			
+			foreach($data as $field => $value) {
+				if($i === $total) {
+					$_fields .= "$field";
+					$_values .= "'$value'";
+				} else {
+					$_fields .= "$field, ";
+					$_values .= "'$value', ";	
+				}
+						
+				$i++;	
+			}
+			
+			$query = "INSERT INTO $table ($_fields) VALUES ($_values)";
 		} else {
-			if(isset($this->data) and isset($table) and !$data) {
-				$query = $this->Database->insert($table, $this->data);
+			if(!$values) {
+				return FALSE;	
+			}
+			
+			$query = "INSERT INTO $table ($fields) VALUES ($values)";
+		}	
+		
+		$this->Rs = $this->Database->_query($query);
+		
+		if($this->Rs) {
+			if(!$this->primaryKey) {
+				return TRUE;
 			} else {
-				$query = $this->Database->insert($table, $data);
+				$insertID = $this->Database->insertID();
+						
+				return $insertID;
 			}
 		}
 		
-		if($this->primaryKey === FALSE) {
-			return TRUE;
-		} else {
-			$insertID = $this->Database->insertID();
-					
-			return $insertID;
-		}
+		return FALSE;
 	}
 	
-	public function insertBatch($table, $data) {
-		$this->Database->insertBatch($table, $data);
-	}
-	
-    /**
-     * Calls ZP_Database::update to make an update query by primary key
-     *
-     * @param integer $ID
-     * @return boolean value
-     */
-	public function update($ID) {
-		$query = $this->Database->update($this->table, $this->values, $ID, $this->primaryKey);	
-		
-		if($this->logs) {
-			$this->setLog($ID, $this->table, "Update");
+	public function insertBatch($table, $data) {			
+		if(!$table or !$data) {
+			return FALSE;
 		}
 		
-		return $query;	
-	}
-	
-    /**
-     * Calls ZP_Database::updateBySQL to make an update query by SQL query
-     *
-     * @return boolean value
-     */
-	public function updateBySQL() {
-		$query = $this->Database->updateBySQL($this->table, $this->values);
-		
-		if($this->logs) {
-			$this->setLog(0, $this->table, "UpdateBySQL", $this->values);
-		}
+		if(isset($data[0])) {
+			$inserts = count($data);
+			$_fields = NULL;
+			$_values = NULL;
+			$query   = NULL;
+			$i 		 = 0;
+			$j 		 = 0;
+			
+			foreach($data as $insert) {
+				$total = count($data[$i]);
 				
-		return $query;
-	}	
-	
-    /**
-     * Calls ZP_Database::delete to do a delete query by primary key
-     *
-     * @param integer $ID
-     * @return boolean value
-     */
-	public function delete($ID) {
-		$query = $this->Database->delete($this->table, $ID, $this->primaryKey);
+				foreach($insert as $field => $value) {
+					if($i === $total) {
+						$_fields .= "$field";
+						$_values .= "'$value'";
+					} else {
+						$_fields .= "$field, ";
+						$_values .= "'$value', ";	
+					}
+							
+					$j++;	
+					
+					$query .= "INSERT INTO $table ($_fields) VALUES ($_values);";
+				}
+				
+				$_fields = NULL;
+				$_values = NULL;
+				
+				$i++;
+			}
+		} else {
+			return FALSE;
+		}
 		
-		return $query;
+		return ($this->Database->_query($query)) ? TRUE : FALSE;
 	}
 	
     /**
-     * Calls ZP_Database::deleteBy to do a delete query by specific field
+     * Make an update query by Primary Key
      *
-     * @param string $field
-     * @param string $value
+     * @param string $table
+     * @param string $values
+     * @param integer $ID
      * @return boolean value
      */
-	public function deleteBy($field, $value) {	
-		$query = $this->Database->deleteBy($this->table, $field, $value);	
+	public function update($ID = FALSE) {		
+		if(!$this->table or !$this->values or !$ID or !$this->primaryKey) {
+			return FALSE;
+		}
 		
-		return $query;
-	}	
+		$query = "UPDATE $this->table SET $this->values WHERE $this->primaryKey = $ID";
+		
+		return ($this->Database->_query($query)) ? TRUE : FALSE;
+	}
 	
     /**
-     * Calls ZP_Database::deleteBySQL to do a delete query by SQL query
+     * Make an update by SQL query
      *
+     * @param string $table
      * @param string $SQL
      * @return boolean value
      */
-	public function deleteBySQL($SQL) {
-		$query = $this->Database->deleteBySQL($this->table, $SQL);		
+	public function updateBySQL() {
+		if(!$this->table or !$this->SQL) {
+			return FALSE;
+		}
 		
-		return $query;
+		$query = "UPDATE $this->table SET $this->SQL";
+		
+		return ($this->Database->_query($query)) ? TRUE : FALSE;
+	}
+	
+    /**
+     * Make a delete query by Primary Key
+     *
+     * @param string $table
+     * @param integer $ID
+	 * @param string $primaryKey
+     * @return boolean value
+     */
+	public function delete($ID = FALSE) {	
+		if(!$this->table or !$ID or !$this->primaryKey) {
+			return FALSE;		
+		}
+		
+		$query = "DELETE FROM $this->table WHERE $primaryKey = $ID";
+		
+		return ($this->Database->_query($query)) ? TRUE : FALSE;
+	}
+	
+    /**
+     * Make a delete query by specific field and value
+     *
+     * @param string $table
+     * @param string $field
+     * @param string $value
+     * @param string $limit = "LIMIT 1"
+     * @return boolean value
+     */
+	public function deleteBy($field = FALSE, $value = FALSE, $limit = "1") {
+		if(!$this->table or !$field or !$value) {
+			return FALSE;
+		}
+		
+		if(_dbController === "odbc_mssql") {
+			$query = "DELETE TOP ($limit) FROM $this->table WHERE $field = $value";
+		} else {
+			$query = "DELETE FROM $this->table WHERE $field = $value $limit";
+		}
+		
+		return ($this->Database->_query($query)) ? TRUE : FALSE;
+	}
+		
+    /**
+     * Make a deletion by a SQL query
+     *
+     * @param string $table
+     * @param string $SQL
+     * @return boolean value
+     */
+	public function deleteBySQL($SQL = FALSE) {
+		if(!$this->table or !$SQL) {
+			return FALSE;
+		}
+		
+		$query = "DELETE FROM $this->table WHERE $SQL";
+		
+		return ($this->Database->_query($query)) ? TRUE : FALSE;
 	}	
+	
+    /**
+     * Gets the results into an array
+     *
+     * @return boolean value / array value
+     */
+	public function fetch($count = 0) {
+		if($this->fetch === "array") {
+			return (!$this->Rs) ? FALSE : $this->Rs->fetchRow();
+		} elseif($this->fetch === "assoc") {	
+			return (!$this->Rs) ? FALSE : $this->Rs->getArray($count);
+		} elseif($this->fetch === "object") {
+			return (!$this->Rs) ? FALSE : $this->Rs->fetchObject();
+		}
+	}
+	
+    /**
+     * Gets the count of rows
+     *
+     * @return boolean value / integer value
+     */	
+	public function rows() {
+		return (!$this->Rs) ? FALSE : $this->Rs->recordCount();	
+	}
+	
+    /**
+     * Gets the last inserted ID
+     *
+     * @return boolean value / integer value
+     */
+	public function insertID($table = FALSE) {
+		if($table) {
+			$query = "SELECT TOP 1 $this->primaryKey FROM $this->table ORDER BY $this->primaryKey DESC";
+			 	
+			$this->Rs = $this->Database->_query($query);
+			
+			$data = $this->Rs->getArray(1);
+			
+			return $data[0]["$primaryKey"];
+		} else {
+			return (self::$connection) ? $this->Database->insert_ID() : FALSE;
+		}
+	}
 	
     /**
      * Decide whether the system deletes, updates or inserts
@@ -786,6 +976,24 @@ class ZP_Db extends ZP_Load {
 		} else {
 			return (isset($rows)) ? $rows : FALSE;
 		}
+	}
+	
+    /**
+     * Frees memory
+     *
+     * @return boolean value / void
+     */
+	public function free() {
+	 	return ($this->Rs) ? $this->Rs->free() : FALSE;
+	}
+	
+    /**
+     * Closes the current database connection
+     *
+     * @return boolean value / void
+     */
+	public function close() {
+		return (!self::$connection) ? FALSE : $this->Database->close(self::$connection);
 	}
 	
 	/**
