@@ -8,6 +8,8 @@ if(!defined("_access")) {
 
 class Default_Controller extends ZP_Load {
 	
+	public $args;
+	
 	public function __construct() {
 	
 	}
@@ -16,7 +18,9 @@ class Default_Controller extends ZP_Load {
 		print __("Hi, I'm the default application");
 	}
 	
-	public function prueba($p1, $p2, $p3) {
-		print $p1 . $p2 . $p3;	
+	public function prueba() {
+		$this->args = func_get_args();
+		
+		print $this->args[0] . $this->args[1];
 	}
 }

@@ -183,7 +183,7 @@ function execute() {
 			if(method_exists($$controller, $method)) {
 				$$controller->$method();
 			} else {
-				die("Method $method does not exists in $controller class");	
+				redirect(_webBase);
 			}
 		} else {
 			$$controller->index();	

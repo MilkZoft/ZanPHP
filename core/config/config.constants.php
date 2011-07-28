@@ -9,7 +9,7 @@ if(!defined("_access")) {
 /**
  * Basics
  */
-define("_webURL", "http://localhost/zanphp");
+define("_webURL", "http://localhost/ZanPHP");
 define("_webName", "ZanPHP");
 define("_webTheme", "zanphp");
 define("_domain", FALSE);
