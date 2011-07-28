@@ -8,8 +8,6 @@ if(!defined("_access")) {
 
 class Default_Controller extends ZP_Load {
 	
-	public $args;
-	
 	public function __construct() {
 	
 	}
@@ -18,9 +16,19 @@ class Default_Controller extends ZP_Load {
 		print __("Hi, I'm the default application");
 	}
 	
-	public function prueba() {
-		$this->args = func_get_args();
+	public function contacts() {
+		$this->Default_Model = $this->model("Default_Model");
 		
-		print $this->args[0] . $this->args[1];
+		$data = $this->Default_Model->getContacts();
+		
+		____($data);	
+	}
+	
+	public function getContact($contactID = 0) {
+		$this->Agenda_Model = $this->model("Agenda_Model", "default");
+		
+		$data = $this->Agenda_Model->getContact($contactID);
+		
+		____($data);
 	}
 }

@@ -102,6 +102,8 @@ define("_class", "class");
 define("_classes", "classes");
 define("_controller", "controller");
 define("_controllers", "controllers");
+define("_model", "model");
+define("_models", "models");
 define("_favicon", "favicon.ico");
 define("_index", "index.php");
 define("_icons", "icons");

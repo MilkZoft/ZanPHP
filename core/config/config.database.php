@@ -12,7 +12,7 @@ if(!defined("_access")) {
 $production = FALSE;
 
 if($production) {
-	define("_dbController", "MySQLi");
+	define("_dbController", "mysqli");
 	define("_dbHost", "localhost");
 	define("_dbUser", "root"); 
 	define("_dbPwd", "");
@@ -20,7 +20,7 @@ if($production) {
 	define("_dbPort", "5432");
 	define("_dbPfx", "zan_");
 } else {
-	define("_dbController", "MySQLi");
+	define("_dbController", "mysqli");
 	define("_dbHost", "localhost");
 	define("_dbUser", "root"); 
 	define("_dbPwd", "");

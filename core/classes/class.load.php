@@ -69,22 +69,30 @@ class ZP_Load {
      * @param string $name
      * @return object value
      */
-	public function model($name) {
-		$parts = explode("_", $name);
+	public function model($model, $application = FALSE) {
+		$parts = explode("_", $model);
 		
-		if(count($parts) === 2) {
-			$file = _applications . _sh . strtolower($parts[0]) . _sh . strtolower($parts[1]) . _dot . strtolower($parts[0]) . _PHP;
+		if(!$application) {
+			if(count($parts) === 2) {
+				$file = _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;						
+			}		
+		} else {
+			if(count($parts) === 2) {
+				$file = _applications . _sh . $application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
+			}
+		}
+		
+		if(file_exists($file)) {							
+			if(class_exists($model)) {
+				return ZP_Singleton::instance($model);
+			}
 			
-			if(file_exists($file)) {				
-				if(class_exists($name)) {
-					return ZP_Singleton::instance($name);
-				}
-				
-				include $file;																		
-				
-				return ZP_Singleton::instance($name);				
-			}							
-		}		
+			include $file;
+			
+			return ZP_Singleton::instance($model);
+		}	
+		
+		return FALSE;		
 	}		
 	
     /**
@@ -221,7 +229,13 @@ class ZP_Load {
 	public function library($name, $library = NULL) {	
 		$lib = str_replace("class.", "", $name);
 		
-		if(isset($name) and $library !== NULL) {
+		if($name === "AdoDB") {
+			if(file_exists(_core . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP)) {
+				include_once _core . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP;				
+			} else {
+				die("$name library doesn't exists");
+			}			
+		} elseif(isset($name) and $library !== NULL) {
 			if(file_exists(_core . _sh . _libraries . _sh . $library . _sh . $name . _PHP)) {
 				include_once _core . _sh . _libraries . _sh . $library . _sh . $name . _PHP;				
 			} else {
