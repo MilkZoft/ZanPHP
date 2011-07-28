@@ -87,30 +87,18 @@ class ZP_Db extends ZP_Load {
 	 * @var private $encode
 	 */
 	private $encode = FALSE;
-	
-	private $select = "SELECT *";
-	
-	private $join = NULL;
-	
-	private $where = NULL;
 		
     /**
      * Load Database class
      *
      * @return void
      */
-	public function __construct() {
+	public function __construct($table) {
 		$this->Database = $this->core("Database");	
 	}
 	
 	public function encode($encode = FALSE) {
 		$this->encode = $encode;
-	}
-	
-	public function setFetch($fetch = "assoc") {
-		$this->fetch = $fetch;
-		
-		$this->Database->fetch = $fetch;	
 	}
 	
     /**
@@ -149,203 +137,25 @@ class ZP_Db extends ZP_Load {
      */
 	public function values($values) {
 		$this->values = $values;	
-	}
-	
-	public function select($fields = "*", $normal = TRUE) {
-		if(!$normal) {
-			$this->select = $fields;	
-		} else {
-			$this->select = "SELECT $fields";	
-		}
-	}
-	
-	public function selectMax($field, $as = FALSE) {
-		if(isset($field) and $as) {
-			$this->select = "SELECT MAX($field) as $as";	
-		} else {
-			$this->select = "SELECT MAX($field) as $field";
-		}
-	}
-	
-	public function selectMin($min, $as = FALSE) {
-		if(isset($min) and $as) {
-			$this->select = "SELECT MIN($field) as $as";	
-		} else {
-			$this->select = "SELECT MIN($field) as $field";
-		}	
-	}
-	
-	public function selectAvg($field, $as = FALSE) {
-		if(isset($field) and $as) {
-			$this->select = "SELECT AVG($field) as $as";	
-		} else {
-			$this->select = "SELECT AVG($field) as $field";
-		}	
-	}
-	
-	public function selectSum($field, $as = FALSE) {
-		if(isset($field) and $as) {
-			$this->select = "SELECT SUM($field) as $as";	
-		} else {
-			$this->select = "SELECT SUM($field) as $field";
-		}	
-	}
-	
-	public function from($table) {
-		$this->from = $table;	
-	}
-	
-	public function join($table, $condition, $position = FALSE) {
-		if(!$table or !$condition) {
-			return FALSE;	
-		}
-		
-		if(!$position) {
-			$this->join = "JOIN $table ON $condition";
-		} else {
-			$this->join = "$position JOIN $table ON $condition";	
-		}
-	}
-	
-	public function set($field, $value) {
-		$this->data[$field] = $value;
-	}
-	
-	public function get($table = FALSE, $limit = 0, $offset = 0) {
-		if($limit === 0 and $offset === 0) {
-			if($table) {
-				$query = "$this->select FROM $table $this->join $this->where";
-			} else {
-				$query = "$this->select FROM $this->from $this->join $this->where";
-			}
-		} else {
-			if($table) {
-				$query = "$this->select FROM $table $this->join $this->where LIMIT $limit, $offset";
-			} else {
-				$query = "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";	
-			}
-		}
-		
-		$rs = $this->Database->query($query);	
-		
-		if($this->Database->rows() === 0) {
-			return FALSE;
-		} elseif($this->Database->rows() === 1) {
-			$rows[] = $this->Database->fetch();			
-		} else {
-			while($row = $this->Database->fetch()) {
-				$rows[] = $row;	
-			}
-		}		
-		
-		$this->Database->free();
-		
-		if($this->encode) {
-			if($this->fetch === "assoc") {
-				return isset($rows) ? $this->encoding($rows) : FALSE;
-			} else {
-				return isset($rows) ? $rows : FALSE;	
-			}
-		} else {
-			return isset($rows) ? $rows : FALSE;
-		}
-	}
-	
-	public function getWhere($table, $where, $limit = 0, $offset = 0) {
-		$i = 0;
-		$count = count($where);
-		
-		foreach($where as $field => $value) {
-			if($i === $count) {
-				$_where = "$field = '$value'";
-			} else {
-				$_where = "$field = '$value' AND ";
-			}
-			
-			$i++;
-		}
-		
-		if($limit === 0 and $offset === 0) {
-			$query = "$this->select FROM $table WHERE $_where"; 
-		} else {
-			$query = "SELECT $this->fields FROM $table WHERE $_where LIMIT $limit, $offset";	
-		}
-	}
-	
-	public function where($data, $value = NULL) {
-		if(is_array($data)) {
-			$total = count($data);
-			$i = 0;
-			$this->where = NULL;
-			$_where = NULL;
-			
-			foreach($data as $field => $value) {
-				if($i === $total) {
-					$_where .= "$field = '$value'";
-				} else {
-					$_where .= "$field = '$value' AND ";
-				}
-				
-				$i++;
-			}
-			
-			$this->where = "WHERE $_where";
-		} else {
-			$this->where = "WHERE $data = '$value'";
-		}
-	}
-	
-	public function whereOr($data, $value = NULL) {
-		if(is_array($data)) {
-			$total = count($data);
-			$i = 0;
-			$this->where = NULL;
-			
-			foreach($data as $field => $value) {
-				if($i === $total) {
-					$this->where .= "$field = '$value'";
-				} else {
-					$this->where .= "$field = '$value' OR ";
-				}
-				
-				$i++;
-			}
-		} else {
-			$this->where = "$data = '$value'";
-		}
-	}
-	
-	public function whereIn($field, $data) {
-		if(is_array($data)) {
-			for($i = 0; $i <= count($data) - 1; $i++) {
-				if($i === count($data) - 1) {
-					$values .= "'$data[$i]'";	
-				} else {
-					$values .= "'$data[$i]', ";
-				}
-			}
-			
-			$this->where = "$field IN ($values);";
-		} else {
-			$this->where = "$field IN ('$data')";	
-		}
-	}
+	}		
 		 
     /**
-     * Calls ZP_Database::insert to make an insert query
+     * Calls ZP_ZP_Database::insert to make an insert query
      *
      * @return string "RollBack" / boolean value / integer insert ID
      */
-	public function insert($table = FALSE, $data = FALSE) {
-		if(!$table and !$fields) {
-			$query = $this->Database->insert($this->table, $this->fields, $this->values);
-		} else {
-			if(isset($this->data) and isset($table) and !$data) {
-				$query = $this->Database->insert($table, $this->data);
-			} else {
-				$query = $this->Database->insert($table, $data);
-			}
+	public function insert($begin = FALSE) {
+		if($begin === TRUE) {
+			$this->begin();
 		}
+		
+		$query = $this->Database->insert($this->table, $this->fields, $this->values);
+		
+		if($query === FALSE) {
+			return "rollback";
+		}
+		
+		$this->inserts++;				
 		
 		if($this->primaryKey === FALSE) {
 			return TRUE;
@@ -354,10 +164,6 @@ class ZP_Db extends ZP_Load {
 					
 			return $insertID;
 		}
-	}
-	
-	public function insertBatch($table, $data) {
-		$this->Database->insertBatch($table, $data);
 	}
 	
     /**

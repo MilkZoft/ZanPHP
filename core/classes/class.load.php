@@ -219,7 +219,7 @@ class ZP_Load {
      * @return void
      */
 	public function library($name, $library = NULL) {	
-		$lib  = str_replace("class.", "", $name);
+		$lib = str_replace("class.", "", $name);
 		
 		if(isset($name) and $library !== NULL) {
 			if(file_exists(_core . _sh . _libraries . _sh . $library . _sh . $name . _PHP)) {
