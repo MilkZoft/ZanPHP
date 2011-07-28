@@ -272,7 +272,7 @@ class ZP_Db extends ZP_Load {
 		}
 	}
 	
-	public function where($data, $value = NULL) {
+	public function where($data, $value = FALSE) {
 		if(is_array($data)) {
 			$total = count($data);
 			$i = 0;
@@ -280,18 +280,54 @@ class ZP_Db extends ZP_Load {
 			$_where = NULL;
 			
 			foreach($data as $field => $value) {
+				$parts = explode(" ", $field);
+				
 				if($i === $total) {
-					$_where .= "$field = '$value'";
+					if(count($parts) === 2) {
+						$_where .= "$parts[0] $parts[1] '$value'";
+					} else {
+						$_where .= "$field = '$value'";
+					}
 				} else {
-					$_where .= "$field = '$value' AND ";
+					if(count($parts) === 2) {
+						$_where .= "$parts[0] $parts[1] '$value' AND ";
+					} else {
+						$_where .= "$field = '$value' AND ";
+					}
 				}
+				
+				unset($parts);
 				
 				$i++;
 			}
 			
-			$this->where = "WHERE $_where";
+			if(is_null($this->where)) {
+				$this->where = "WHERE $_where";
+			} else {
+				$this->where .= " AND $_where";
+			}
 		} else {
-			$this->where = "WHERE $data = '$value'";
+			if(isset($data) and !$value) {
+				$this->where = "WHERE $data";	
+			} else {
+				if(is_null($this->where)) {
+					$parts = explode(" ", $data);
+					
+					if(count($parts) === 2) {
+						$this->where = "WHERE parts[0] $parts[1] '$value'";	
+					} else {
+						$this->where = "WHERE $data = '$value'";
+					}
+				} else {
+					$parts = explode(" ", $data);
+					
+					if(count($parts) === 2) {
+						$this->where .= " AND $parts[0] $parts[1] '$value'";
+					} else {
+						$this->where .= " AND $data = '$value'";	
+					}	
+				}	
+			}
 		}
 	}
 	
