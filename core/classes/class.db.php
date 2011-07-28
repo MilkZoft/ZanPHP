@@ -178,7 +178,7 @@ class ZP_Db extends ZP_Load {
 		$this->table  = _dbPfx . $table;  
 		$this->fields = $fields;
 
-		$data = $this->query("SHOW COLUMNS FROM $this->table");
+		$data = $this->Database->_query("SHOW COLUMNS FROM $this->table");
 		
 		if(is_array($data)) {
 			foreach($data as $column) {
@@ -278,7 +278,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		$rs = $this->Database->query($query);	
+		$rs = $this->Database->_query($query);	
 		
 		if($this->Database->rows() === 0) {
 			return FALSE;
@@ -290,7 +290,11 @@ class ZP_Db extends ZP_Load {
 			}
 		}		
 		
-		$this->Database->free();
+		$this->free();
+		
+		$this->select = NULL;
+		$this->join   = NULL;
+		$this->where  = NULL;
 		
 		if($this->encode) {
 			if($this->fetch === "assoc") {
@@ -303,11 +307,11 @@ class ZP_Db extends ZP_Load {
 		}
 	}
 	
-	public function getWhere($table, $where, $limit = 0, $offset = 0) {
+	public function getWhere($table, $data, $limit = 0, $offset = 0) {
 		$i = 0;
-		$count = count($where);
+		$count = count($data);
 		
-		foreach($where as $field => $value) {
+		foreach($data as $field => $value) {
 			if($i === $count) {
 				$_where = "$field = '$value'";
 			} else {
@@ -326,15 +330,15 @@ class ZP_Db extends ZP_Load {
 	
 	public function where($data, $value = FALSE) {
 		if(is_array($data)) {
-			$total = count($data);
-			$i = 0;
+			$count 		 = count($data);
+			$i 			 = 0;
+			$_where 	 = NULL;
 			$this->where = NULL;
-			$_where = NULL;
 			
 			foreach($data as $field => $value) {
 				$parts = explode(" ", $field);
 				
-				if($i === $total) {
+				if($i === $count) {
 					if(count($parts) === 2) {
 						$_where .= "$parts[0] $parts[1] '$value'";
 					} else {
@@ -360,7 +364,11 @@ class ZP_Db extends ZP_Load {
 			}
 		} else {
 			if(isset($data) and !$value) {
-				$this->where = "WHERE $data";	
+				if(is_null($this->where)) {
+					$this->where  = "WHERE $data";
+				} else {
+					$this->where .= " $data";	
+				}
 			} else {
 				if(is_null($this->where)) {
 					$parts = explode(" ", $data);
@@ -385,21 +393,64 @@ class ZP_Db extends ZP_Load {
 	
 	public function whereOr($data, $value = NULL) {
 		if(is_array($data)) {
-			$total = count($data);
-			$i = 0;
+			$count 		 = count($data);
+			$i 			 = 0;
+			$_where 	 = NULL;
 			$this->where = NULL;
 			
 			foreach($data as $field => $value) {
-				if($i === $total) {
-					$this->where .= "$field = '$value'";
+				$parts = explode(" ", $field);
+				
+				if($i === $count) {
+					if(count($parts) === 2) {
+						$_where .= "$parts[0] $parts[1] '$value'";
+					} else {
+						$_where .= "$field = '$value'";
+					}
 				} else {
-					$this->where .= "$field = '$value' OR ";
+					if(count($parts) === 2) {
+						$_where .= "$parts[0] $parts[1] '$value' OR ";
+					} else {
+						$_where .= "$field = '$value' OR ";
+					}
 				}
+				
+				unset($parts);
 				
 				$i++;
 			}
+			
+			if(is_null($this->where)) {
+				$this->where = "WHERE $_where";
+			} else {
+				$this->where .= " OR $_where";
+			}
 		} else {
-			$this->where = "$data = '$value'";
+			if(isset($data) and !$value) {
+				if(is_null($this->where)) {
+					$this->where  = "WHERE $data";
+				} else {
+					$this->where .= " $data";	
+				}
+			} else {
+				if(is_null($this->where)) {
+					$parts = explode(" ", $data);
+					
+					if(count($parts) === 2) {
+						$this->where = "WHERE parts[0] $parts[1] '$value'";	
+					} else {
+						$this->where = "WHERE $data = '$value'";
+					}
+				} else {
+					$parts = explode(" ", $data);
+					
+					if(count($parts) === 2) {
+						$this->where .= " OR $parts[0] $parts[1] '$value'";
+					} else {
+						$this->where .= " OR $data = '$value'";	
+					}	
+				}	
+			}
 		}
 	}
 	
@@ -413,9 +464,163 @@ class ZP_Db extends ZP_Load {
 				}
 			}
 			
-			$this->where = "$field IN ($values);";
+			if(is_null($this->where)) {
+				$this->where = "WHERE $field IN ($values)";
+			} else {
+				$this->where .= " AND $field IN ($values)";
+			}
 		} else {
-			$this->where = "$field IN ('$data')";	
+			if(is_null($this->where)) {
+				$this->where = "WHERE $field IN ('$data')";
+			} else {
+				$this->where .= " AND $field IN ('$data')";
+			}
+		}
+	}
+	
+	public function orWhereIn($field, $data) {
+		if(is_array($data)) {
+			for($i = 0; $i <= count($data) - 1; $i++) {
+				if($i === count($data) - 1) {
+					$values .= "'$data[$i]'";	
+				} else {
+					$values .= "'$data[$i]', ";
+				}
+			}
+			
+			if(!is_null($this->where)) {
+				$this->where .= " OR $field IN ($values)";
+			}
+		} else {
+			if(!is_null($this->where)) {
+				$this->where .= " OR $field IN ('$data')";
+			}
+		}
+	}
+	
+	public function whereNotIn($field, $data) {
+		if(is_array($data)) {
+			for($i = 0; $i <= count($data) - 1; $i++) {
+				if($i === count($data) - 1) {
+					$values .= "'$data[$i]'";	
+				} else {
+					$values .= "'$data[$i]', ";
+				}
+			}
+			
+			if(is_null($this->where)) {
+				$this->where = "WHERE $field NOT IN ($values)";
+			} else {
+				$this->where .= " AND $field NOT IN ($values)";
+			}
+		} else {
+			if(is_null($this->where)) {
+				$this->where = "WHERE $field NOT IN ('$data')";
+			} else {
+				$this->where .= " AND $field NOT IN ('$data')";
+			}
+		}
+	}
+	
+	public function orWhereNotIn($field, $data) {
+		if(is_array($data)) {
+			for($i = 0; $i <= count($data) - 1; $i++) {
+				if($i === count($data) - 1) {
+					$values .= "'$data[$i]'";	
+				} else {
+					$values .= "'$data[$i]', ";
+				}
+			}
+			
+			if(!is_null($this->where)) {
+				$this->where .= " OR $field NOT IN ($values)";
+			}
+		} else {
+			if(!is_null($this->where)) {
+				$this->where .= " OR $field NOT IN ('$data')";
+			}
+		}
+	}
+	
+	public function like($data, $match = FALSE, $position = "both") {
+		if(is_array($data)) {
+			$_where = NULL;
+			$i      = 0;
+			$count  = count($data);
+			
+			foreach($data as $field => $value) {
+				if($i === $count) {
+					if($position === "both") {
+						$_where .= "$field LIKE '%$match%'";
+					} elseif($position === "before") {
+						$_where .= "$field LIKE '%$match'";
+					} elseif($postion === "after") {
+						$_where .= "$field LIKE '$match%'";
+					}
+				} else {
+					if($position === "both") {
+						$_where .= " AND $field LIKE '%$match%'";
+					} elseif($position === "before") {
+						$_where .= " AND $field LIKE '%$match'";
+					} elseif($postion === "after") {
+						$_where .= " AND $field LIKE '$match%'";
+					}	
+				}
+			}
+		} else {
+			if(is_null($this->where)) {
+				if($position === "both") {
+					$this->where  = "WHERE $data LIKE '%$match%'";
+				} elseif($position === "before") {
+					$this->where  = "WHERE $data LIKE '%$match'";
+				} elseif($position === "after") {
+					$this->where  = "WHERE $data LIKE '$match%'";
+				}
+			} else {
+				if($position === "both") {
+					$this->where .= " AND $data LIKE '%$match%'";	
+				} elseif($position === "before") {
+					$this->where .= " AND $data LIKE '%$match'";
+				} elseif($position === "after") {
+					$this->where .= " AND $data LIKE '$match%'";
+				}
+			}
+		}
+	}
+	
+	public function orLike($data, $match = FALSE, $position = "both") {
+		if(is_array($data)) {
+			$_where = NULL;
+			$i      = 0;
+			$count  = count($data);
+			
+			foreach($data as $field => $value) {
+				if($i === $count) {
+					if($position === "both") {
+						$_where .= "$field LIKE '%$match%'";
+					} elseif($position === "before") {
+						$_where .= "$field LIKE '%$match'";
+					} elseif($postion === "after") {
+						$_where .= "$field LIKE '$match%'";
+					}
+				} else {
+					if($position === "both") {
+						$_where .= " AND $field LIKE '%$match%'";
+					} elseif($position === "before") {
+						$_where .= " AND $field LIKE '%$match'";
+					} elseif($postion === "after") {
+						$_where .= " AND $field LIKE '$match%'";
+					}	
+				}
+			}
+			
+			if(!is_null($this->where)) {
+				$this->where .= " OR $field NOT IN ($values)";
+			}
+		} else {
+			if(!is_null($this->where)) {
+				$this->where .= " OR $field NOT IN ('$data')";
+			}
 		}
 	}
 		 
@@ -681,7 +886,7 @@ class ZP_Db extends ZP_Load {
 	public function find($ID) {
 		$query = "SELECT $this->fields FROM $this->table WHERE $this->primaryKey = $ID"; 
 		
-		$rs = $this->Database->query($query);	
+		$rs = $this->Database->_query($query);	
 
 		if($this->Database->rows() === 0) {
 			return FALSE;
@@ -689,7 +894,7 @@ class ZP_Db extends ZP_Load {
 			$rows[] = $this->Database->fetch();			
 		}		
 		
-		$this->Database->free();
+		$this->free();
 		
 		if($this->encode) {
 			return isset($rows) ? $this->encoding($rows) : FALSE;
@@ -729,7 +934,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $field = '$value'$SQL"; 
 
-		$rs = $this->Database->query($query);
+		$rs = $this->Database->_query($query);
 
 		if($this->Database->rows() === 0) {
 			return FALSE;
@@ -741,7 +946,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		$this->Database->free();
+		$this->free();
 		
 		if($this->encode) {
 			return isset($rows) ? $this->encoding($rows) : FALSE;
@@ -778,7 +983,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";		
 		
-		$rs = $this->Database->query($query);
+		$rs = $this->Database->_query($query);
 		
 		if($this->Database->rows() === 0) {
 			return FALSE;
@@ -790,7 +995,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 
-		$this->Database->free();
+		$this->free();
 		
 		if($this->encode) {
 			return (isset($rows)) ? $this->encoding($rows) : FALSE;
@@ -807,7 +1012,7 @@ class ZP_Db extends ZP_Load {
 	public function findLast() {		
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey DESC LIMIT 1";
 		
-		$rs = $this->Database->query($query);
+		$rs = $this->Database->_query($query);
 		
 		if($this->Database->rows() === 1) {
 			$rows[] = $this->Database->fetch();
@@ -815,7 +1020,7 @@ class ZP_Db extends ZP_Load {
 			return FALSE;
 		}
 		
-		$this->Database->free();
+		$this->free();
 		
 		if($this->encode) {
 			return (isset($rows)) ? $this->encoding($rows) : FALSE;
@@ -827,7 +1032,7 @@ class ZP_Db extends ZP_Load {
 	public function findFirst() {
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey ASC LIMIT 1";
 		
-		$rs = $this->Database->query($query);
+		$rs = $this->Database->_query($query);
 		
 		if($this->Database->rows() === 1) {
 			$rows[] = $this->Database->fetch();
@@ -835,7 +1040,7 @@ class ZP_Db extends ZP_Load {
 			return FALSE;
 		}
 		
-		$this->Database->free();
+		$this->free();
 		
 		if($this->encode) {
 			return (isset($rows)) ? $this->encoding($rows) : FALSE;
@@ -873,7 +1078,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table$SQL";
 
-		$rs = $this->Database->query($query);						
+		$rs = $this->Database->_query($query);						
 		
 		if($this->Database->rows() === 0) {
 			return FALSE;
@@ -885,7 +1090,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 
-		$this->Database->free();
+		$this->free();
 		
 		if($this->encode) {
 			return (isset($rows)) ? $this->encoding($rows) : FALSE;
@@ -902,7 +1107,7 @@ class ZP_Db extends ZP_Load {
 	public function countAll() {		
 		$query = "SELECT $this->fields FROM $this->table";
 		
-		$rs = $this->Database->query($query);
+		$rs = $this->Database->_query($query);
 		
 		return $this->Database->rows();
 	}
@@ -919,7 +1124,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
 
-		$rs = $this->Database->query($query);
+		$rs = $this->Database->_query($query);
 		
 		return $this->Database->rows();
 	}		
@@ -930,7 +1135,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */	
 	public function query($query) {		
-		$query = $this->Database->query($query);
+		$query = $this->Database->_query($query);
 		
 		if($this->Database->rows() === 0) {
 			return FALSE;
@@ -942,7 +1147,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		$this->Database->free();
+		$this->free();
 		
 		if($this->encode) {
 			return isset($rows) ? $this->encoding($rows) : FALSE;
@@ -957,7 +1162,7 @@ class ZP_Db extends ZP_Load {
      * @return array value
      */	
 	public function call($procedure) {
-		$query = $this->Database->query("CALL $procedure");
+		$query = $this->Database->_query("CALL $procedure");
 		
 		if($this->Database->rows() === 0) {
 			return FALSE;
@@ -969,7 +1174,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		$this->Database->free();
+		$this->free();
 
 		if($this->encode) {
 			return (isset($rows)) ? $this->encoding($rows) : FALSE;
