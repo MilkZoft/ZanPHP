@@ -138,11 +138,12 @@ function execute() {
 		die(_webMessage);
 	}
 	
+	
 	if(isController($applicationController, $application)) {
 		$controller 	= ucfirst($applicationController) . "_Controller";
 		$controllerFile = _applications . _sh . strtolower($application) . _sh . _controllers . _sh . _controller . _dot . strtolower($applicationController) . _PHP;
 		
-		$$controller = $Load->controller($controller, $application);
+		$$controller = $Load->controller($controller);
 	} else { 
 		$controller 	= ucfirst($application) . "_Controller";
 		$controllerFile = _applications . _sh . strtolower($application) . _sh . _controllers . _sh . _controller . _dot . strtolower($application) . _PHP;

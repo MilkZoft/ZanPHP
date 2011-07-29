@@ -23,11 +23,11 @@ class Agenda_Model extends ZP_Load {
 	}
 	
 	public function getContact($contactID) {
+		$this->Db->encode(TRUE);
+		$this->Db->fetchMode("array");
 		$this->Db->select("Name, Email, Phone");
 		$this->Db->from($this->table);
 		$this->Db->where(array("ID_Contact" => $contactID));
-		 
-		$this->Db->encode(TRUE);
 		
 		$data = $this->Db->get();
 		

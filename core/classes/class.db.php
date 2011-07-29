@@ -247,13 +247,23 @@ class ZP_Db extends ZP_Load {
 		}
 	}
 	
+	public function _query($query) {
+		if($this->fetchMode === "assoc") {
+			$this->Database->setFetchMode(ADODB_FETCH_ASSOC);
+		} elseif($this->fetchMode === "array") {
+			$this->Database->setFetchMode(ADODB_FETCH_NUM);
+		}
+		
+		return $this->Database->_execute($query);
+	}
+	
    /**
      * Make a free query
      *
      * @return void
      */	
 	public function query($query) {		
-		$query = $this->Database->_execute($query);
+		$query = $this->_query($query);
 		
 		if($this->rows() === 0) {
 			return FALSE;			
@@ -297,12 +307,18 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		$this->Rs = $this->Database->_execute($query);	
+		$this->Rs = $this->_query($query);	
 		
 		if($this->rows() === 0) {
 			return FALSE;			
 		} else {
-			$rows = $this->fetch($this->rows());
+			if($this->fetchMode === "array") {
+				while($row = $this->fetch($this->rows())) {
+					$rows[] = $row;	
+				}
+			} else { 
+				$rows = $this->fetch($this->rows());
+			}
 		}		
 		
 		$this->free();
@@ -320,7 +336,7 @@ class ZP_Db extends ZP_Load {
 	
 	public function getWhere($table, $data, $limit = 0, $offset = 0) {
 		$i = 0;
-		$count = count($data);
+		$count = count($data) - 1;
 		
 		foreach($data as $field => $value) {
 			if($i === $count) {
@@ -341,7 +357,7 @@ class ZP_Db extends ZP_Load {
 	
 	public function where($data, $value = FALSE) {
 		if(is_array($data)) {
-			$count 		 = count($data);
+			$count 		 = count($data) - 1;
 			$i 			 = 0;
 			$_where 	 = NULL;
 			$this->where = NULL;
@@ -362,7 +378,7 @@ class ZP_Db extends ZP_Load {
 						$_where .= "$field = '$value' AND ";
 					}
 				}
-				
+			
 				unset($parts);
 				
 				$i++;
@@ -404,7 +420,7 @@ class ZP_Db extends ZP_Load {
 	
 	public function whereOr($data, $value = NULL) {
 		if(is_array($data)) {
-			$count 		 = count($data);
+			$count 		 = count($data) - 1;
 			$i 			 = 0;
 			$_where 	 = NULL;
 			$this->where = NULL;
@@ -555,9 +571,9 @@ class ZP_Db extends ZP_Load {
 	
 	public function like($data, $match = FALSE, $position = "both") {
 		if(is_array($data)) {
+			$count  = count($data) - 1;
 			$_where = NULL;
 			$i      = 0;
-			$count  = count($data);
 			
 			foreach($data as $field => $value) {
 				if($i === $count) {
@@ -601,9 +617,9 @@ class ZP_Db extends ZP_Load {
 	
 	public function orLike($data, $match = FALSE, $position = "both") {
 		if(is_array($data)) {
+			$count  = count($data) - 1;
 			$_where = NULL;
 			$i      = 0;
-			$count  = count($data);
 			
 			foreach($data as $field => $value) {
 				if($i === $count) {
@@ -637,9 +653,9 @@ class ZP_Db extends ZP_Load {
 	
 	public function notLike($data, $match = FALSE, $position = "both") {
 		if(is_array($data)) {
+			$count  = count($data) - 1;
 			$_where = NULL;
 			$i      = 0;
-			$count  = count($data);
 			
 			foreach($data as $field => $value) {
 				if($i === $count) {
@@ -687,13 +703,13 @@ class ZP_Db extends ZP_Load {
 		$data = $fields;
 			
 		if(is_array($data)) {
-			$total   = count($data);
+			$count   = count($data) - 1;
 			$_fields = NULL;
 			$_values = NULL;
 			$i 		 = 0;
 			
 			foreach($data as $field => $value) {
-				if($i === $total) {
+				if($i === $count) {
 					$_fields .= "$field";
 					$_values .= "'$value'";
 				} else {
@@ -713,7 +729,7 @@ class ZP_Db extends ZP_Load {
 			$query = "INSERT INTO $table ($fields) VALUES ($values)";
 		}	
 		
-		$this->Rs = $this->Database->_execute($query);
+		$this->Rs = $this->_query($query);
 		
 		if($this->Rs) {
 			if(!$this->primaryKey) {
@@ -734,7 +750,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		if(isset($data[0])) {
-			$inserts = count($data);
+			$count = count($data) - 1;
 			$_fields = NULL;
 			$_values = NULL;
 			$query   = NULL;
@@ -745,7 +761,7 @@ class ZP_Db extends ZP_Load {
 				$total = count($data[$i]);
 				
 				foreach($insert as $field => $value) {
-					if($i === $total) {
+					if($i === $count) {
 						$_fields .= "$field";
 						$_values .= "'$value'";
 					} else {
@@ -870,11 +886,11 @@ class ZP_Db extends ZP_Load {
      */
 	public function fetch($count = 0) {
 		if($this->fetchMode === "array") {
-			return (!$this->Rs) ? FALSE : $this->Rs->fetchRow();
+			return (!$this->Rs) ? FALSE : $this->Rs->fetchRow($count);
 		} elseif($this->fetchMode === "assoc") {	
 			return (!$this->Rs) ? FALSE : $this->Rs->getArray($count);
 		} elseif($this->fetchMode === "object") {
-			return (!$this->Rs) ? FALSE : $this->Rs->fetchObject();
+			return (!$this->Rs) ? FALSE : $this->Rs->fetchObject(FALSE);
 		}
 	}
 	
@@ -896,7 +912,7 @@ class ZP_Db extends ZP_Load {
 		if($table) {
 			$query = "SELECT TOP 1 $this->primaryKey FROM $this->table ORDER BY $this->primaryKey DESC";
 			 	
-			$this->Rs = $this->Database->_execute($query);
+			$this->Rs = $this->_query($query);
 			
 			$data = $this->Rs->getArray(1);
 			
@@ -933,7 +949,7 @@ class ZP_Db extends ZP_Load {
 	public function find($ID) {
 		$query = "SELECT $this->fields FROM $this->table WHERE $this->primaryKey = $ID"; 
 		
-		$rs = $this->Database->_execute($query);	
+		$rs = $this->_query($query);	
 
 		if($this->rows() === 0) {
 			return FALSE;
@@ -981,7 +997,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $field = '$value'$SQL"; 
 
-		$rs = $this->Database->_execute($query);
+		$rs = $this->_query($query);
 
 		if($this->rows() === 0) {
 			return FALSE;
@@ -1030,7 +1046,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";		
 		
-		$rs = $this->Database->_execute($query);
+		$rs = $this->_query($query);
 		
 		if($this->rows() === 0) {
 			return FALSE;
@@ -1059,7 +1075,7 @@ class ZP_Db extends ZP_Load {
 	public function findLast() {		
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey DESC LIMIT 1";
 		
-		$rs = $this->Database->_execute($query);
+		$rs = $this->_query($query);
 		
 		if($this->rows() === 1) {
 			$rows[] = $this->fetch();
@@ -1079,7 +1095,7 @@ class ZP_Db extends ZP_Load {
 	public function findFirst() {
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey ASC LIMIT 1";
 		
-		$rs = $this->Database->_execute($query);
+		$rs = $this->_query($query);
 		
 		if($this->rows() === 1) {
 			$rows[] = $this->fetch();
@@ -1125,7 +1141,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table$SQL";
 
-		$rs = $this->Database->_execute($query);						
+		$rs = $this->_query($query);						
 		
 		if($this->rows() === 0) {
 			return FALSE;
@@ -1154,7 +1170,7 @@ class ZP_Db extends ZP_Load {
 	public function countAll() {		
 		$query = "SELECT $this->fields FROM $this->table";
 		
-		$rs = $this->Database->_execute($query);
+		$rs = $this->_query($query);
 		
 		return $this->rows();
 	}
@@ -1171,7 +1187,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
 
-		$rs = $this->Database->_execute($query);
+		$rs = $this->_query($query);
 		
 		return $this->rows();
 	}		
@@ -1256,9 +1272,9 @@ class ZP_Db extends ZP_Load {
 	private function encoding($rows) {
 		$this->encode = FALSE;
 		
-		if(is_object($rows)) {
-			$array = get_object_vars($rows);
-			
+		if(is_object($rows)) { 
+			$array[] = get_object_vars($rows);
+	
 			$key1  = array_keys($array);
 			$size1 = sizeof($key1);			
 			

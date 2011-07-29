@@ -23,8 +23,10 @@ class Default_Model extends ZP_Load {
 	}
 	
 	public function getContacts() {
-		$this->Db->select("Name, Email, Phone")->Db->from($this->table);
-				 
+		$this->Db->select("Name, Email, Phone");
+		$this->Db->from($this->table);
+		
+		$this->Db->fetchMode("array");
 		$this->Db->encode(TRUE);
 		
 		$data = $this->Db->get();

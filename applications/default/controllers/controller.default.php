@@ -9,7 +9,7 @@ if(!defined("_access")) {
 class Default_Controller extends ZP_Load {
 	
 	public function __construct() {
-	
+		$this->application("default");
 	}
 	
 	public function index() {		
@@ -25,8 +25,8 @@ class Default_Controller extends ZP_Load {
 	}
 	
 	public function getContact($contactID = 0) {
-		$this->Agenda_Model = $this->model("Agenda_Model", "default");
-		
+		$this->Agenda_Model = $this->model("Agenda_Model");
+	
 		$data = $this->Agenda_Model->getContact($contactID);
 		
 		____($data);

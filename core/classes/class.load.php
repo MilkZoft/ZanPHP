@@ -51,6 +51,8 @@ class ZP_Load {
 	 */
 	public $Templates;
 	
+	public $application = FALSE;
+	
     /**
      * Loads helper autoload, database config and class templates
      *
@@ -62,6 +64,10 @@ class ZP_Load {
 		
 		$this->Templates = $this->core("Templates");		
 	}
+	
+	public function application($application) {
+		$this->application = $application;	
+	}
 
     /**
      * Loads a model file
@@ -69,16 +75,16 @@ class ZP_Load {
      * @param string $name
      * @return object value
      */
-	public function model($model, $application = FALSE) {
+	public function model($model) {
 		$parts = explode("_", $model);
 		
-		if(!$application) {
+		if(!$this->application) {
 			if(count($parts) === 2) {
 				$file = _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;						
 			}		
 		} else {
 			if(count($parts) === 2) {
-				$file = _applications . _sh . $application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
+				$file = _applications . _sh . $this->application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
 			}
 		}
 		
@@ -160,16 +166,16 @@ class ZP_Load {
      * @param string $name
      * @return object value
      */
-	public function controller($controller, $application = FALSE) {
+	public function controller($controller) {
 		$parts = explode("_", $controller);
 		
-		if(!$application) {
+		if(!$this->application) {
 			if(count($parts) === 2) {
 				$file = _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;						
 			}		
 		} else {
 			if(count($parts) === 2) {
-				$file = _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
+				$file = _applications . _sh . $this->application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
 			}
 		}
 		
@@ -203,8 +209,8 @@ class ZP_Load {
      * @param string $application = NULL
      * @return object value
      */
-	public function classes($class = NULL, $application = NULL) {
-		$file = _applications . _sh . $application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
+	public function classes($class = NULL) {
+		$file = _applications . _sh . $this->application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
 		
 		if(file_exists($file)) {							
 			if(class_exists($class)) {
