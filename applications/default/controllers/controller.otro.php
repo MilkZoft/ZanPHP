@@ -18,7 +18,8 @@ class Otro_Controller extends ZP_Controller {
 		print __("Hi, I'm the otro controllador of default application");
 	}
 	
-	public function getContact($contactID = 0) {
+	public function getContact($contactID = 0, $p2 = "", $p3 = "") {
+		die($contactID . $p2 . $p3);
 		$this->Agenda_Model = $this->model("Agenda_Model");
 		$data = $this->Agenda_Model->getContact($contactID);
 		____($data);

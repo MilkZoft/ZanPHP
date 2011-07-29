@@ -71,7 +71,7 @@ function execute() {
 					
 					for($i = 0; $i < segments(); $i++) {
 						if(segment($j)) {
-							$p[$i] = segment($j);
+							$params[$i] = segment($j);
 						
 							$j++;	
 						}
@@ -83,7 +83,7 @@ function execute() {
 					
 					for($i = 0; $i < segments(); $i++) {
 						if(segment($j)) {
-							$p[$i] = segment($j);
+							$params[$i] = segment($j);
 						
 							$j++;	
 						}
@@ -111,7 +111,7 @@ function execute() {
 					
 					for($i = 0; $i <= segments() - 1; $i++) {
 						if(segment($j)) {
-							$p[$i] = segment($j);
+							$params[$i] = segment($j);
 							
 							$j++;
 						}	
@@ -123,7 +123,7 @@ function execute() {
 					
 					for($i = 0; $i <= segments() - 1; $i++) {
 						if(segment($j)) {
-							$p[$i] = segment($j);
+							$params[$i] = segment($j);
 							
 							$j++;
 						}	
@@ -153,31 +153,9 @@ function execute() {
 	}
 	
 	if(file_exists($controllerFile)) {
-		if(isset($method) and isset($p)) {
+		if(isset($method) and isset($p)) { 
 			if(method_exists($$controller, $method)) {
-				if(count($p) === 10) {
-					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6], $p[7], $p[8], $p[9]);	
-				} elseif(count($p) === 9) {
-					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6], $p[7], $p[8]);
-				} elseif(count($p) === 8) {
-					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6], $p[7]);
-				} elseif(count($p) === 7) {
-					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5], $p[6]);
-				} elseif(count($p) === 6) {
-					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4], $p[5]);
-				} elseif(count($p) === 5) {
-					$$controller->$method($p[0], $p[1], $p[2], $p[3], $p[4]);
-				} elseif(count($p) === 4) {
-					$$controller->$method($p[0], $p[1], $p[2], $p[3]);
-				} elseif(count($p) === 3) {
-					$$controller->$method($p[0], $p[1], $p[2]);
-				} elseif(count($p) === 2) {
-					$$controller->$method($p[0], $p[1]);
-				} elseif(count($p) === 1) {
-					$$controller->$method($p[0]);
-				} else {
-					$$controller->$method();
-				}
+				call_user_func_array(array($$controller, $method), $params);
 			} else {
 				$$controller->index();
 			}
