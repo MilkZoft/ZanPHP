@@ -138,6 +138,7 @@ function execute() {
 		die(_webMessage);
 	}
 	
+	$Load->app($application);
 	
 	if(isController($applicationController, $application)) {
 		$controller 	= ucfirst($applicationController) . "_Controller";

@@ -39,4 +39,10 @@ class ZP_Controller extends ZP_Load {
 		
 		return $this->Templates;	
 	}
+	
+	public function helpers() {
+		$helpers = array("alerts", "debugging", "time", "string", "security");
+		
+		$this->helper($helpers);	
+	}
 }
