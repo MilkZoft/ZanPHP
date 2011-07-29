@@ -6,19 +6,17 @@ if(!defined("_access")) {
 	die("Error: You don't have permission to access here...");
 }
 
-class Agenda_Model extends ZP_Load {
+class Agenda_Model extends ZP_Model {
 	
 	private $route;
 	private $table;
 	private $primaryKey;
 	
-	public function __construct() {
-		$this->Db = $this->core("Db");
-
-		$helpers = array("alerts", "time", "string", "security");
+	public function __construct() {		
+		$this->Db = $this->db();
 		
-		$this->helper($helpers);
-	
+		$this->helpers();
+		
 		$this->table = "contacts";
 	}
 	

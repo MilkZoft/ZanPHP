@@ -6,10 +6,12 @@ if(!defined("_access")) {
 	die("Error: You don't have permission to access here...");
 }
 
-class Default_Controller extends ZP_Load {
+class Default_Controller extends ZP_Controller {
 	
 	public function __construct() {
-		$this->application("default");
+		$this->app("default");
+		
+		$this->Templates = $this->templates();
 	}
 	
 	public function index() {		
@@ -20,15 +22,11 @@ class Default_Controller extends ZP_Load {
 		$this->Default_Model = $this->model("Default_Model");
 		
 		$data = $this->Default_Model->getContacts();
-		
-		____($data);	
 	}
 	
 	public function getContact($contactID = 0) {
 		$this->Agenda_Model = $this->model("Agenda_Model");
 	
 		$data = $this->Agenda_Model->getContact($contactID);
-		
-		____($data);
 	}
 }

@@ -16,6 +16,8 @@ if(file_exists("core/config/config.constants.php")) {
 }
 
 include "core/classes/class.load.php";
+include "core/classes/class.controller.php";
+include "core/classes/class.model.php";
 
 $Load = new ZP_Load(); 
 

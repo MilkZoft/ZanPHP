@@ -58,14 +58,11 @@ class ZP_Load {
      *
      * @return void
      */
-	public function __construct() {	
-		$this->helper("autoload");		
-		$this->config("database");	
-		
-		$this->Templates = $this->core("Templates");		
+	public function __construct() {
+		$this->helper("autoload");			
 	}
 	
-	public function application($application) {
+	public function app($application) {
 		$this->application = $application;	
 	}
 
