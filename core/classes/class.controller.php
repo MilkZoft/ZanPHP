@@ -7,9 +7,8 @@
  * @package		ZanPHP
  * @author		MilkZoft Developer Team
  * @copyright	Copyright (c) 2011, MilkZoft, Inc.
- * @license		http://www.zanphp.com/documentation/en/license/
+ * @license		http://www.zanphp.com/documentation/en/basic/licence
  * @link		http://www.zanphp.com
- * @version		1.0
  */
  
 /**
@@ -34,15 +33,26 @@ class ZP_Controller extends ZP_Load {
 
 	public function __construct() {}
 	
-	public function templates() {
-		$this->Templates = $this->core("Templates");
-		
-		return $this->Templates;	
-	}
-	
+    /**
+     * 
+     *
+     * @return void
+     */
 	public function helpers() {
 		$helpers = array("alerts", "debugging", "time", "string", "security");
 		
 		$this->helper($helpers);	
 	}
+	
+    /**
+     * 
+     *
+     * @return void
+     */
+	public function templates() {
+		$this->Templates = $this->core("Templates");
+		
+		return $this->Templates;	
+	}
+
 }
