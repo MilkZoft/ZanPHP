@@ -38,6 +38,13 @@ class ZP_Singleton {
      * @var private static $instances = array()
      */	
 	private static $instances = array();
+	
+	/**
+     * Prevent object cloning
+     *
+     * @return void
+     */
+	private final function __clone() {}
 
     /**
      * Prevent direct object creation
@@ -45,7 +52,7 @@ class ZP_Singleton {
      * @return void
      */	
 	private function __construct() {}
-
+	
 	/**
      * Returns new or existing Singleton instance
      * @param string $class
@@ -62,11 +69,5 @@ class ZP_Singleton {
 				
 		return self::$instances[$class];
 	}
-	
-	/**
-     * Prevent object cloning
-     *
-     * @return void
-     */
-	private final function __clone() {}
+
 }

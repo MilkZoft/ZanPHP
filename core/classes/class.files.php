@@ -9,7 +9,6 @@
  * @copyright	Copyright (c) 2011, MilkZoft, Inc.
  * @license		http://www.zanphp.com/documentation/en/license/
  * @link		http://www.zanphp.com
- * @version		1.0
  */
 
 /**
@@ -31,20 +30,20 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/classes/files_class
  */
 class ZP_Files extends ZP_Load {
-		
+
+	/**
+	 * Contains the error if the file has one
+	 * 
+	 * @var public $fileError
+	 */
+	public $fileError;	
+	
 	/**
 	 * Contains the name of the file
 	 * 
 	 * @var public $filename
 	 */
 	public $filename;
-	
-	/**
-	 * Contains the mime type of the file
-	 * 
-	 * @var public $fileType
-	 */
-	public $fileType;
 	
 	/**
 	 * Contains the size in bytes of the file
@@ -61,11 +60,186 @@ class ZP_Files extends ZP_Load {
 	public $fileTmp;
 	
 	/**
-	 * Contains the error if the file has one
+	 * Contains the mime type of the file
 	 * 
-	 * @var public $fileError
+	 * @var public $fileType
 	 */
-	public $fileError;	
+	public $fileType;
+	
+    /**
+     * Get the type of a file and divide into audios, documents, images or videos
+     *
+     * @param string $ext
+     * @param boolean $mimeType = FALSE
+     * @param boolean $return = FALSE
+     * @return void
+     */
+	public function getType($ext, $mimeType = FALSE, $return = FALSE, $icons = FALSE) {	
+		if($mimeType === FALSE) {
+			$ext   = strtolower($ext);		
+			$parts = explode("/", $ext);
+			
+			if(count($parts) === 2) {
+				$ext = $parts[1];
+			}
+		} else {
+			$ext   = strtolower($ext);		
+			$parts = explode(_dot, $ext);
+			
+			if(count($parts) === 2) {
+				$ext = $parts[1];
+			}
+		}
+						
+		if($ext === "vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+			$ext = "xlsx";
+		} elseif($ext === "vnd.openxmlformats-officedocument.presentationml.presentation") {
+			$ext = "pptx";
+		} elseif($ext === "vnd.openxmlformats-officedocument.wordprocessingml.document") {
+			$ext = "docx";
+		} elseif($ext === "msword") {
+			$ext = "doc";
+		} elseif($ext === "vnd.ms-excel") {
+			$ext = "xls";
+		} elseif($ext === "vnd.ms-powerpoint") {
+			$ext = "ppt";		
+		} elseif($ext === "plain") {
+			$ext = "txt";
+		} elseif($ext === "x-rar") {
+			$ext = "rar";
+		} elseif($ext === "octet-stream") {
+			$ext = $ext2[1];
+		} elseif($ext === "pjpeg") {
+			$ext = "jpg";
+		} elseif($ext === "x-png") {
+			$ext = "png";
+		}
+		
+		if($icons === TRUE) {
+			if($ext === "txt") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "text.png";
+				$icon[1] = __("Text File");
+			} elseif($ext === "doc" or $ext === "docx") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "doc.png";
+				$icon[1] = __("Document File");
+			} elseif($ext === "pdf") {	
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "pdf.png";
+				$icon[1] = __("PDF File");
+			} elseif($ext === "ppt" or $ext === "pptx") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ppt.png";
+				$icon[1] = __("Power Point File");
+			} elseif($ext === "rar" or $ext === "iso") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "rar.png";
+				$icon[1] = __("Winrar File");
+			} elseif($ext === "xls" or $ext === "xlsx" or $ext === "csv") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "xls.png";
+				$icon[1] = __("Excel File");
+			} elseif($ext === "zip") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "zip.png";
+				$icon[1] = __("Winzip File");
+			} elseif($ext === "7z") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "7z.png";
+				$icon[1] = __("7z File");				
+			} elseif($ext === "ai" or $ext === "svg") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ai.png";
+				$icon[1] = __("Adobe Illustrator File");								
+			} elseif($ext === "cdr") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "cdr.png";
+				$icon[1] = __("Corel Draw File");				
+			} elseif($ext === "exe" or $ext === "msi") {
+				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "exe.png";
+				$icon[1] = __("Executable File");				
+			}	
+					
+			return $icon;
+		}
+					
+		if($return  === TRUE) {
+			return $ext;
+		}
+					
+		if($ext	=== "wav") {
+			return "audio";
+		} elseif($ext === "midi") {
+			return "audio";
+		} elseif($ext === "mid") {
+			return "audio";
+		} elseif($ext === "mp3") {
+			return "audio";
+		} elseif($ext === "wma") {
+			return "audio";
+		} elseif($ext === "7z") {
+			return "document";
+		} elseif($ext === "ai") {
+			return "document";
+		} elseif($ext === "cdr") {
+			return "document";
+		} elseif($ext === "csv") {
+			return "document";
+		} elseif($ext === "doc") {
+			return "document";
+		} elseif($ext === "docx") {
+			return "document";
+		} elseif($ext === "fla") {
+			return "document";
+		} elseif($ext === "exe") {
+			return "document";
+		} elseif($ext === "iso") {
+			return "document";
+		} elseif($ext === "msi") {
+			return "document";
+		} elseif($ext === "pdf") {
+			return "document";
+		} elseif($ext === "ppt") {
+			return "document";
+		} elseif($ext === "pptx") {
+			return "document";
+		} elseif($ext === "psd") {
+			return "document";
+		} elseif($ext === "rar") {
+			return "document";
+		} elseif($ext === "svg") {
+			return "document";
+		} elseif($ext === "swf") {
+			return "document";
+		} elseif($ext === "txt") {
+			return "document";
+		} elseif($ext === "xls") {
+			return "document";
+		} elseif($ext === "xlsx") {
+			return "document";
+		} elseif($ext === "zip") {
+			return "document";
+		} elseif($ext === "jpg") {
+			return "image";
+		} elseif($ext === "jpeg") {
+			return "image";
+		} elseif($ext === "png") {
+			return "image";
+		} elseif($ext === "gif") {
+			return "image";
+		} elseif($ext === "bmp") {
+			return "image";	
+		} elseif($ext === "mpg") {
+			return "video";
+		} elseif($ext === "mpeg") {
+			return "video";
+		} elseif($ext === "avi") {
+			return "video";
+		} elseif($ext === "wmv") {
+			return "video";
+		} elseif($ext === "asf") {
+			return "video";		
+		} elseif($ext === "mp4") {
+			return "video";
+		} elseif($ext === "flv") {
+			return "video";
+		} elseif($ext === "mov") {
+			return "video";			
+		} else {
+			return FALSE;
+		}
+	}
 	
     /**
      * Upload a file to specific path
@@ -220,178 +394,4 @@ class ZP_Files extends ZP_Load {
 		}
 	}
 	
-    /**
-     * Get the type of a file and divide into audios, documents, images or videos
-     *
-     * @param string $ext
-     * @param boolean $mimeType = FALSE
-     * @param boolean $return = FALSE
-     * @return void
-     */
-	public function getType($ext, $mimeType = FALSE, $return = FALSE, $icons = FALSE) {	
-		if($mimeType === FALSE) {
-			$ext   = strtolower($ext);		
-			$parts = explode("/", $ext);
-			
-			if(count($parts) === 2) {
-				$ext = $parts[1];
-			}
-		} else {
-			$ext   = strtolower($ext);		
-			$parts = explode(_dot, $ext);
-			
-			if(count($parts) === 2) {
-				$ext = $parts[1];
-			}
-		}
-						
-		if($ext === "vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-			$ext = "xlsx";
-		} elseif($ext === "vnd.openxmlformats-officedocument.presentationml.presentation") {
-			$ext = "pptx";
-		} elseif($ext === "vnd.openxmlformats-officedocument.wordprocessingml.document") {
-			$ext = "docx";
-		} elseif($ext === "msword") {
-			$ext = "doc";
-		} elseif($ext === "vnd.ms-excel") {
-			$ext = "xls";
-		} elseif($ext === "vnd.ms-powerpoint") {
-			$ext = "ppt";		
-		} elseif($ext === "plain") {
-			$ext = "txt";
-		} elseif($ext === "x-rar") {
-			$ext = "rar";
-		} elseif($ext === "octet-stream") {
-			$ext = $ext2[1];
-		} elseif($ext === "pjpeg") {
-			$ext = "jpg";
-		} elseif($ext === "x-png") {
-			$ext = "png";
-		}
-		
-		if($icons === TRUE) {
-			if($ext === "txt") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "text.png";
-				$icon[1] = __("Text File");
-			} elseif($ext === "doc" or $ext === "docx") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "doc.png";
-				$icon[1] = __("Document File");
-			} elseif($ext === "pdf") {	
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "pdf.png";
-				$icon[1] = __("PDF File");
-			} elseif($ext === "ppt" or $ext === "pptx") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ppt.png";
-				$icon[1] = __("Power Point File");
-			} elseif($ext === "rar" or $ext === "iso") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "rar.png";
-				$icon[1] = __("Winrar File");
-			} elseif($ext === "xls" or $ext === "xlsx" or $ext === "csv") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "xls.png";
-				$icon[1] = __("Excel File");
-			} elseif($ext === "zip") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "zip.png";
-				$icon[1] = __("Winzip File");
-			} elseif($ext === "7z") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "7z.png";
-				$icon[1] = __("7z File");				
-			} elseif($ext === "ai" or $ext === "svg") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ai.png";
-				$icon[1] = __("Adobe Illustrator File");								
-			} elseif($ext === "cdr") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "cdr.png";
-				$icon[1] = __("Corel Draw File");				
-			} elseif($ext === "exe" or $ext === "msi") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "exe.png";
-				$icon[1] = __("Executable File");				
-			}	
-					
-			return $icon;
-		}
-					
-		if($return  === TRUE) {
-			return $ext;
-		}
-					
-		if($ext	=== "wav") {
-			return "Audio";
-		} elseif($ext === "midi") {
-			return "Audio";
-		} elseif($ext === "mid") {
-			return "Audio";
-		} elseif($ext === "mp3") {
-			return "Audio";
-		} elseif($ext === "wma") {
-			return "Audio";
-		} elseif($ext === "7z") {
-			return "document";
-		} elseif($ext === "ai") {
-			return "document";
-		} elseif($ext === "cdr") {
-			return "document";
-		} elseif($ext === "csv") {
-			return "document";
-		} elseif($ext === "doc") {
-			return "document";
-		} elseif($ext === "docx") {
-			return "document";
-		} elseif($ext === "fla") {
-			return "document";
-		} elseif($ext === "exe") {
-			return "document";
-		} elseif($ext === "iso") {
-			return "document";
-		} elseif($ext === "msi") {
-			return "document";
-		} elseif($ext === "pdf") {
-			return "document";
-		} elseif($ext === "ppt") {
-			return "document";
-		} elseif($ext === "pptx") {
-			return "document";
-		} elseif($ext === "psd") {
-			return "document";
-		} elseif($ext === "rar") {
-			return "document";
-		} elseif($ext === "svg") {
-			return "document";
-		} elseif($ext === "swf") {
-			return "document";
-		} elseif($ext === "txt") {
-			return "document";
-		} elseif($ext === "xls") {
-			return "document";
-		} elseif($ext === "xlsx") {
-			return "document";
-		} elseif($ext === "zip") {
-			return "document";
-		} elseif($ext === "jpg") {
-			return "image";
-		} elseif($ext === "jpeg") {
-			return "image";
-		} elseif($ext === "png") {
-			return "image";
-		} elseif($ext === "gif") {
-			return "image";
-		} elseif($ext === "bmp") {
-			return "image";	
-		} elseif($ext === "mpg") {
-			return "Video";
-		} elseif($ext === "mpeg") {
-			return "Video";
-		} elseif($ext === "avi") {
-			return "Video";
-		} elseif($ext === "wmv") {
-			return "Video";
-		} elseif($ext === "asf") {
-			return "Video";		
-		} elseif($ext === "mp4") {
-			return "Video";
-		} elseif($ext === "flv") {
-			return "Video";
-		} elseif($ext === "mov") {
-			return "Video";			
-		} else {
-			return FALSE;
-		}
-	}
 }

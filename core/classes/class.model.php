@@ -32,19 +32,40 @@ if(!defined("_access")) {
  */
 class ZP_Model extends ZP_Load {
 	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
 	public $Db;
 	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
 	public function __construct() {}
 	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
 	public function db() {
 		$this->Db = $this->core("Db");
 		
 		return $this->Db;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
 	public function helpers() {
 		$helpers = array("alerts", "debugging", "time", "string", "security");
 		
 		$this->helper($helpers);
 	}
+	
 }

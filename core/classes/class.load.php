@@ -38,11 +38,11 @@ include "class.singleton.php";
 class ZP_Load {
 
 	/**
-	 * Contains the array of views
 	 * 
-	 * @var private $views = array()
+	 * 
+	 * 
 	 */
-	private $views = array();
+	public $application = FALSE;
 	
 	/**
 	 * Contains an Instance (object) of the Templates Class
@@ -51,7 +51,12 @@ class ZP_Load {
 	 */
 	public $Templates;
 	
-	public $application = FALSE;
+	/**
+	 * Contains the array of views
+	 * 
+	 * @var private $views = array()
+	 */
+	private $views = array();
 	
     /**
      * Loads helper autoload, database config and class templates
@@ -62,98 +67,55 @@ class ZP_Load {
 		$this->helper("autoload");			
 	}
 	
+    /**
+     * 
+     *
+     * @param string 
+     * @return 
+     */
 	public function app($application) {
 		$this->application = $application;	
 	}
-
-    /**
-     * Loads a model file
-     *
-     * @param string $name
+	
+	/**
+     * Loads an application class
+     * 
+     * @param string $class = NULL
+     * @param string $application = NULL
      * @return object value
      */
-	public function model($model) {
-		$parts = explode("_", $model);
-		
-		if(!$this->application) {
-			if(count($parts) === 2) {
-				$file = _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;						
-			}		
-		} else {
-			if(count($parts) === 2) {
-				$file = _applications . _sh . $this->application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
-			}
-		}
+	public function classes($class = NULL) {
+		$file = _applications . _sh . $this->application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
 		
 		if(file_exists($file)) {							
-			if(class_exists($model)) {
-				return ZP_Singleton::instance($model);
+			if(class_exists($class)) {
+				return ZP_Singleton::instance($class);
 			}
 			
 			include $file;
 			
-			return ZP_Singleton::instance($model);
-		}	
-		
-		return FALSE;		
-	}		
-	
-    /**
-     * Loads a view
-     *
-     * @param string $name
-     * @param string $application = NULL
-     * @param string $vars        = NULL
-     * @return string value / void
-     */	
-	public function view($name, $application = NULL, $vars = NULL) {
-		if(!is_null($application)) {
-			$view = _applications . _sh . $application . _sh . _views . _sh . _view . _dot . $name . _PHP;
-
-			if(is_array($vars)) {
-				$key  = array_keys($vars);
-				$size = sizeof($key);			
-			
-				for($i = 0; $i < $size; $i++) {
-					$$key[$i] = $vars[$key[$i]];
-				}
-			} elseif($vars === TRUE) {
-				return $view;
-			}
-				
-			if(file_exists($view)) {
-				include $view;
-			} else {
-				die("Error 404: $view view not found");	
-			}
+			return ZP_Singleton::instance($class);
 		} else {
-			return FALSE;
+			die("$class class does not exists");
 		}
 	}
-
+	
     /**
-     * Loads templates
-     *
+     * Loads a config file
+     * 
      * @param string $name
-     * @param string $vars
-     * @return string value / void
-     */	
-	public function template($name, $vars = NULL) {			
-		if(is_array($vars)) {
-			if(count($this->views) === 0) {
-				$this->views[0]["name"] = $name;
-				$this->views[0]["vars"] = $vars;
-			} else {
-				$i = count($this->views);
-					
-				$this->views[$i]["name"] = $name;
-				$this->views[$i]["vars"] = $vars;				
-			}
+     * @param bool $application = FALSE
+     * @return void
+     */
+	public function config($name) {
+		if(file_exists(_core . _sh . _config . _sh . _config . _dot . $name . _PHP)) {
+			include_once _core . _sh . _config . _sh . _config . _dot . $name . _PHP;
 		} else {
-			$i = count($this->views);
-				
-			$this->views[$i]["name"] = $name;
-			$this->views[$i]["vars"] = FALSE;		
+			if(file_exists(_applications . _sh . $name . _sh . _config . _sh . _config . _dot . $name . _PHP)) {
+				include_once _applications . _sh . $name . _sh . _config . _sh . _config . _dot . $name . _PHP;
+			} else {
+				die("$name config doesn't exists");
+			}
 		}
 	}
 	
@@ -199,79 +161,56 @@ class ZP_Load {
 		return ZP_Singleton::instance("ZP_$class");		
 	}
 	
-	/**
-     * Loads an application class
+    /**
+     * Sets a CSS file from an specific application
      * 
-     * @param string $class = NULL
+     * @param string $CSS = NULL
      * @param string $application = NULL
-     * @return object value
+     * @param bool $print = FALSE
+     * @return void
      */
-	public function classes($class = NULL) {
-		$file = _applications . _sh . $this->application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
-		
-		if(file_exists($file)) {							
-			if(class_exists($class)) {
-				return ZP_Singleton::instance($class);
+	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
+		$this->Templates->CSS($CSS, $application, $print);
+	}
+	
+    /**
+     * Loads a footer template
+     *
+     * @return void
+     */
+	private function footer() {
+		if($this->Templates->exists("footer")) {
+			if(count($this->views) > 0) {
+				for($i = 0; $i <= count($this->views) - 1; $i++) {
+					if($this->views[$i]["vars"] !== FALSE) {
+						$this->Templates->vars($this->views[$i]["vars"]);
+					}
+				}
 			}
 			
-			include $file;
-			
-			return ZP_Singleton::instance($class);
-		} else {
-			die("$class class does not exists");
+			$this->Templates->load("footer");				
 		}
 	}
 	
     /**
-     * Loads a library file
-     * 
-     * @param string $name
-     * @param string $library
+     * Load header template
+     *
      * @return void
      */
-	public function library($name, $library = NULL) {	
-		$lib = str_replace("class.", "", $name);
-		
-		if($name === "AdoDB") {
-			if(file_exists(_core . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP)) {
-				include_once _core . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP;				
-			} else {
-				die("$name library doesn't exists");
-			}			
-		} elseif(isset($name) and $library !== NULL) {
-			if(file_exists(_core . _sh . _libraries . _sh . $library . _sh . $name . _PHP)) {
-				include_once _core . _sh . _libraries . _sh . $library . _sh . $name . _PHP;				
-			} else {
-				die("$name library doesn't exists");
+	private function header() {
+		if($this->Templates->exists("header")) {
+			if(count($this->views) > 0) {
+				for($i = 0; $i <= count($this->views) - 1; $i++) {
+					if($this->views[$i]["vars"] !== FALSE) {
+						$this->Templates->vars($this->views[$i]["vars"]);
+					}
+				}
 			}
-		} else {
-			if(file_exists(_core . _sh . _libraries . _sh . $lib . _sh . strtolower($name) . _PHP)) {
-				include_once _core . _sh . _libraries . _sh . $lib . _sh . strtolower($name) . _PHP;										
-			} else {
-				die("$name library doesn't exists");
-			}			
-		}
+			
+			$this->Templates->load("header");
+		}		
 	}
 	
-    /**
-     * Loads a config file
-     * 
-     * @param string $name
-     * @param bool $application = FALSE
-     * @return void
-     */
-	public function config($name) {
-		if(file_exists(_core . _sh . _config . _sh . _config . _dot . $name . _PHP)) {
-			include_once _core . _sh . _config . _sh . _config . _dot . $name . _PHP;
-		} else {
-			if(file_exists(_applications . _sh . $name . _sh . _config . _sh . _config . _dot . $name . _PHP)) {
-				include_once _applications . _sh . $name . _sh . _config . _sh . _config . _dot . $name . _PHP;
-			} else {
-				die("$name config doesn't exists");
-			}
-		}
-	}
-
     /**
      * Loads a helper or multiple helper files
      * 
@@ -354,33 +293,6 @@ class ZP_Load {
 		}
 	}
 	
-    /**
-     * Load languages files
-     * 
-     * @param string $language
-     * @return void
-     */
-	public function language($language) {
-		if(file_exists(_core . _sh . _languages . _sh . _language . _dot . strtolower($language) . _PHP)) {
-			include_once _core . _sh . _languages . _sh . _language . _dot . strtolower($language) . _PHP;
-		} else {
-			return FALSE;
-		}
-	}
-	
-    /**
-     * Sets a CSS file from an specific application
-     * 
-     * @param string $CSS = NULL
-     * @param string $application = NULL
-     * @param bool $print = FALSE
-     * @return void
-     */
-	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
-		$this->Templates->CSS($CSS, $application, $print);
-	}
-	
-	
 	/**
      * Sets a JS file from an specific application
      * 
@@ -395,32 +307,17 @@ class ZP_Load {
 	}
 	
     /**
-     * Set title for header template
-     *
-     * @param string $title = NULL
+     * Load languages files
+     * 
+     * @param string $language
      * @return void
      */
-	public function title($title = NULL) {
-		$this->Templates->title(__($title));
-	}
-	
-    /**
-     * Load header template
-     *
-     * @return void
-     */
-	private function header() {
-		if($this->Templates->exists("header")) {
-			if(count($this->views) > 0) {
-				for($i = 0; $i <= count($this->views) - 1; $i++) {
-					if($this->views[$i]["vars"] !== FALSE) {
-						$this->Templates->vars($this->views[$i]["vars"]);
-					}
-				}
-			}
-			
-			$this->Templates->load("header");
-		}		
+	public function language($language) {
+		if(file_exists(_core . _sh . _languages . _sh . _language . _dot . strtolower($language) . _PHP)) {
+			include_once _core . _sh . _languages . _sh . _language . _dot . strtolower($language) . _PHP;
+		} else {
+			return FALSE;
+		}
 	}
 	
     /**
@@ -443,41 +340,66 @@ class ZP_Load {
 	}
 	
     /**
-     * Loads a right template
-     *
+     * Loads a library file
+     * 
+     * @param string $name
+     * @param string $library
      * @return void
      */
-	private function right() {
-		if($this->Templates->exists("right")) {
-			if(count($this->views) > 0) {
-				for($i = 0; $i <= count($this->views) - 1; $i++) {
-					if($this->views[$i]["vars"] !== FALSE) {
-						$this->Templates->vars($this->views[$i]["vars"]);
-					}
-				}
+	public function library($name, $library = NULL) {	
+		$lib = str_replace("class.", "", $name);
+		
+		if($name === "AdoDB") {
+			if(file_exists(_core . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP)) {
+				include_once _core . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP;				
+			} else {
+				die("$name library doesn't exists");
+			}			
+		} elseif(isset($name) and $library !== NULL) {
+			if(file_exists(_core . _sh . _libraries . _sh . $library . _sh . $name . _PHP)) {
+				include_once _core . _sh . _libraries . _sh . $library . _sh . $name . _PHP;				
+			} else {
+				die("$name library doesn't exists");
 			}
-			
-			$this->Templates->load("right");
+		} else {
+			if(file_exists(_core . _sh . _libraries . _sh . $lib . _sh . strtolower($name) . _PHP)) {
+				include_once _core . _sh . _libraries . _sh . $lib . _sh . strtolower($name) . _PHP;										
+			} else {
+				die("$name library doesn't exists");
+			}			
 		}
 	}
-	
+
     /**
-     * Loads a footer template
+     * Loads a model file
      *
-     * @return void
+     * @param string $name
+     * @return object value
      */
-	private function footer() {
-		if($this->Templates->exists("footer")) {
-			if(count($this->views) > 0) {
-				for($i = 0; $i <= count($this->views) - 1; $i++) {
-					if($this->views[$i]["vars"] !== FALSE) {
-						$this->Templates->vars($this->views[$i]["vars"]);
-					}
-				}
+	public function model($model) {
+		$parts = explode("_", $model);
+		
+		if(!$this->application) {
+			if(count($parts) === 2) {
+				$file = _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;						
+			}		
+		} else {
+			if(count($parts) === 2) {
+				$file = _applications . _sh . $this->application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
+			}
+		}
+		
+		if(file_exists($file)) {							
+			if(class_exists($model)) {
+				return ZP_Singleton::instance($model);
 			}
 			
-			$this->Templates->load("footer");				
-		}
+			include $file;
+			
+			return ZP_Singleton::instance($model);
+		}	
+		
+		return FALSE;		
 	}
 	
     /**
@@ -547,6 +469,51 @@ class ZP_Load {
 	}
 	
     /**
+     * Loads a right template
+     *
+     * @return void
+     */
+	private function right() {
+		if($this->Templates->exists("right")) {
+			if(count($this->views) > 0) {
+				for($i = 0; $i <= count($this->views) - 1; $i++) {
+					if($this->views[$i]["vars"] !== FALSE) {
+						$this->Templates->vars($this->views[$i]["vars"]);
+					}
+				}
+			}
+			
+			$this->Templates->load("right");
+		}
+	}	
+	
+    /**
+     * Loads templates
+     *
+     * @param string $name
+     * @param string $vars
+     * @return string value / void
+     */	
+	public function template($name, $vars = NULL) {			
+		if(is_array($vars)) {
+			if(count($this->views) === 0) {
+				$this->views[0]["name"] = $name;
+				$this->views[0]["vars"] = $vars;
+			} else {
+				$i = count($this->views);
+					
+				$this->views[$i]["name"] = $name;
+				$this->views[$i]["vars"] = $vars;				
+			}
+		} else {
+			$i = count($this->views);
+				
+			$this->views[$i]["name"] = $name;
+			$this->views[$i]["vars"] = FALSE;		
+		}
+	}
+	
+    /**
      * Set the current theme
      *
      * @return void
@@ -556,4 +523,48 @@ class ZP_Load {
 		
 		$this->Templates->theme($theme);
 	}
+	
+    /**
+     * Set title for header template
+     *
+     * @param string $title = NULL
+     * @return void
+     */
+	public function title($title = NULL) {
+		$this->Templates->title(__($title));
+	}
+	
+    /**
+     * Loads a view
+     *
+     * @param string $name
+     * @param string $application = NULL
+     * @param string $vars        = NULL
+     * @return string value / void
+     */	
+	public function view($name, $application = NULL, $vars = NULL) {
+		if(!is_null($application)) {
+			$view = _applications . _sh . $application . _sh . _views . _sh . _view . _dot . $name . _PHP;
+
+			if(is_array($vars)) {
+				$key  = array_keys($vars);
+				$size = sizeof($key);			
+			
+				for($i = 0; $i < $size; $i++) {
+					$$key[$i] = $vars[$key[$i]];
+				}
+			} elseif($vars === TRUE) {
+				return $view;
+			}
+				
+			if(file_exists($view)) {
+				include $view;
+			} else {
+				die("Error 404: $view view not found");	
+			}
+		} else {
+			return FALSE;
+		}
+	}
+	
 }

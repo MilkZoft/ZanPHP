@@ -31,23 +31,7 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/classes/email_class
  */
 class ZP_Email extends ZP_Load {
-   
-    /*
-	 * Contains the name string of the Sender
-	 * 
-	 * @var public $fromName
-	 */
-	public $fromName;
-	
-	/*
-	 * 
-	 * 
-	 * Contains the email string of the Sender
-	 * 
-	 * @var public $fromName
-	 */
-	public $fromEmail;
-	
+  
 	/*
 	 * 
 	 * 
@@ -60,11 +44,18 @@ class ZP_Email extends ZP_Load {
 	/*
 	 * 
 	 * 
-	 * Contains the email's subject
+	 * Contains the email string of the Sender
 	 * 
 	 * @var public $fromName
 	 */
-	public $subject;
+	public $fromEmail;
+	
+    /*
+	 * Contains the name string of the Sender
+	 * 
+	 * @var public $fromName
+	 */
+	public $fromName;
 	
 	/*
 	 * 
@@ -76,16 +67,13 @@ class ZP_Email extends ZP_Load {
 	public $message;
 	
 	/*
-	 * setLibrary
 	 * 
-	 * Sets the way the email will be send (optionally the PHP-defined mail() function or with a external Library)
-	 *  
-	 * @param string $library = "native"
-	 * @return @void
-	*/
-	public function setLibrary($library = "native") {
-		$this->library = $library;
-	}
+	 * 
+	 * Contains the email's subject
+	 * 
+	 * @var public $fromName
+	 */
+	public $subject;
 	
 	/*
 	 * send
@@ -95,17 +83,7 @@ class ZP_Email extends ZP_Load {
 	 * @return @mixed
 	*/
 	public function send() {
-		if($this->library === "native") {
-			$headers  = "MIME-Version: 1.0\r\n";
-			$headers .= "Content-type: text/html; charset=utf-8\r\n";
-			$headers .= "From: " . $this->fromName . " <" . $this->fromEmail . ">\r\n";			
-			
-			if(@mail($this->email, $this->subject, $this->message, $headers) === FALSE) {
-				return FALSE;
-			} else {
-				return TRUE;
-			}		
-		} elseif($this->library === "PHPMailer") {
+		if($this->library === "PHPMailer") {
 			$this->library("class.phpmailer");
 			
 			$this->PHPMailer = new PHPMailer();
@@ -128,6 +106,28 @@ class ZP_Email extends ZP_Load {
 			} else { 
 				return TRUE;
 			}		
+		} else {
+			$headers  = "MIME-Version: 1.0\r\n";
+			$headers .= "Content-type: text/html; charset=utf-8\r\n";
+			$headers .= "From: " . $this->fromName . " <" . $this->fromEmail . ">\r\n";			
+			
+			if(@mail($this->email, $this->subject, $this->message, $headers) === FALSE) {
+				return FALSE;
+			} else {
+				return TRUE;
+			}		
 		}
+	}
+	
+	/*
+	 * setLibrary
+	 * 
+	 * Sets the way the email will be send (optionally the PHP-defined mail() function or with a external Library)
+	 *  
+	 * @param string $library = "native"
+	 * @return @void
+	*/
+	public function setLibrary($library = "native") {
+		$this->library = $library;
 	}
 }

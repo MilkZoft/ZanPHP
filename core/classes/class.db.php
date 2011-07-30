@@ -302,7 +302,7 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = "LIMIT 1"
      * @return boolean value
      */
-	public function deleteBy($field = FALSE, $value = FALSE, $limit = "1") {
+	public function deleteBy($field = FALSE, $value = FALSE, $limit = 1) {
 		if(!$this->table or !$field or !$value) {
 			return FALSE;
 		}

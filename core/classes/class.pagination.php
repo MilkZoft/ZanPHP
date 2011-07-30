@@ -116,4 +116,5 @@ class ZP_Pagination extends ZP_Load {
 			
 		return '<div id="pagination">'. $pageFirst . $pagePrevious . $pageNav . $pageNext . $pageLast .'</div>';
 	}	
+	
 }
