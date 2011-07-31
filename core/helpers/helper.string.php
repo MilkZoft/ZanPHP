@@ -31,7 +31,7 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/string_helper
  */
 
- /**
+/**
  * String Helper
  *
  * Cleans HTML from a String
@@ -73,35 +73,7 @@ function cleanHTML($HTML) {
 	return $text;
 }
 
- /**
- * removeSpaces
- *
- * Removes blank spaces
- * 
- * @param string $text
- * @param bool   $trim
- * @return string $text
- */ 
-function removeSpaces($text, $trim = FALSE) {
-	$text = str_replace("           ", " ", $text);
-	$text = str_replace("          ", " ", $text);
-	$text = str_replace("         ", " ", $text);
-	$text = str_replace("        ", " ", $text);
-	$text = str_replace("       ", " ", $text);
-	$text = str_replace("      ", " ", $text);
-	$text = str_replace("     ", " ", $text);
-	$text = str_replace("    ", " ", $text);
-	$text = str_replace("   ", " ", $text);
-	$text = str_replace("  ", " ", $text);
-	
-	if($trim === TRUE) {
-		return trim($text);
-	}
-	
-	return $text;
-}
-
- /**
+/**
  * compress
  *
  * Compresses a string
@@ -116,66 +88,76 @@ function compress($string) {
 }
 
 /**
- * POST
+ * cut
  * 
- * Gets a specific position value from $_POST
- * 
- * @param string $position
- * @param string $coding   = "decode"
- * @return mixed
- */ 
-function POST($position = FALSE, $coding = "decode", $filter = TRUE) {
-	if(!$position) {
-		____($_POST);
-	} elseif(isset($_POST[$position]) and is_array($_POST[$position])) {
-		return $_POST[$position];
-	} elseif(isset($_POST[$position]) and $_POST[$position] === "") {
-		return NULL;
-	} elseif(isset($_POST[$position])) {
-		if($coding === "encrypt") {
-			if($filter === TRUE) {
-				return encrypt(encode($_POST[$position]));
-			} elseif($filter === "escape") {
-				return encrypt(filter(encode($_POST[$position]), "escape"));
+ * Trims a string
+ *
+ * @param string $type = "Word"
+ * @param string $text
+ * @param string $length
+ * @param string $nice
+ * @param bool $file
+ * @param bool   $elipsis 
+ * @return string $
+ */
+function cut($type = "word", $text, $length = 12, $nice = TRUE, $file = FALSE, $elipsis = FALSE) {
+	if($type === "text") {
+		$elipsis = "...";
+		$words   = explode(" ", $text);
+				
+		if(count($words) > $length) {
+			return str_replace("\n", "", implode(" ", array_slice($words, 0, $length)) . $elipsis);
+		}
+		
+		return $text;
+	} elseif($type === "word") {
+		if($file) {
+			if(strlen($text) < $length) {
+				$max = strlen($text);
+			}
+			
+			if($nice) {
+				return substr(nice($text), 0, $length);
 			} else {
-				return encrypt(filter(encode($_POST[$position]), TRUE));
-			}
-		} elseif($coding === "encode") {
-			if($filter === TRUE) {
-				return encode($_POST[$position]);
-			} elseif($filter === "escape") {
-				return filter(encode($_POST[$position]), "escape");
-			}  else {
-				return filter(encode($_POST[$position]), TRUE);
-			}
-		} elseif($coding === "decode-encrypt") {
-			if($filter === TRUE) {
-				return encrypt(filter($_POST[$position], TRUE));
-			} elseif($filter === "escape") {
-				return encrypt(filter($_POST[$position], "escape"));
-			}  else {
-				return encrypt($_POST[$position]);
-			}		
-		} elseif($coding === "decode") {			
-			if($filter === TRUE) {
-				return filter(decode($_POST[$position]), TRUE);
-			} elseif($filter === "escape") {
-				return filter(decode($_POST[$position]), "escape");
-			}  else {
-				return decode($_POST[$position]);
+				return substr($text, 0, $length);			
 			}
 		} else {
-			if($filter === TRUE) {
-				return filter($_POST[$position], TRUE);
-			} elseif($filter === "escape") {
-				return filter($_POST[$position], "escape");
-			}  else {
-				return $_POST[$position];
-			}		
+			if(strlen($text) < 13) {
+				return $text;
+			}
+			
+			if(!$elipsis) {
+				if($nice) {
+					return substr(nice($text), 0, $length);
+				} else {
+					return substr($text, 0, $length);
+				}
+			} else {
+				if($nice) {
+					return substr(nice($text), 0, $length) . $elipsis;
+				} else {
+					return substr($text, 0, $length) . $elipsis;			
+				}
+			}
 		}
-	} else {
-		return FALSE;
 	}
+}
+
+function decode($text, $URL = FALSE) {
+	return (!$URL) ? utf8_decode($text) : urldecode($text);
+}
+
+/**
+ * encode
+ * 
+ * Encodes a string and/or a URL
+ *
+ * @param string $text
+ * @param string $URL = FALSE
+ * @return string value
+ */
+function encode($text, $URL = FALSE) {
+	return (!$URL) ? utf8_encode($text) : urlencode($text);
 }
 
 /**
@@ -200,103 +182,6 @@ function FILES($name = FALSE, $position = NULL, $i = NULL) {
 }
 
 /**
- * GET
- * 
- * Gets a specific position from $_GET
- *
- * @param string $position
- * @param string $coding = "decode"
- * @return mixed
- */
-function GET($position = FALSE, $coding = "decode", $filter = TRUE) {
-	if(!$position) {
-		____($_POST);
-	} elseif(isset($_GET[$position])) {
-		if($coding === "encrypt") {
-			if($filter === TRUE) {
-				return encrypt(encode($_GET[$position]));
-			} else {
-				return encrypt(filter(encode($_GET[$position]), TRUE));
-			}
-		} elseif($coding === "encode") {
-			if($filter === TRUE) {
-				return encode($_GET[$position]);
-			} else {
-				return filter(encode($_GET[$position]), TRUE);
-			}
-		} elseif($coding === "decode-encrypt") {
-			if($filter === TRUE) {
-				return encrypt(filter(decode($_GET[$position]), TRUE));
-			} else {
-				return encrypt(decode($_GET[$position]));
-			}		
-		} else {
-			if($filter === TRUE) {
-				return filter(decode($_GET[$position]), TRUE);
-			} else {
-				return decode($_GET[$position]);
-			}
-		}
-	} else {
-		return FALSE;
-	}
-}
-
-function getTotal($count, $singular, $plural) {
-	if((int) $count === 0) {
-		return $count . " " . __($plural);
-	} elseif((int) $count === 1) {
-		return $count . " " . __($singular);
-	} else {
-		return $count . " " . __($plural);
-	}
-}
-
-/**
- * recoverPOST
- * 
- * Recovers data from $_POST
- *
- * @parama string $position
- * @parama string $value = NULL
- * @return string
- */
-function recoverPOST($position, $value = NULL) {
-	if(!$value) {
-		return (POST($position)) ? htmlentities(POST($position, "clean", FALSE)) : NULL;
-	} else {
-		if(is_array($value)) {
-			foreach($value as $val) {
-				$data[] = htmlentities($val);
-			}
-			
-			return $data;
-		} else {
-			return (POST($position)) ? htmlentities(POST($position, "clean", FALSE)) : htmlentities(decode($value));
-		}	
-	}
-}
-
-/**
- * getFileSize
- * 
- * Gets a specific position from $_GET
- *
- * @param string $position
- * @param string $coding = "decode"
- * @return string $coding = "decode"
- */
-function getFileSize($size) {	
-	if($size <= 0) {
-		return FALSE;		
-	} elseif($size < 1048576) {
-		return round($size / 1024, 2) . " Kb";
-	} else {
-		return round($size / 1048576, 2) . " Mb";
-	}
-}
-
-/**
  * filter
  * 
  * Cleans a string
@@ -310,7 +195,6 @@ function filter($text, $filter = FALSE) {
 		$text = cleanHTML($text);
 	} elseif($filter === "escape") {		
 		$text = addslashes($text);
-		$text = characters($text);
 	} else {	
 		$text = str_replace("'", "", $text);
 		$text = str_replace('"', "", $text);
@@ -326,75 +210,33 @@ function filter($text, $filter = FALSE) {
 	return $text;
 }
 
-function characters($text) {	
-	$text = str_replace("ś", "s", $text);	
-	$text = str_replace("Ś", "S", $text);	
-	$text = str_replace("ẃ", "w", $text);	
-	$text = str_replace("Ẃ", "W", $text);	
-	$text = str_replace("ŕ", "r", $text);	
-	$text = str_replace("Ŕ", "R", $text);	
-	$text = str_replace("ý", "y", $text);	
-	$text = str_replace("Ý", "Y", $text);	
-	$text = str_replace("ṕ", "p", $text);
-	$text = str_replace("Ṕ", "P", $text);	
-	$text = str_replace("ǵ", "g", $text);	
-	$text = str_replace("Ǵ", "G", $text);	
-	$text = str_replace("Ĺ", "L", $text);	
-	$text = str_replace("ź", "z", $text);	
-	$text = str_replace("Ź", "Z", $text);	
-	$text = str_replace("ć", "c", $text);	
-	$text = str_replace("Ć", "C", $text);	
-	$text = str_replace("Ǘ", "u", $text);	
-	$text = str_replace("ǘ", "v", $text);	
-	$text = str_replace("ń", "n", $text);	
-	$text = str_replace("Ń", "N", $text);	
-	$text = str_replace("ḿ", "m", $text);	
-	$text = str_replace("Ḿ", "M", $text);
-	$text = str_replace("¡", "&iexcl;", $text);
-	$text = str_replace("¿", "&iquest;", $text);
-	
-	return $text;
-}
-
-function pagebreak($content, $URL = NULL) {
-	$content = str_replace("<p><!-- pagebreak --></p>", "<!---->", $content);
-	$content = str_replace('<p style="text-align: center;"><!-- pagebreak --></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: left;"><!-- pagebreak --></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: right;"><!-- pagebreak --></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: justify;"><!-- pagebreak --></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: center;"><span style="color: #ff0000;"><!----></span></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: center;"><em><!-- pagebreak --></em></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: center;"><strong><!-- pagebreak --></strong></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: center;"><span style="text-decoration: underline;"><!-- pagebreak --></span></p>', "<!---->", $content);
-	$content = str_replace('<p style="text-align: justify;"><!-- pagebreak --></p>', "<!---->", $content);
-	$content = str_replace('<p><!-- pagebreak -->', "<p><!-- pagebreak --></p>\n<p>", $content);
-	$content = str_replace("<p><!-- pagebreak --></p>", "<!---->", $content);
-	$content = str_replace('<!-- pagebreak -->', "<!---->", $content);		
-			
-	$parts = explode("<!---->", $content);
-
-	if(count($parts) > 1) {
-		return $parts[0] .'<p><a href="'. $URL .'" title="'. __("Read more") .'">&raquo;'. __("Read more") .'...</a></p>';
-	}
-	
-	return $content;		
-}
-
 /**
- * encode
+ * getFileSize
  * 
- * Encodes a string and/or a URL
+ * 
  *
- * @param string $text
- * @param string $URL = FALSE
- * @return string value
+ * @param string $position
+ * @param string $coding = "decode"
+ * @return string $coding = "decode"
  */
-function encode($text, $URL = FALSE) {
-	return (!$URL) ? utf8_encode($text) : URLencode($text);
+function getFileSize($size) {	
+	if($size <= 0) {
+		return FALSE;		
+	} elseif($size < 1048576) {
+		return round($size / 1024, 2) ." Kb";
+	} else {
+		return round($size / 1048576, 2) ." Mb";
+	}
 }
 
-function decode($text, $URL = FALSE) {
-	return (!$URL) ? utf8_decode($text) : URLdecode($text);
+function getTotal($count, $singular, $plural) {
+	if((int) $count === 0) {
+		return $count ." ". __($plural);
+	} elseif((int) $count === 1) {
+		return $count ." ". __($singular);
+	} else {
+		return $count ." ". __($plural);
+	}
 }
 
 /**
@@ -509,8 +351,8 @@ function nice($title) {
 	$title = str_replace("Ń", "n", $title);	
 	$title = str_replace("ḿ", "m", $title);	
 	$title = str_replace("Ḿ", "m", $title);	
-	$title = str_replace("“", '"', $title);	
-	$title = str_replace("”", '"', $title);
+	$title = str_replace('"', '', $title);	
+	$title = str_replace("'", '', $title);
 	$title = str_replace("-----------", '', $title);
 	$title = str_replace("----------", '', $title);
 	$title = str_replace("---------", '', $title);
@@ -528,58 +370,142 @@ function nice($title) {
 	return $title;
 }
 
-/**
- * cut
- * 
- * Trims a string
- *
- * @param string $type = "Word"
- * @param string $text
- * @param string $length
- * @param string $nice
- * @param bool $file
- * @param bool   $elipsis 
- * @return string $
- */
-function cut($type = "word", $text, $length = 12, $nice = TRUE, $file = FALSE, $elipsis = FALSE) {
-	if($type === "text") {
-		$elipsis = "...";
-		$words   = explode(" ", $text);
-				
-		if(count($words) > $length) {
-			return str_replace("\n", "", implode(" ", array_slice($words, 0, $length)) . $elipsis);
-		}
-		
-		return $text;
-	} elseif($type === "word") {
-		if($file === TRUE) {
-			if(strlen($text) < $length) {
-				$max = strlen($text);
-			}
+function pageBreak($content, $URL = NULL) {
+	$content = str_replace("<p><!-- pagebreak --></p>", "<!---->", $content);
+	$content = str_replace('<p style="text-align: center;"><!-- pagebreak --></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: left;"><!-- pagebreak --></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: right;"><!-- pagebreak --></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: justify;"><!-- pagebreak --></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: center;"><span style="color: #ff0000;"><!----></span></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: center;"><em><!-- pagebreak --></em></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: center;"><strong><!-- pagebreak --></strong></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: center;"><span style="text-decoration: underline;"><!-- pagebreak --></span></p>', "<!---->", $content);
+	$content = str_replace('<p style="text-align: justify;"><!-- pagebreak --></p>', "<!---->", $content);
+	$content = str_replace('<p><!-- pagebreak -->', "<p><!-- pagebreak --></p>\n<p>", $content);
+	$content = str_replace("<p><!-- pagebreak --></p>", "<!---->", $content);
+	$content = str_replace('<!-- pagebreak -->', "<!---->", $content);		
 			
-			if($nice === TRUE) {
-				return substr(getNice($text), 0, $length);
+	$parts = explode("<!---->", $content);
+
+	if(count($parts) > 1) {
+		return $parts[0] .'<p><a href="'. $URL .'" title="'. __("Read more") .'">&raquo;'. __("Read more") .'...</a></p>';
+	}
+	
+	return $content;		
+}
+
+/**
+ * POST
+ * 
+ * Gets a specific position value from $_POST
+ * 
+ * @param string $position
+ * @param string $coding   = "decode"
+ * @return mixed
+ */ 
+function POST($position = FALSE, $coding = "decode", $filter = "escape") {
+	if(!$position) {
+		____($_POST);
+	} elseif(isset($_POST[$position]) and is_array($_POST[$position])) {
+		return $_POST[$position];
+	} elseif(isset($_POST[$position]) and $_POST[$position] === "") {
+		return NULL;
+	} elseif(isset($_POST[$position])) {
+		if($coding === "encrypt") {
+			if($filter === "escape") {
+				return encrypt(filter(encode($_POST[$position]), "escape"));
+			} elseif($filter) {
+				return encrypt(encode($_POST[$position]));
 			} else {
-				return substr($text, 0, $length);			
+				return encrypt(filter(encode($_POST[$position]), TRUE));
+			}
+		} elseif($coding === "encode") {
+			if($filter === "escape") {
+				return filter(encode($_POST[$position]), "escape");
+			} elseif($filter) {
+				return encode($_POST[$position]);
+			} else {
+				return filter(encode($_POST[$position]), TRUE);
+			}
+		} elseif($coding === "decode-encrypt") {
+			if($filter === "escape") {
+				return encrypt(filter($_POST[$position], "escape"));
+			} elseif($filter) {
+				return encrypt(filter($_POST[$position], TRUE));
+			} else {
+				return encrypt($_POST[$position]);
+			}		
+		} elseif($coding === "decode") {			
+			if($filter === "escape") {
+				return filter(decode($_POST[$position]), "escape");
+			} elseif($filter) {
+				return filter(decode($_POST[$position]), TRUE);
+			} else {
+				return decode($_POST[$position]);
 			}
 		} else {
-			if(strlen($text) < 13) {
-				return $text;
+			if($filter === "escape") {
+				return filter($_POST[$position], "escape");
+			} elseif($filter) {
+				return filter($_POST[$position], TRUE);
+			} else {
+				return $_POST[$position];
+			}		
+		}
+	} else {
+		return FALSE;
+	}
+}
+
+/**
+ * recoverPOST
+ * 
+ * Recovers data from $_POST
+ *
+ * @parama string $position
+ * @parama string $value = NULL
+ * @return string
+ */
+function recoverPOST($position, $value = NULL) {
+	if(!$value) {
+		return (POST($position)) ? htmlentities(POST($position, "clean", FALSE)) : NULL;
+	} else {
+		if(is_array($value)) {
+			foreach($value as $val) {
+				$data[] = htmlentities($val);
 			}
 			
-			if($elipsis === FALSE) {
-				if($nice === TRUE) {
-					return substr(getNice($text), 0, $length);
-				} else {
-					return substr($text, 0, $length);
-				}
-			} else {
-				if($nice === TRUE) {
-					return substr(getNice($text), 0, $length) . $elipsis;
-				} else {
-					return substr($text, 0, $length) . $elipsis;			
-				}
-			}
-		}
+			return $data;
+		} else {
+			return (POST($position)) ? htmlentities(POST($position, "clean", FALSE)) : htmlentities(decode($value));
+		}	
 	}
+}
+
+/**
+ * removeSpaces
+ *
+ * Removes blank spaces
+ * 
+ * @param string $text
+ * @param bool   $trim
+ * @return string $text
+ */ 
+function removeSpaces($text, $trim = FALSE) {
+	$text = str_replace("           ", " ", $text);
+	$text = str_replace("          ", " ", $text);
+	$text = str_replace("         ", " ", $text);
+	$text = str_replace("        ", " ", $text);
+	$text = str_replace("       ", " ", $text);
+	$text = str_replace("      ", " ", $text);
+	$text = str_replace("     ", " ", $text);
+	$text = str_replace("    ", " ", $text);
+	$text = str_replace("   ", " ", $text);
+	$text = str_replace("  ", " ", $text);
+	
+	if($trim) {
+		return trim($text);
+	}
+	
+	return $text;
 }

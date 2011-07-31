@@ -116,7 +116,7 @@ define("_sh", "/");
 define("_dot", ".");
 define("_PHP", ".php");
 
-if(_modRewrite === FALSE) {
+if(!_modRewrite) {
 	define("_webBase", _webURL . _sh . _index);
 } else {
 	define("_webBase", _webURL);

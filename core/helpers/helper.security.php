@@ -41,7 +41,7 @@ if(!defined("_access")) {
  * @return string value
  */
 function code($max = 10, $uppercase = TRUE) {
-	return ($uppercase === TRUE) ? strtoupper(substr(md5(date("Y-m-d H:i:s", time())), 0, $max)) : substr(md5(date("Y-m-d H:i:s", time())), 0, $max);
+	return ($uppercase) ? strtoupper(substr(md5(date("Y-m-d H:i:s", time())), 0, $max)) : substr(md5(date("Y-m-d H:i:s", time())), 0, $max);
 }
 
 /**
@@ -56,7 +56,7 @@ function code($max = 10, $uppercase = TRUE) {
  * @return string value
  */
 function encrypt($password = NULL, $strong = 3, $key = TRUE, $uppercase = FALSE) {		
-	if($key === FALSE) {
+	if(!$key) {
 		$password = $password . substr(md5(date("Y-m-d H:i:s", time())), 0, 10);
 	} else {
 		$password = _ZanPHP . _secretKey . $password;
@@ -70,7 +70,7 @@ function encrypt($password = NULL, $strong = 3, $key = TRUE, $uppercase = FALSE)
 		$hash = sha1(md5(sha1(md5(sha1(md5($password))))));		
 	}
 	
-	return ($uppercase === TRUE) ? strtoupper($hash) : $hash;
+	return ($uppercase) ? strtoupper($hash) : $hash;
 }
 
 
@@ -110,7 +110,7 @@ function getIP() {
 function ping($domain) {
 	$domain = str_replace("http://", "", $domain);
 	
-	if(@file_get_contents("http://" . $domain) === FALSE) {
+	if(!@file_get_contents("http://" . $domain)) {
 		return FALSE; 
 	} else {
 		return TRUE;
@@ -127,18 +127,18 @@ function ping($domain) {
  * @return void
  */
 function redirect($URL, $time = FALSE) {
-	if($time === FALSE) {
+	if(!$time) {
 		header("location: $URL");
-	} elseif(!is_bool($time) AND $time > 0) {
+	} elseif(!is_bool($time) and $time > 0) {
 		$time = $time * 1000;
 		
 		print '
 			<script type="text/javascript">
 				function delayedRedirect() { 
-					window.location.replace("' . $URL . '"); 
+					window.location.replace("'. $URL .'"); 
 				}
 				
-				setTimeout("delayedRedirect()", ' . $time . ');
+				setTimeout("delayedRedirect()", '. $time .');
 			</script>';
 	}
 }

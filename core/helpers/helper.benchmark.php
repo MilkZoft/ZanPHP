@@ -33,18 +33,24 @@ if(!defined("_access")) {
  
 /**
  * A Benchmark utility to test Application Perfomance, Queries and Process
+ *
  * @param global $startTime
  * @return float
  */
-
-function benchMarkStart() {
-	global $startTime;
-	
-	$startTime = microtime(true);
-}
- 
 function benchMarkEnd() {
 	global $startTime;
 	
 	return (microtime(true) - $startTime);
+}
+
+/**
+ * 
+ *
+ * 
+ *
+ */
+function benchMarkStart() {
+	global $startTime;
+	
+	$startTime = microtime(true);
 }

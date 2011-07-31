@@ -60,6 +60,38 @@ function __($text) {
 }
 
 /**
+ * getLanguage
+ *
+ * Returns the translation of a specific Language Word
+ * 
+ * @param boolean $invert = TRUE
+ * @return string value
+ */
+function getLanguage($language, $flags = FALSE) {
+	if($flags) {
+		if($language === "Spanish") {
+			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/spanish.png" alt="' . __("Spanish") . '" />';
+		} elseif($language === "English") {
+			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/english.png" alt="' . __("English") . '" />';
+		} elseif($language === "French") {
+			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/french.png" alt="' . __("French") . '" />';
+		} elseif($language === "Portuguese") {
+			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/portuguese.png" alt="' . __("Portuguese") . '" />';
+		}
+	} else {
+		if($language === "Spanish") {
+			return __("Spanish");
+		} elseif($language === "English") {
+			return __("English");
+		} elseif($language === "French") {
+			return __("French");
+		} elseif($language === "Portuguese") {
+			return __("Portuguese");		
+		}
+	}
+}
+
+/**
  * getXMLang()
  *
  * Returns the standard XML language
@@ -101,6 +133,31 @@ function getXMLang($language, $invert = FALSE) {
 }
 
 /**
+ * isLanguage
+ *
+ * Defines if an Abbrevation is a standard XML language
+ * 
+ * @param boolean $invert = TRUE
+ * @return string value
+ */
+function isLanguage($language) {
+	if($language === "en") {
+		return TRUE;
+	} elseif($language === "es") {
+		return TRUE;
+	} elseif($language === "fr") {
+		return TRUE;
+	} elseif($language === "it") {
+		return TRUE;
+	} elseif($language === "pt") {
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+
+/**
  * whichLanguage
  *
  * Returns the default Language
@@ -129,61 +186,5 @@ function whichLanguage($invert = TRUE) {
 		} else {
 			return _webLanguage;
 		}	
-	}
-}
-
-/**
- * isLanguage
- *
- * Defines if an Abbrevation is a standard XML language
- * 
- * @param boolean $invert = TRUE
- * @return string value
- */
-function isLanguage($language) {
-	if($language === "en") {
-		return TRUE;
-	} elseif($language === "es") {
-		return TRUE;
-	} elseif($language === "fr") {
-		return TRUE;
-	} elseif($language === "it") {
-		return TRUE;
-	} elseif($language === "pt") {
-		return TRUE;
-	}
-	
-	return FALSE;
-}
-
-/**
- * getLanguage
- *
- * Returns the translation of a specific Language Word
- * 
- * @param boolean $invert = TRUE
- * @return string value
- */
-function getLanguage($language, $flags = FALSE) {
-	if($flags) {
-		if($language === "Spanish") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/spanish.png" alt="' . __("Spanish") . '" />';
-		} elseif($language === "English") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/english.png" alt="' . __("English") . '" />';
-		} elseif($language === "French") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/french.png" alt="' . __("French") . '" />';
-		} elseif($language === "Portuguese") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/portuguese.png" alt="' . __("Portuguese") . '" />';
-		}
-	} else {
-		if($language === "Spanish") {
-			return __("Spanish");
-		} elseif($language === "English") {
-			return __("English");
-		} elseif($language === "French") {
-			return __("French");
-		} elseif($language === "Portuguese") {
-			return __("Portuguese");		
-		}
 	}
 }

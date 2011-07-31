@@ -171,9 +171,27 @@ function execute() {
 	}
 }
 
+/**
+ * getURL
+ *
+ * Returns and URL built with _webBase and the Amount of segments contained on route()
+ * 
+ * @return array		
+ */
+function getURL() {		
+	$URL = NULL;
+
+	for($i = 0; $i <= segments() - 1; $i++) {
+		$URL .= segment($i) . _sh; 	
+	}
+	
+	$URL = _webBase . _sh . $URL;
+	
+	return $URL;
+}
+
 function isController($controller, $application) {
 	$file = _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . $controller . _PHP;
-	
 	
 	if(file_exists($file)) {
 		return TRUE;	
@@ -188,6 +206,33 @@ function isLang() {
 	}
 	
 	return FALSE;
+}
+
+/**
+ * route
+ *
+ * Returns an Array from $_SERVER["REQUEST_URI"] exploding each position with slashes
+ * 
+ * @return array		
+ */
+function route() {
+	$URL = explode("/", substr($_SERVER["REQUEST_URI"], 1));
+	
+	if(is_array($URL)) {		 
+		$URL = array_diff($URL, array(""));
+		
+		if(!_domain) {
+			$vars[] = array_shift($URL);
+		}
+		
+		if(!_modRewrite and isset($URL[0])) { 
+			if($URL[0] == basename($_SERVER["SCRIPT_FILENAME"])) {
+				$vars[] = array_shift($URL);
+			}
+		}
+	}
+	
+	return $URL;
 }
 
 /**
@@ -224,50 +269,4 @@ function segments() {
 	$route = route();
 	
 	return count($route);
-}
-
-/**
- * route
- *
- * Returns an Array from $_SERVER["REQUEST_URI"] exploding each position with slashes
- * 
- * @return array		
- */
-function route() {
-	$URL = explode("/", substr($_SERVER["REQUEST_URI"], 1));
-	
-	if(is_array($URL)) {		 
-		$URL = array_diff($URL, array(""));
-		
-		if(_domain === FALSE) {
-			$vars[] = array_shift($URL);
-		}
-		
-		if(_modRewrite === FALSE and isset($URL[0])) { 
-			if($URL[0] == basename($_SERVER["SCRIPT_FILENAME"])) {
-				$vars[] = array_shift($URL);
-			}
-		}
-	}
-	
-	return $URL;
-}
-
-/**
- * getURL
- *
- * Returns and URL built with _webBase and the Amount of segments contained on route()
- * 
- * @return array		
- */
-function getURL() {		
-	$URL = NULL;
-
-	for($i = 0; $i <= segments() - 1; $i++) {
-		$URL .= segment($i) . _sh; 	
-	}
-	
-	$URL = _webBase . _sh . $URL;
-	
-	return $URL;
 }

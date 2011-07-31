@@ -31,37 +31,6 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/time_helper
  */
 
- 
-function isYear($year) {
-	if(strlen($year) === 4) {
-		if($year >= 2000 and $year <= date("Y")) {
-			return TRUE;
-		} 
-	}
-	
-	return FALSE;
-}
-
-function isMonth($month) {
-	if(strlen($month) === 2) {
-		if($month > 0 and $month <= 12) {
-			return TRUE;
-		}
-	}
-	
-	return FALSE;
-}
-
-function isDay($day) {
-	if(strlen($day) === 2) {
-		if($day > 0 and $day <= 31) {
-			return TRUE;
-		}
-	}
-	
-	return FALSE;
-}
-
 /**
  * getHour
  *
@@ -117,7 +86,7 @@ function getHour($date) {
 }
 
 function getSeconds($time) {
-	return intval($time	/ 1000) . " " . __("seconds");
+	return intval($time	/ 1000) ." ". __("seconds");
 }
 
 function getTime($date) {
@@ -160,13 +129,13 @@ function howLong($value) {
 		$relation[$letter[4]] = $number[4];
 		$relation[$letter[5]] = $number[5];
 
-    	$balue = mktime($relation["H"], $relation["i"], $relation["s"], $relation["n"], $relation["j"], $relation["Y"]);
+    	$value = mktime($relation["H"], $relation["i"], $relation["s"], $relation["n"], $relation["j"], $relation["Y"]);
 	}
 
 	$time = time() - $value;
 	
 	if($time >= 2116800) {
-		$date = __("on") . " " . now(2);
+		$date = __("on") ." ". now(2);
 	}
 
 	if($time < 30242054.045) {
@@ -174,23 +143,23 @@ function howLong($value) {
 		
 		if($rTime > 1) {
 			if($language === "English") {
-				$date = $rTime . " months ago";
+				$date = $rTime ." months ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " meses";
+				$date = "hace  ". $rTime ." meses";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " mois";
+				$date = "il ya ". $rTime ." mois";
 			} elseif($language === "Portuguese") {
-				$date = "há    " . $rTime . " meses";
+				$date = "há ". $rTime ." meses";
 			}
 		} else {	
 			if($language === "English") {
-				$date = $rTime . " month ago";
+				$date = $rTime ." month ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " mes";
+				$date = "hace  ". $rTime ." mes";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " mois";		
+				$date = "il ya ". $rTime ." mois";		
 			} elseif($language === "Portuguese") {
-				$date = $rTime . " m&ecirc;s atr&aacute;s";
+				$date = $rTime ." m&ecirc;s atr&aacute;s";
 			}
 		}
 	}
@@ -200,23 +169,23 @@ function howLong($value) {
 		
 		if($rTime > 1) {
 			if($language === "English") {
-				$date = $rTime . " weeks ago";
+				$date = $rTime ." weeks ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " semanas";
+				$date = "hace  ". $rTime ." semanas";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " semaines";		
+				$date = "il ya ". $rTime ." semaines";		
 			} elseif($language === "Portuguese") {
-				$date = $rTime . " semanas atr&aacute;s";
+				$date = $rTime ." semanas atr&aacute;s";
 			}
 		} else {
 			if($language === "English") {
-				$date = $rTime . " week ago";
+				$date = $rTime ." week ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " semana";
+				$date = "hace  ". $rTime ." semana";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " semaine";
+				$date = "il ya ". $rTime ." semaine";
 			} elseif($language === "Portuguese") {
-				$date = $rTime . " semana atr&aacute;s";
+				$date = $rTime ." semana atr&aacute;s";
 			}
 		}
 	}
@@ -234,39 +203,39 @@ function howLong($value) {
 		
 		if($rTime > 2) {
 			if($language === "English") {
-				$date = $rTime . " days ago";
+				$date = $rTime ." days ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " d&iacute;as";
+				$date = "hace ". $rTime ." d&iacute;as";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " jours";
+				$date = "il ya ". $rTime ." jours";
 			} elseif($language === "Portuguese") {
-				$date = $rTime . " dias atr&aacute;s";
+				$date = $rTime ." dias atr&aacute;s";
 			}
 		}
 	}
 	
-	if($time < 84600){
+	if($time < 84600) {
 		$rTime = round($time / 3600);
 				
 		if($rTime > 1) {
 			if($language === "English") {
-				$date = $rTime . " hours ago";
+				$date = $rTime ." hours ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " horas";
+				$date = "hace  ". $rTime ." horas";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " heures";
+				$date = "il ya ". $rTime ." heures";
 			} elseif($language === "Portuguese") {
-				$date =  $rTime . " horas atr&aacute;s";
+				$date =  $rTime ." horas atr&aacute;s";
 			}
 		} else {
 			if($language === "English") {
-				$date = $rTime . " hour ago";
+				$date = $rTime ." hour ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " hora";
+				$date = "hace  ". $rTime ." hora";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " heures";
+				$date = "il ya ". $rTime ." heures";
 			} elseif($language === "Portuguese") {
-				$date = $rTime . " hora atr&aacute;s";
+				$date = $rTime ." hora atr&aacute;s";
 			}
 		}
 		
@@ -280,35 +249,35 @@ function howLong($value) {
 		
 		if($rTime > 1) {
 			if($language === "English") {
-				$date = $rTime . " minutes ago";
+				$date = $rTime ." minutes ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " minutos";
+				$date = "hace  ". $rTime ." minutos";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " minutes";
+				$date = "il ya ". $rTime ." minutes";
 			} elseif($language === "Portuguese") {
-				$date = $rTime . " minutos atr&aacute;s";
+				$date = $rTime ." minutos atr&aacute;s";
 			}
 		} else {
 			if($language === "English") {
-				$date = $rTime . " minute ago";
+				$date = $rTime ." minute ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $rTime . " minuto";
+				$date = "hace  ". $rTime ." minuto";
 			} elseif($language === "French") {
-				$date = "il ya " . $rTime . " minute";
+				$date = "il ya ". $rTime ." minute";
 			} elseif($language === "Portuguese") {
-				$date = $rTime . " minuto atr&aacute;s";
+				$date = $rTime ." minuto atr&aacute;s";
 			}
 		}
 		
 		if($time < 60) {
 			if($language === "English") {
-				$date = $time . " seconds ago";
+				$date = $time ." seconds ago";
 			} elseif($language === "Spanish") {
-				$date = "hace  " . $time . " segundos";
+				$date = "hace  ". $time ." segundos";
 			} elseif($language === "French") {
-				$date = "il ya " . $time . " secondes";
+				$date = "il ya ". $time ." secondes";
 			} elseif($language === "Portuguese") {
-				$date = $time . " segundos atr&aacute;s";
+				$date = $time ." segundos atr&aacute;s";
 			}
 		}
 		
@@ -318,6 +287,36 @@ function howLong($value) {
 	}
 	
 	return $date;
+}
+
+function isDay($day) {
+	if(strlen($day) === 2) {
+		if($day > 0 and $day <= 31) {
+			return TRUE;
+		}
+	}
+	
+	return FALSE;
+}
+
+function isMonth($month) {
+	if(strlen($month) === 2) {
+		if($month > 0 and $month <= 12) {
+			return TRUE;
+		}
+	}
+	
+	return FALSE;
+}
+
+function isYear($year) {
+	if(strlen($year) === 4) {
+		if($year >= 1950 and $year <= date("Y")) {
+			return TRUE;
+		} 
+	}
+	
+	return FALSE;
 }
 
 function month($month) {
@@ -355,7 +354,7 @@ function now($format, $hour = FALSE, $language = NULL) {
 		$language = whichLanguage();
 	}
 	
-	if($hour === TRUE) {	
+	if($hour) {	
 		$time	   = time() + 7200;
 		$hours 	   = (int) date("H", $time);
 		$minutes   = date("i", $time);
@@ -532,13 +531,13 @@ function now($format, $hour = FALSE, $language = NULL) {
 		}
 		
 		if($language === "English") {
-			return "$day, $month ".date("d").", ".date("Y");
+			return "$day, $month ". date("d") .", ". date("Y");
 		} elseif($language === "Spanish") {
-			return "$day, ".date("d")." de $month de ".date("Y"); 
+			return "$day, ". date("d") ." de $month de ". date("Y"); 
 		} elseif($language === "French") {
-			return "$day, ".date("d")." $month ".date("Y");
+			return "$day, ". date("d") ." $month ". date("Y");
 		} else {
-			return "$day, $month ".date("d").", ".date("Y"); 
+			return "$day, $month ". date("d") .", ". date("Y"); 
 		}
 	} elseif($format === 3) {
 		return date("d/m/Y H:i:s", time()); 			

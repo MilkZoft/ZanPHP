@@ -33,7 +33,6 @@ if(!defined("_access")) {
  * @param boolean $disabled = FALSE
  * @return string value
  */		
-
 function formCheckbox($attributes = FALSE) {
 	if(isset($attributes) and is_array($attributes)) {
 		$attrs = NULL;
@@ -58,6 +57,36 @@ function formCheckbox($attributes = FALSE) {
 	} else {
 		return NULL;
 	}
+}
+
+/**
+ * formClose
+ * 
+ * Closes a Basic Form structure
+ * 
+ * @returns string $HTML
+ */	
+function formClose() {
+	$HTML  = char("\t") . "</fieldset>" . char("\n");
+	$HTML .= "</form>";		
+	
+	return $HTML;
+}
+
+function formField($a = NULL, $text, $raquo = TRUE) {
+	$raquo = ($raquo === TRUE) ? "&raquo; " : "";
+	
+	if(!is_null($a)) {
+		$HTML  = '<p class="field">' . char("\n");
+		$HTML .= char("\t") . '<a '. $a .'>'. $raquo . $text .'</a>' . char("\n");
+		$HTML .= '</p>' . char("\n");
+	} else {
+		$HTML  = '<p class="field">' . char("\n");
+		$HTML .= char("\t") . $raquo . $text . char("\n"); 
+		$HTML .= '</p>' . char("\n");
+	}
+	
+	return $HTML;
 }	
 	
 /**
@@ -143,30 +172,29 @@ function formLabel($for, $text, $br = TRUE) {
 	return $HTML;
 }
 
-function formField($a = NULL, $text, $raquo = TRUE) {
-	$raquo = ($raquo === TRUE) ? "&raquo; " : "";
+/**
+ * formOpen
+ * 
+ * Sets and Opens a basic form structure
+ *
+ * @param string $ID      = NULL
+ * @param string $text    = NULL
+ * @param string $action
+ * @param string $class   = "forms"
+ * @param string $method  = "post"
+ * @param string $enctype = "multipart/form-data"
+ * @returns string $HTML
+ */	
+function formOpen($ID = NULL, $legend = NULL, $action, $class = "Forms", $method = "post", $enctype = "multipart/form-data") {	
+	$ID     = (isset($ID))     ? ' id="'.$ID.'"' 			  			 : NULL;
+	$legend = (isset($legend)) ? "<legend>$legend</legend>" . char("\n") : NULL;
 	
-	if(!is_null($a)) {
-		$HTML  = '<p class="field">' . char("\n");
-		$HTML .= char("\t") . '<a '. $a .'>'. $raquo . $text .'</a>' . char("\n");
-		$HTML .= '</p>' . char("\n");
-	} else {
-		$HTML  = '<p class="field">' . char("\n");
-		$HTML .= char("\t") . $raquo . $text . char("\n"); 
-		$HTML .= '</p>' . char("\n");
-	}
-	
+	$HTML  = '<form' . $ID . ' action="' . $action . '" method="' . $method . '" class="' . $class . '" enctype="' . $enctype . '">' . char("\n\t");
+	$HTML .= '<fieldset>' . char("\n\t\t");
+	$HTML .= $Legend . char("\n");			
+
 	return $HTML;
 }
-
-function formUploadFrame($value, $events = NULL) {
-	$HTML  = '<input type="file" name="'. $value .'File" /> ';
-	$HTML .= '<input type="submit" class="small-submit" name="'. $value .'Upload" value="'. __("Upload") .'" '. $events .' /><br />';
-	$HTML .= '<iframe name="'. $value .'Upload" class="no-display"></iframe>';
-	
-	return $HTML;
-}
-
 
 /**
  * formRadio
@@ -183,7 +211,7 @@ function formUploadFrame($value, $events = NULL) {
  * @param boolean $disable  = FALSE 
  * @returns string value
  */	
-function formRadio($text = NULL, $position = "Right", $name, $value, $ID = NULL, $checked = FALSE, $events = NULL, $disabled = FALSE) {
+function formRadio($attributes) {
 	if(isset($attributes) and is_array($attributes)) {
 		$attrs = NULL;
 		
@@ -296,40 +324,10 @@ function formTextarea($attributes = FALSE) {
 	}								
 }
 
-/**
- * formOpen
- * 
- * Sets and Opens a basic form structure
- *
- * @param string $ID      = NULL
- * @param string $text    = NULL
- * @param string $action
- * @param string $class   = "forms"
- * @param string $method  = "post"
- * @param string $enctype = "multipart/form-data"
- * @returns string $HTML
- */	
-function formOpen($ID = NULL, $legend = NULL, $action, $class = "Forms", $method = "post", $enctype = "multipart/form-data") {	
-	$ID     = (isset($ID))     ? ' id="'.$ID.'"' 			  			 : NULL;
-	$legend = (isset($legend)) ? "<legend>$legend</legend>" . char("\n") : NULL;
-	
-	$HTML  = '<form' . $ID . ' action="' . $action . '" method="' . $method . '" class="' . $class . '" enctype="' . $enctype . '">' . char("\n\t");
-	$HTML .= '<fieldset>' . char("\n\t\t");
-	$HTML .= $Legend . char("\n");			
-
-	return $HTML;
-}
-
-/**
- * formClose
- * 
- * Closes a Basic Form structure
- * 
- * @returns string $HTML
- */	
-function formClose() {
-	$HTML  = char("\t") . "</fieldset>" . char("\n");
-	$HTML .= "</form>";		
+function formUploadFrame($value, $events = NULL) {
+	$HTML  = '<input type="file" name="'. $value .'File" /> ';
+	$HTML .= '<input type="submit" class="small-submit" name="'. $value .'Upload" value="'. __("Upload") .'" '. $events .' /><br />';
+	$HTML .= '<iframe name="'. $value .'Upload" class="no-display"></iframe>';
 	
 	return $HTML;
 }

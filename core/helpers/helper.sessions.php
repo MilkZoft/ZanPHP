@@ -31,34 +31,12 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/security_helper
  */
 
-/**
- * unsetCookie
- *
- * Removes a cookie
- * 
- * @param $cookie
- * @param $URL    = _webBase
- * @return void
- */ 
-function unsetCookie($cookie, $URL = _webBase) {
-	setcookie($cookie);	
-	
-	redirect($URL);
-}
-
-/**
- * unsetSessions
- *
- * Unsets all started sessions variables
- * 
- * @param $URL    = _webBase
- * @return void
- */ 
-function unsetSessions($URL = _webBase) {
-	session_unset(); 
-	session_destroy();	
-	
-	redirect($URL);
+function COOKIE($cookie) {
+	if(isset($_COOKIE[$cookie])) {
+		return filter($_COOKIE[$cookie]);
+	} else {
+		return FALSE;
+	}
 }
 
 /**
@@ -95,7 +73,7 @@ function createCookie($cookie = NULL, $value, $time = 604800, $redirect = FALSE,
 function createSession($session = NULL, $value = NULL, $redirect = FALSE, $URL = _webBase) {	
 	$_SESSION[$session] = $value;
 	
-	if($redirect === TRUE) {
+	if($redirect) {
 		redirect($URL);
 	}
 }
@@ -122,10 +100,32 @@ function SESSION($session, $value = FALSE) {
 	return TRUE;
 }
 
-function COOKIE($cookie) {
-	if(isset($_COOKIE[$cookie])) {
-		return filter($_COOKIE[$cookie]);
-	} else {
-		return FALSE;
-	}
+/**
+ * unsetCookie
+ *
+ * Removes a cookie
+ * 
+ * @param $cookie
+ * @param $URL    = _webBase
+ * @return void
+ */ 
+function unsetCookie($cookie, $URL = _webBase) {
+	setcookie($cookie);	
+	
+	redirect($URL);
+}
+
+/**
+ * unsetSessions
+ *
+ * Unsets all started sessions variables
+ * 
+ * @param $URL    = _webBase
+ * @return void
+ */ 
+function unsetSessions($URL = _webBase) {
+	session_unset(); 
+	session_destroy();	
+	
+	redirect($URL);
 }

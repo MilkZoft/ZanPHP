@@ -45,24 +45,30 @@ function getAlert($message, $type = "error", $URL = NULL) {
 	}
 	
 	if($type === "error") {
-		return '<div class="flashdata error">'.__($message).'</div>';
+		return '<div class="flashdata error">'. __($message) .'</div>';
 	} elseif($type === "success") {
 		unset($_POST);
 		
-		return '<div class="flashdata success">'.__($message).'</div>';
+		return '<div class="flashdata success">'. __($message) .'</div>';
 	} elseif($type === "warning") {
-		return '<div class="flashdata warning">'.__($message).'</div>';
+		return '<div class="flashdata warning">'. __($message) .'</div>';
 	} elseif($type === "notice") {
-		return '<div class="flashdata notice">'.__($message).'</div>';
+		return '<div class="flashdata notice">'. __($message) .'</div>';
 	}
 }
 
+/**
+ * 
+ *
+ * 
+ *
+ */
 function showAlert($message, $URL = FALSE) {
 	print '	<script>
-				alert("' . __($message) . '");';
+				alert("'. __($message) .'");';
 	
-	if($URL !== FALSE) {
-		print '	window.location.href="' . $URL . '";';			
+	if($URL) {
+		print '	window.location.href="'. $URL .'";';			
 	}
 	
 	print '</script>';
