@@ -219,19 +219,19 @@ class ZP_Load {
      * @return void
      */	
 	public function helper($helper, $application = NULL) {
-		if(is_array($helper)) {
+		if(is_array($helper)) { 
 			for($i = 0; $i <= count($helper) - 1; $i++) {
 				if($application === NULL) {
 					if(file_exists(_core . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP)) {
 						include_once _core . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP;
-					} else {			
-						die("$name helper doesn't exists");
+					} else {		
+						die("$helper[$i] helper doesn't exists");
 					}			
 				} else {
 					if(file_exists(_applications . _sh . $application . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP)) {
 						include_once _applications . _sh . $application . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP;
 					} else {			
-						die("$name helper doesn't exists");
+						die("$helper[$i] helper doesn't exists");
 					}				
 				}
 			}

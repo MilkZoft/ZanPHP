@@ -6,7 +6,7 @@ if(!defined("_access")) {
 	die("Error: You don't have permission to access here...");
 }
 
-class Default_Model extends ZP_Model {
+class Otro_Model extends ZP_Model {
 	
 	private $route;
 	private $table;
@@ -20,11 +20,11 @@ class Default_Model extends ZP_Model {
 		$this->table = "contacts";
 	}
 	
-	public function getContact() {
-		$this->Db->select("Name, Email, Phone");
+	public function getContact($ID = 0) {
+		$this->Db->select("Name, Email");
 		$this->Db->from($this->table);
 		
-		$this->Db->fetchMode("array");
+	
 		$this->Db->encode(TRUE);
 		
 		$data = $this->Db->get();

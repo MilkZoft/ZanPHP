@@ -153,7 +153,7 @@ function execute() {
 	}
 	
 	if(file_exists($controllerFile)) {
-		if(isset($method) and isset($p)) { 
+		if(isset($method) and isset($params)) { 
 			if(method_exists($$controller, $method)) {
 				call_user_func_array(array($$controller, $method), $params);
 			} else {
