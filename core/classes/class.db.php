@@ -124,7 +124,6 @@ class ZP_Db extends ZP_Load {
 	 */
 	private $values;
 	
-	
 	/**
 	 * 
 	 * 
