@@ -64,7 +64,7 @@ class ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$this->helper("autoload");			
+		$this->helper("autoload");
 	}
 	
     /**
@@ -89,11 +89,25 @@ class ZP_Load {
 		
 		if(file_exists($file)) {							
 			if(class_exists($class)) {
-				return ZP_Singleton::instance($class);
+				if($this->Cache->get($class, "classes")) {
+					return $this->Cache->get($class, "classes");	
+				} else {
+					return ZP_Singleton::instance($class);
+				}
 			}
 			
-			include $file;
+			if($this->Cache->get($class, "classes")) {
+				return $this->Cache->get($class, "classes");	
+			} else {
+				include $file;
+			}
 			
+			if(_cacheStatus) {
+				$$class = ZP_Singleton::instance($class);
+				
+				$this->Cache->save($$class, $class, "classes");	
+			}
+
 			return ZP_Singleton::instance($class);
 		} else {
 			die("$class class does not exists");
@@ -130,7 +144,7 @@ class ZP_Load {
 		
 		if(!$this->application) {
 			if(count($parts) === 2) {
-				$file = _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;						
+				$file = _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
 			}		
 		} else {
 			if(count($parts) === 2) {
@@ -142,7 +156,7 @@ class ZP_Load {
 			if(class_exists($controller)) {
 				return ZP_Singleton::instance($controller);
 			}
-			
+		
 			include $file;
 			
 			return ZP_Singleton::instance($controller);
@@ -157,8 +171,8 @@ class ZP_Load {
      * @param string $class
      * @return object value
      */
-	public function core($class) {
-		return ZP_Singleton::instance("ZP_$class");		
+	public function core($core) {
+		return ZP_Singleton::instance("ZP_$core");		
 	}
 	
     /**
@@ -381,7 +395,7 @@ class ZP_Load {
 		
 		if(!$this->application) {
 			if(count($parts) === 2) {
-				$file = _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;						
+				$file = _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;	
 			}		
 		} else {
 			if(count($parts) === 2) {
@@ -399,7 +413,7 @@ class ZP_Load {
 			return ZP_Singleton::instance($model);
 		}	
 		
-		return FALSE;		
+		return FALSE;
 	}
 	
     /**
@@ -544,8 +558,9 @@ class ZP_Load {
      */	
 	public function view($name, $application = NULL, $vars = NULL) {
 		if(!is_null($application)) {
-			$view = _applications . _sh . $application . _sh . _views . _sh . _view . _dot . $name . _PHP;
-
+			$view 	 = _applications . _sh . $application . _sh . _views . _sh . _view . _dot . $name . _PHP;
+			$cacheID = cacheSession($name);
+		
 			if(is_array($vars)) {
 				$key  = array_keys($vars);
 				$size = sizeof($key);			
@@ -558,7 +573,24 @@ class ZP_Load {
 			}
 				
 			if(file_exists($view)) {
-				include $view;
+				$this->Cache = $this->core("Cache");	
+
+				if($this->Cache->get($cacheID, "templates")) {
+					print $this->Cache->get($cacheID, "templates");	
+				} else {
+					include $view;
+				}
+				
+				if(_cacheStatus) {
+					$output = ob_get_contents();
+
+					ob_end_clean();
+					
+					$this->Cache->save($output, $cacheID, "templates");
+					
+					print $output;	
+				} 
+				
 			} else {
 				die("Error 404: $view view not found");	
 			}

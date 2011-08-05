@@ -230,7 +230,34 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function load($template, $direct = FALSE) {	
-		
+		$this->Cache = (_cacheStatus) ? $this->core("Cache") : FALSE;
+
+		if(_cacheStatus) {
+			if(!is_array($template)) {
+				$cache = $this->Cache->get(cacheSession($template), "templates");
+
+				if($cache) {
+					print $cache;
+
+					return TRUE;
+				}
+			} else {
+				$cache = NULL;
+
+				for($i = 0; $i <= count($template) - 1; $i++) {
+					if($this->Cache->get(cacheSession($template[$i]), "templates")) {
+						$cache .= $this->Cache->get(cacheSession($template[$i]), "templates");
+					}
+				}
+
+				if(!is_null($cache)) {
+					print $cache;
+
+					return TRUE;
+				}
+			}
+		}
+
 		if(is_array($this->vars)) {
 			$key  = array_keys($this->vars);
 			$size = sizeof($key);			
@@ -240,28 +267,78 @@ class ZP_Templates extends ZP_Load {
 			}
 		}
 		
-		if($direct === TRUE) {
+		if($direct) {
 			if(is_array($template)) {
 				if(count($template) === 1) {
 					include $template[0];
+					
+					if(_cacheStatus) {
+						$output = ob_get_contents();
+
+						ob_end_clean();
+						
+						$this->Cache->save($output, cacheSession($template[0]), "templates");	
+					}
 				} elseif(count($template) === 2) {
 					include $template[0];
 					include $template[1];
+
+					if(_cacheStatus) {
+						$output = ob_get_contents();
+
+						ob_end_clean();
+						
+						$this->Cache->save($output, cacheSession($template[0]), "templates");
+						$this->Cache->save($output, cacheSession($template[1]), "templates");
+					}
 				} elseif(count($template) === 3) {
 					include $template[0];
 					include $template[1];
 					include $template[2];
+
+					if(_cacheStatus) {
+						$output = ob_get_contents();
+
+						ob_end_clean();
+						
+						$this->Cache->save($output, cacheSession($template[0]), "templates");
+						$this->Cache->save($output, cacheSession($template[1]), "templates");
+						$this->Cache->save($output, cacheSession($template[2]), "templates");
+					}
 				} elseif(count($template) === 4) {
 					include $template[0];
 					include $template[1];
 					include $template[2];
 					include $template[3];
+
+					if(_cacheStatus) {
+						$output = ob_get_contents();
+
+						ob_end_clean();
+						
+						$this->Cache->save($output, cacheSession($template[0]), "templates");
+						$this->Cache->save($output, cacheSession($template[1]), "templates");
+						$this->Cache->save($output, cacheSession($template[2]), "templates");
+						$this->Cache->save($output, cacheSession($template[3]), "templates");
+					}
 				} elseif(count($template) === 5) {
 					include $template[0];
 					include $template[1];
 					include $template[2];
 					include $template[3];
 					include $template[4];
+
+					if(_cacheStatus) {
+						$output = ob_get_contents();
+
+						ob_end_clean();
+						
+						$this->Cache->save($output, cacheSession($template[0]), "templates");
+						$this->Cache->save($output, cacheSession($template[1]), "templates");
+						$this->Cache->save($output, cacheSession($template[2]), "templates");
+						$this->Cache->save($output, cacheSession($template[3]), "templates");
+						$this->Cache->save($output, cacheSession($template[4]), "templates");
+					}
 				}
 			} else {
 				if(!file_exists($template)) {
@@ -269,18 +346,36 @@ class ZP_Templates extends ZP_Load {
 				}		
 				
 				include $template;
+
+				if(_cacheStatus) {
+					$output = ob_get_contents();
+
+					ob_end_clean();
+					
+					$this->Cache->save($output, cacheSession($template), "templates");	
+				} else {
+					return TRUE;
+				}	
 			}
 		} else { 
-			$this->template = _lib . _sh . _themes . _sh . $this->theme . _sh . $template . _PHP;
+			$template = _lib . _sh . _themes . _sh . $this->theme . _sh . $template . _PHP;
 			
-			if(!file_exists($this->template)) {
-				die("Error 404: Theme Not Found: " . $this->template);									
+			if(!file_exists($template)) {
+				die("Error 404: Theme Not Found: " . $template);									
 			}
 			
-			include $this->template; 
-			
-			return TRUE;
-		}									
+			include $template; 
+
+			if(_cacheStatus) {
+				$output = ob_get_contents();
+
+				ob_end_clean();
+				
+				$this->Cache->save($output, cacheSession($template), "templates");	
+			} else {
+				return TRUE;
+			}	
+		}						
 	}
 	
     /**

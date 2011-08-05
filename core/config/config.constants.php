@@ -21,6 +21,14 @@ define("_webLanguage", "English");
 define("_webLang", "en");
 
 /**
+ * Cache
+ */
+define("_cacheDir", "lib/cache");
+define("_cacheTime", 3600);
+define("_cacheExt", ".txt");
+define("_cacheStatus", TRUE);
+
+/**
  * Languages:
  */
 define("_Spanish", TRUE);
@@ -105,6 +113,7 @@ define("_controllers", "controllers");
 define("_model", "model");
 define("_models", "models");
 define("_favicon", "favicon.ico");
+define("_guest", "guest");
 define("_index", "index.php");
 define("_icons", "icons");
 define("_files", "files");

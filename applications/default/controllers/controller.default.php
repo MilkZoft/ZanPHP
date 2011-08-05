@@ -17,6 +17,12 @@ class Default_Controller extends ZP_Controller {
 	public function index() {		
 		print __("Hi, I'm the default application");
 	}
+
+	public function vista() {
+		$vars["name"]  = "Carlos";
+		$vars["email"] = "carlos@milkzoft.com";
+		$vars["view"]  = $this->view("prueba", "default", $vars);
+	}
 	
 	public function getContact($ID) {
 		$this->Default_Model = $this->model("Default_Model");

@@ -1,16 +1,6 @@
-<?php
-/**
- * ZanPHP
- *
- * An open source agile and rapid development framework for PHP 5
- *
- * @package		ZanPHP
- * @author		MilkZoft Developer Team
- * @copyright	Copyright (c) 2011, MilkZoft, Inc.
- * @license		http://www.zanphp.com/documentation/en/license/
- * @link		http://www.zanphp.com
- * @version		1.0
- */
+<?php /**  * ZanPHP  *  * An open source agile and rapid development framework for PHP 5  *  * @package     ZanPHP  *
+@author      MilkZoft Developer Team  * @copyright   Copyright (c) 2011, MilkZoft, Inc.  * @license
+http://www.zanphp.com/documentation/en/license/  * @link http://www.zanphp.com  * @version     1.0  */
  
 /**
  * Access from index.php
@@ -32,6 +22,8 @@ if(!defined("_access")) {
  */
 class ZP_Db extends ZP_Load {
 	
+	private $caching = FALSE;
+
 	/**
 	 * 
 	 * 
@@ -137,6 +129,8 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function __construct() {
+		$this->Cache = $this->core("Cache");
+
 		$this->config("database");
 		$this->connect();	
 	}
@@ -165,6 +159,10 @@ class ZP_Db extends ZP_Load {
 	public function begin() {
 		return $this->Database->beginTrans();
 	}
+
+	public function caching($caching = FALSE) {
+		$this->caching = $caching;
+	}
 	
     /**
      * Call a stored procedure
@@ -172,25 +170,13 @@ class ZP_Db extends ZP_Load {
      * @return array value
      */	
 	public function call($procedure) {
-		$query = $this->Database->_execute("CALL $procedure");
-		
-		if($this->rows() === 0) {
-			return FALSE;
-		} elseif($this->rows() === 1) {
-			$rows[] = $this->fetch();			
+		if($this->Cache->get(sha1("CALL $procedure"), "db")) {
+			return $this->Cache->get(sha1("CALL $procedure"), "db");
 		} else {
-			while($row = $this->fetch()) {
-				$rows[] = $row;	
-			}
-		}
+			$this->Rs = $this->Database->_execute("CALL $procedure");
 		
-		$this->free();
-
-		if($this->encode) {
-			return (isset($rows)) ? $this->encoding($rows) : FALSE;
-		} else {
-			return (isset($rows)) ? $rows : FALSE;
-		}
+			return $this->data();
+		}		
 	}
 	
     /**
@@ -252,7 +238,7 @@ class ZP_Db extends ZP_Load {
 	public function countAll() {		
 		$query = "SELECT $this->fields FROM $this->table";
 		
-		$rs = $this->_query($query);
+		$this->Rs = $this->_query($query);
 		
 		return $this->rows();
 	}
@@ -269,9 +255,39 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
 
-		$rs = $this->_query($query);
+		$this->Rs = $this->_query($query);
 		
 		return $this->rows();
+	}
+
+	private function data($query) {
+		$this->Rs = $this->_query($query);	
+		
+		if($this->rows() === 0) {
+				return FALSE;			
+		} else {
+			if($this->fetchMode === "array") {
+				while($row = $this->fetch($this->rows())) {
+					$rows[] = $row;	
+				}
+			} else { 
+				$rows = $this->fetch($this->rows());
+			}
+		}	
+
+		$this->free();
+			
+		if($this->encode) {
+			$data = isset($rows) ? $this->encoding($rows) : FALSE;
+		} else { 
+			$data = isset($rows) ? $rows : FALSE;
+		}
+			
+		if($this->caching and $data) {
+			$this->Cache->save($data, sha1($query), "db");
+		}
+
+		return $data;
 	}
 	
     /**
@@ -361,7 +377,7 @@ class ZP_Db extends ZP_Load {
 				$size2 = sizeof($key2);
 				
 				for($j = 0; $j < $size2; $j++) {					
-					$data[$i][$key2[$j]] = encode($array[$i][$key2[$j]]);								
+					$data[$i][$key2[$j]] = htmlentities($array[$i][$key2[$j]]);								
 				}
 			}
 			
@@ -375,7 +391,7 @@ class ZP_Db extends ZP_Load {
 				$size2 = sizeof($key2);
 				
 				for($j = 0; $j < $size2; $j++) {					
-					$data[$i][$key2[$j]] = encode($rows[$i][$key2[$j]]);								
+					$data[$i][$key2[$j]] = htmlentities($rows[$i][$key2[$j]]);								
 				}
 			}
 			
@@ -417,22 +433,12 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / array value
      */
 	public function find($ID) {
-		$query = "SELECT $this->fields FROM $this->table WHERE $this->primaryKey = $ID"; 
-		
-		$rs = $this->_query($query);	
-
-		if($this->rows() === 0) {
-			return FALSE;
-		} elseif($this->rows() === 1) {
-			$rows[] = $this->fetch();			
-		}		
-		
-		$this->free();
-		
-		if($this->encode) {
-			return isset($rows) ? $this->encoding($rows) : FALSE;
+		$query = "SELECT $this->fields FROM $this->table WHERE $this->primaryKey = $ID";
+	
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			return isset($rows) ? $rows : FALSE;
+			return $this->data($query);
 		}				
 	}
 	
@@ -451,39 +457,25 @@ class ZP_Db extends ZP_Load {
 			$SQL .= " GROUP BY ".$group;
 		}
 		
-		if($order === FALSE) {
+		if(!$order) {
 			$SQL .= "";		
 		} elseif($order !== NULL) {
-			$SQL .= " ORDER BY ".$order;
+			$SQL .= " ORDER BY ". $order;
 		} elseif($order === NULL) {
 			$SQL .= " ORDER BY $this->primaryKey";
 		}
 		
 		if($limit !== NULL) {
-			$SQL .= " LIMIT ".$limit;
+			$SQL .= " LIMIT ". $limit;
 		}
 		
-		$query = "SELECT $this->fields FROM $this->table$SQL";
+		$query = "SELECT $this->fields FROM $this->table $SQL";
 
-		$rs = $this->_query($query);						
-		
-		if($this->rows() === 0) {
-			return FALSE;
-		} elseif($this->rows() === 1) {
-			$rows[] = $this->fetch();
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			while($row = $this->fetch()) {
-				$rows[] = $row;	
-			}
-		}
-
-		$this->free();
-		
-		if($this->encode) {
-			return (isset($rows)) ? $this->encoding($rows) : FALSE;
-		} else {
-			return (isset($rows)) ? $rows : FALSE;
-		}
+			return $this->data($query);
+		}	
 	}
 		
     /**
@@ -503,7 +495,7 @@ class ZP_Db extends ZP_Load {
 			$SQL .= " GROUP BY " . $group;
 		}
 		
-		if($order === FALSE) {
+		if(!$order) {
 			$SQL .= "";
 		} elseif($order !== NULL) {
 			$SQL .= " ORDER BY " . $order;
@@ -512,29 +504,15 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		if($limit !== NULL) {
-			$SQL .= " LIMIT ".$limit;
+			$SQL .= " LIMIT ". $limit;
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $field = '$value'$SQL"; 
 
-		$rs = $this->_query($query);
-
-		if($this->rows() === 0) {
-			return FALSE;
-		} elseif($this->rows() === 1) {
-			$rows[] = $this->fetch();			
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			while($row = $this->fetch()) {
-				$rows[] = $row;	
-			}
-		}
-		
-		$this->free();
-		
-		if($this->encode) {
-			return isset($rows) ? $this->encoding($rows) : FALSE;
-		} else {
-			return isset($rows) ? $rows : FALSE;
+			return $this->data($query);
 		}
 	}
 	
@@ -549,41 +527,27 @@ class ZP_Db extends ZP_Load {
      */
 	public function findBySQL($SQL, $group = NULL, $order = NULL, $limit = NULL) {					
 		if($group !== NULL) {
-			$SQL .= " GROUP BY ".$group;
+			$SQL .= " GROUP BY ". $group;
 		}
 		
-		if($order === FALSE) {
+		if(!$order) {
 			$SQL .= "";		
 		} elseif($order !== NULL) {
-			$SQL .= " ORDER BY ".$order;
+			$SQL .= " ORDER BY ". $order;
 		} elseif($order === "") {
 			$SQL .= " ORDER BY $this->primaryKey";
 		}
 		
 		if($limit !== NULL) {
-			$SQL .= " LIMIT ".$limit;
+			$SQL .= " LIMIT ". $limit;
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";		
-		
-		$rs = $this->_query($query);
-		
-		if($this->rows() === 0) {
-			return FALSE;
-		} elseif($this->rows() === 1) {
-			$rows[] = $this->fetch();			
-		} else {
-			while($row = $this->fetch()) {
-				$rows[] = $row;	
-			}
-		}
 
-		$this->free();
-		
-		if($this->encode) {
-			return (isset($rows)) ? $this->encoding($rows) : FALSE;
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			return (isset($rows)) ? $rows : FALSE;
+			return $this->data($query);
 		}
 	}
 	
@@ -595,20 +559,10 @@ class ZP_Db extends ZP_Load {
 	public function findFirst() {
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey ASC LIMIT 1";
 		
-		$rs = $this->_query($query);
-		
-		if($this->rows() === 1) {
-			$rows[] = $this->fetch();
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			return FALSE;
-		}
-		
-		$this->free();
-		
-		if($this->encode) {
-			return (isset($rows)) ? $this->encoding($rows) : FALSE;
-		} else {
-			return (isset($rows)) ? $rows : FALSE;
+			return $this->data($query);
 		}	
 	}
 		
@@ -620,20 +574,10 @@ class ZP_Db extends ZP_Load {
 	public function findLast() {		
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey DESC LIMIT 1";
 		
-		$rs = $this->_query($query);
-		
-		if($this->rows() === 1) {
-			$rows[] = $this->fetch();
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			return FALSE;
-		}
-		
-		$this->free();
-		
-		if($this->encode) {
-			return (isset($rows)) ? $this->encoding($rows) : FALSE;
-		} else {
-			return (isset($rows)) ? $rows : FALSE;
+			return $this->data($query);
 		}
 	}
 	
@@ -686,31 +630,11 @@ class ZP_Db extends ZP_Load {
 				$query = "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";	
 			}
 		}
-		
-		$this->Rs = $this->_query($query);	
-		
-		if($this->rows() === 0) {
-			return FALSE;			
+
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			if($this->fetchMode === "array") {
-				while($row = $this->fetch($this->rows())) {
-					$rows[] = $row;	
-				}
-			} else { 
-				$rows = $this->fetch($this->rows());
-			}
-		}		
-		
-		$this->free();
-		
-		$this->select = NULL;
-		$this->join   = NULL;
-		$this->where  = NULL;
-		
-		if($this->encode) {
-			return isset($rows) ? $this->encoding($rows) : FALSE;
-		} else {
-			return isset($rows) ? $rows : FALSE;
+			return $this->data($query);
 		}
 	}
 	
@@ -738,6 +662,12 @@ class ZP_Db extends ZP_Load {
 			$query = "$this->select FROM $table WHERE $_where"; 
 		} else {
 			$query = "SELECT $this->fields FROM $table WHERE $_where LIMIT $limit, $offset";	
+		}
+
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
+		} else {
+			return $this->data($query);
 		}
 	}
 	
@@ -1073,20 +1003,10 @@ class ZP_Db extends ZP_Load {
      * @return void
      */	
 	public function query($query) {		
-		$query = $this->_query($query);
-		
-		if($this->rows() === 0) {
-			return FALSE;			
+		if($this->Cache->get(sha1($query), "db")) {
+			return $this->Cache->get(sha1($query), "db");
 		} else {
-			$rows = $this->fetch($this->rows());
-		}
-		
-		$this->free();
-		
-		if($this->encode) {
-			return isset($rows) ? $this->encoding($rows) : FALSE;
-		} else {
-			return isset($rows) ? $rows : FALSE;
+			return $this->data($query);
 		}
 	}
 	
@@ -1220,13 +1140,11 @@ class ZP_Db extends ZP_Load {
 
 		$data = $this->Database->_execute("SHOW COLUMNS FROM $this->table");
 		
-		if(is_array($data)) {
-			foreach($data as $column) {
-				if($column["Key"] === "PRI") {
-					$this->primaryKey = $column["Field"];
+		if(is_object($data)) { 
+			if($data->fields["Key"] === "PRI") {
+				$this->primaryKey = $data->fields["Field"];
 					
-					return $this->primaryKey;
-				}
+				return $this->primaryKey;
 			}
 		}
 		

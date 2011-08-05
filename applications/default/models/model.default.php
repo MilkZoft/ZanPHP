@@ -20,14 +20,11 @@ class Default_Model extends ZP_Model {
 		$this->table = "contacts";
 	}
 	
-	public function getContact() {
-		$this->Db->select("Name, Email, Phone");
-		$this->Db->from($this->table);
-		
-		$this->Db->fetchMode("array");
+	public function getContact($ID) {
+		$this->Db->table("contacts");
+		$this->Db->caching(TRUE);
 		$this->Db->encode(TRUE);
-		
-		$data = $this->Db->get();
+		$data = $this->Db->find($ID);
 		
 		return $data;
 	}

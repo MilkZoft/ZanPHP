@@ -24,7 +24,7 @@ $Load = new ZP_Load();
 $helpers = array("i18n", "router", "benchmark", "string", "sessions", "security");
 
 $Load->helper($helpers);
-
+benchMarkStart();
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
 header("Content-type: text/html; charset=utf-8");
@@ -36,3 +36,4 @@ if(!version_compare(PHP_VERSION, "5.2.0", ">=")) {
 }
 
 execute();
+print benchMarkEnd();

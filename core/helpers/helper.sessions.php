@@ -31,6 +31,14 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/security_helper
  */
 
+function cacheSession($cacheID) {
+	if(SESSION("ZanUser")) {
+		return $cacheID . _dot . SESSION("ZanUser");
+	}
+
+	return $cacheID . _dot . _guest;
+}
+
 function COOKIE($cookie) {
 	if(isset($_COOKIE[$cookie])) {
 		return filter($_COOKIE[$cookie]);
