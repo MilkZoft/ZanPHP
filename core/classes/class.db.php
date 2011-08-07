@@ -261,7 +261,7 @@ class ZP_Db extends ZP_Load {
 	}
 
 	private function data($query) {
-		if($this->Cache->get(sha1($query), "db")) {
+		if(_cacheStatus and $this->Cache->get(sha1($query), "db")) {
 			return $this->Cache->get(sha1($query), "db");
 		} else {
 			$this->Rs = $this->_query($query);	
@@ -288,6 +288,8 @@ class ZP_Db extends ZP_Load {
 				
 			if($this->caching and $data) {
 				$this->Cache->save($data, sha1($query), "db");
+				
+				$this->caching = FALSE;
 			}
 
 			return $data;

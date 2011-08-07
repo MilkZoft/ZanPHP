@@ -24,16 +24,19 @@ $Load = new ZP_Load();
 $helpers = array("i18n", "router", "benchmark", "string", "sessions", "security");
 
 $Load->helper($helpers);
-benchMarkStart();
+
+//benchMarkStart();
+
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
 header("Content-type: text/html; charset=utf-8");
 
 error_reporting(E_ALL);
 
-if(!version_compare(PHP_VERSION, "5.2.0", ">=")) {
-	die("ZanPHP needs PHP 5.2.X or higher to run.");
+if(!version_compare(PHP_VERSION, "5.1.0", ">=")) {
+	die("ZanPHP needs PHP 5.1.X or higher to run.");
 }
 
 execute();
-print benchMarkEnd();
+
+//print benchMarkEnd();

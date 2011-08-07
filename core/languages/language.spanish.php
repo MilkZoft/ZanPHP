@@ -8,22 +8,8 @@ if(!defined("_access")) {
 
 function translation($text) {
 	switch($text) {
-		case "Name": return "Nombre"; break;
-		case "Email": return "Correo electrónico"; break;
-		case "Phone": return "Teléfono"; break;
-		
-		case "January": return "Enero"; break;
-		case "February": return "Febrero"; break;
-		case "March": return "Marzo"; break;
-		case "April": return "Abril"; break;
-		case "May": return "Mayo"; break;
-		case "June": return "Junio"; break;
-		case "July": return "Julio"; break;
-		case "August": return "Agosto"; break;
-		case "September": return "Septiembre"; break;
-		case "October": return "Octubre"; break;
-		case "November": return "Noviembre"; break;
-		case "December": return "Diciembre"; break;
+		case "Hello World!": return "Hola Mundo!"; break;
+		case "Goodbye Cruel World!": return "Adiós Mundo Cruel!"; break;
 	}
 	
 	return $text;

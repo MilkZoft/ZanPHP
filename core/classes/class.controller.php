@@ -44,15 +44,4 @@ class ZP_Controller extends ZP_Load {
 		$this->helper($helpers);	
 	}
 	
-    /**
-     * 
-     *
-     * @return void
-     */
-	public function templates() {
-		$this->Templates = $this->core("Templates");
-		
-		return $this->Templates;	
-	}
-
 }
