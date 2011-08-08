@@ -612,6 +612,12 @@ class ZP_Db extends ZP_Load {
 		return $this->data($query);
 	}
 	
+	private function getTable($table) {
+		$table = str_replace(_dbPfx, "", $table);
+		
+		return _dbPfx . $table; 	
+	}
+	
     /**
      * 
      *
@@ -654,15 +660,15 @@ class ZP_Db extends ZP_Load {
 			return FALSE;
 		}
 		
-		$data = $fields;
+		$table = $this->getTable($table);
 			
-		if(is_array($data)) {
-			$count   = count($data) - 1;
+		if(is_array($fields)) {
+			$count   = count($fields) - 1;
 			$_fields = NULL;
 			$_values = NULL;
 			$i 		 = 0;
 			
-			foreach($data as $field => $value) {
+			foreach($fields as $field => $value) {
 				if($i === $count) {
 					$_fields .= "$field";
 					$_values .= "'$value'";
@@ -689,7 +695,7 @@ class ZP_Db extends ZP_Load {
 			if(!$this->primaryKey) {
 				return TRUE;
 			} else {
-				$insertID = $this->Database->insertID();
+				$insertID = $this->Database->insert_ID();
 						
 				return $insertID;
 			}

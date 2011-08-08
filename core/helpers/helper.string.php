@@ -287,6 +287,7 @@ function nice($title) {
 	$title = str_replace("'", "" , $title);	
 	$title = str_replace('"', "" , $title);	
 	$title = str_replace(".", "-", $title);	
+	$title = str_replace("·", "", $title);
 	$title = str_replace("-jpg", ".jpg", $title);	
 	$title = str_replace("-jpeg", ".jpeg", $title);	
 	$title = str_replace("-gif", ".gif", $title);	

@@ -59,9 +59,16 @@ function execute() {
 			if(segment(2)) {
 				if(isController(segment(2), segment(1))) {
 					$applicationController = segment(2);
-					$method = segment(3);
+					
+					if(segment(3) and !isNumber(segment(3))) {
+						$method = segment(3);
+					} else {
+						$method = "index";	
+					}
 				} else {
-					$method = segment(2);
+					if(!isNumber(segment(2))) {
+						$method = segment(2);
+					}
 				}
 			}
 			
@@ -93,15 +100,19 @@ function execute() {
 		} else {
 			$application = segment(0);
 			
-			if(segment(1)) {
+			if(segment(1)) { 
 				if(isController(segment(1), segment(0))) {
 					$applicationController = segment(1);
 					
-					if(segment(2)) {
-						$method = segment(2);
+					if(segment(2) and !isNumber(segment(2))) {
+						$method = segment(2); 
+					} else {
+						$method = "index";	
 					}
 				} else {
-					$method = segment(1);
+					if(!isNumber(segment(1))) { 
+						$method = segment(1);
+					} 
 				}	
 			}
 			
@@ -200,8 +211,10 @@ function isController($controller, $application) {
 	return FALSE;
 }
 
-function isLang() {
-	if(segment(0) === "en" or segment(0) === "es" or segment(0) === "fr" or segment(0) === "pt") {
+function isNumber($number) {
+	$number = (int) $number;
+	
+	if($number > 0) {
 		return TRUE;	
 	}
 	

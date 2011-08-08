@@ -91,7 +91,7 @@ class ZP_Cache extends ZP_Load {
 	public function getStatus() {
 		return $this->status;
 	}
-
+	
 	public function remove($ID, $groupID = "default", $groupLevel = FALSE) {
 		$this->setFileRoutes($ID, $groupID);
 		
@@ -106,6 +106,10 @@ class ZP_Cache extends ZP_Load {
 		} else {
 			return FALSE;
 		}
+	}
+	
+	public function removeAll($groupID = "default") {
+		$this->delete(_cacheDir . _sh . $this->getKey($groupID) . _sh);
 	}
 
 	public function save($data, $ID, $groupID = "default", $time = _cacheTime) {

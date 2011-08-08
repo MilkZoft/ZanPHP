@@ -140,7 +140,11 @@ function getXMLang($language, $invert = FALSE) {
  * @param boolean $invert = TRUE
  * @return string value
  */
-function isLanguage($language) {
+function isLang($language = FALSE) {
+	if(!$language) {
+		$language = segment(0);	
+	}
+	
 	if($language === "en") {
 		return TRUE;
 	} elseif($language === "es") {

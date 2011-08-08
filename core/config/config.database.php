@@ -24,7 +24,7 @@ if($production) {
 	define("_dbHost", "localhost");
 	define("_dbUser", "root"); 
 	define("_dbPwd", "");
-	define("_dbName", "prueba");
+	define("_dbName", "zanphp");
 	define("_dbPort", "5432");
 	define("_dbPfx", "zan_");
 }

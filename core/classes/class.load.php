@@ -74,7 +74,9 @@ class ZP_Load {
      * @return 
      */
 	public function app($application) {
-		$this->application = $application;	
+		$this->application = $application;
+		
+		return $application;	
 	}
 	
 	/**

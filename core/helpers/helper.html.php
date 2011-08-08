@@ -31,31 +31,23 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/html_helper
  */
  	
-function a($text, $URL = NULL, $title = NULL, $external = FALSE, $attributes = FALSE) {
-	$title  = (is_null($title))  ? removeSpaces(cleanHTML($text)) : $title;
-	$class  = (!is_null($class)) ? ' class="' . $class . '"' : NULL;
-	$events = NULL;
+function a($text, $URL = NULL, $external = FALSE, $attributes = FALSE) {
+	$attrs = NULL;
 	
-	if(!is_null($onclick)) {
-		$events  = ' onclick="' . $onclick . '"';
+	if(is_array($attributes)) {
+		foreach($attributes as $attribute => $value) {
+			$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
+		}
 	}
-	
-	if(!is_null($onchange)) {
-		$events .= ' onchange="' . $onchange . '"';
-	}
-	
-	if(!is_null($onmouseover)) {
-		$events .= ' onmouseover="' . $onmouseover . '"'; 
-	}
-	
+		 
 	if(!$URL) {
-		return '<a title="' . $title . '"' . $class . ' name="' . $title . '"' . $events . '>' . $text . '</a>';
-	} elseif($URL === NULL) {
-		return '<a name="' . $text . '"></a>';	
+		return '<a'. $attrs .'>'. $text .'</a>';
+	} elseif(is_null($URL)) {
+		return '<a name="'. $text .'"></a>';	
 	} elseif($external) {
-		return '<a rel="external" href="' . $URL . '" title="' . $title . '"' . $events . '>' . $text . '</a>';
+		return '<a target="_blank" href="'. $URL .'"'. $attrs .'>'. $text .'</a>';
 	} else {
-		return '<a href="' . $URL . '" title="' . $title . '"' . $events . '>' . $text . '</a>';
+		return '<a href="'. $URL .'"'. $attrs .'>'. $text .'</a>';
 	}
 }
 
