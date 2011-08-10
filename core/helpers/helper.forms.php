@@ -105,7 +105,7 @@ function formField($a = NULL, $text, $raquo = TRUE) {
  * @param string  $src    = NULL
  * @param boolean $raquo  = NULL
  * @returns string $HTML
- */		
+ */		 
 function formInput($attributes = FALSE) {	
 	if(isset($attributes) and is_array($attributes)) {
 		$attrs = NULL;

@@ -17,8 +17,8 @@ define("_modRewrite", FALSE);
 define("_webCharacters", TRUE);
 define("_defaultApplication", "default");
 define("_webState", "Active");
-define("_webLanguage", "Spanish");
-define("_webLang", "es");
+define("_webLanguage", "English");
+define("_webLang", "en");
 
 /**
  * Cache

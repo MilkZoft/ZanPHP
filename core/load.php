@@ -25,7 +25,7 @@ $helpers = array("i18n", "router", "benchmark", "string", "sessions", "security"
 
 $Load->helper($helpers);
 
-benchMarkStart();
+#benchMarkStart();
 
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
@@ -39,4 +39,4 @@ if(!version_compare(PHP_VERSION, "5.1.0", ">=")) {
 
 execute();
 
-print benchMarkEnd();
+#print benchMarkEnd();
