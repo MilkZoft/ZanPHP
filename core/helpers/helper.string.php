@@ -406,7 +406,7 @@ function pageBreak($content, $URL = NULL) {
  */ 
 function POST($position = FALSE, $coding = "decode", $filter = "escape") {
 	if(!$position) {
-		____($_POST);
+		die(var_dump($_POST));
 	} elseif(isset($_POST[$position]) and is_array($_POST[$position])) {
 		return $_POST[$position];
 	} elseif(isset($_POST[$position]) and $_POST[$position] === "") {

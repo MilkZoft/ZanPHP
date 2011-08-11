@@ -106,7 +106,7 @@ function formField($a = NULL, $text, $raquo = TRUE) {
  * @param boolean $raquo  = NULL
  * @returns string $HTML
  */		 
-function formInput($attributes = FALSE) {	
+function formInput($attributes = FALSE) {
 	if(isset($attributes) and is_array($attributes)) {
 		$attrs = NULL;
 		
@@ -122,33 +122,35 @@ function formInput($attributes = FALSE) {
 		
 		if(isset($type)) {
 			if($type === "text") {
-				return '<input'. $attrs .' type="text" /> ';
+				return '<input'. $attrs .' type="text" /> ' . "\n";
 			} elseif($type === "password") {
-				return '<input'. $attrs .' type="password" /> ';
+				return '<input'. $attrs .' type="password" /> ' . "\n";
 			} elseif($type === "submit") {
-				return '<input'. $attrs .' type="submit" /> ';
+				return '<input'. $attrs .' type="submit" /> ' . "\n";
 			} elseif($type === "button") {
-				return '<input'. $attrs .' type="button" /> ';
+				return '<input'. $attrs .' type="button" /> ' . "\n";
 			} elseif($type === "checkbox") {
-				return '<input'. $attrs .' type="checkbox" /> ';
+				return '<input'. $attrs .' type="checkbox" /> ' . "\n";
 			} elseif($type === "radio") {
-				return '<input'. $attrs .' type="radio" /> ';
+				return '<input'. $attrs .' type="radio" /> ' . "\n";
 			} elseif($type === "file") {
-				return '<input'. $attrs .' type="file" /> ';
+				return '<input'. $attrs .' type="file" /> ' . "\n";
 			} elseif($type === "hidden") {
-				return '<input'. $attrs .' type="hidden" /> ';
+				return '<input'. $attrs .' type="hidden" /> ' . "\n";
 			} elseif($type === "image") {
-				return '<input'. $attrs .' type="image" /> ';
+				return '<input'. $attrs .' type="image" /> ' . "\n";
 			} elseif($type === "reset") {
-				return '<input'. $attrs .' type="reset" /> ';
+				return '<input'. $attrs .' type="reset" /> ' . "\n";
 			} else {
-				return '<input'. $attrs .' type="text" /> ';
+				return '<input'. $attrs .' type="text" /> ' . "\n";
 			}
 		} else {
-			return '<input ' . $attrs . ' type="text" /> ';
+			return '<input'. $attrs .' type="text" /> ' . "\n";
 		}
+	} elseif($attributes) {
+		return '<input name="'. $attributes .'" type="text" />' . "\n";
 	} else {
-		return NULL;
+		return NULL;	
 	}
 }
 
@@ -185,9 +187,10 @@ function formLabel($for, $text, $br = TRUE) {
  * @param string $enctype = "multipart/form-data"
  * @returns string $HTML
  */	
-function formOpen($action, $ID = NULL, $legend = NULL, $class = "forms", $method = "post", $enctype = "multipart/form-data") {	
+function formOpen($action = NULL, $ID = NULL, $legend = NULL, $class = "forms", $method = "post", $enctype = "multipart/form-data") {	
 	$ID     = (isset($ID))     ? ' id="'. $ID .'"' 			  			 : NULL;
 	$legend = (isset($legend)) ? "<legend>$legend</legend>" . "\n" : NULL;
+	$action = (strstr($action, "http://")) ? $action : _webBase . _sh . $action;
 	
 	$HTML  = '<form'. $ID .' action="'. $action .'" method="'. $method .'" class="'. $class .'" enctype="'. $enctype .'">' . "\n\t";
 	$HTML .= '<fieldset>' . "\n\t\t";
