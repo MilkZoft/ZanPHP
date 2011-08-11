@@ -67,7 +67,7 @@ function formCheckbox($attributes = FALSE) {
  * @returns string $HTML
  */	
 function formClose() {
-	$HTML  = char("\t") . "</fieldset>" . char("\n");
+	$HTML  = "\t" . "</fieldset>" . "\n";
 	$HTML .= "</form>";		
 	
 	return $HTML;
@@ -77,13 +77,13 @@ function formField($a = NULL, $text, $raquo = TRUE) {
 	$raquo = ($raquo === TRUE) ? "&raquo; " : "";
 	
 	if(!is_null($a)) {
-		$HTML  = '<p class="field">' . char("\n");
-		$HTML .= char("\t") . '<a '. $a .'>'. $raquo . $text .'</a>' . char("\n");
-		$HTML .= '</p>' . char("\n");
+		$HTML  = '<p class="field">' . "\n";
+		$HTML .= "\t" . '<a '. $a .'>'. $raquo . $text .'</a>' . "\n";
+		$HTML .= '</p>' . "\n";
 	} else {
-		$HTML  = '<p class="field">' . char("\n");
-		$HTML .= char("\t") . $raquo . $text . char("\n"); 
-		$HTML .= '</p>' . char("\n");
+		$HTML  = '<p class="field">' . "\n";
+		$HTML .= "\t" . $raquo . $text . "\n"; 
+		$HTML .= '</p>' . "\n";
 	}
 	
 	return $HTML;
@@ -166,7 +166,7 @@ function formLabel($for, $text, $br = TRUE) {
 	$HTML = "<label for=\"$for\">$text: </label>";
 	
 	if($br == TRUE) {
-		$HTML .= "<br />" . char("\n");
+		$HTML .= "<br />" . "\n";
 	}
 	
 	return $HTML;
@@ -185,13 +185,13 @@ function formLabel($for, $text, $br = TRUE) {
  * @param string $enctype = "multipart/form-data"
  * @returns string $HTML
  */	
-function formOpen($ID = NULL, $legend = NULL, $action, $class = "Forms", $method = "post", $enctype = "multipart/form-data") {	
-	$ID     = (isset($ID))     ? ' id="'.$ID.'"' 			  			 : NULL;
-	$legend = (isset($legend)) ? "<legend>$legend</legend>" . char("\n") : NULL;
+function formOpen($action, $ID = NULL, $legend = NULL, $class = "forms", $method = "post", $enctype = "multipart/form-data") {	
+	$ID     = (isset($ID))     ? ' id="'. $ID .'"' 			  			 : NULL;
+	$legend = (isset($legend)) ? "<legend>$legend</legend>" . "\n" : NULL;
 	
-	$HTML  = '<form' . $ID . ' action="' . $action . '" method="' . $method . '" class="' . $class . '" enctype="' . $enctype . '">' . char("\n\t");
-	$HTML .= '<fieldset>' . char("\n\t\t");
-	$HTML .= $Legend . char("\n");			
+	$HTML  = '<form'. $ID .' action="'. $action .'" method="'. $method .'" class="'. $class .'" enctype="'. $enctype .'">' . "\n\t";
+	$HTML .= '<fieldset>' . "\n\t\t";
+	$HTML .= $legend . "\n";			
 
 	return $HTML;
 }
@@ -261,7 +261,7 @@ function formSelect($attributes = FALSE, $options = FALSE, $select = FALSE) {
 			$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
 		}
 		
-		$HTML = char("\t") . '<select'. $attrs . '>'. char("\n");
+		$HTML = "\t" . '<select'. $attrs . '>'. "\n";
 		
 		if(is_array($options)) {
 			foreach($options as $option) {
@@ -275,11 +275,11 @@ function formSelect($attributes = FALSE, $options = FALSE, $select = FALSE) {
 				$value    = (isset($option["value"]))  ? $option["value"]  : NULL;
 				$text 	  = (isset($option["option"])) ? $option["option"] : NULL;
 				
-				$HTML .= char("\t\t") . '<option value="' . $value . '"' . $selected . '>' . $text . '</option>' . char("\n");				
+				$HTML .= "\t\t" . '<option value="' . $value . '"' . $selected . '>' . $text . '</option>' . "\n";				
 			}
 		}
 		
-		$HTML .= char("\t") . '</select>' . char("\n");
+		$HTML .= "\t" . '</select>' . "\n";
 		
 		unset($options);
 		

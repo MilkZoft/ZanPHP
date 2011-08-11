@@ -26,7 +26,7 @@ define("_webLang", "en");
 define("_cacheDir", "lib/cache");
 define("_cacheTime", 3600);
 define("_cacheExt", ".cache");
-define("_cacheStatus", TRUE);
+define("_cacheStatus", FALSE);
 
 /**
  * Languages:
