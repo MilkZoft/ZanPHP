@@ -493,16 +493,8 @@ function recoverPOST($position, $value = NULL) {
  * @return string $text
  */ 
 function removeSpaces($text, $trim = FALSE) {
-	$text = str_replace("           ", " ", $text);
-	$text = str_replace("          ", " ", $text);
-	$text = str_replace("         ", " ", $text);
-	$text = str_replace("        ", " ", $text);
-	$text = str_replace("       ", " ", $text);
-	$text = str_replace("      ", " ", $text);
-	$text = str_replace("     ", " ", $text);
-	$text = str_replace("    ", " ", $text);
-	$text = str_replace("   ", " ", $text);
-	$text = str_replace("  ", " ", $text);
+	
+	$text = preg_replace('/\s+/', ' ', $text);
 	
 	if($trim) {
 		return trim($text);
