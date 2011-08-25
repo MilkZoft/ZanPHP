@@ -128,17 +128,21 @@ function ping($domain) {
  */
 function redirect($URL, $time = FALSE) {
 	if(!$time) {
-		header("location: $URL");
+		if(substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
+			header("location: ". _webBase .  _sh . _webLang . _sh . $URL);
+		} else {
+			header("location: $URL");
+		}
 	} elseif(!is_bool($time) and $time > 0) {
 		$time = $time * 1000;
 		
 		print '
 			<script type="text/javascript">
 				function delayedRedirect() { 
-					window.location.replace("'. $URL .'"); 
+					window.location.replace("' . $URL . '"); 
 				}
 				
-				setTimeout("delayedRedirect()", '. $time .');
+				setTimeout("delayedRedirect()", ' . $time . ');
 			</script>';
 	}
 }

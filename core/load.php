@@ -25,6 +25,19 @@ $helpers = array("i18n", "router", "benchmark", "string", "sessions", "security"
 
 $Load->helper($helpers);
 
+if(_translation === "gettext") {
+	$Load->library("class.gettext", "gettext");
+	$Load->library("class.streams", "gettext");
+	 
+	$languageFile = _core . _sh . _languages . _sh . _getText . _sh . _sh . _language . _dot . strtolower(whichLanguage()) . _dot . _mo;
+
+	if(file_exists($languageFile)) {
+		$Gettext_Reader = new Gettext_Reader($languageFile);
+		
+		$Gettext_Reader->load_tables();
+	}
+}
+print __(_("Hello")); die();
 #benchMarkStart();
 
 header("Cache-Control: no-cache, must-revalidate");

@@ -8,6 +8,7 @@ if(!defined("_access")) {
 
 function translation($text) {
 	switch($text) {
+		case "Hello": return "Hola"; break;
 		case "Hi, I'm agenda": return "Hola, soy agenda"; break;
 		case "Hello World!": return "Hola Mundo!"; break;
 		case "Goodbye Cruel World!": return "Adiós Mundo Cruel!"; break;

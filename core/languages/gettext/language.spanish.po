@@ -1,0 +1,2777 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZanPHP\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-24 20:05-0600\n"
+"PO-Revision-Date: 2011-08-24 20:05-0600\n"
+"Last-Translator: Carlos Santana <carlos@milkzoft.com>\n"
+"Language-Team: Carlos Santana <carlos@santana.ws>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: MEXICO\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: /opt/lampp/htdocs/ZanPHP\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: core/load.php:40
+msgid "Hello"
+msgstr "Hola2"
+
+#~ msgid "Title"
+#~ msgstr "Título"
+
+#~ msgid "Top"
+#~ msgstr "Superior"
+
+#~ msgid "Center"
+#~ msgstr "Centro"
+
+#~ msgid "Left"
+#~ msgstr "Izquierda"
+
+#~ msgid "Right"
+#~ msgstr "Derecha"
+
+#~ msgid "Bottom"
+#~ msgstr "Inferior"
+
+#~ msgid "Position"
+#~ msgstr "Posición"
+
+#~ msgid "Banner"
+#~ msgstr "Banner"
+
+#~ msgid "Url"
+#~ msgstr "Url"
+
+#~ msgid "Code"
+#~ msgstr "Código"
+
+#~ msgid "Seconds"
+#~ msgstr "Segundos"
+
+#~ msgid "Time"
+#~ msgstr "Tiempo"
+
+#~ msgid "Manage "
+#~ msgstr "Administrar "
+
+#~ msgid "Applications"
+#~ msgstr "Aplicaciones"
+
+#~ msgid "Adding"
+#~ msgstr "Agregar"
+
+#~ msgid "In Trash: "
+#~ msgstr "En Papelera: "
+
+#~ msgid "Trash"
+#~ msgstr "Papelera"
+
+#~ msgid "Name"
+#~ msgstr "Nombre"
+
+#~ msgid "Controller"
+#~ msgstr "Controlador"
+
+#~ msgid "Yes"
+#~ msgstr "Si"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#~ msgid "Model"
+#~ msgstr "Modelo"
+
+#~ msgid "CPanel"
+#~ msgstr "CPanel"
+
+#~ msgid "Active"
+#~ msgstr "Activo"
+
+#~ msgid "Inactive"
+#~ msgstr "Inactivo"
+
+#~ msgid "Permissions"
+#~ msgstr "Permisos"
+
+#~ msgid "Super Admin"
+#~ msgstr "Super Administrador"
+
+#~ msgid "Deleting"
+#~ msgstr "Eliminar"
+
+#~ msgid "Editing"
+#~ msgstr "Editar"
+
+#~ msgid "Viewing"
+#~ msgstr "Ver"
+
+#~ msgid "Admin"
+#~ msgstr "Administrador"
+
+#~ msgid "Moderator"
+#~ msgstr "Moderador"
+
+#~ msgid "Member"
+#~ msgstr "Miembro"
+
+#~ msgid "Manage Applications"
+#~ msgstr "Administrar Aplicaciones"
+
+#~ msgid "Application"
+#~ msgstr "Aplicación"
+
+#~ msgid "Welcome to"
+#~ msgstr "Bienvenido a"
+
+#~ msgid "this is your first post, going to your"
+#~ msgstr "este es tu primer post, entra en tu"
+
+#~ msgid "Control Panel"
+#~ msgstr "Panel de Control"
+
+#~ msgid ""
+#~ "and when you add a new post this post will be disappear automatically, "
+#~ "enjoy it!"
+#~ msgstr ""
+#~ "y cuando agreges una nueva entrada este post desaparecerá "
+#~ "automaticamente, disfrutalo!"
+
+#~ msgid "Hello World"
+#~ msgstr "Hola Mundo"
+
+#~ msgid "No Comments"
+#~ msgstr "Sin Comentarios"
+
+#~ msgid "Comments"
+#~ msgstr "Comentarios"
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
+
+#~ msgid "Do you want to delete the comment permanently?"
+#~ msgstr "¿Desea eliminar el comentario permanentemente?"
+
+#~ msgid "Hi"
+#~ msgstr "Hola"
+
+#~ msgid "post a comment!"
+#~ msgstr "publica un comentario!"
+
+#~ msgid "Comment"
+#~ msgstr "Comentario"
+
+#~ msgid "Publish on Twitter"
+#~ msgstr "Publicar en Twitter"
+
+#~ msgid "Send Comment"
+#~ msgstr "Enviar Comentario"
+
+#~ msgid "Hi, Post a Comment!"
+#~ msgstr "Hola, publica un comentario!"
+
+#~ msgid "E-Mail"
+#~ msgstr "E-Mail"
+
+#~ msgid "Website"
+#~ msgstr "Sitio Web"
+
+#~ msgid "Do you want to change the current image of the mural?"
+#~ msgstr "¿Desea cambiar la imagen actual del mural?"
+
+#~ msgid "This publication will have a picture of mural?"
+#~ msgstr "¿Esta publicación tendrá una imagen de mural?"
+
+#~ msgid "Click to Show or Hide"
+#~ msgstr "Clic para mostrar o esconder"
+
+#~ msgid "Categories"
+#~ msgstr "Categorías"
+
+#~ msgid "Content"
+#~ msgstr "Contenido"
+
+#~ msgid "Published"
+#~ msgstr "Publicado"
+
+#~ msgid "Not Published"
+#~ msgstr "No Publicado"
+
+#~ msgid "State"
+#~ msgstr "Estado"
+
+#~ msgid "Tags (separated by commas)"
+#~ msgstr "Etiquetas (separadas por comas)"
+
+#~ msgid "Password"
+#~ msgstr "Contraseña"
+
+#~ msgid "Enabled"
+#~ msgstr "Habilitado"
+
+#~ msgid "Disabled"
+#~ msgstr "Deshabilitado"
+
+#~ msgid "State of Comments"
+#~ msgstr "Estado de los comentarios"
+
+#~ msgid "Language"
+#~ msgstr "Idioma"
+
+#~ msgid "Private Post"
+#~ msgstr "Post Privado"
+
+#~ msgid "Autentify"
+#~ msgstr "Autentificación"
+
+#~ msgid "By"
+#~ msgstr "Por"
+
+#~ msgid "Read"
+#~ msgstr "Leído"
+
+#~ msgid "times"
+#~ msgstr "veces"
+
+#~ msgid "time"
+#~ msgstr "vez"
+
+#~ msgid "Increase size"
+#~ msgstr "Incrementar tamaño"
+
+#~ msgid "Normal size"
+#~ msgstr "Tamaño normal"
+
+#~ msgid "Decrease font"
+#~ msgstr "Reducir tamaño"
+
+#~ msgid "Print documment"
+#~ msgstr "Imprimir documento"
+
+#~ msgid "Download PDF documment"
+#~ msgstr "Descargar documento PDF"
+
+#~ msgid "Protected Published By"
+#~ msgstr "Publicación protegida por"
+
+#~ msgid "There are no comments, why not comment?"
+#~ msgstr "No hay nuevos comentarios, ¿Por qué no comentas?"
+
+#~ msgid "Only registered users can comment"
+#~ msgstr "Solo usuarios registrados pueden comentar"
+
+#~ msgid "Join"
+#~ msgstr "Registro"
+
+#~ msgid ""
+#~ "If you are already a registered user, make your comment and put your "
+#~ "username and password to verify your account exists"
+#~ msgstr ""
+#~ "Si ya eres un usuario registrado, haz tu comentario y coloca tu usuario y "
+#~ "contraseña para verificar que tu cuenta existe"
+
+#~ msgid "User"
+#~ msgstr "Usuario"
+
+#~ msgid "Publish Comment"
+#~ msgstr "Publicar Comentario"
+
+#~ msgid "1 Comment"
+#~ msgstr "1 Comentario"
+
+#~ msgid "Written by"
+#~ msgstr "Escrito por"
+
+#~ msgid "Published in"
+#~ msgstr "Publicado en"
+
+#~ msgid "Manage Comments"
+#~ msgstr "Administrar Comentarios"
+
+#~ msgid "New Category"
+#~ msgstr "Nueva Categoría"
+
+#~ msgid "Add Category"
+#~ msgstr "Agregar Categoría"
+
+#~ msgid "Parent Category"
+#~ msgstr "Categoría Padre"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuración"
+
+#~ msgid "Name of the Website"
+#~ msgstr "Nombre del Sitio Web"
+
+#~ msgid "Slogan of the Website"
+#~ msgstr "Slogan de la Web"
+
+#~ msgid "Url Base"
+#~ msgstr "Url Principal"
+
+#~ msgid "Email for recieve notifications"
+#~ msgstr "Email para recibir notificaciones"
+
+#~ msgid "Email for send notifications"
+#~ msgstr "Email para enviar notificaciones"
+
+#~ msgid "Default Theme"
+#~ msgstr "Diseño por Defecto"
+
+#~ msgid "Default Language"
+#~ msgstr "Idioma por Defecto"
+
+#~ msgid "Default Application"
+#~ msgstr "Aplicación por Defecto"
+
+#~ msgid "Gallery Theme"
+#~ msgstr "Plantilla de la Galería"
+
+#~ msgid "Status of the Website"
+#~ msgstr "Estado del Sitio Web"
+
+#~ msgid "Message when the website is inactive"
+#~ msgstr "Mensaje que se mostrará cuando la web este inactiva"
+
+#~ msgid "Description"
+#~ msgstr "Descripción"
+
+#~ msgid "Goal"
+#~ msgstr "Total"
+
+#~ msgid "Duration"
+#~ msgstr "Duración"
+
+#~ msgid "There are no new pages"
+#~ msgstr "No hay nuevas páginas"
+
+#~ msgid "There are no new posts"
+#~ msgstr "No hay nuevos posts"
+
+#~ msgid "There are no new links"
+#~ msgstr "No hay nuevos enlaces"
+
+#~ msgid "There are no new users"
+#~ msgstr "No hay nuevos usuarios"
+
+#~ msgid "Results not found"
+#~ msgstr "No se encontraron resultados"
+
+#~ msgid "Records"
+#~ msgstr "Registros"
+
+#~ msgid "Founded"
+#~ msgstr "Encontrados"
+
+#~ msgid "Record"
+#~ msgstr "Registro"
+
+#~ msgid "Found"
+#~ msgstr "Encontrado"
+
+#~ msgid "Read Message"
+#~ msgstr "Leer Mensaje"
+
+#~ msgid "Send to Trash"
+#~ msgstr "Enviar a la papelera"
+
+#~ msgid "Do you want to send to the trash the record?"
+#~ msgstr "¿Desea enviar a la papelera el registro?"
+
+#~ msgid "Validate"
+#~ msgstr "Validar"
+
+#~ msgid "Do you want to validate the comment?"
+#~ msgstr "¿Deseas validar el comentario?"
+
+#~ msgid "Do you want to send to delete comment?"
+#~ msgstr "¿Deseas eliminar el comentario?"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
+
+#~ msgid "Do you want to edit the record?"
+#~ msgstr "¿Desea editar el registro?"
+
+#~ msgid "Restore"
+#~ msgstr "Restaurar"
+
+#~ msgid "Do you want to restore the record?"
+#~ msgstr "¿Desea restaurar el registro?"
+
+#~ msgid "Do you want to delete the record permanently?"
+#~ msgstr "¿Desea eliminar el registro permanentemente?"
+
+#~ msgid "Thank you very much"
+#~ msgstr "¡Muchas Gracias!"
+
+#~ msgid "Your message has been received"
+#~ msgstr "¡El Mensaje ha sido recibido!"
+
+#~ msgid "We will contact you as soon as possible"
+#~ msgstr "Nos pondremos en contacto con usted a la brevedad posible"
+
+#~ msgid "Have a nice day!"
+#~ msgstr "¡Que tenga un excelente día!"
+
+#~ msgid "Go Back"
+#~ msgstr "Regresar"
+
+#~ msgid "You have a new message from "
+#~ msgstr "Tiene un nuevo mensaje desde "
+
+#~ msgid "Email"
+#~ msgstr "E-Mail"
+
+#~ msgid "Company"
+#~ msgstr "Empresa"
+
+#~ msgid "Phone"
+#~ msgstr "Teléfono"
+
+#~ msgid "City"
+#~ msgstr "Ciudad"
+
+#~ msgid "Subject"
+#~ msgstr "Asunto"
+
+#~ msgid "Message"
+#~ msgstr "Mensaje"
+
+#~ msgid "Date"
+#~ msgstr "Fecha"
+
+#~ msgid "Feedback"
+#~ msgstr "Contacto"
+
+#~ msgid ""
+#~ "For more information, or simply send your comments, please fill out the "
+#~ "form below and we will contact you as soon as possible."
+#~ msgstr ""
+#~ "Si desea obtener más información, o simplemente enviar sus comentarios, "
+#~ "por favor llene el siguiente formulario y nosotros nos pondremos en "
+#~ "contacto con usted a la brevedad posible."
+
+#~ msgid "Full Name"
+#~ msgstr "Nombre Completo"
+
+#~ msgid "Other"
+#~ msgstr "Otro"
+
+#, fuzzy
+#~ msgid "Quote"
+#~ msgstr "Voto"
+
+#~ msgid "Question"
+#~ msgstr "Pregunta"
+
+#~ msgid "Send Message"
+#~ msgstr "Enviar Mensaje"
+
+#~ msgid "Blog"
+#~ msgstr "Blog"
+
+#~ msgid "From"
+#~ msgstr "De"
+
+#~ msgid "Ubication"
+#~ msgstr "Ubicación"
+
+#~ msgid "at"
+#~ msgstr "a las"
+
+#~ msgid "Return"
+#~ msgstr "Regresar"
+
+#~ msgid "Unread"
+#~ msgstr "Sin leer"
+
+#~ msgid "Topic / Author"
+#~ msgstr "Tema / Autor"
+
+#~ msgid "Last Message"
+#~ msgstr "Último Mensaje"
+
+#~ msgid "Replies"
+#~ msgstr "Respuestas"
+
+#~ msgid "Visits"
+#~ msgstr "Visitas"
+
+#~ msgid "Forums"
+#~ msgstr "Foros"
+
+#~ msgid "Forum"
+#~ msgstr "Foro"
+
+#~ msgid "Topics"
+#~ msgstr "Temas"
+
+#~ msgid "Messages"
+#~ msgstr "Mensajes"
+
+#~ msgid "New Topic"
+#~ msgstr "Nuevo Tema"
+
+#~ msgid "There is not new topics in this forum"
+#~ msgstr "No hay nuevos temas en este foro"
+
+#~ msgid "written by"
+#~ msgstr "escrito por"
+
+#~ msgid "There is not new messages in this forum"
+#~ msgstr "No hay nuevos mensajes en este foro"
+
+#~ msgid "Publish"
+#~ msgstr "Publicar"
+
+#~ msgid "Reply"
+#~ msgstr "Respuesta"
+
+#~ msgid "Publish Reply"
+#~ msgstr "Publicar Respuesta"
+
+#~ msgid "Profile"
+#~ msgstr "Perfil"
+
+#~ msgid "Send a Message"
+#~ msgstr "Enviar Mensaje"
+
+#~ msgid "Write a comment..."
+#~ msgstr "Escribe un comentario..."
+
+#~ msgid "You have to be connected to post a comment"
+#~ msgstr "Necesitas estar conectado para poder comentar"
+
+#~ msgid "Log in"
+#~ msgstr "Autentificación"
+
+#~ msgid "Sign up"
+#~ msgstr "Registrate"
+
+#~ msgid "Sign up Twitter"
+#~ msgstr "Conectar con Twitter"
+
+#~ msgid "Sign up Facebook"
+#~ msgstr "Conectar con Facebook"
+
+#~ msgid "Select an Album"
+#~ msgstr "Selecciona un Álbum"
+
+#~ msgid "Existing Albums"
+#~ msgstr "Albums Existentes"
+
+#~ msgid "Album"
+#~ msgstr "Álbum"
+
+#~ msgid "Image"
+#~ msgstr "Imagen"
+
+#~ msgid "Gallery"
+#~ msgstr "Galería"
+
+#~ msgid "Previous"
+#~ msgstr "Anterior"
+
+#~ msgid "Next"
+#~ msgstr "Siguiente"
+
+#~ msgid "Unknown"
+#~ msgstr "Desconocido"
+
+#~ msgid "Albums"
+#~ msgstr "Albums"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Publication Status"
+#~ msgstr "Estado de Publicación"
+
+#~ msgid "Follow"
+#~ msgstr "Seguimiento"
+
+#~ msgid "All Sections"
+#~ msgstr "Todas las Secciones"
+
+#~ msgid "Link Section"
+#~ msgstr "Sección de Enlaces"
+
+#~ msgid "Recommended Websites"
+#~ msgstr "Sitios Recomendados"
+
+#~ msgid "Inbox"
+#~ msgstr "Bandeja de entrada"
+
+#~ msgid "New"
+#~ msgstr "Nuevo"
+
+#~ msgid "Page Translation and Related Pages"
+#~ msgstr "Traducción de la Página y Páginas Relacionadas"
+
+#~ msgid "Principal"
+#~ msgstr "Principal"
+
+#~ msgid "Translation"
+#~ msgstr "Traducción"
+
+#~ msgid "Answer"
+#~ msgstr "Respuesta"
+
+#~ msgid "Voting"
+#~ msgstr "Votar"
+
+#~ msgid "votes"
+#~ msgstr "votos"
+
+#~ msgid "Portfolio"
+#~ msgstr "Portafolio"
+
+#~ msgid ""
+#~ "Below are the projects that our clients have relied on the quality and "
+#~ "seriousness that distinguishes our company."
+#~ msgstr ""
+#~ "A continuación le mostramos los proyectos desarrollados a nuestros "
+#~ "clientes que han confiado en la calidad y seriedad que distingue a "
+#~ "nuestra empresa."
+
+#~ msgid "Training"
+#~ msgstr "Capacitación"
+
+#~ msgid "Design"
+#~ msgstr "Diseño"
+
+#~ msgid "&"
+#~ msgstr "&"
+
+#~ msgid "Software Development"
+#~ msgstr "Desarrollo de Software"
+
+#~ msgid "Video URL. Example: "
+#~ msgstr "URL del Video. Ejemplo: "
+
+#~ msgid "Player Color"
+#~ msgstr "Color del Reproductor"
+
+#~ msgid "Support: "
+#~ msgstr "Soporte: "
+
+#~ msgid "Do you want to Upload an Image?"
+#~ msgstr "¿Deseas subir una imagen?"
+
+#~ msgid "Connect"
+#~ msgstr "Conectar"
+
+#~ msgid "Send Respond"
+#~ msgstr "Enviar Respuesta"
+
+#~ msgid "The account has been created"
+#~ msgstr "La cuenta se ha creado satisfactoriamente"
+
+#~ msgid "The tweet has been added"
+#~ msgstr "El tweet ha sido agregado"
+
+#~ msgid "Your account have been activated!"
+#~ msgstr "Su cuenta ha sido activada!"
+
+#~ msgid "Your account could not have been activated!"
+#~ msgstr "Su cuenta no ha podido activarse!"
+
+#~ msgid "Ups!! Twitter in problems"
+#~ msgstr "Ups!! Twitter tiene problemas"
+
+#~ msgid "Hello, I Register in the web "
+#~ msgstr "Me he registrado en MilkZoft :)"
+
+#~ msgid "You registered at"
+#~ msgstr "Estas registrado en"
+
+#~ msgid "Register: "
+#~ msgstr "Registrar:"
+
+#~ msgid "Password Recovery"
+#~ msgstr "Recuperar Contraseña"
+
+#~ msgid "Hour"
+#~ msgstr "Hora"
+
+#~ msgid "Start Date"
+#~ msgstr "Fecha Inicio"
+
+#~ msgid "End Date"
+#~ msgstr "Fecha Fin"
+
+#~ msgid "Add Event"
+#~ msgstr "Agregar Evento"
+
+#~ msgid "Username"
+#~ msgstr "Usuario"
+
+#~ msgid "Select one"
+#~ msgstr "Selecciona uno"
+
+#~ msgid "User Type"
+#~ msgstr "Tipo de Usuario"
+
+#~ msgid "Retrieve Password"
+#~ msgstr "Recuperar Contraseña"
+
+#~ msgid "Welcome"
+#~ msgstr "Bienvenido"
+
+#~ msgid "You have written"
+#~ msgstr "Haz escrito"
+
+#~ msgid "comments"
+#~ msgstr "comentarios"
+
+#~ msgid "Edit Profile"
+#~ msgstr "Editar Perfil"
+
+#~ msgid "Logout"
+#~ msgstr "Desconectar"
+
+#~ msgid "The account has been modified"
+#~ msgstr "La cuenta ha sido modificada"
+
+#, fuzzy
+#~ msgid "New password"
+#~ msgstr "Contraseña"
+
+#~ msgid "Gender"
+#~ msgstr "Sexo"
+
+#~ msgid "Male"
+#~ msgstr "Masculino"
+
+#~ msgid "Female"
+#~ msgstr "Femenino"
+
+#~ msgid "Personal Information"
+#~ msgstr "Información Personal"
+
+#~ msgid "Social Networks"
+#~ msgstr "Redes Sociales"
+
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
+
+#~ msgid "Facebook"
+#~ msgstr "Facebook"
+
+#, fuzzy
+#~ msgid "Recovery"
+#~ msgstr "Registro"
+
+#~ msgid "Registration of new users"
+#~ msgstr "Registro de Nuevos Usuarios"
+
+#~ msgid "Register"
+#~ msgstr "Registrar"
+
+#~ msgid "Show"
+#~ msgstr "Mostrar"
+
+#~ msgid "Hide"
+#~ msgstr "Esconder"
+
+#~ msgid "Area"
+#~ msgstr "Area"
+
+#~ msgid "Select a option"
+#~ msgstr "Selecciona una opción"
+
+#~ msgid "Picture"
+#~ msgstr "Imagen"
+
+#~ msgid "Upload Document"
+#~ msgstr "Subir Documento"
+
+#~ msgid "Add Area"
+#~ msgstr "Agregar Area"
+
+#~ msgid "Image 1"
+#~ msgstr "Imagen 1"
+
+#~ msgid "Image 2"
+#~ msgstr "Imagen 2"
+
+#~ msgid "Image 3"
+#~ msgstr "Imagen 3"
+
+#~ msgid "Image 4"
+#~ msgstr "Imagen 4"
+
+#~ msgid "Image 5"
+#~ msgstr "Imagen 5"
+
+#~ msgid "Development"
+#~ msgstr "Desarrollo"
+
+#~ msgid "Category"
+#~ msgstr "Categoría"
+
+#~ msgid "Error: config.php doesn't exists"
+#~ msgstr "Error: el archivo config.php no existe."
+
+#~ msgid "Error: function.autoload.php doesn't exists"
+#~ msgstr "Error: el archivo autoload.function.php no existe"
+
+#~ msgid "ZanPHP needs PHP 5.2.X or higher to run."
+#~ msgstr "ZanPHP necesita PHP 5.2.X o mayor para funcionar."
+
+#~ msgid "Error: Insert Failed"
+#~ msgstr "Error al intentar insertar el registro"
+
+#~ msgid "Error: Update Failed"
+#~ msgstr "Error al intentar actualizar el registro"
+
+#~ msgid "Error: Remove Failed"
+#~ msgstr "Error al intentar eliminar el registro"
+
+#~ msgid "Tags"
+#~ msgstr "Etiquetas"
+
+#~ msgid "in"
+#~ msgstr "en"
+
+#~ msgid "Not classes founded"
+#~ msgstr "Clases no encontradas"
+
+#~ msgid "This application doesn't exists"
+#~ msgstr "Error: Esta aplicación no existe"
+
+#~ msgid "Stop!"
+#~ msgstr "¡Alto!"
+
+#~ msgid "You don't have sufficient permissions to access here"
+#~ msgstr "Usted no tiene los permisos suficientes para acceder aquí"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Search"
+#~ msgstr "Búsqueda"
+
+#~ msgid "Field"
+#~ msgstr "Campo"
+
+#~ msgid "Order"
+#~ msgstr "Ordenar"
+
+#~ msgid "Ascending"
+#~ msgstr "Ascendente"
+
+#~ msgid "Descending"
+#~ msgstr "Descendente"
+
+#~ msgid "Seek"
+#~ msgstr "Buscar"
+
+#~ msgid "Counting"
+#~ msgstr "Total"
+
+#~ msgid "Select: "
+#~ msgstr "Seleccionar: "
+
+#~ msgid "All"
+#~ msgstr "Todos"
+
+#~ msgid "None"
+#~ msgstr "Ningúno"
+
+#~ msgid "Text File"
+#~ msgstr "Archivo de Texto"
+
+#~ msgid "Document File"
+#~ msgstr "Documento"
+
+#~ msgid "PDF File"
+#~ msgstr "Archivo PDF"
+
+#~ msgid "Power Point File"
+#~ msgstr "Archivo Power Point"
+
+#~ msgid "Winrar File"
+#~ msgstr "Archivo Winrar"
+
+#~ msgid "Excel File"
+#~ msgstr "Archivo Excel"
+
+#~ msgid "Winzip File"
+#~ msgstr "Archivo Winzip"
+
+#~ msgid "7z File"
+#~ msgstr "Archivo 7z"
+
+#~ msgid "Adobe Illustrator File"
+#~ msgstr "Archivo de Adobe Illustrator"
+
+#~ msgid "Corel Draw File"
+#~ msgstr "Archivo de Corel Draw"
+
+#~ msgid "Executable File"
+#~ msgstr "Archivo Ejecutable"
+
+#~ msgid "Do you really want to cancel?"
+#~ msgstr "¿Realmente deseas cancelar?"
+
+#~ msgid "Upload"
+#~ msgstr "Subir archivo"
+
+#~ msgid "Images Library"
+#~ msgstr "Librería de imágenes"
+
+#~ msgid "Documents Library"
+#~ msgstr "Librería de documentos"
+
+#~ msgid "Do you want to delete the file?"
+#~ msgstr "¿Deseas eliminar el archivo?"
+
+#~ msgid "Go"
+#~ msgstr "Ir"
+
+#~ msgid "Make Directory"
+#~ msgstr "Crear Directorio"
+
+#~ msgid "The new folders will be created and the files will be uploaded in:"
+#~ msgstr "Las nuevas carpetas serán creadas y los archivos serán subidos en:"
+
+#~ msgid "Support files:"
+#~ msgstr "Archivos soportados:"
+
+#~ msgid "and"
+#~ msgstr "y"
+
+#~ msgid "Images"
+#~ msgstr "Imagénes"
+
+#~ msgid "Preview Image"
+#~ msgstr "Previsualizar imagen"
+
+#~ msgid "Insert Image"
+#~ msgstr "Insertar Imagen"
+
+#~ msgid "Download file"
+#~ msgstr "Descargar archivo"
+
+#~ msgid "Insert File"
+#~ msgstr "Insertar Archivo"
+
+#~ msgid "Error: Connection failed"
+#~ msgstr "Error: Fallo en la conexión"
+
+#~ msgid "Home"
+#~ msgstr "Portada"
+
+#~ msgid "Error 404: Theme Not Found: "
+#~ msgstr "Error 404: No se encontró la Plantilla: "
+
+#~ msgid "Disable Javascript"
+#~ msgstr "Javascript Deshabilitado"
+
+#~ msgid "PreView"
+#~ msgstr "Previsualizar"
+
+#~ msgid "Error when trying to upload file"
+#~ msgstr "Error al intentar subir el archivo"
+
+#~ msgid "InvalID file"
+#~ msgstr "Archivo Inválido"
+
+#~ msgid "The file has errors"
+#~ msgstr "El archivo contiene errores"
+
+#~ msgid "The file exceeds the allowed size"
+#~ msgstr "El tamaño del archivo sobrepasa el límite permitido"
+
+#~ msgid "The file already exists in the files library"
+#~ msgstr "El archivo ya existe en la librería de archivos"
+
+#~ msgid "Successfully uploaded file"
+#~ msgstr "Archivo subido con éxito"
+
+#~ msgid "Download File"
+#~ msgstr "Descargar archivo"
+
+#~ msgid "New Message"
+#~ msgstr "Nuevo Mensaje"
+
+#~ msgid "New Messages"
+#~ msgstr "Nuevos Mensajes"
+
+#~ msgid "No SPAM Please :)"
+#~ msgstr "Favor de no hacer SPAM :)"
+
+#~ msgid "No Injections Please :)"
+#~ msgstr "Favor de no hacer inyecciones HTML :)"
+
+#~ msgid "The title is very vulgar, please edit it"
+#~ msgstr "El título es muy vulgar, editalo porfavor"
+
+#~ msgid "Your message is very vulgar, please edit it"
+#~ msgstr "Su mensaje es muy vulgar, editelo porfavor"
+
+#~ msgid "You need to write a code"
+#~ msgstr "Necesitas escribir el código"
+
+#~ msgid "Write a code or upload a banner"
+#~ msgstr "Escribe un código o sube un banner"
+
+#~ msgid "Invalid size for the banner"
+#~ msgstr "Tamaño invalido para la imagen del banner"
+
+#~ msgid "You need to write a title"
+#~ msgstr "Necesitas escribir un título"
+
+#~ msgid "You need to write a slogan"
+#~ msgstr "Necesitas escribir el slogan de la web"
+
+#~ msgid "You need to write a content"
+#~ msgstr "Necesitas escribir el contenido"
+
+#~ msgid "You need to write a description"
+#~ msgstr "Necesitas escribir una descripción"
+
+#~ msgid "You need to write a username"
+#~ msgstr "Necesitas escribir el nombre de usuario"
+
+#~ msgid "You need to write your name"
+#~ msgstr "Necesitas escribir tu nombre"
+
+#~ msgid "You need to write a subject"
+#~ msgstr "Necesitas escribir el asunto del mensaje"
+
+#~ msgid "You need to write your city"
+#~ msgstr "Necesitas escribir tu ciudad"
+
+#, fuzzy
+#~ msgid "The Message is Large"
+#~ msgstr "Administrar Mensajes"
+
+#~ msgid "You need to write a message"
+#~ msgstr "Necesitas escribir el mensaje"
+
+#~ msgid "You need to write a comment"
+#~ msgstr "Necesitas escribir el comentario"
+
+#~ msgid "You need to write an answer"
+#~ msgstr "Necesitas escribir una respuesta"
+
+#~ msgid "You need to write a url"
+#~ msgstr "Necesitas escribir una URL"
+
+#~ msgid "Invalid URL"
+#~ msgstr "URL Inválida"
+
+#~ msgid "Invalid Password"
+#~ msgstr "Contraseña Inválido"
+
+#~ msgid "Invalid size for mural image"
+#~ msgstr "Tamaño invalido para la imagen del mural"
+
+#~ msgid "Invalid email"
+#~ msgstr "E-Mail Inválido"
+
+#~ msgid "You must to select a permission"
+#~ msgstr "Debes seleccionar un permiso"
+
+#~ msgid "An error happened on having tried to upload the image."
+#~ msgstr "Ocurrió un error al intentar subir la imagen."
+
+#~ msgid "Invalid file"
+#~ msgstr "Archivo Inválido"
+
+#~ msgid "Corrupted file, this file has an error."
+#~ msgstr "Archivo Corrupto, el archivo esta dañado"
+
+#~ msgid "You need to specify the correct url base"
+#~ msgstr "Necesitas escribir la URL Base correctamente"
+
+#~ msgid "You must select at least a category"
+#~ msgstr "Debes seleccionar al menos una categoría"
+
+#~ msgid "Already exists a translation for this record"
+#~ msgstr "Ya existe una traducción para este registro"
+
+#~ msgid "This record already exists in the database"
+#~ msgstr "Este registro ya existe en la base de datos"
+
+#~ msgid "The file has been uploaded correctly"
+#~ msgstr "El archivo ha sido subido correctamente"
+
+#~ msgid "Successful configuration"
+#~ msgstr "Configuración exitosa"
+
+#~ msgid "The record has been saved correctly"
+#~ msgstr "El registro ha sido guardado correctamente"
+
+#~ msgid "The record has been edited correctly"
+#~ msgstr "El registro ha sido editado correctamente"
+
+#~ msgid "The configuration has been edited correctly"
+#~ msgstr "Configuración exitosa!"
+
+#~ msgid "This user already exists in the database"
+#~ msgstr "Este usuario ya existe en la base de datos"
+
+#~ msgid "This email already exists in the database"
+#~ msgstr "Este email ya existe en la base de datos"
+
+#~ msgid "The "
+#~ msgstr "Diseño"
+
+#~ msgid "Comment published correctly"
+#~ msgstr "El comentario ha sido publicado correctamente"
+
+#~ msgid "Your message had been sent successfully"
+#~ msgstr "¡El Mensaje ha sido enviado correctamente!"
+
+#~ msgid "You need to select a User"
+#~ msgstr "Necesitas seleccionar un usuario"
+
+#~ msgid "The forum has been saved"
+#~ msgstr "El foro ha sido guardado correctamente"
+
+#~ msgid "The forum has been edited"
+#~ msgstr "El foro ha sido editado correctamente"
+
+#~ msgid "The Ad has been saved"
+#~ msgstr "El anuncio ha sido guardado correctamente"
+
+#~ msgid "The Ad has been edited"
+#~ msgstr "El anuncio ha sido editado correctamente"
+
+#~ msgid "The Category has been saved"
+#~ msgstr "La categoría ha sido guardada correctamente"
+
+#~ msgid "The Category has been edited"
+#~ msgstr "La categoría ha sido guardada correctamente"
+
+#~ msgid "The Poll has been saved"
+#~ msgstr "La encuesta ha sido guardada correctamente"
+
+#~ msgid "The Link has been saved"
+#~ msgstr "El enlace ha sido agregado correctamente"
+
+#~ msgid "The Link has been edited"
+#~ msgstr "El enlace ha sido agregado correctamente"
+
+#~ msgid "The Poll has been edited"
+#~ msgstr "La encuesta ha sido editado correctamente"
+
+#~ msgid "The Page has been edited"
+#~ msgstr "La página ha sido editado correctamente"
+
+#~ msgid "The Url has been saved"
+#~ msgstr "La URL ha sido guardada correctamente"
+
+#~ msgid "The Url has been edited"
+#~ msgstr "La URL ha sido editada correctamente"
+
+#, fuzzy
+#~ msgid "The Work has been edited"
+#~ msgstr "El foro ha sido editado correctamente"
+
+#, fuzzy
+#~ msgid "The Work has been saved"
+#~ msgstr "El foro ha sido guardado correctamente"
+
+#~ msgid "Spanish"
+#~ msgstr "Español"
+
+#~ msgid "English"
+#~ msgstr "Inglés"
+
+#~ msgid "French"
+#~ msgstr "Francés"
+
+#~ msgid "Portuguese"
+#~ msgstr "Portugués"
+
+#~ msgid "Italian"
+#~ msgstr "Italiano"
+
+#~ msgid "German"
+#~ msgstr "Alemán"
+
+#~ msgid "Read More"
+#~ msgstr "Leer Más..."
+
+#~ msgid "Share"
+#~ msgstr "Compartir"
+
+#~ msgid "on"
+#~ msgstr "el"
+
+#~ msgid "yesterday"
+#~ msgstr "ayer"
+
+#~ msgid "before yesterday"
+#~ msgstr "antier"
+
+#~ msgid "more than an hour ago"
+#~ msgstr "hace más de una hora"
+
+#~ msgid "now"
+#~ msgstr "ahora"
+
+#~ msgid "Manage Ads"
+#~ msgstr "Administrar Anuncios"
+
+#~ msgid "Manage Blog"
+#~ msgstr "Administrar Blog"
+
+#~ msgid "Manage Links"
+#~ msgstr "Administrar Enlaces"
+
+#~ msgid "Manage Users"
+#~ msgstr "Administrar Usuarios"
+
+#~ msgid "Manage Categories"
+#~ msgstr "Administrar Categorías"
+
+#~ msgid "Manage Pages"
+#~ msgstr "Administrar Páginas"
+
+#~ msgid "Manage Feedback"
+#~ msgstr "Administrar Mensajes de Contacto"
+
+#~ msgid "Manage Support"
+#~ msgstr "Administrar Soporte"
+
+#~ msgid "Action"
+#~ msgstr "Acción"
+
+#~ msgid "Author"
+#~ msgstr "Autor"
+
+#~ msgid "Clicks"
+#~ msgstr "Clics"
+
+#~ msgid "BeDefault"
+#~ msgstr "Por Defecto"
+
+#~ msgid "Ads"
+#~ msgstr "Anuncios"
+
+#~ msgid "Help"
+#~ msgstr "Ayuda"
+
+#~ msgid "Journal"
+#~ msgstr "Diario"
+
+#~ msgid "Languages"
+#~ msgstr "Idiomas"
+
+#~ msgid "Learning"
+#~ msgstr "Educación"
+
+#~ msgid "Links"
+#~ msgstr "Enlaces"
+
+#~ msgid "Pages"
+#~ msgstr "Páginas"
+
+#~ msgid "SMS"
+#~ msgstr "SMS"
+
+#~ msgid "Users"
+#~ msgstr "Usuarios"
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "E-Bill"
+#~ msgstr "Facturación Electrónica"
+
+#~ msgid "Polls"
+#~ msgstr "Encuestas"
+
+#~ msgid "Support"
+#~ msgstr "Soporte Técnico"
+
+#~ msgid "Works"
+#~ msgstr "Portafolio de Trabajos"
+
+#~ msgid "Deleted"
+#~ msgstr "Eliminado"
+
+#~ msgid "Unpublished"
+#~ msgstr "Sin Publicar"
+
+#~ msgid "The image has been saved correctly"
+#~ msgstr "La imagen ha sido guardada correctamente"
+
+#~ msgid "The page has been saved correctly"
+#~ msgstr "La página ha sido guardada correctamente"
+
+#~ msgid "The page has been edited correctly"
+#~ msgstr "La página ha sido modificada correctamente"
+
+#~ msgid "The post has been saved correctly"
+#~ msgstr "El post ha sido guardado correctamente"
+
+#~ msgid "The post has been edited correctly"
+#~ msgstr "El post ha sido modificado correctamente"
+
+#~ msgid "The ticket has been saved correctly"
+#~ msgstr "El ticket ha sido guardado correctamente"
+
+#~ msgid "Information"
+#~ msgstr "Información"
+
+#~ msgid "Publications"
+#~ msgstr "Publicaciones"
+
+#~ msgid "Citations"
+#~ msgstr "Citas"
+
+#~ msgid "Documents"
+#~ msgstr "Documentos"
+
+#~ msgid "Powered by"
+#~ msgstr "Desarrollado por"
+
+#~ msgid "Users Online"
+#~ msgstr "Usuarios en Línea"
+
+#~ msgid "Registered Users"
+#~ msgstr "Registrados"
+
+#~ msgid "Last User"
+#~ msgstr "Último"
+
+#~ msgid "Last Posts"
+#~ msgstr "Últimos Posts"
+
+#~ msgid "Last Pages"
+#~ msgstr "Últimas Páginas"
+
+#~ msgid "Last Links"
+#~ msgstr "Últimos Enlaces"
+
+#~ msgid "Last Users"
+#~ msgstr "Últimos Usuarios"
+
+#~ msgid "Login"
+#~ msgstr "Conectar"
+
+#~ msgid "Incorrect Login"
+#~ msgstr "Login Incorrecto"
+
+#~ msgid "Administration"
+#~ msgstr "Administración"
+
+#~ msgid "You are in"
+#~ msgstr "Usted está en"
+
+#~ msgid "Our products"
+#~ msgstr "Nuestros productos"
+
+#~ msgid "Contact us now!"
+#~ msgstr "¡Contactános hoy!"
+
+#~ msgid "In our offices"
+#~ msgstr "En nuestras oficinas"
+
+#~ msgid "About us"
+#~ msgstr "Nosotros"
+
+#~ msgid "Services"
+#~ msgstr "Servicios"
+
+#~ msgid "Contact us"
+#~ msgstr "Contacto"
+
+#~ msgid "What's happening?"
+#~ msgstr "¿Qué está pasando?"
+
+#~ msgid "Log off"
+#~ msgstr "Desconectar"
+
+#~ msgid "You can login with your Twitter account"
+#~ msgstr "Puedes conectarte con tu cuenta de Twitter"
+
+#~ msgid "You can login with your Facebook account"
+#~ msgstr "Puedes conectarte con tu cuenta de Facebook"
+
+#, fuzzy
+#~ msgid "Recovery Password"
+#~ msgstr "Recuperar Contraseña"
+
+#~ msgid "Member Login"
+#~ msgstr "Autentificación de Miembros"
+
+#~ msgid "Remember me"
+#~ msgstr "Recordar mi sesión"
+
+#~ msgid "Not a member yet? Sign Up!"
+#~ msgstr "¿Aún no eres un miembro?, Registrate!"
+
+#~ msgid "A password will be e-mailed to you"
+#~ msgstr "Una contraseña será enviada a tu e-mail"
+
+#, fuzzy
+#~ msgid "My Comments"
+#~ msgstr "Comentarios"
+
+#, fuzzy
+#~ msgid "Mentions"
+#~ msgstr "Secciones"
+
+#, fuzzy
+#~ msgid "No Mentions"
+#~ msgstr "Sin Comentarios"
+
+#, fuzzy
+#~ msgid "My Friends"
+#~ msgstr "Webs Amigas"
+
+#, fuzzy
+#~ msgid "No Friends"
+#~ msgstr "Webs Amigas"
+
+#, fuzzy
+#~ msgid "Members panel"
+#~ msgstr "Autentificación de Miembros"
+
+#~ msgid "Guest"
+#~ msgstr "Invitado"
+
+#~ msgid "Open Panel"
+#~ msgstr "Abrir Panel"
+
+#~ msgid "Log In or Register"
+#~ msgstr "Zona Miembros"
+
+#~ msgid "Close"
+#~ msgstr "Cerrar"
+
+#, fuzzy
+#~ msgid "My Home"
+#~ msgstr "Portada"
+
+#, fuzzy
+#~ msgid "My Last Comments"
+#~ msgstr "Administrar Comentarios"
+
+#~ msgid ""
+#~ "The page was edited properly. There is a translation page that needs "
+#~ "updating, you will be redirected automatically."
+#~ msgstr ""
+#~ "La página ha sido editada correctamente. Existe una página de traducción "
+#~ "que necesita ser actualizada, serás redireccionado automáticamente."
+
+#~ msgid "Click to show or Hide"
+#~ msgstr "Clic para mostrar o esconder"
+
+#~ msgid "Monday"
+#~ msgstr "Lunes"
+
+#~ msgid "Tuesday"
+#~ msgstr "Martes"
+
+#~ msgid "Wednesday"
+#~ msgstr "Miércoles"
+
+#~ msgid "Thursday"
+#~ msgstr "Jueves"
+
+#~ msgid "Friday"
+#~ msgstr "Viernes"
+
+#~ msgid "Saturday"
+#~ msgstr "Sábado"
+
+#~ msgid "Sunday"
+#~ msgstr "Domingo"
+
+#~ msgid "January"
+#~ msgstr "Enero"
+
+#~ msgid "February"
+#~ msgstr "Febrero"
+
+#~ msgid "March"
+#~ msgstr "Marzo"
+
+#~ msgid "April"
+#~ msgstr "Abril"
+
+#~ msgid "May"
+#~ msgstr "Mayo"
+
+#~ msgid "June"
+#~ msgstr "Junio"
+
+#~ msgid "July"
+#~ msgstr "Julio"
+
+#~ msgid "August"
+#~ msgstr "Agosto"
+
+#~ msgid "September"
+#~ msgstr "Septiembre"
+
+#~ msgid "November"
+#~ msgstr "Noviembre"
+
+#~ msgid "December"
+#~ msgstr "Diciembre"
+
+#~ msgid "Welcome to MilkZoft"
+#~ msgstr "Bienvenido a Milk"
+
+#~ msgid "Answer 1"
+#~ msgstr "Respuesta 1"
+
+#~ msgid "Private"
+#~ msgstr "Privada"
+
+#~ msgid "FlickR State"
+#~ msgstr "Estado en FlickR"
+
+#~ msgid "Manage Images"
+#~ msgstr "Administrar Imágenes"
+
+#~ msgid "Do you want to eliminate the record?"
+#~ msgstr "¿Deseas eliminar el registro?"
+
+#~ msgid "Valid XHTML 1.0 Strict"
+#~ msgstr "Valid XHTML 1.0 Strict"
+
+#~ msgid "Valid CSS"
+#~ msgstr "CSS Válido"
+
+#~ msgid "WAI-AA WCAG 1.0"
+#~ msgstr "WAI-AA WCAG 1.0"
+
+#~ msgid "We don't support IE"
+#~ msgstr "No respaldamos a IE"
+
+#~ msgid "Developed by"
+#~ msgstr "Desarrollado por"
+
+#~ msgid "All rights reserved"
+#~ msgstr "Todos los derechos reservados"
+
+#~ msgid "Presidency"
+#~ msgstr "Presidencia"
+
+#~ msgid "Secretariats"
+#~ msgstr "Secretarías"
+
+#~ msgid "Structures"
+#~ msgstr "Estructuras"
+
+#~ msgid "Basic Documents"
+#~ msgstr "Documentos Básicos"
+
+#~ msgid "Officials"
+#~ msgstr "Funcionarios"
+
+#~ msgid "Press Room"
+#~ msgstr "Sala de Prensa"
+
+#~ msgid "Community"
+#~ msgstr "Comunidad"
+
+#~ msgid "The image size should be "
+#~ msgstr "La imagen debe ser de "
+
+#~ msgid "Manage Gallery"
+#~ msgstr "Administrar Galería"
+
+#~ msgid "Manage Videos"
+#~ msgstr "Administrar Videos"
+
+#~ msgid "Soporte"
+#~ msgstr "Soporte Técnico"
+
+#~ msgid "Published by"
+#~ msgstr "Publicado por"
+
+#~ msgid "Reply: "
+#~ msgstr "Respuesta"
+
+#, fuzzy
+#~ msgid "week ago"
+#~ msgstr "Ver también"
+
+#, fuzzy
+#~ msgid "seconds ago"
+#~ msgstr "Segundos"
+
+#, fuzzy
+#~ msgid "//Caption"
+#~ msgstr "Citas"
+
+#, fuzzy
+#~ msgid "Do you want to Upload an Image"
+#~ msgstr "¿Deseas eliminar la página?"
+
+#~ msgid "Videos"
+#~ msgstr "Videos"
+
+#~ msgid "portfolio"
+#~ msgstr "portafolio"
+
+#~ msgid "feedback"
+#~ msgstr "contacto"
+
+#~ msgid "blog"
+#~ msgstr "blog"
+
+#~ msgid "Hidden"
+#~ msgstr "Esconder"
+
+#~ msgid "Ad"
+#~ msgstr "Anuncio"
+
+#~ msgid "The comment can not be empty"
+#~ msgstr "El Comentario no puede estar vacío"
+
+#~ msgid "Posts"
+#~ msgstr "Posts"
+
+#~ msgid "Parent"
+#~ msgstr "Padre"
+
+#~ msgid "Manage Messages"
+#~ msgstr "Administrar Mensajes"
+
+#~ msgid "Country"
+#~ msgstr "País"
+
+#~ msgid "Photo"
+#~ msgstr "Fotografía"
+
+#~ msgid "Photos"
+#~ msgstr "Fotografías"
+
+#~ msgid "Manage Help"
+#~ msgstr "Administrar Ayudas"
+
+#~ msgid "Topic"
+#~ msgstr "Tema"
+
+#~ msgid "Link"
+#~ msgstr "Enlace"
+
+#~ msgid "Full Screen"
+#~ msgstr "Pantalla Completa"
+
+#~ msgid "Page"
+#~ msgstr "Página"
+
+#~ msgid "You have to write a username"
+#~ msgstr "Tiene que escribir su nombre de usuario"
+
+#~ msgid "Your password must have 6 characters or more."
+#~ msgstr "Su contraseña debe contener al menos 6 caracteres."
+
+#~ msgid "Invalid Email"
+#~ msgstr "E-Mail Inválido"
+
+#~ msgid "You have to write your name"
+#~ msgstr "Tiene que escribir su nombre"
+
+#~ msgid "Passwords do not match"
+#~ msgstr "Las contraseñas no coinciden"
+
+#~ msgid "The user already exists in our database"
+#~ msgstr "El usuario ya existe en nuestra base de datos"
+
+#~ msgid "The e-mail already exists in our database"
+#~ msgstr "El e-mail ya existe en nuestra base de datos"
+
+#~ msgid "Invalid Referer"
+#~ msgstr "Referido Inválido"
+
+#~ msgid "You have to choose your country"
+#~ msgstr "Tiene que elegir su país"
+
+#~ msgid "You have to choose your district"
+#~ msgstr "Tiene que elegir su estado"
+
+#~ msgid "You have to choose your town"
+#~ msgstr "Tiene que elegir su municipio"
+
+#~ msgid "Name(s)"
+#~ msgstr "Nombre(s)"
+
+#~ msgid "Last Name"
+#~ msgstr "Apellido"
+
+#~ msgid "Mother's maiden name"
+#~ msgstr "Nombre de soltera de la madre"
+
+#~ msgid "Email Ucol"
+#~ msgstr "E-Mail de Ucol"
+
+#~ msgid "Number Employee"
+#~ msgstr "Números de empleados"
+
+#~ msgid "Academic Unit"
+#~ msgstr "Unidad Académica"
+
+#~ msgid "Academic Degree"
+#~ msgstr "Grado Académico"
+
+#~ msgid "Area of initial training"
+#~ msgstr "Área de formación inicial"
+
+#~ msgid "Projects in the last two years"
+#~ msgstr "Proyectos en los últimos dos años"
+
+#~ msgid "Surnames"
+#~ msgstr "Apellidos"
+
+#~ msgid "Academic Information"
+#~ msgstr "Información Académica"
+
+#~ msgid "Flickr"
+#~ msgstr "Flickr"
+
+#~ msgid "Your password must be have almost 6 characters"
+#~ msgstr "Su contraseña debe contener al menos 6 caracteres"
+
+#~ msgid "This ad already exists in the database"
+#~ msgstr "Este anuncio ya existe en la base de datos"
+
+#~ msgid "This post already exists in the database"
+#~ msgstr "Este post ya existe en la base de datos"
+
+#~ msgid "This page already exists in the database"
+#~ msgstr "Este página ya existe en la base de datos"
+
+#~ msgid "The image already exists."
+#~ msgstr "La imagen ya existe"
+
+#~ msgid "The help has been saved correctly"
+#~ msgstr "La ayuda ha sido guardada correctamente"
+
+#~ msgid "Javascript disabled"
+#~ msgstr "Javascript Deshabilitado"
+
+#~ msgid "Lost your password?"
+#~ msgstr "¿Olvidó su contraseña?"
+
+#~ msgid "Write the Username"
+#~ msgstr "Escribe el usuario"
+
+#~ msgid "Write the Password"
+#~ msgstr "Escribe la contraseña"
+
+#~ msgid "Log In"
+#~ msgstr "Autentificación "
+
+#~ msgid "Mission"
+#~ msgstr "Misión"
+
+#~ msgid "Vision"
+#~ msgstr "Visión"
+
+#~ msgid "Values"
+#~ msgstr "Valores"
+
+#~ msgid "Organization Chart"
+#~ msgstr "Organigrama"
+
+#~ msgid "Careers"
+#~ msgstr "Carreras"
+
+#~ msgid "Solutions"
+#~ msgstr "Soluciones"
+
+#~ msgid "Content Management System"
+#~ msgstr "CMS"
+
+#~ msgid "CMS"
+#~ msgstr "CMS"
+
+#~ msgid "CRM"
+#~ msgstr "CRM"
+
+#~ msgid "E-Commerce"
+#~ msgstr "Comercio Electrónico"
+
+#~ msgid "E-Learning"
+#~ msgstr "Educación "
+
+#~ msgid "Networking"
+#~ msgstr "Networking"
+
+#~ msgid "Web 2.0"
+#~ msgstr "Web 2.0"
+
+#~ msgid "Software Support"
+#~ msgstr "Soporte Técnico"
+
+#~ msgid "Software"
+#~ msgstr "Software"
+
+#~ msgid "Open Source"
+#~ msgstr "Software Libre"
+
+#~ msgid "Resources"
+#~ msgstr "Recursos"
+
+#~ msgid "Aula TI"
+#~ msgstr "Aula TI"
+
+#~ msgid "Events Calendar"
+#~ msgstr "Calendario de Eventos"
+
+#~ msgid "Sign Up"
+#~ msgstr "Registrate"
+
+#~ msgid "Permissions by application"
+#~ msgstr "Permisos por aplicación"
+
+#~ msgid "Add"
+#~ msgstr "Agregar"
+
+#~ msgid "Searching"
+#~ msgstr "Búsqueda"
+
+#~ msgid "Error: connection failed"
+#~ msgstr "Error: Fallo en la conexión"
+
+#~ msgid "Surveys"
+#~ msgstr "Encuestas"
+
+#~ msgid "New Application"
+#~ msgstr "Nueva Aplicación"
+
+#~ msgid "New Publication"
+#~ msgstr "Nueva Publicación"
+
+#~ msgid "New Image"
+#~ msgstr "Nueva Imagen"
+
+#~ msgid "New Link"
+#~ msgstr "Nuevo Enlace"
+
+#~ msgid "New Page"
+#~ msgstr "Nueva Página"
+
+#~ msgid "New Work"
+#~ msgstr "Nuevo Trabajo"
+
+#~ msgid "New Survey"
+#~ msgstr "Nueva Encuesta"
+
+#~ msgid "New User"
+#~ msgstr "Nuevo Usuario"
+
+#~ msgid "Do you want to _Edit the record?"
+#~ msgstr "¿Deseas editar el registro?"
+
+#~ msgid ""
+#~ "Your account has been created correctly, you have to verify your e-mail "
+#~ "to activate your account."
+#~ msgstr ""
+#~ "Su cuenta ha sido creada correctamente, verifique su e-mail para activar "
+#~ "su cuenta."
+
+#~ msgid "Your account has been created and activated correctly."
+#~ msgstr "Su cuenta ha sido creada y activada correctamente."
+
+#~ msgid "Account Activation"
+#~ msgstr "Activación de Cuenta"
+
+#~ msgid "This is your account information"
+#~ msgstr "Esta es la información de tu cuenta"
+
+#~ msgid ""
+#~ "It is necessary that you activate your account, to activate it do click "
+#~ "in the following link"
+#~ msgstr ""
+#~ "Es necesario que actives tu cuenta, para activarla haz clic en el "
+#~ "siguiente enlace"
+
+#~ msgid "Activate Account"
+#~ msgstr "Activar Cuenta"
+
+#~ msgid ""
+#~ "If you have problems on having acceded to the link, copy and paste the "
+#~ "following url in your explorer"
+#~ msgstr ""
+#~ "Si tienes problemas para acceder al enlace, copia y pega la siguiente url "
+#~ "en tu explorador"
+
+#~ msgid "There are"
+#~ msgstr "Hay"
+
+#~ msgid "connected users"
+#~ msgstr "usuarios conectados"
+
+#~ msgid "persons have registered"
+#~ msgstr "personas se han registrado"
+
+#~ msgid "is the most new user"
+#~ msgstr "es el usuario más nuevo"
+
+#~ msgid "Add Image"
+#~ msgstr "Agrega Imagen"
+
+#~ msgid "District"
+#~ msgstr "Estado"
+
+#~ msgid "Party"
+#~ msgstr "Partido"
+
+#~ msgid "Structural Organization"
+#~ msgstr "Organización Estructural"
+
+#~ msgid "Announcements"
+#~ msgstr "Convocatorias"
+
+#~ msgid "Transparency"
+#~ msgstr "Transparencia"
+
+#~ msgid "Young Voice"
+#~ msgstr "Voz Joven"
+
+#~ msgid "Link Unit"
+#~ msgstr "Unidad de Enlace"
+
+#~ msgid "Organization"
+#~ msgstr "Organización"
+
+#~ msgid "Does the post appear on the homepage?"
+#~ msgstr "¿El post aparecerá en la página principal?"
+
+#~ msgid "Password to protect this post"
+#~ msgstr "Contraseña para proteger el post"
+
+#~ msgid "URL"
+#~ msgstr "URL"
+
+#~ msgid "Status"
+#~ msgstr "Estado"
+
+#~ msgid "Add Link"
+#~ msgstr "Agregar Enlace"
+
+#~ msgid "Subscribed"
+#~ msgstr "Suscrito"
+
+#~ msgid "New Album"
+#~ msgstr "Álbum Nuevo"
+
+#~ msgid "Add Album"
+#~ msgstr "Agregar Álbum"
+
+#~ msgid "Our Representatives"
+#~ msgstr "Nuestros Representantes"
+
+#, fuzzy
+#~ msgid "message Messages"
+#~ msgstr "Administrar Mensajes"
+
+#~ msgid "Rss"
+#~ msgstr "Rss"
+
+#~ msgid "Up"
+#~ msgstr "Subir"
+
+#~ msgid "The Page has been created correctly"
+#~ msgstr "La página ha sido creada correctamente"
+
+#~ msgid "The Post has been modified correctly"
+#~ msgstr "El Post ha sido modificado correctamente"
+
+#~ msgid "You need to write a name"
+#~ msgstr "Necesitas escribir el nombre de la web"
+
+#~ msgid "You need to write a title for the image"
+#~ msgstr "Necesitas escribir el titulo de la imagen"
+
+#~ msgid "Invalid File"
+#~ msgstr "Archivo Inválido"
+
+#~ msgid "You need to write a URL"
+#~ msgstr "Necesitas escribir la URL"
+
+#~ msgid "The Page has been modified correctly"
+#~ msgstr "La Página ha sido modificada correctamente"
+
+#~ msgid "The User already exists"
+#~ msgstr "El usuario ya existe"
+
+#~ msgid "The Poll has been added correctly"
+#~ msgstr "La encuesta ha sido agragada correctamente"
+
+#~ msgid "The Answers has been added correctly"
+#~ msgstr "Las respuestas han sido agregadas correctamente"
+
+#~ msgid "Exception thrown while calling facebook.connect.unregisterUsers: "
+#~ msgstr "Error mientras se llamaba a facebook.connect.unregisterUsers:"
+
+#~ msgid "Exception thrown while calling facebook.connect.registerUsers: "
+#~ msgstr "Error mientras se llamaba a facebook.connect.registerUsers:"
+
+#~ msgid "Authenticating users"
+#~ msgstr "Autentificación"
+
+#~ msgid "CCD'S"
+#~ msgstr "CCD'S"
+
+#~ msgid "Survey of the Week"
+#~ msgstr "Encuesta de la Semana"
+
+#~ msgid "Thanks for your vote"
+#~ msgstr "¡Muchas gracias por tu voto!"
+
+#~ msgid "Send Vote"
+#~ msgstr "Votar"
+
+#~ msgid "View Results"
+#~ msgstr "Ver Resultados"
+
+#~ msgid "Location"
+#~ msgstr "Ubicación"
+
+#~ msgid "Last Photos"
+#~ msgstr "Últimos Fotos"
+
+#~ msgid "Link Text"
+#~ msgstr "Texto del Enlace"
+
+#~ msgid "Some Text"
+#~ msgstr "Escriba algún texto"
+
+#~ msgid "Class"
+#~ msgstr "Clase"
+
+#~ msgid "Video Server"
+#~ msgstr "Video Servidor"
+
+#~ msgid "Privilege"
+#~ msgstr "Privilegio"
+
+#~ msgid "Down"
+#~ msgstr "Inferior"
+
+#~ msgid "Modify Ad"
+#~ msgstr "Modificar Anuncio"
+
+#~ msgid "Create Ad"
+#~ msgstr "Crear Anuncio"
+
+#~ msgid "Sponsor"
+#~ msgstr "Empresa Patrocinadora"
+
+#~ msgid "Add User"
+#~ msgstr "Agregar Usuario"
+
+#~ msgid "Privileges"
+#~ msgstr "Privilegios"
+
+#~ msgid "Alternative Text"
+#~ msgstr "Texto Alternativo"
+
+#~ msgid "Alt Text"
+#~ msgstr "Texto Alternativo"
+
+#~ msgid "Legal"
+#~ msgstr "Legal"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Política de Privacidad"
+
+#, fuzzy
+#~ msgid "Parents"
+#~ msgstr "Padre"
+
+#~ msgid "Related Topics"
+#~ msgstr "Temas Relacionados"
+
+#~ msgid "Modify Post"
+#~ msgstr "Modificar Post"
+
+#~ msgid "Save"
+#~ msgstr "Guardar"
+
+#~ msgid "Separate tags with commas"
+#~ msgstr "Separa las etiquetas con comas"
+
+#~ msgid "Metatags"
+#~ msgstr "Metadatos"
+
+#~ msgid "Javascript Framework"
+#~ msgstr "Framework de Javascript"
+
+#~ msgid "Post by Page"
+#~ msgstr "Post por Página"
+
+#~ msgid "Friendly Urls"
+#~ msgstr "Urls Amigables"
+
+#~ msgid "Charset"
+#~ msgstr "Codificación de Caracteres"
+
+#~ msgid "Who will activate the new users accounts?"
+#~ msgstr "¿Quién activará las nuevas cuentas de usuarios?"
+
+#~ msgid "Nobody"
+#~ msgstr "Nadie"
+
+#~ msgid "The User"
+#~ msgstr "El Usuario"
+
+#~ msgid "The Administrator"
+#~ msgstr "El Administrador"
+
+#~ msgid "Administrator Email"
+#~ msgstr "Email del Administrador"
+
+#~ msgid "Send Feedback Mailing"
+#~ msgstr "Enviar Correos de Contacto"
+
+#~ msgid "Every Weekend"
+#~ msgstr "Cada Fin de Semana"
+
+#~ msgid "Always"
+#~ msgstr "Siempre"
+
+#~ msgid "Never"
+#~ msgstr "Nunca"
+
+#~ msgid "Apply Changes"
+#~ msgstr "Aplicar Cambios"
+
+#~ msgid "Modify"
+#~ msgstr "Modificar"
+
+#~ msgid "Error: Could not connect to paypal"
+#~ msgstr "Error: Fallo en la conexión de PayPal"
+
+#~ msgid "Error: Duplicate Transaction"
+#~ msgstr "Error: Transacción duplicada"
+
+#~ msgid "Error: Invalid Transaction"
+#~ msgstr "Error: Transacción inválida"
+
+#~ msgid "PayPal. The fast and secure way to pay online."
+#~ msgstr "PayPal. La manera más rápida y segura de pagar en línea."
+
+#~ msgid "Delete Image"
+#~ msgstr "Eliminar imagen"
+
+#~ msgid "Phones"
+#~ msgstr "Teléfonos"
+
+#~ msgid "Delete Selected Images"
+#~ msgstr "Borrar las Imágenes Seleccionadas"
+
+#~ msgid "Modify Page"
+#~ msgstr "Modificar Página"
+
+#~ msgid "Create Page"
+#~ msgstr "Crear Página"
+
+#~ msgid "Every page must be published in a different language"
+#~ msgstr "Cada página debe ser publicada en un idioma diferente"
+
+#~ msgid "Jobs"
+#~ msgstr "Empleos"
+
+#~ msgid "PHP"
+#~ msgstr "PHP"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid ""
+#~ "Write a title that describes the content of the post should be short and "
+#~ "easy to remember (less than 100 characters)"
+#~ msgstr ""
+#~ "Escribe un título que describa el contenido del post, debe ser corto y "
+#~ "fácil de recordar (menos de 100 caracteres)"
+
+#~ msgid "Add Tags"
+#~ msgstr "Agregar Etiquetas"
+
+#~ msgid "Ads Filter"
+#~ msgstr "Filtro de anuncios"
+
+#~ msgid "There are no new ads"
+#~ msgstr "No hay nuevos anuncios"
+
+#~ msgid "Pending Review"
+#~ msgstr "Pendiente de Revisión"
+
+#~ msgid "Investigation"
+#~ msgstr "Investigación"
+
+#~ msgid "Educational Offer"
+#~ msgstr "Oferta Educativa"
+
+#~ msgid "Students"
+#~ msgstr "Estudiantes"
+
+#~ msgid "Tutorships"
+#~ msgstr "Tutorías"
+
+#~ msgid "Teachers"
+#~ msgstr "Profesores"
+
+#~ msgid "Related Pages"
+#~ msgstr "Páginas Relacionadas"
+
+#~ msgid "Size"
+#~ msgstr "Tamaño"
+
+#~ msgid "Date Start"
+#~ msgstr "Fecha de Inicio"
+
+#~ msgid "Date End"
+#~ msgstr "Fecha de Término"
+
+#~ msgid "Route"
+#~ msgstr "Ruta"
+
+#~ msgid "Root"
+#~ msgstr "Raíz"
+
+#~ msgid "Do you want to eliminate the link?"
+#~ msgstr "¿Deseas eliminar el enlace?"
+
+#, fuzzy
+#~ msgid "Imagess"
+#~ msgstr "Imagénes"
+
+#~ msgid "Do you want to edit the photo?"
+#~ msgstr "¿Deseas editar la fotografía?"
+
+#~ msgid "Do you want to eliminate the photo?"
+#~ msgstr "¿Deseas eliminar la fotografía?"
+
+#~ msgid "Manage Photos"
+#~ msgstr "Administrar Fotografías"
+
+#~ msgid "Themes"
+#~ msgstr "Diseños"
+
+#~ msgid "Do you want to edit the theme?"
+#~ msgstr "¿Deseas editar el diseño?"
+
+#~ msgid "Do you want to eliminate the theme?"
+#~ msgstr "¿Deseas eliminar el diseño?"
+
+#~ msgid "Manage Themes"
+#~ msgstr "Administrar Diseños"
+
+#~ msgid "Path"
+#~ msgstr "Ruta"
+
+#~ msgid "Your need to write the complete name"
+#~ msgstr "Necesitas escribir el nombre completo"
+
+#~ msgid "Administrator"
+#~ msgstr "Administrador"
+
+#~ msgid "Complete Name"
+#~ msgstr "Nombre Completo"
+
+#~ msgid "Birthday"
+#~ msgstr "Cumpleaños"
+
+#~ msgid "MySpace"
+#~ msgstr "MySpace"
+
+#~ msgid "Do you want to edit the user?"
+#~ msgstr "¿Deseas editar al usuario?"
+
+#~ msgid "Do you want to eliminate the user?"
+#~ msgstr "¿Deseas eliminar al usuario?"
+
+#~ msgid "There are no new applications"
+#~ msgstr "No hay nuevas aplicaciones"
+
+#~ msgid "Last Applications"
+#~ msgstr "Últimas Aplicaciones"
+
+#~ msgid "Statistics"
+#~ msgstr "Estadísticas"
+
+#~ msgid "Poll of the week"
+#~ msgstr "Encuesta de la semana"
+
+#~ msgid "Sign in"
+#~ msgstr "Registro"
+
+#~ msgid "About the school"
+#~ msgstr "Acerca de la Escuela"
+
+#~ msgid "Directory of personnel"
+#~ msgstr "Directorio del Personal"
+
+#~ msgid "Repository of formats and software"
+#~ msgstr "Repositorios de formatos y software"
+
+#~ msgid "Ads2"
+#~ msgstr "Anuncios"
+
+#~ msgid "Do you want to edit the application?"
+#~ msgstr "¿Deseas editar la aplicación?"
+
+#~ msgid "Do you want to eliminate the application?"
+#~ msgstr "¿Deseas eliminar la aplicación?"
+
+#~ msgid "Protected"
+#~ msgstr "Protegido"
+
+#~ msgid "Do you want to edit the category?"
+#~ msgstr "¿Deseas editar la categoría?"
+
+#~ msgid "Do you want to eliminate the category?"
+#~ msgstr "¿Deseas eliminar la categoría?"
+
+#~ msgid "Do you want to eliminate the message?"
+#~ msgstr "¿Deseas eliminar el mensaje?"
+
+#~ msgid "User Destiny"
+#~ msgstr "Destino"
+
+#~ msgid "Fullscreen"
+#~ msgstr "Pantalla Completa"
+
+#~ msgid "Visit our FlickR!"
+#~ msgstr "Visita nuestro  FlickR!"
+
+#~ msgid "Registration of new autos"
+#~ msgstr "Registro de nuevos autos"
+
+#~ msgid "Mark"
+#~ msgstr "Marca"
+
+#~ msgid "Districts"
+#~ msgstr "Estado"
+
+#~ msgid "Year"
+#~ msgstr "Año"
+
+#~ msgid "Register Auto"
+#~ msgstr "Registrar auto"
+
+#~ msgid "Empty Company"
+#~ msgstr "Falta la Compañia"
+
+#~ msgid "Empty Social Reason"
+#~ msgstr "Falta la Razón Social"
+
+#~ msgid "Empty Address"
+#~ msgstr "Falta la Dirección Postal"
+
+#~ msgid "Empty Phone"
+#~ msgstr "Falta el Teléfono de Casa"
+
+#~ msgid "Empty Cellphone"
+#~ msgstr "Falta el Celular"
+
+#~ msgid "Empty Town"
+#~ msgstr "Falta la Ciudad"
+
+#~ msgid "Empty Name"
+#~ msgstr "Falta el Nombre Completo"
+
+#~ msgid "Your account have been created correctly"
+#~ msgstr "Su cuenta ha sido creada correctamente"
+
+#~ msgid "Providers"
+#~ msgstr "Proveedores"
+
+#~ msgid "Purchases"
+#~ msgstr "Compras"
+
+#~ msgid "Purchase"
+#~ msgstr "Compra"
+
+#~ msgid "Month"
+#~ msgstr "Mes"
+
+#~ msgid "Concept"
+#~ msgstr "Concepto"
+
+#~ msgid "Subtotal"
+#~ msgstr "Subtotal"
+
+#~ msgid "Tax"
+#~ msgstr "IVA"
+
+#~ msgid "Payment"
+#~ msgstr "Pago"
+
+#~ msgid "Check"
+#~ msgstr "Cheque"
+
+#~ msgid "New Provider"
+#~ msgstr "Nuevo Proveedor"
+
+#~ msgid "RFC"
+#~ msgstr "RFC"
+
+#~ msgid "CURP (Natural person)"
+#~ msgstr "CURP (Persona Física)"
+
+#~ msgid "Address"
+#~ msgstr "Dirección"
+
+#~ msgid "Telephone"
+#~ msgstr "Teléfono"
+
+#~ msgid "Home Phone"
+#~ msgstr "Teléfono de Casa"
+
+#~ msgid "Cell Phone"
+#~ msgstr "Celular"
+
+#~ msgid "Register Provider"
+#~ msgstr "Registrar Proveedor"
+
+#~ msgid "Hours"
+#~ msgstr "Horas"
+
+#~ msgid "Enrollment"
+#~ msgstr "Inscripciones"
+
+#~ msgid "Open"
+#~ msgstr "Abiertas"
+
+#~ msgid "Online Trading"
+#~ msgstr "Cotización en Línea"
+
+#~ msgid "Approximately"
+#~ msgstr "Apróximadamente"
+
+#~ msgid "Note: from 11 persons or more becomes a 15% discount"
+#~ msgstr "Nota: a partir de 11 personas o más se hace un 15% de descuento"
+
+#~ msgid "Prices are expressed in Mexican Pesos and Dollars"
+#~ msgstr "Los precios están expresados en pesos mexicanos y dólares"
+
+#~ msgid "Courses are open from 6 people"
+#~ msgstr "Los cursos se abren a partir de 6 personas"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "Unable to set var. Already set."
+#~ msgstr "Incapaz de crear la variable. Ya ha sido creada."
+
+#~ msgid "Until"
+#~ msgstr "Hasta"
+
+#~ msgid "Select the type"
+#~ msgstr "Giro del Negocio"
+
+#~ msgid "I accept terms and conditions established per"
+#~ msgstr "He leído y acepto los términos y condiciones establecidos"
+
+#~ msgid "Brazil"
+#~ msgstr "Brasil"
+
+#~ msgid "Chile"
+#~ msgstr "Chile"
+
+#~ msgid "Colombia"
+#~ msgstr "Colombia"
+
+#~ msgid "Costa Rica"
+#~ msgstr "Costa Rica"
+
+#~ msgid "Ecuador"
+#~ msgstr "Ecuador"
+
+#~ msgid "Spain"
+#~ msgstr "España"
+
+#~ msgid "El Salvador"
+#~ msgstr "El Salvador"
+
+#~ msgid "France"
+#~ msgstr "Francia"
+
+#~ msgid "Guatemala"
+#~ msgstr "Guatemala"
+
+#~ msgid "Honduras"
+#~ msgstr "Honduras"
+
+#~ msgid "Mexico"
+#~ msgstr "México"
+
+#~ msgid "Nicaragua"
+#~ msgstr "Nicaragua"
+
+#~ msgid "Panama"
+#~ msgstr "Panamá"
+
+#~ msgid "Paraguay"
+#~ msgstr "Paraguay"
+
+#~ msgid "Peru"
+#~ msgstr "Perú"
+
+#~ msgid "Portugal"
+#~ msgstr "Portugal"
+
+#~ msgid "Puerto Rico"
+#~ msgstr "Puerto Rico"
+
+#~ msgid "Uruguay"
+#~ msgstr "Uruguay"
+
+#~ msgid "Venezuela"
+#~ msgstr "Venezuela"
+
+#~ msgid "Restricted Zone"
+#~ msgstr "Zona Restringida"
+
+#~ msgid "New Post"
+#~ msgstr "Nueva Publicación"
+
+#~ msgid "New Course"
+#~ msgstr "Nuevo Curso"
+
+#~ msgid "New Picture"
+#~ msgstr "Nueva Imagen"
+
+#~ msgid "Recent entries"
+#~ msgstr "Entradas Recientes"
+
+#~ msgid "Written on"
+#~ msgstr "escrito el día"
+
+#~ msgid "Products and Services"
+#~ msgstr "Productos y servicios"
+
+#~ msgid "Features"
+#~ msgstr "Funcionalidades"
+
+#~ msgid "Rates"
+#~ msgstr "Tarifas"
+
+#~ msgid "Quick guide"
+#~ msgstr "Guía rápida"
+
+#~ msgid "FAQs"
+#~ msgstr "Preguntas frecuentes"
+
+#~ msgid "Affiliates"
+#~ msgstr "Afiliados"
+
+#~ msgid "Our Clients"
+#~ msgstr "Nuestros Clientes"
+
+#~ msgid "You have to write your telephone"
+#~ msgstr "Tiene que escribir su teléfono"
+
+#~ msgid "You have invited"
+#~ msgstr "Haz invitado a"
+
+#~ msgid "friends"
+#~ msgstr "amigos"
+
+#~ msgid "You have"
+#~ msgstr "Tienes"
+
+#~ msgid "tickets"
+#~ msgstr "boletos"
+
+#~ msgid "Invite a friend"
+#~ msgstr "Invita a un amigo"
+
+#~ msgid "3D Design"
+#~ msgstr "Diseño 3D"
+
+#~ msgid "Accounting"
+#~ msgstr "Contabilidad"
+
+#~ msgid "Audio and Video Editing"
+#~ msgstr "Edición de Audio y Video"
+
+#~ msgid "Databases"
+#~ msgstr "Bases de Datos"
+
+#~ msgid "Graphic Design"
+#~ msgstr "Diseño Gráfico"
+
+#~ msgid "Marketing"
+#~ msgstr "Mercadotecnia"
+
+#~ msgid "Operating Systems"
+#~ msgstr "Sistemas Operativos"
+
+#~ msgid "Vector Design"
+#~ msgstr "Diseño Vectorial"
+
+#~ msgid "Web Design"
+#~ msgstr "Diseño Web"
+
+#~ msgid "Corporate Image"
+#~ msgstr "Imagen Corporativa"
+
+#~ msgid "Websites"
+#~ msgstr "Sitios Web"
+
+#~ msgid "Brochures"
+#~ msgstr "Folletos"
+
+#~ msgid "Cards of Presentation"
+#~ msgstr "Tarjetas de Presentación"
+
+#~ msgid "Webpages"
+#~ msgstr "Páginas Web"
+
+#~ msgid "New Users"
+#~ msgstr "Nuevos Usuarios"
+
+#~ msgid "Create Account"
+#~ msgstr "Crear Cuenta"
+
+#~ msgid "All the Messages will be answered before 24 hours"
+#~ msgstr ""
+#~ "Todos los mensajes enviados serán respondidos en un lapso de 24 horas"
+
+#~ msgid "Open Enrollment"
+#~ msgstr "Inscripciones Abiertas"
+
+#~ msgid "Closed Enrollment"
+#~ msgstr "Inscripciones Cerradas"
+
+#~ msgid "Computer Science"
+#~ msgstr "Informática"
+
+#~ msgid "Points"
+#~ msgstr "Puntos"
+
+#~ msgid "Change to"
+#~ msgstr "Cambiar a"
+
+#, fuzzy
+#~ msgid "Spanish2"
+#~ msgstr "Español"
+
+#~ msgid "Amount"
+#~ msgstr "Cantidad"
+
+#~ msgid "Who I am?"
+#~ msgstr "Sobre mi"
+
+#~ msgid "New Accounts Activation"
+#~ msgstr "Activación de Cuentas Nuevas"
+
+#~ msgid "Activation By"
+#~ msgstr "Activación por"
+
+#~ msgid "Referers"
+#~ msgstr "Invitados"
+
+#~ msgid "Error: Model Not Found"
+#~ msgstr "Error: Modelo no encontrado"
+
+#~ msgid "Error 404: Page Not Found"
+#~ msgstr "Error 404: Página no encontrada"
+
+#~ msgid "Theme Error: The index.php file must exists in the Theme Path"
+#~ msgstr "Error: No existe el archivo index.php en la plantilla seleccionada."
+
+#~ msgid "You have to write your surnames"
+#~ msgstr "Tiene que escribir sus apellidos"
+
+#~ msgid "Error: 404 Controller Not Found"
+#~ msgstr "Error 404: Controlador no econtrado"
+
+#~ msgid "Italic Text"
+#~ msgstr "Texto en Cursiva"
+
+#~ msgid "Underline Text"
+#~ msgstr "Texto Subrayado"
+
+#~ msgid "Strike Text"
+#~ msgstr "Texto Tachado"
+
+#~ msgid "Color [#FFFFFF]"
+#~ msgstr "Color [#FFFFFF]"
+
+#~ msgid "Type of List [ol = ordered | ul = unordered]"
+#~ msgstr "Tipo de Lista [ol = ordenada | ul = desordenada]"
+
+#~ msgid "Image URL:"
+#~ msgstr "URL de la Imagen"
+
+#~ msgid "Image Text: "
+#~ msgstr "Texto de la Imagen"
+
+#~ msgid "MP3 URL"
+#~ msgstr "URL del MP3"
+
+#~ msgid "Embed: GoEar, Last.fm, Host (The mp3 is in your own hosting)"
+#~ msgstr ""
+#~ "Integrado: GoEar, Last.fm, Host (El mp3 se encuentra alojado en tu "
+#~ "servidor)"
+
+#~ msgid ""
+#~ "Embed: Youtube, Vimeo, Break, Metacafe, Host (The video is in your own "
+#~ "hosting)"
+#~ msgstr ""
+#~ "Integrado: Youtube, Vimeo, Break, Metacafe, Host (El video se encuentra "
+#~ "alojado en tu servidor)"
+
+#~ msgid "Style [font: Arial; font-size: 1em;]"
+#~ msgstr "Estilo [font: Arial; font-size: 1em;]"
+
+#~ msgid "Style Text"
+#~ msgstr "Texto con Estilo"
+
+#~ msgid "Bold"
+#~ msgstr "Negrita"
+
+#~ msgid "Underline"
+#~ msgstr "Subrayado"
+
+#~ msgid "Justify"
+#~ msgstr "Justificar"
+
+#~ msgid "List [ul|ol]"
+#~ msgstr "Lista [ul|ol]"
+
+#~ msgid "Music"
+#~ msgstr "Música"
+
+#~ msgid "Style"
+#~ msgstr "Estilo"
+
+#~ msgid "Editor for textareas"
+#~ msgstr "Editor para los textareas"
+
+#~ msgid "Error: View Not Found"
+#~ msgstr "Error: Vista no encontrado"
+
+#~ msgid "Error 404: View Not Found: "
+#~ msgstr "Error 404: No se encontró la vista: "
+
+#~ msgid "Primary Column not found for Table:"
+#~ msgstr "No se encontro el campo primario en la tabla:"
+
+#~ msgid "Error: Name is empty"
+#~ msgstr "Error: El Nombre de la Web está vacío"
+
+#~ msgid "Error: Slogan is empty"
+#~ msgstr "Error: EL Slogan de la Web está vacío"
+
+#~ msgid "Error: Url Base is empty"
+#~ msgstr "Error: La URL base de la web está vacía"
+
+#~ msgid "Anonymous"
+#~ msgstr "Anónimos"
