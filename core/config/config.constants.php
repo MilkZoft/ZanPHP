@@ -19,6 +19,7 @@ define("_defaultApplication", "default");
 define("_webState", "Active");
 define("_webLanguage", "Spanish");
 define("_webLang", "es");
+define("_translation", "gettext");
 
 /**
  * Cache
@@ -38,6 +39,8 @@ define("_Portuguese", FALSE);
 define("_flags", "flags");
 define("_language", "language");
 define("_languages", "languages");
+define("_getText", "gettext");
+define("_mo", "mo");
 
 /**
  * E-Mail
