@@ -37,7 +37,7 @@ if(_translation === "gettext") {
 		$Gettext_Reader->load_tables();
 	}
 }
-print __(_("Hello")); die();
+
 #benchMarkStart();
 
 header("Cache-Control: no-cache, must-revalidate");
