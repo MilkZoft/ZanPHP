@@ -40,23 +40,33 @@ if(!defined("_access")) {
  * @return string value
  */
 function __($text) {
-	global $Load;
-	
-	$language = whichLanguage();
-	
-	if($language === "English") {
-		$Load->language("English");
-	} elseif($language === "Spanish") {
-		$Load->language("Spanish");
-	} elseif($language === "French") {
-		$Load->language("French");
-	} elseif($language === "Portuguese") {
-		$Load->language("Portuguese");
+	if(_translation === "gettext") {
+		global $Gettext_Reader;
+		
+		if(is_null($Gettext_Reader)) {
+			return $text;
+		}
+		
+		return $Gettext_Reader->translate($text);
 	} else {
-		$Load->language("English");
+		global $Load;
+		
+		$language = whichLanguage();
+		
+		if($language === "English") {
+			$Load->language("English");
+		} elseif($language === "Spanish") {
+			$Load->language("Spanish");
+		} elseif($language === "French") {
+			$Load->language("French");
+		} elseif($language === "Portuguese") {
+			$Load->language("Portuguese");
+		} else {
+			$Load->language("English");
+		}
+		
+		return translation($text); 	
 	}
-	
-	return translation($text); 
 }
 
 /**
