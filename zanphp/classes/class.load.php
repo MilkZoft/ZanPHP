@@ -1,4 +1,7 @@
 <?php
+
+/* ex: set tabstop=2 noexpandtab: */
+
 /**
  * ZanPHP
  *
@@ -558,7 +561,10 @@ class ZP_Load {
      * @param string $vars        = NULL
      * @return string value / void
      */	
-	public function view($name, $application = NULL, $vars = NULL) {
+	public function view($name, $vars = NULL) {
+
+		$application = $this->application
+
 		if(!is_null($application)) {
 			$view 	 = _www . _sh . _applications . _sh . $application . _sh . _views . _sh . _view . _dot . $name . _PHP;
 			$cacheID = cacheSession($name);
