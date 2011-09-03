@@ -563,7 +563,7 @@ class ZP_Load {
      */	
 	public function view($name, $vars = NULL) {
 
-		$application = $this->application
+		$application = $this->application;
 
 		if(!is_null($application)) {
 			$view 	 = _www . _sh . _applications . _sh . $application . _sh . _views . _sh . _view . _dot . $name . _PHP;
