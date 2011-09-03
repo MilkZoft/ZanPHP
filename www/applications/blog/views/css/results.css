@@ -1,0 +1,31 @@
+.results {
+	border-collapse: collapse; 
+	background-color: #E8E8E8; 
+	width: 100%;
+	font-size: 0.85em;
+}
+
+.results caption {
+	padding: 10px; 
+	text-transform: uppercase; 
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.results thead th {
+	background-color: #F5F5F5; 
+	border-bottom: 3px solid #CCCCCC; 
+	color: #666666; 
+	padding: 5px;
+}
+
+.results tbody tr td {
+	padding: 3px 8px;
+}
+
+.results tfoot tr td {
+	background-color: #E7E7E7; 
+	color: #333333; 
+	padding: 4px; 
+	text-align: center;
+}

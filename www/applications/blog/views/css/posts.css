@@ -1,0 +1,89 @@
+.post-image a {
+	display: block;
+	float: left;
+	width: 320px;
+	margin-left: 35px;
+	margin-bottom: 10px;
+}
+
+.post-image a {
+	color: #2080b9;
+	text-decoration: none;
+}
+
+.post-image a:hover {
+	color: #FFF;
+	background-color: #000;
+}
+
+.margin-left {
+	margin-left: 45px;
+}
+
+.post {
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.post a {
+	color: #2080b9;
+	text-decoration: none;
+}
+
+.post a:hover {
+	color: #333;
+}
+
+.post-title {
+	font-size: 1.4em;
+	color: #333;
+	font-weight: bold;
+}
+
+.post-title a {
+	text-decoration: none;
+	color: #333;
+}
+
+.post-title a:hover {
+	color: #0088fc;
+}
+
+.post-left {
+	float: left;
+	font-size: 0.7em;
+	color: #666;
+}
+
+.post-right {
+	float: right;
+	font-size: 0.7em;
+	color: #666;
+}
+
+.post-content {
+	text-align: justify;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.post-image {
+	width: 300px;
+	float: left;
+	text-align: center;
+}
+
+.blog-access fieldset {
+	border: 0px;
+}
+
+.blog-access .input {
+	border: 1px solid #333;
+	font-size: 1.2em;
+}
+
+.blog-access .submit {
+	border: 1px solid #333;
+	background-color: #CCC;
+}
