@@ -67,7 +67,9 @@ class ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$this->helper("autoload");
+		$helpers = array("autoload", "router");
+		
+		$this->helper($helpers);
 	}
 	
     /**
@@ -561,9 +563,10 @@ class ZP_Load {
      * @param string $vars        = NULL
      * @return string value / void
      */	
-	public function view($name, $vars = NULL) {
-
-		$application = $this->application;
+	public function view($name, $vars = NULL, $application = NULL) {
+		if(is_null($application)) {
+			$application = whichApplication();
+		} 
 
 		if(!is_null($application)) {
 			$view 	 = _www . _sh . _applications . _sh . $application . _sh . _views . _sh . _view . _dot . $name . _PHP;

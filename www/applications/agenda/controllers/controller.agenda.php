@@ -48,7 +48,7 @@ class Agenda_Controller extends ZP_Controller {
 				$this->RESTServer->process($data, 5);
 			} else {
 				$vars["contacts"] = $data;
-				$vars["view"]	  = $this->view("contacts", $this->application, TRUE);
+				$vars["view"]	  = $this->view("contacts", TRUE);
 				
 				$this->template("content", $vars);	
 				$this->render();
@@ -66,7 +66,7 @@ class Agenda_Controller extends ZP_Controller {
 			$this->RESTServer->process($data);	
 		} else {
 			$vars["contacts"] = $data;
-			$vars["view"]	  = $this->view("contacts", $this->application, TRUE);
+			$vars["view"]	  = $this->view("contacts", TRUE);
 			
 			$this->template("content", $vars);
 			

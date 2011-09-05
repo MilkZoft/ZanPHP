@@ -21,7 +21,7 @@ class Default_Controller extends ZP_Controller {
 	public function vista() {
 		$vars["name"]  = "Carlos";
 		$vars["email"] = "carlos@milkzoft.com";
-		$vars["view"]  = $this->view("prueba", "default", $vars);
+		$vars["view"]  = $this->view("prueba", $vars);
 	}
 	
 	public function getContact($ID) {

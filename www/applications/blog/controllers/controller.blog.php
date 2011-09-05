@@ -68,7 +68,7 @@ class Blog_Controller extends ZP_Controller {
 		if($data) {	
 			$this->title(decode($data[0]["Title"]));
 				
-			$vars["view"][0] = $this->view("post", $this->application, TRUE);		
+			$vars["view"][0] = $this->view("post", TRUE);		
 			
 			$this->template("content", $vars);			
 		} else {
@@ -98,7 +98,7 @@ class Blog_Controller extends ZP_Controller {
 			$this->title("Blog - ". segment(2) ."/". segment(3) ."/". segment(4));
 			
 			$vars["posts"] = $data;
-			$vars["view"]  = $this->view("posts", $this->application, TRUE);
+			$vars["view"]  = $this->view("posts", TRUE);
 			
 			$this->template("content", $vars);			
 		} else {
@@ -126,7 +126,7 @@ class Blog_Controller extends ZP_Controller {
 			$this->title("Blog - ". segment(2) ."/". segment(3));
 			
 			$vars["posts"] = $data;
-			$vars["view"]  = $this->view("posts", $this->application, TRUE);
+			$vars["view"]  = $this->view("posts", TRUE);
 			
 			$this->template("content", $vars);			
 		} else {
@@ -152,7 +152,7 @@ class Blog_Controller extends ZP_Controller {
 			$this->title("Blog - ". $year);
 			
 			$vars["posts"] = $data;
-			$vars["view"]  = $this->view("posts", $this->application, TRUE);
+			$vars["view"]  = $this->view("posts", TRUE);
 			
 			$this->template("content", $vars);			
 		} else {
@@ -171,8 +171,8 @@ class Blog_Controller extends ZP_Controller {
 		$data = $this->Blog_Model->getPosts(10, 0);
 		
 		if($data) {			
-			$vars["posts"]      = $data;
-			$vars["view"]    	= $this->view("posts", $this->application, TRUE);
+			$vars["posts"] = $data;
+			$vars["view"]  = $this->view("posts", TRUE);
 			
 			$this->template("content", $vars);
 		} else {
@@ -186,7 +186,7 @@ class Blog_Controller extends ZP_Controller {
 			$vars["date"]     = now(1);
 			$vars["post"]     = $post;
 			$vars["comments"] = __("No Comments");				
-			$vars["view"]  	  = $this->view("zero", $this->application, TRUE);
+			$vars["view"]  	  = $this->view("zero", TRUE);
 			
 			$this->template("content", $vars);				
 		}
