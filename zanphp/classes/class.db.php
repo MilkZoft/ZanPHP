@@ -139,6 +139,11 @@ class ZP_Db extends ZP_Load {
 		$this->Cache = $this->core("Cache");
 
 		$this->config("database");
+		
+		$this->exception("database");
+		
+		$this->helper("exceptions");
+		
 		$this->connect();	
 	}
 	
@@ -212,27 +217,31 @@ class ZP_Db extends ZP_Load {
 	public function connect() {
 		if(!self::$connection) {
 			$this->library("AdoDB");
-			 
+			
 			if(_dbController === "odbc_mssql") {
-				$this->Database = ADONewConnection("odbc_mssql");
+				try {
+					$this->Database = ADONewConnection("odbc_mssql");
 				
-				self::$connection = $this->Database->connect("Driver={SQL Server}; Server=". _dbHost .", ". _dbPort ."; Database=". _dbName .";", _dbUser, _dbPwd);
-			} elseif(_dbController === "mysql") {
-				$this->Database = ADONewConnection("mysql");
+					self::$connection = $this->Database->connect("Driver={SQL Server}; Server=". _dbHost .", ". _dbPort ."; Database=". _dbName .";", _dbUser, _dbPwd);	
+					
+					if(!self::$connection) {
+						throw new Exception(e("Connection Error"), 1);	
+					}
+				} catch(Exception $e) {
+					getException($e);	
+				}
+			} else {
+				try {
+					$this->Database = ADONewConnection(_dbController);
 				
-				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);	
-			} elseif(_dbController === "mysqli") {
-				$this->Database = ADONewConnection("mysqli");
-				
-				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);	
-			} elseif(_dbController === "postgres") {
-				$this->Database = ADONewConnection("postgres");
-				
-				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);	
-			} elseif(_dbController === "oci8") {
-				$this->Database = ADONewConnection("oci8");
-				
-				self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);			
+					self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
+					
+					if(!self::$connection) {
+						throw new Exception(e("Connection Error"), 1);	
+					}
+				} catch(Exception $e) {
+					getException($e);
+				}
 			}
 		}									
 	}

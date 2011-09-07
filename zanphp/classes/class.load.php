@@ -70,6 +70,9 @@ class ZP_Load {
 		$helpers = array("autoload", "router");
 		
 		$this->helper($helpers);
+		
+		$this->config("cache");
+		$this->config("exceptions");
 	}
 	
     /**
@@ -192,6 +195,14 @@ class ZP_Load {
      */
 	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
 		$this->Templates->CSS($CSS, $application, $print);
+	}
+	
+	public function exception($exception) {
+		if(file_exists(_www . _sh . _lib . _sh . _exceptions . _sh . _exception . _dot . strtolower($exception) . _PHP)) {
+			include_once _www . _sh . _lib . _sh .  _exceptions . _sh . _exception . _dot . strtolower($exception) . _PHP;
+		} else {
+			return FALSE;
+		}
 	}
 	
     /**

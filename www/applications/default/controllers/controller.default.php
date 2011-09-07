@@ -11,6 +11,8 @@ class Default_Controller extends ZP_Controller {
 	public function __construct() {
 		$this->app("default");
 		
+		$this->Default_Model = $this->model("Default_Model");
+		
 		$this->Templates = $this->core("Templates");
 	}
 	
@@ -24,10 +26,10 @@ class Default_Controller extends ZP_Controller {
 		$vars["view"]  = $this->view("prueba", $vars);
 	}
 	
-	public function getContact($ID) {
+	public function contact($ID) {
 		$this->Default_Model = $this->model("Default_Model");
 		
-		$data = $this->Default_Model->getContact($ID);
+		$data = $this->Default_Model->contact($ID);
 		
 		____($data);
 	}

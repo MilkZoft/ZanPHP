@@ -89,12 +89,20 @@ class ZP_MongoDB extends ZP_Load {
      */
 	public function connect() {
 		if(!self::$connection) {
-			$this->Mongo = new Mongo("mongodb://". _dbNoSQLHost .":". _dbNoSQLPort);
-			
-			if(_dbNoSQLUser !== "" and _dbNoSQLPwd !== "") {
-				$this->Mongo->selectDb(_dbNoSQLDatabase)->authenticate(_dbNoSQLUser, _dbNoSQLPwd);
-			} else {
-				$this->Mongo->selectDb(_dbNoSQLDatabase);
+			try {
+				$this->Mongo = new Mongo("mongodb://". _dbNoSQLHost .":". _dbNoSQLPort);
+				
+				if(!$this->Mongo) {
+					throw new Exception(e("Connection Error"), 1);
+				}
+				
+				if(_dbNoSQLUser !== "" and _dbNoSQLPwd !== "") {
+					$this->Mongo->selectDb(_dbNoSQLDatabase)->authenticate(_dbNoSQLUser, _dbNoSQLPwd);
+				} else {
+					$this->Mongo->selectDb(_dbNoSQLDatabase);
+				}
+			} catch(Exception $e) {
+				getException($e);	
 			}
 		}									
 	}

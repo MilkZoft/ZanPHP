@@ -20,9 +20,9 @@ class Default_Model extends ZP_Model {
 		$this->table = "contacts";
 	}
 	
-	public function getContact($ID) {
+	public function contact($ID) {
 		$this->Db->table("contacts");
-		$this->Db->caching(TRUE);
+		$this->Db->cache(TRUE);
 		$this->Db->encode(TRUE);
 		$data = $this->Db->find($ID);
 		
