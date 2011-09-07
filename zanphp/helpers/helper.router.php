@@ -145,7 +145,7 @@ function execute() {
 		}
 	}
 	
-	if(_webState === "Inactive" and !SESSION("ZanUserID") and $control !== _cpanel) {
+	if(_webState !== "Active" and !SESSION("ZanUserID") and $control !== _cpanel) {
 		die(_webMessage);
 	}
 	
@@ -172,7 +172,17 @@ function execute() {
 			}
 		} elseif(isset($method)) {
 			if(method_exists($$controller, $method)) {
-				$$controller->$method();
+				try {
+					$reflection = new ReflectionMethod($$controller, $method);
+				
+					if(!$reflection->isPublic()) {
+						throw new RuntimeException("The called method is not public.", 100);
+					}
+	
+					$$controller->$method();
+				} catch(RuntimeException $e) {
+					getException($e);
+				}
 			} else {
 				redirect(_webBase);
 			}
@@ -216,6 +226,8 @@ function whichApplication() {
 		return segment(0); 
 	} elseif(file_exists(_www . _sh . _applications . _sh . segment(1) . _sh . _controllers . _sh . _controller . _dot . segment(1) . _PHP)) {
 		return segment(1);
+	} elseif(file_exists(_www . _sh . _applications . _sh . _defaultApplication . _sh . _controllers . _sh . _controller . _dot . _defaultApplication . _PHP)) {
+		return _defaultApplication;	
 	}
 	
 	return FALSE;

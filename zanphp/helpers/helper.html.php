@@ -82,15 +82,11 @@ function br($jumps = 1) {
 function char($char, $repeat = 1) {
 	$HTML = NULL;
 	
-	if(_webCharacters) {
-		for($i = 0; $i <= $repeat; $i++) {
-			$HTML .= $char;
-		}
-		
-		return $HTML;
+	for($i = 0; $i <= $repeat; $i++) {
+		$HTML .= $char;
 	}
-	
-	return NULL;
+		
+	return $HTML;
 }
 
 function closeUl() {
@@ -130,6 +126,8 @@ function getHTMLDecode($HTML) {
 }
 
 function getScript($js, $application = NULL, $extra = NULL, $getJs = FALSE) {
+	$HTML = NULL;
+	
 	if(file_exists($js)) {		
 		return loadScript($js);
 	} else {

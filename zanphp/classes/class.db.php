@@ -185,9 +185,7 @@ class ZP_Db extends ZP_Load {
 		if($this->Cache->get(sha1("CALL $procedure"), "db")) {
 			return $this->Cache->get(sha1("CALL $procedure"), "db");
 		} else {
-			$this->Rs = $this->Database->_execute("CALL $procedure");
-		
-			return $this->data();
+			return $this->data("CALL $procedure");
 		}		
 	}
 	
@@ -399,7 +397,7 @@ class ZP_Db extends ZP_Load {
 				$size2 = sizeof($key2);
 				
 				for($j = 0; $j < $size2; $j++) {					
-					$data[$i][$key2[$j]] = htmlentities($array[$i][$key2[$j]]);								
+					$data[$i][$key2[$j]] = encode($array[$i][$key2[$j]]);								
 				}
 			}
 			
@@ -413,7 +411,7 @@ class ZP_Db extends ZP_Load {
 				$size2 = sizeof($key2);
 				
 				for($j = 0; $j < $size2; $j++) {					
-					$data[$i][$key2[$j]] = htmlentities($rows[$i][$key2[$j]]);								
+					$data[$i][$key2[$j]] = encode($rows[$i][$key2[$j]]);								
 				}
 			}
 			

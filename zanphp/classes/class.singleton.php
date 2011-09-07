@@ -62,11 +62,11 @@ class ZP_Singleton {
 		if(is_null($class)) {
 			die("Missing class information");
 		}
-		
+
 		if(!array_key_exists($class, self::$instances)) {
 			self::$instances[$class] = new $class;
 		}
-				
+					
 		return self::$instances[$class];
 	}
 

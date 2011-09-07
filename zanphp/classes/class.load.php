@@ -151,14 +151,16 @@ class ZP_Load {
      */
 	public function controller($controller) {
 		$parts = explode("_", $controller);
-		
-		if(!$this->application) {
+	
+		if(!$this->application) { 
 			if(count($parts) === 2) {
 				$file = _www . _sh . _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
 			}		
 		} else {
-			if(count($parts) === 2) {
+			if(file_exists(_www . _sh . _applications . _sh . $this->application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP)) {
 				$file = _www . _sh . _applications . _sh . $this->application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
+			} else {
+				$file = _www . _sh . _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
 			}
 		}
 		
@@ -410,24 +412,28 @@ class ZP_Load {
      */
 	public function model($model) {
 		$parts = explode("_", $model);
-		
+
 		if(!$this->application) {
 			if(count($parts) === 2) {
 				$file = _www . _sh . _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;	
 			}		
 		} else {
 			if(count($parts) === 2) {
-				$file = _www . _sh . _applications . _sh . $this->application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
+				if(file_exists(_www . _sh . _applications . _sh . $this->application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP)) {
+					$file = _www . _sh . _applications . _sh . $this->application . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
+				} else {
+					$file = _www . _sh . _applications . _sh . strtolower($parts[0]) . _sh . _models . _sh . _model . _dot . strtolower($parts[0]) . _PHP;
+				}
 			}
 		}
-		
+	
 		if(file_exists($file)) {							
-			if(class_exists($model)) {
+			if(class_exists($model)) { 
 				return ZP_Singleton::instance($model);
 			}
 			
 			include $file;
-			
+							
 			return ZP_Singleton::instance($model);
 		}	
 		

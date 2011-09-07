@@ -232,7 +232,7 @@ class ZP_Templates extends ZP_Load {
      */
 	public function load($template, $direct = FALSE) {	
 		$this->Cache = (_cacheStatus) ? $this->core("Cache") : FALSE;
-			
+		
 		if(is_array($this->vars)) {
 			$key  = array_keys($this->vars);
 			$size = sizeof($key);			
