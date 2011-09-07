@@ -211,7 +211,7 @@ function isController($controller, $application) {
 	return FALSE;
 }
 
-function wichApplication() {
+function whichApplication() {
 	if(file_exists(_www . _sh . _applications . _sh . segment(0) . _sh . _controllers . _sh . _controller . _dot . segment(0) . _PHP)) {
 		return segment(0); 
 	} elseif(file_exists(_www . _sh . _applications . _sh . segment(1) . _sh . _controllers . _sh . _controller . _dot . segment(1) . _PHP)) {
