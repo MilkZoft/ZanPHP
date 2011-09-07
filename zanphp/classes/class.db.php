@@ -252,11 +252,11 @@ class ZP_Db extends ZP_Load {
      * @return integer value
      */	
 	public function countAll() {		
-		$query = "SELECT $this->fields FROM $this->table";
+		$query = "SELECT COUNT(*) AS Total FROM $this->table";
 		
-		$this->Rs = $this->_query($query);
+		$data = $this->data($query);
 		
-		return $this->rows();
+		return $data[0]["Total"];
 	}
 
     /**
@@ -269,11 +269,11 @@ class ZP_Db extends ZP_Load {
 			return FALSE;
 		}
 		
-		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
+		$query = "SELECT COUNT(*) AS Total FROM $this->table WHERE $SQL";
 
-		$this->Rs = $this->_query($query);
+		$data = $this->data($query);
 		
-		return $this->rows();
+		return $data[0]["Total"];
 	}
 
 	private function data($query) {
@@ -283,7 +283,7 @@ class ZP_Db extends ZP_Load {
 			$this->Rs = $this->_query($query);	
 			
 			if($this->rows() === 0) {
-					return FALSE;			
+				return FALSE;			
 			} else {
 				if($this->fetchMode === "array") {
 					while($row = $this->fetch($this->rows())) {
