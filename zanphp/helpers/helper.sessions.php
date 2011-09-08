@@ -68,25 +68,6 @@ function createCookie($cookie = NULL, $value, $time = 604800, $redirect = FALSE,
 }
 
 /**
- * createSession
- *
- * Sets a session variable
- * 
- * @param string $session
- * @param string $value
- * @param string $redirect
- * @param string $URL      = _webBase
- * @return void
- */ 
-function createSession($session = NULL, $value = NULL, $redirect = FALSE, $URL = _webBase) {	
-	$_SESSION[$session] = $value;
-	
-	if($redirect) {
-		redirect($URL);
-	}
-}
-
-/**
  * SESSION
  *
  * Returns a $_SESSION index variable value

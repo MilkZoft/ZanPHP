@@ -94,8 +94,16 @@ class ZP_Load {
      * @param string $application = NULL
      * @return object value
      */
-	public function classes($class = NULL) {
-		$file = _www . _sh . _applications . _sh . $this->application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
+	public function classes($class = NULL, $application = NULL) {
+		if(file_exists(_www . _sh . _applications . _sh . $this->application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP)) {
+			$file = _www . _sh . _applications . _sh . $this->application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;	
+		} elseif(file_exists(_www . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP)) {
+			$file = _www . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
+		} elseif(file_exists(_www . _sh . _applications . _sh . $application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP)) {
+			$file = _www . _sh . _applications . _sh . $application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
+		}
+		
+		$this->Cache = $this->core("Cache");
 		
 		if(file_exists($file)) {							
 			if(class_exists($class)) {
@@ -149,15 +157,19 @@ class ZP_Load {
      * @param string $name
      * @return object value
      */
-	public function controller($controller) {
+	public function controller($controller, $application = NULL) {
 		$parts = explode("_", $controller);
 	
 		if(!$this->application) { 
-			if(count($parts) === 2) {
+			if(file_exists(_www . _sh . _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP)) {
+				$file = _www . _sh . _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
+			} elseif(count($parts) === 2) {
 				$file = _www . _sh . _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
 			}		
 		} else {
-			if(file_exists(_www . _sh . _applications . _sh . $this->application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP)) {
+			if(file_exists(_www . _sh . _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP)) {
+				$file = _www . _sh . _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
+			} elseif(file_exists(_www . _sh . _applications . _sh . $this->application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP)) {
 				$file = _www . _sh . _applications . _sh . $this->application . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
 			} else {
 				$file = _www . _sh . _applications . _sh . strtolower($parts[0]) . _sh . _controllers . _sh . _controller . _dot . strtolower($parts[0]) . _PHP;
@@ -258,6 +270,8 @@ class ZP_Load {
 				if($application === NULL) {
 					if(file_exists(_corePath . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP)) {
 						include_once _corePath . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP;
+					} elseif(file_exists(_www . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP)) {
+						include_once _www . _sh . _helpers . _sh . _helper . _dot . $helper[$i] . _PHP;
 					} else {		
 						die("$helper[$i] helper doesn't exists");
 					}			
@@ -273,7 +287,9 @@ class ZP_Load {
 			if(is_null($application)) {
 				if(file_exists(_corePath . _sh . _helpers . _sh . _helper . _dot . $helper . _PHP)) {
 					include_once _corePath . _sh . _helpers . _sh . _helper . _dot . $helper . _PHP;
-				} else {			
+				} elseif(file_exists(_www . _sh . _helpers . _sh . _helper . _dot . $helper . _PHP)) {
+						include_once _www . _sh . _helpers . _sh . _helper . _dot . $helper . _PHP;
+				}  else {			
 					die("$name helper doesn't exists");
 				}
 			} else {
@@ -569,6 +585,8 @@ class ZP_Load {
      * @return void
      */
 	public function title($title = NULL) {
+		$this->Templates = $this->core("Templates");
+		
 		$this->Templates->title(__($title));
 	}
 	

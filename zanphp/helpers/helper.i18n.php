@@ -80,13 +80,13 @@ function __($text, $normal = FALSE) {
 function getLanguage($language, $flags = FALSE) {
 	if($flags) {
 		if($language === "Spanish") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/spanish.png" alt="' . __("Spanish") . '" />';
+			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/spanish.png" alt="' . __("Spanish") . '" />';
 		} elseif($language === "English") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/english.png" alt="' . __("English") . '" />';
+			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/english.png" alt="' . __("English") . '" />';
 		} elseif($language === "French") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/french.png" alt="' . __("French") . '" />';
+			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/french.png" alt="' . __("French") . '" />';
 		} elseif($language === "Portuguese") {
-			return '<img class="no-border" src="'. _webURL . '/lib/images/icons/flags/portuguese.png" alt="' . __("Portuguese") . '" />';
+			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/portuguese.png" alt="' . __("Portuguese") . '" />';
 		}
 	} else {
 		if($language === "Spanish") {

@@ -184,9 +184,25 @@ class ZP_Db extends ZP_Load {
 	public function call($procedure) {
 		if($this->Cache->get(sha1("CALL $procedure"), "db")) {
 			return $this->Cache->get(sha1("CALL $procedure"), "db");
-		} else {
-			return $this->data("CALL $procedure");
-		}		
+		}
+		
+		$this->Database->multiQuery = TRUE;
+		
+		$this->Rs = $this->Database->execute("CALL $procedure");	
+		
+		if($this->encode) {
+			$data = isset($data) ? $this->encoding($data) : FALSE;
+		} else { 
+			$data = isset($data) ? $data : FALSE;
+		}
+			
+		if($this->caching and $data) {
+			$this->Cache->save($data, sha1($query), "db");
+			
+			$this->caching = FALSE;
+		}
+
+		return $data; 
 	}
 	
     /**
@@ -254,7 +270,7 @@ class ZP_Db extends ZP_Load {
 		
 		$data = $this->data($query);
 		
-		return $data[0]["Total"];
+		return isset($data[0]["Total"]) ? $data[0]["Total"] : 0;
 	}
 
     /**
@@ -271,14 +287,20 @@ class ZP_Db extends ZP_Load {
 
 		$data = $this->data($query);
 		
-		return $data[0]["Total"];
+		return isset($data[0]["Total"]) ? $data[0]["Total"] : 0;
 	}
 
 	private function data($query) {
 		if(_cacheStatus and $this->Cache->get(sha1($query), "db")) {
 			return $this->Cache->get(sha1($query), "db");
-		} else {
-			$this->Rs = $this->_query($query);	
+		} else {	
+			if($query === "") {
+				return FALSE;	
+			}
+			
+			self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
+			
+			$this->Rs = $this->_query($query);
 			
 			if($this->rows() === 0) {
 				return FALSE;			
@@ -551,7 +573,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
-		
+	
 		return $this->data($query);
 	}
 	
@@ -791,15 +813,15 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function join($table, $condition, $position = FALSE) {
-		if(!$table or !$condition) {
+	public function join($table, $_Status, $position = FALSE) {
+		if(!$table or !$_Status) {
 			return FALSE;	
 		}
 		
 		if(!$position) {
-			$this->join = "JOIN $table ON $condition";
+			$this->join = "JOIN $table ON $_Status";
 		} else {
-			$this->join = "$position JOIN $table ON $condition";	
+			$this->join = "$position JOIN $table ON $_Status";	
 		}
 	}
 	
@@ -992,7 +1014,8 @@ class ZP_Db extends ZP_Load {
      *
      * @return void
      */	
-	public function query($query) {return $this->data($query);
+	public function query($query) {
+		return $this->data($query);
 	}
 	
 	/**
@@ -1020,7 +1043,7 @@ class ZP_Db extends ZP_Load {
      * @return boolean value
      */
 	public function save($option = NULL) {	
-		if($option === FALSE) {
+		if(!$option) {
 			return $this->updateBySQL();
 		} elseif($option === NULL) {
 			return $this->insert();	

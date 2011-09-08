@@ -688,7 +688,7 @@ class ADODB_mysqli extends ADOConnection {
 		return $mysql_res;
 		*/
 		
-		if ($this->multiQuery) {
+		if($this->multiQuery) {
 			$rs = mysqli_multi_query($this->_connectionID, $sql.';');
 			if ($rs) {
 				$rs = ($ADODB_COUNTRECS) ? @mysqli_store_result( $this->_connectionID ) : @mysqli_use_result( $this->_connectionID );
@@ -697,7 +697,7 @@ class ADODB_mysqli extends ADOConnection {
 		} else {
 			$rs = mysqli_query($this->_connectionID, $sql, $ADODB_COUNTRECS ? MYSQLI_STORE_RESULT : MYSQLI_USE_RESULT);
 		
-			if ($rs) return $rs;
+			if($rs) return $rs;
 		}
 
 		if($this->debug)

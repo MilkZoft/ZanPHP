@@ -100,7 +100,7 @@ function compress($string) {
  * @param bool   $elipsis 
  * @return string $
  */
-function cut($type = "word", $text, $length = 12, $nice = TRUE, $file = FALSE, $elipsis = FALSE) {
+function cut($text, $length = 12, $type = "text", $slug = FALSE, $file = FALSE, $elipsis = FALSE) {
 	if($type === "text") {
 		$elipsis = "...";
 		$words   = explode(" ", $text);
@@ -116,8 +116,8 @@ function cut($type = "word", $text, $length = 12, $nice = TRUE, $file = FALSE, $
 				$max = strlen($text);
 			}
 			
-			if($nice) {
-				return substr(nice($text), 0, $length);
+			if($slug) {
+				return substr(slug($text), 0, $length);
 			} else {
 				return substr($text, 0, $length);			
 			}
@@ -127,14 +127,14 @@ function cut($type = "word", $text, $length = 12, $nice = TRUE, $file = FALSE, $
 			}
 			
 			if(!$elipsis) {
-				if($nice) {
-					return substr(nice($text), 0, $length);
+				if($slug) {
+					return substr(slug($text), 0, $length);
 				} else {
 					return substr($text, 0, $length);
 				}
 			} else {
-				if($nice) {
-					return substr(nice($text), 0, $length) . $elipsis;
+				if($slug) {
+					return substr(slug($text), 0, $length) . $elipsis;
 				} else {
 					return substr($text, 0, $length) . $elipsis;			
 				}
@@ -247,7 +247,7 @@ function getTotal($count, $singular, $plural) {
  * @param string $title
  * @return string $title
  */
-function nice($title) {		
+function slug($string) {		
 	$characters = array("Á" => "A", "Ç" => "c", "É" => "e", "Í" => "i", "Ñ" => "n", "Ó" => "o", "Ú" => "u", 
 						"á" => "a", "ç" => "c", "é" => "e", "í" => "i", "ñ" => "n", "ó" => "o", "ú" => "u"
 	);
