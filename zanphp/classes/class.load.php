@@ -73,6 +73,7 @@ class ZP_Load {
 		
 		$this->config("cache");
 		$this->config("exceptions");
+		$this->config("languages");
 	}
 	
     /**

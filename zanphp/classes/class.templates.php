@@ -222,7 +222,7 @@ class ZP_Templates extends ZP_Load {
 			return getScript($js, $application, $extra, $getJs);	
 		} 
 		
-		$this->js = getScript($js, $application, $extra, $getJs);	
+		$this->js .= getScript($js, $application, $extra, $getJs);	
 	}
 	
     /**

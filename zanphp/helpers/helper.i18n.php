@@ -65,7 +65,7 @@ function __($text, $normal = FALSE) {
 			$Load->language("English");
 		}
 
-		return translation($text); 	
+		return encode(translation($text)); 	
 	}
 }
 

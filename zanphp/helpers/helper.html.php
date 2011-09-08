@@ -39,11 +39,11 @@ function a($text, $URL = NULL, $external = FALSE, $attributes = FALSE) {
 			$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
 		}
 	}
-		 
-	if(!$URL) {
-		return '<a'. $attrs .'>'. $text .'</a>';
-	} elseif(is_null($URL)) {
+	
+	if(is_null($URL)) {
 		return '<a name="'. $text .'"></a>';	
+	} elseif(!$URL) {
+		return '<a'. $attrs .'>'. $text .'</a>';
 	} elseif($external) {
 		return '<a target="_blank" href="'. $URL .'"'. $attrs .'>'. $text .'</a>';
 	} else {
@@ -196,7 +196,7 @@ function loadScript($js, $application = NULL) {
 		return '<script type="text/javascript" src="'. _webURL . _sh . $js .'"></script>';
 	} else {
 		if(isset($application)) {
-			$file = _applications . _sh . $application . _sh . _views . _sh . _js . _sh . $js . _dot . _js;
+			$file = _www . _sh . _applications . _sh . $application . _sh . _views . _sh . _js . _sh . $js . _dot . _js;
 			
 			if(file_exists($file)) {
 				return '<script type="text/javascript" src="'. _webURL . _sh . $file .'"></script>';

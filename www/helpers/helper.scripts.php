@@ -1,4 +1,11 @@
 <?php
+/**
+ * Access from index.php:
+ */
+if(!defined("_access")) {
+	die("Error: You don't have permission to access here...");
+}
+
 function getScript($js, $application = NULL, $extra = NULL, $getJs = FALSE) {
 	$HTML = NULL;
 	
@@ -34,7 +41,7 @@ function getScript($js, $application = NULL, $extra = NULL, $getJs = FALSE) {
 								}
 							</script>';
 			} elseif($js === "tiny-mce") {
-				$HTML  = loadScript("lib/scripts/js/tiny_mce/tiny_mce.js");
+				$HTML  = loadScript("www/lib/scripts/js/tiny_mce/tiny_mce.js"); 
 				$HTML .= '<script type="text/javascript">';
 				
 				if($extra !== "basic") {

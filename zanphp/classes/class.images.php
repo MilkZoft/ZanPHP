@@ -162,7 +162,7 @@ class ZP_Images extends ZP_Load {
 	public function load($filename) {
 		$image_info = getimagesize($filename);
 	  
-		$this->image_type = $image_info[2];
+		$this->imageType = $image_info[2];
 	  
 		if($this->imageType === IMAGETYPE_JPEG) {
 		 $this->image = imagecreatefromjpeg($filename);
@@ -244,7 +244,7 @@ class ZP_Images extends ZP_Load {
 			imagepng($this->image, $filename);
 		}   
 
-		if($permissions !== NULL) {
+		if(!is_null($permissions)) {
 			chmod($filename, $permissions);
 		}
 	}

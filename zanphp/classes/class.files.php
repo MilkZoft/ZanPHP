@@ -66,6 +66,11 @@ class ZP_Files extends ZP_Load {
 	 */
 	public $fileType;
 	
+	public function __construct() {
+		$this->config("files");
+		$this->config("images");	
+	}
+	
     /**
      * Get the type of a file and divide into audios, documents, images or videos
      *
@@ -115,46 +120,46 @@ class ZP_Files extends ZP_Load {
 			$ext = "png";
 		}
 		
-		if($icons === TRUE) {
+		if($icons) {
 			if($ext === "txt") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "text.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "text.png";
 				$icon[1] = __("Text File");
 			} elseif($ext === "doc" or $ext === "docx") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "doc.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "doc.png";
 				$icon[1] = __("Document File");
 			} elseif($ext === "pdf") {	
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "pdf.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "pdf.png";
 				$icon[1] = __("PDF File");
 			} elseif($ext === "ppt" or $ext === "pptx") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ppt.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ppt.png";
 				$icon[1] = __("Power Point File");
 			} elseif($ext === "rar" or $ext === "iso") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "rar.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "rar.png";
 				$icon[1] = __("Winrar File");
 			} elseif($ext === "xls" or $ext === "xlsx" or $ext === "csv") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "xls.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "xls.png";
 				$icon[1] = __("Excel File");
 			} elseif($ext === "zip") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "zip.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "zip.png";
 				$icon[1] = __("Winzip File");
 			} elseif($ext === "7z") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "7z.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "7z.png";
 				$icon[1] = __("7z File");				
 			} elseif($ext === "ai" or $ext === "svg") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ai.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "ai.png";
 				$icon[1] = __("Adobe Illustrator File");								
 			} elseif($ext === "cdr") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "cdr.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "cdr.png";
 				$icon[1] = __("Corel Draw File");				
 			} elseif($ext === "exe" or $ext === "msi") {
-				$icon[0] = _webURL . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "exe.png";
+				$icon[0] = _webURL . _sh . _www . _sh . _lib . _sh . _images . _sh . _icons . _sh . _files . _sh . "exe.png";
 				$icon[1] = __("Executable File");				
 			}	
 					
 			return $icon;
 		}
 					
-		if($return  === TRUE) {
+		if($return) {
 			return $ext;
 		}
 					
@@ -236,9 +241,9 @@ class ZP_Files extends ZP_Load {
 			return "video";
 		} elseif($ext === "mov") {
 			return "video";			
-		} else {
-			return FALSE;
-		}
+		} 
+		
+		return FALSE;
 	}
 	
     /**
@@ -301,7 +306,7 @@ class ZP_Files extends ZP_Load {
 			}
 		}
 		
-		$filename = code(5, FALSE) . "_" . nice($parts[0]) . _dot . $ext;
+		$filename = code(5, FALSE) . "_" . slug($parts[0]) . _dot . $ext;
 		$file     = $path . $filename;		
 		
 		if(file_exists($file)) {
