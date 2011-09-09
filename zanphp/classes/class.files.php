@@ -360,17 +360,17 @@ class ZP_Files extends ZP_Load {
 		
 		$upload = $this->upload($dir);
 		
-		if($upload["upload"] === FALSE) {
-			@unlink($dir . $upload["filename"]);
-			
-			return $upload["filename"];
+		if(!$upload["upload"]) {			
+			return FALSE;
 		}
 		
 		$this->Images = $this->core("Images");
 		
 		$this->Images->load($dir . $upload["filename"]);
 		
-		if($type === "resize") {					
+		if($type === "normal") {
+			return $dir . $upload["filename"];
+		} elseif($type === "resize") {					
 			if($small) {
 				$size["small"] = $this->Images->getResize("small", $dir, $upload["filename"]);	
 			}

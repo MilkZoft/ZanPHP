@@ -1183,7 +1183,7 @@ class ZP_Db extends ZP_Load {
 				return FALSE;
 			} else {
 				$table  = $this->table;
-				$fields = $this->fields;
+				$fields = $this->values;
 			}
 		}
 		
@@ -1206,11 +1206,7 @@ class ZP_Db extends ZP_Load {
 			}
 			
 			$query = "UPDATE $table SET $_values WHERE $this->primaryKey = $ID";
-		} else {
-			if(!$values) {
-				return FALSE;	
-			}
-			
+		} else {		
 			$query = "UPDATE $table SET $fields WHERE $this->primaryKey = $ID";
 		}	
 		
