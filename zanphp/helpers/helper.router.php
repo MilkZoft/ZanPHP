@@ -166,7 +166,17 @@ function execute() {
 	if(file_exists($controllerFile)) {
 		if(isset($method) and isset($params)) { 
 			if(method_exists($$controller, $method)) {
-				call_user_func_array(array($$controller, $method), $params);
+				try {
+					$reflection = new ReflectionMethod($$controller, $method);
+				
+					if(!$reflection->isPublic()) {
+						throw new RuntimeException("The called method is not public.", 100);
+					}
+	
+					call_user_func_array(array($$controller, $method), $params);
+				} catch(RuntimeException $e) {
+					getException($e);
+				}
 			} else {
 				$$controller->index();
 			}

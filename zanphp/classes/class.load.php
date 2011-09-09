@@ -102,8 +102,10 @@ class ZP_Load {
 			$file = _www . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
 		} elseif(file_exists(_www . _sh . _applications . _sh . $application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP)) {
 			$file = _www . _sh . _applications . _sh . $application . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;
+		} else {
+			$file = FALSE;	
 		}
-		
+	
 		$this->Cache = $this->core("Cache");
 		
 		if(file_exists($file)) {							

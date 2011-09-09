@@ -200,7 +200,8 @@ function filter($text, $filter = FALSE) {
 		$text = str_replace('"', "", $text);
 		$text = str_replace("\\", "", $text);
 	}
-		
+	
+	$text = str_replace(".", "", $text);
 	$text = str_replace("<", "", $text);
 	$text = str_replace(">", "", $text);
 	$text = str_replace("%27", "", $text);

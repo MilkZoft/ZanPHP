@@ -143,7 +143,7 @@ function ping($domain) {
  * @return void
  */
 function redirect($URL, $time = FALSE) {
-	if(!$time) {
+	if(!$time) {		
 		if(substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
 			header("location: ". _webBase .  _sh . _webLang . _sh . $URL);
 		} else {

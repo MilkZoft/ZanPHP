@@ -129,6 +129,8 @@ class ZP_Db extends ZP_Load {
 	 * @var private
 	 */
 	private $where = NULL;
+	
+	private $SQL = NULL;
 		
     /**
      * Load Database class
@@ -345,7 +347,7 @@ class ZP_Db extends ZP_Load {
 			return FALSE;		
 		}
 		
-		$query = "DELETE FROM $this->table WHERE $primaryKey = $ID";
+		$query = "DELETE FROM $this->table WHERE $this->primaryKey = $ID";
 		
 		return ($this->Database->_execute($query)) ? TRUE : FALSE;
 	}
@@ -691,13 +693,19 @@ class ZP_Db extends ZP_Load {
      * @param string $values
      * @return object or boolean value
      */		
-	public function insert($table, $fields = FALSE, $values = FALSE) {
+	public function insert($table = FALSE, $fields = FALSE, $values = FALSE) {
 		if(!$table or !$fields) {
-			return FALSE;
+			if(!$this->table or !$this->fields or !$this->values) {
+				return FALSE;
+			} else {
+				$table  = $this->table;
+				$fields = $this->fields;
+				$values = $this->values;
+			}
 		}
 		
 		$table = $this->getTable($table);
-			
+		
 		if(is_array($fields)) {
 			$count   = count($fields) - 1;
 			$_fields = NULL;
@@ -1043,10 +1051,10 @@ class ZP_Db extends ZP_Load {
      * @return boolean value
      */
 	public function save($option = NULL) {	
-		if(!$option) {
-			return $this->updateBySQL();
-		} elseif($option === NULL) {
+		if(is_null($option)) {
 			return $this->insert();	
+		} elseif($option) {
+			return $this->updateBySQL();
 		} elseif($option === "begin") {
 			return $this->insert(TRUE);
 		} elseif($option > 0) {
@@ -1145,13 +1153,15 @@ class ZP_Db extends ZP_Load {
 		
 		$this->table  = _dbPfx . $table;  
 		$this->fields = $fields;
-
+		
+		self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
+		
 		$data = $this->Database->_execute("SHOW COLUMNS FROM $this->table");
 		
 		if(is_object($data)) { 
 			if($data->fields["Key"] === "PRI") {
 				$this->primaryKey = $data->fields["Field"];
-					
+							
 				return $this->primaryKey;
 			}
 		}
@@ -1173,7 +1183,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$query = "UPDATE $this->table SET $this->values WHERE $this->primaryKey = $ID";
-		
+	
 		return ($this->Database->_execute($query)) ? TRUE : FALSE;
 	}
 	
