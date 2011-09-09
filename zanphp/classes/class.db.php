@@ -1053,13 +1053,13 @@ class ZP_Db extends ZP_Load {
 	public function save($option = NULL) {	
 		if(is_null($option)) {
 			return $this->insert();	
-		} elseif($option) {
-			return $this->updateBySQL();
+		} elseif($option > 0) {
+			return $this->update(FALSE, FALSE, $option);	
 		} elseif($option === "begin") {
 			return $this->insert(TRUE);
-		} elseif($option > 0) {
-			return $this->update($option);	
-		}
+		} elseif($option) {
+			return $this->updateBySQL();
+		} 
 	}
 	
    	/**
@@ -1177,14 +1177,50 @@ class ZP_Db extends ZP_Load {
      * @param integer $ID
      * @return boolean value
      */
-	public function update($ID = FALSE) {		
-		if(!$this->table or !$this->values or !$ID or !$this->primaryKey) {
-			return FALSE;
+	public function update($table = FALSE, $fields = FALSE, $ID = FALSE) {		
+		if(!$table or !$fields) {
+			if(!$this->table or !$this->fields) {
+				return FALSE;
+			} else {
+				$table  = $this->table;
+				$fields = $this->fields;
+			}
 		}
 		
-		$query = "UPDATE $this->table SET $this->values WHERE $this->primaryKey = $ID";
-	
-		return ($this->Database->_execute($query)) ? TRUE : FALSE;
+		$table = $this->getTable($table);
+		
+		if(is_array($fields)) {
+			$count   = count($fields) - 1;
+			$_fields = NULL;
+			$_values = NULL;
+			$i 		 = 0;
+			
+			foreach($fields as $field => $value) {
+				if($i === $count) {
+					$_values .= "$field = '$value'";
+				} else {
+					$_values .= "$field = '$value', ";	
+				}
+						
+				$i++;	
+			}
+			
+			$query = "UPDATE $table SET $_values WHERE $this->primaryKey = $ID";
+		} else {
+			if(!$values) {
+				return FALSE;	
+			}
+			
+			$query = "UPDATE $table SET $fields WHERE $this->primaryKey = $ID";
+		}	
+		
+		$this->Rs = $this->_query($query);
+		
+		if($this->Rs) {
+			return TRUE;
+		}
+		
+		return FALSE;
 	}
 	
     /**
@@ -1194,14 +1230,21 @@ class ZP_Db extends ZP_Load {
      * @param string $SQL
      * @return boolean value
      */
-	public function updateBySQL() {
-		if(!$this->table or !$this->SQL) {
-			return FALSE;
+	public function updateBySQL($table = NULL, $SQL = NULL) {
+		if(!$table or !$SQL) {
+			if(!$this->table or !$this->SQL) {
+				return FALSE;
+			} else {
+				$table = $this->table;
+				$SQL   = $this->SQL;	
+			}
 		}
 		
-		$query = "UPDATE $this->table SET $this->SQL";
+		$table = $this->getTable($table);
 		
-		return ($this->Database->_execute($query)) ? TRUE : FALSE;
+		$query = "UPDATE $table SET $SQL";
+		
+		return ($this->_query($query)) ? TRUE : FALSE;
 	}
 
     /**

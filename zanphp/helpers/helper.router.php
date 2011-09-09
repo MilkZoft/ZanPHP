@@ -183,10 +183,29 @@ function execute() {
 		} elseif(isset($method)) {
 			if(method_exists($$controller, $method)) {
 				try {
-					$reflection = new ReflectionMethod($$controller, $method);
-				
-					if(!$reflection->isPublic()) {
+					$Reflection = new ReflectionMethod($$controller, $method);
+					
+					if(!$Reflection->isPublic()) {
 						throw new RuntimeException("The called method is not public.", 100);
+					} elseif($Reflection->getNumberOfRequiredParameters() > 0 and !isset($params)) {
+						$params 	= $Reflection->getParameters();
+						$parameters = NULL;
+						
+						if(count($params) > 0) {
+							$i = 0;
+							
+							foreach($params as $param) {
+								if($i === count($params) - 1) {
+									$parameters .= $param->name;
+								} else {
+									$parameters .= $param->name .", ";	
+								}
+								
+								$i++;
+							}
+						}
+						
+						throw new RuntimeException("The called method need required parameters ($parameters).", 200);
 					}
 	
 					$$controller->$method();

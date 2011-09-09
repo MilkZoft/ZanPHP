@@ -207,6 +207,7 @@ function filter($text, $filter = FALSE) {
 	$text = str_replace("%27", "", $text);
 	$text = str_replace("%22", "", $text);
 	$text = str_replace("%20", "", $text);
+	$text = str_replace("indexphp", "index.php", $text);
 		
 	return $text;
 }
