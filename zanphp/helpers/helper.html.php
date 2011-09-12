@@ -213,7 +213,13 @@ function openUl($ID = NULL, $class = NULL) {
 }
 
 function p($text, $class = "left") {
-	return char("\n\t") . '<p class="'. $class .'">'. char("\n\t\t") . $text . char("\n\t") . '</p>' . char("\n");
+	if(is_string($text)) {
+		return char("\n\t") . '<p class="'. $class .'">'. char("\n\t\t") . $text . char("\n\t") . '</p>' . char("\n");
+	} elseif($text === TRUE) {
+		return '<p class="'. $class .'">';
+	} else {
+		return '</p>';
+	}
 }
 
 function small($text) {

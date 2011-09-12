@@ -43,7 +43,7 @@ class ZP_Db extends ZP_Load {
 	 * 
 	 * @var private $encode
 	 */
-	private $encode = FALSE;
+	private $encode = TRUE;
 	
 	/**
 	 * 
@@ -216,6 +216,14 @@ class ZP_Db extends ZP_Load {
 		return (!self::$connection) ? FALSE : $this->Database->close(self::$connection);
 	}
 	
+	public function columns($table) {
+		$table = $this->getTable($table);
+		
+		$data = $this->data("SHOW COLUMNS FROM $table");
+		
+		return $data;
+	}
+	
 	/**
      * Saves changes
      *
@@ -300,10 +308,8 @@ class ZP_Db extends ZP_Load {
 				return FALSE;	
 			}
 			
-			self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
-			
 			$this->Rs = $this->_query($query);
-			
+
 			if($this->rows() === 0) {
 				return FALSE;			
 			} else {
@@ -322,8 +328,8 @@ class ZP_Db extends ZP_Load {
 				$data = isset($rows) ? $this->encoding($rows) : FALSE;
 			} else { 
 				$data = isset($rows) ? $rows : FALSE;
-			}
-				
+			}		
+
 			if($this->caching and $data) {
 				$this->Cache->save($data, sha1($query), "db");
 				
@@ -398,7 +404,7 @@ class ZP_Db extends ZP_Load {
      * @param string
      * @return void
      */
-	public function encode($encode = FALSE) {
+	public function encode($encode = TRUE) {
 		$this->encode = $encode;
 	}
 	
@@ -408,7 +414,7 @@ class ZP_Db extends ZP_Load {
      * @return array value
      */	
 	private function encoding($rows) {
-		$this->encode = FALSE;
+		$this->encode = TRUE;
 		
 		if(is_object($rows)) { 
 			$array[] = get_object_vars($rows);
@@ -420,8 +426,18 @@ class ZP_Db extends ZP_Load {
 				$key2  = array_keys($array[$i]);
 				$size2 = sizeof($key2);
 				
-				for($j = 0; $j < $size2; $j++) {					
-					$data[$i][$key2[$j]] = encode($array[$i][$key2[$j]]);								
+				for($j = 0; $j < $size2; $j++) {	
+					if($array[$i][$key2[$j]] === "1") {
+						if(stristr($key2[$j], "ID")) {
+							$data[$i][$key2[$j]] = 1;
+						} else {
+							$data[$i][$key2[$j]] = TRUE;
+						}
+					} elseif($array[$i][$key2[$j]] === "0") {
+						$data[$i][$key2[$j]] = FALSE;
+					} else {
+						$data[$i][$key2[$j]] = encode($array[$i][$key2[$j]]);								
+					}
 				}
 			}
 			
@@ -434,8 +450,18 @@ class ZP_Db extends ZP_Load {
 				$key2  = array_keys($rows[$i]);
 				$size2 = sizeof($key2);
 				
-				for($j = 0; $j < $size2; $j++) {					
-					$data[$i][$key2[$j]] = encode($rows[$i][$key2[$j]]);								
+				for($j = 0; $j < $size2; $j++) {				
+					if($rows[$i][$key2[$j]] === "1") {
+						if(stristr($key2[$j], "ID")) {
+							$data[$i][$key2[$j]] = 1;
+						} else {
+							$data[$i][$key2[$j]] = TRUE;
+						}
+					} elseif($rows[$i][$key2[$j]] === "0") {
+						$data[$i][$key2[$j]] = FALSE;
+					} else {
+						$data[$i][$key2[$j]] = encode($rows[$i][$key2[$j]]);								
+					}								
 				}
 			}
 			
@@ -509,7 +535,7 @@ class ZP_Db extends ZP_Load {
 			$SQL .= " LIMIT ". $limit;
 		}
 		
-		$query = "SELECT $this->fields FROM $this->table $SQL";
+		$query = "SELECT $this->fields FROM $this->table$SQL";
 
 		return $this->data($query);
 	}
@@ -575,7 +601,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
-	
+
 		return $this->data($query);
 	}
 	

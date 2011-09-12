@@ -251,7 +251,8 @@ function getTotal($count, $singular, $plural) {
  */
 function slug($string) {		
 	$characters = array("Á" => "A", "Ç" => "c", "É" => "e", "Í" => "i", "Ñ" => "n", "Ó" => "o", "Ú" => "u", 
-						"á" => "a", "ç" => "c", "é" => "e", "í" => "i", "ñ" => "n", "ó" => "o", "ú" => "u"
+						"á" => "a", "ç" => "c", "é" => "e", "í" => "i", "ñ" => "n", "ó" => "o", "ú" => "u",
+						"à" => "a", "è" => "e", "ì" => "i", "ò" => "o", "ù" => "u"
 	);
 	
 	$string = strtr($string, $characters);
@@ -309,7 +310,11 @@ function POST($position = FALSE, $coding = "decode", $filter = TRUE) {
 	} elseif(isset($_POST[$position]) and $_POST[$position] === "") {
 		return NULL;
 	} elseif(isset($_POST[$position])) {
-		if($coding === "encrypt") {
+		if($coding === "b64") {
+			return base64_decode($_POST[$position]);
+		} elseif($coding === "unserialize") {
+			return unserialize(base64_decode($_POST[$position]));
+		} elseif($coding === "encrypt") {
 			if($filter === TRUE) {
 				return encrypt(encode($_POST[$position]));
 			} elseif($filter === "escape") {
@@ -367,7 +372,7 @@ function POST($position = FALSE, $coding = "decode", $filter = TRUE) {
  * @parama string $value = NULL
  * @return string
  */
-function recoverPOST($position, $value = NULL) {
+function recoverPOST($position, $value = NULL) { 
 	if(!$value) {
 		return (POST($position)) ? htmlentities(POST($position, "decode", FALSE)) : NULL;
 	} else {

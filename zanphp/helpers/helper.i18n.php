@@ -202,3 +202,49 @@ function whichLanguage($invert = TRUE) {
 		}	
 	}
 }
+
+function getLanguages($flags = FALSE) {
+	$data = array();
+
+	if(_Spanish) {
+		if(_webLanguage === "Spanish") {
+			$default = TRUE;	
+		} else {
+			$default = FALSE;
+		}
+
+		$data[] = array("default" => $default, "name" => "Spanish", "value" => getLanguage("Spanish", $flags));
+	}
+	
+	if(_English) {
+		if(_webLanguage === "English") {
+			$default = TRUE;	
+		} else {
+			$default = FALSE;
+		}
+
+		$data[] = array("default" => $default, "name" => "English", "value" => getLanguage("English", $flags));
+	}
+	
+	if(_French) {
+		if(_webLanguage === "French") {
+			$default = TRUE;	
+		} else {
+			$default = FALSE;
+		}
+
+		$data[] = array("default" => $default, "name" => "French", "value" => getLanguage("French", $flags));
+	}
+	
+	if(_Portuguese) {
+		if(_webLanguage === "Portuguese") {
+			$default = TRUE;	
+		} else {
+			$default = FALSE;
+		}
+
+		$data[] = array("default" => $default, "name" => "Portuguese", "value" => getLanguage("Portuguese", $flags));
+	}
+	
+	return $data;
+}

@@ -41,7 +41,7 @@ function formCheckbox($attributes = FALSE) {
 			if($attribute !== "position" and $attribute !== "text" and $attribute !== "type") {
 				$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
 			} else {
-				$$attribute = strtolower(encode($value));
+				$$attribute = encode($value);
 			}
 		}
 		
@@ -113,40 +113,55 @@ function formInput($attributes = FALSE) {
 		foreach($attributes as $attribute => $value) {
 			if($attribute === "events") {
 				$attrs .= ' '. $value .' ';
-			} elseif($attribute !== "type") {
+			} elseif($attribute !== "type" and $attribute !== "p" and $attribute !== "field") {
 				$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
 			} else {
-				$$attribute = strtolower(encode($value));
+				$$attribute = $value;
 			}
 		}
 		
 		if(isset($type)) {
 			if($type === "text") {
-				return '<input'. $attrs .' type="text" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="text" /> ' . "\n";
 			} elseif($type === "password") {
-				return '<input'. $attrs .' type="password" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="password" /> ' . "\n";
 			} elseif($type === "submit") {
-				return '<input'. $attrs .' type="submit" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="submit" /> ' . "\n";
 			} elseif($type === "button") {
-				return '<input'. $attrs .' type="button" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="button" /> ' . "\n";
 			} elseif($type === "checkbox") {
-				return '<input'. $attrs .' type="checkbox" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="checkbox" /> ' . "\n";
 			} elseif($type === "radio") {
-				return '<input'. $attrs .' type="radio" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="radio" /> ' . "\n";
 			} elseif($type === "file") {
-				return '<input'. $attrs .' type="file" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="file" /> ' . "\n";
 			} elseif($type === "hidden") {
-				return '<input'. $attrs .' type="hidden" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="hidden" /> ' . "\n";
 			} elseif($type === "image") {
-				return '<input'. $attrs .' type="image" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="image" /> ' . "\n";
 			} elseif($type === "reset") {
-				return '<input'. $attrs .' type="reset" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="reset" /> ' . "\n";
 			} else {
-				return '<input'. $attrs .' type="text" /> ' . "\n";
+				$HTML = '<input'. $attrs .' type="text" /> ' . "\n";
 			}
 		} else {
-			return '<input'. $attrs .' type="text" /> ' . "\n";
+			$HTML = '<input'. $attrs .' type="text" /> ' . "\n";
 		}
+
+		if(isset($p) and isset($field)) {
+			$HTML = '	<p>
+							<span class="field">&raquo; '. $field .'</span><br />
+							'. $HTML .'
+						</p>';
+		} elseif(isset($p)) {
+			$HTML = '	<p>
+							'. $HTML .'
+						</p>';
+		} elseif(isset($field)) {
+			$HTML = '<span class="field">&raquo; '. $field .'</span><br />'. $HTML .'';
+		}
+
+		return $HTML;
 	} elseif($attributes) {
 		return '<input name="'. $attributes .'" type="text" />' . "\n";
 	} else {
@@ -187,7 +202,7 @@ function formLabel($for, $text, $br = TRUE) {
  * @param string $enctype = "multipart/form-data"
  * @returns string $HTML
  */	
-function formOpen($action = NULL, $ID = NULL, $legend = NULL, $class = "forms", $method = "post", $enctype = "multipart/form-data") {	
+function formOpen($action = NULL, $class = "forms", $ID = NULL, $legend = NULL, $method = "post", $enctype = "multipart/form-data") {	
 	$ID     = (isset($ID))     ? ' id="'. $ID .'"' 			  			 : NULL;
 	$legend = (isset($legend)) ? "<legend>$legend</legend>" . "\n" : NULL;
 	$action = (strstr($action, "http://")) ? $action : _webBase . _sh . $action;
@@ -214,27 +229,55 @@ function formOpen($action = NULL, $ID = NULL, $legend = NULL, $class = "forms", 
  * @param boolean $disable  = FALSE 
  * @returns string value
  */	
-function formRadio($attributes) {
+function formRadio($attributes, $options = FALSE) {
 	if(isset($attributes) and is_array($attributes)) {
 		$attrs = NULL;
 		
 		foreach($attributes as $attribute => $value) {
-			if($attribute != "position" and $attribute != "text" and $attribute != "type") {
-				$attrs .= ' ' . strtolower($attribute) . '="' . encode($value) . ' "';
+			if($attribute !== "position" and $attribute !== "text" and $attribute !== "type" and $attribute !== "p" and $attribute !== "field") {
+				$attrs .= ' '. strtolower($attribute) . '="' . encode($value) . '"';
 			} else {
-				$$attribute = strtolower(encode($value));
+				$$attribute = $value;
 			}
 		}
 		
-		if(isset($position) and $position === "left" and isset($text)) {
-			return $text . ' <input ' . $attrs . ' type="radio" />';
-		} elseif(isset($position) and $position === "right" and isset($text)) {
-			return '<input ' . $attrs . ' type="radio" /> ' . $text;
-		} elseif(isset($text)) {
-			return $text . ' <input ' . $attrs . ' type="radio" />';
+		if(is_array($options)) {
+			$HTML = NULL;
+
+			foreach($options as $option) {
+				if(is_array($option)) { 
+					foreach($option as $attribute) {
+						if($attribute["default"]) {
+							$check = ' checked="checked"';
+						} else {
+							$check = NULL;	
+						}
+
+						$HTML .= ' <input '. $attrs .' value="'. $attribute["name"] .'" type="radio"'. $check .' />'. $attribute["value"];
+					}					
+				}	
+			}
 		} else {
-			return '<input ' . $attrs . ' type="radio" />';
+			if(isset($position) and $position === "left" and isset($text)) {
+				$HTML = $text . ' <input'. $attrs .' type="radio" />';
+			} elseif(isset($position) and $position === "right" and isset($text)) {
+				$HTML = '<input'. $attrs .' type="radio" /> '. $text;
+			} elseif(isset($text)) {
+				$HTML = $text . ' <input'. $attrs .' type="radio" />';
+			} else {
+				$HTML = '<input'. $attrs .' type="radio" />';
+			}	
 		}
+		
+		if(isset($p) and isset($field)) {
+			$HTML = '	<p>
+							<span class="field">&raquo; '. $field .'</span><br />
+							'. $HTML .'
+						</p>';
+
+		}
+
+		return $HTML;
 	} else {
 		return NULL;
 	}
@@ -261,7 +304,11 @@ function formSelect($attributes = FALSE, $options = FALSE, $select = FALSE) {
 		$attrs = NULL;
 		
 		foreach($attributes as $attribute => $value) {
-			$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
+			if($attribute !== "p" and $attribute !== "field") {
+				$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
+			} else {
+				$$attribute = $value;
+			}
 		}
 		
 		$HTML = "\t" . '<select'. $attrs . '>'. "\n";
@@ -274,17 +321,29 @@ function formSelect($attributes = FALSE, $options = FALSE, $select = FALSE) {
 					$select = FALSE;
 				}
 				
-				$selected = (isset($option["selected"]) and $option["selected"] === TRUE) ? ' selected="selected"' : NULL;
-				$value    = (isset($option["value"]))  ? $option["value"]  : NULL;
-				$text 	  = (isset($option["option"])) ? $option["option"] : NULL;
-				
-				$HTML .= "\t\t" . '<option value="' . $value . '"' . $selected . '>' . $text . '</option>' . "\n";				
+				if(!is_array($option) and is_string($option)) {
+					$HTML .= "\t\t" . '<option>'. $option .'</option>' . "\n";	
+				} else {
+					$selected = (isset($option["selected"]) and $option["selected"]) ? ' selected="selected"' : NULL;
+					$value    = (isset($option["value"]))  ? $option["value"]  : NULL;
+					$text 	  = (isset($option["option"])) ? $option["option"] : NULL;
+					
+					$HTML .= "\t\t" . '<option value="' . $value . '"' . $selected . '>' . $text . '</option>' . "\n";		
+				}			
 			}
 		}
 		
 		$HTML .= "\t" . '</select>' . "\n";
 		
 		unset($options);
+
+		if(isset($p) and isset($field)) {
+			$HTML = '	<p>
+							<span class="field">&raquo; '. $field .'</span><br />
+							'. $HTML .'
+						</p>';
+
+		}
 		
 		return $HTML;
 	} else {
@@ -313,15 +372,27 @@ function formTextarea($attributes = FALSE) {
 	if(isset($attributes) and is_array($attributes)) {
 		$attrs = NULL;
 		
-		foreach($attributes as $key => $val) {
-			if($key != "type" and $key != "value") {
-				$attrs .= ' ' . strtolower($key) . '="' . encode($val) . ' "';
+		foreach($attributes as $attribute => $val) {
+			if($attribute !== "type" and $attribute !== "value" and $attribute !== "p" and $attribute !== "field") {
+				$attrs .= ' '. strtolower($attribute) .'="'. encode($val) .'"';
 			} else {
-				$$key = encode($val);
+				$$attribute = $val;
 			}
 		}
 		
-		return '<textarea ' . $attrs . '>' . isset($value) ? $value : NULL . '</textarea>';
+		$value = isset($value) ? $value : NULL;
+		
+		$HTML = '<textarea'. $attrs .'>'. $value .'</textarea>';
+
+		if(isset($p) and isset($field)) {
+			$HTML = '	<p>
+							<span class="field">&raquo; '. $field .'</span><br />
+							'. $HTML .'
+						</p>';
+
+		}
+
+		return $HTML;
 	} else {
 		return NULL;
 	}								

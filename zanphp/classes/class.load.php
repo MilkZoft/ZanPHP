@@ -211,6 +211,8 @@ class ZP_Load {
      * @return void
      */
 	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
+		$this->Templates = $this->core("Templates");
+	
 		$this->Templates->CSS($CSS, $application, $print);
 	}
 	

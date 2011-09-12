@@ -245,94 +245,184 @@ class ZP_Templates extends ZP_Load {
 		if($direct) { 
 			if(is_array($template)) {
 				if(count($template) === 1) {
-					@ob_clean();
+					$buffer1 = ob_get_clean();
 					
-					include $template[0];
-					
-					if(_cacheStatus) {
-						$output = @ob_get_contents();
+					if(_cacheStatus) { 								 
+						$cache = $this->Cache->get(cacheSession($template[0]), "templates");
 						
-						@ob_end_clean();
+						if($cache) {
+							print $buffer1;
+							print $cache;
+
+							return TRUE;
+						} else {
+							ob_start();
+							
+							include $template[0];
+							
+							$buffer2 = ob_get_contents();
+							
+							@ob_end_clean();
 						
-						$this->Cache->save($output, cacheSession($template[0]), "templates");
+							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");	
+							
+							print $buffer1;
+							print $buffer2;
+						}
+					} else {
+						print $buffer1;
 						
-						print $output;
+						include $template[0];
 					}
 				} elseif(count($template) === 2) {
-					@ob_clean();
+					$buffer1 = ob_get_clean();
 					
-					include $template[0];
-					include $template[1];
-
-					if(_cacheStatus) {
-						$output = @ob_get_contents();
-
-						@ob_end_clean();
+					if(_cacheStatus) { 								 
+						$cache1 = $this->Cache->get(cacheSession($template[0]), "templates");
+						$cache2 = $this->Cache->get(cacheSession($template[1]), "templates");
 						
-						$this->Cache->save($output, cacheSession($template[0]), "templates");
-						$this->Cache->save($output, cacheSession($template[1]), "templates");
+						if($cache1 and $cache2) {
+							print $buffer1;
+							print $cache1;
+							print $cache2;
+						} else {
+							ob_start();
+							
+							include $template[0];
+							
+							$buffer2 = ob_get_clean();
+
+							ob_start();
+
+							include $template[1];
+
+							$buffer3 = ob_get_contents();
+							
+							@ob_end_clean();
 						
-						print $output;
+							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");
+							$this->Cache->save($buffer3, cacheSession($template[1]), "templates");	
+							
+							print $buffer1;
+							print $buffer2;
+							print $buffer3;
+						}
+					} else {
+						print $buffer1;
+						
+						include $template[0];
+						include $template[1];
 					}
 				} elseif(count($template) === 3) {
-					@ob_clean();
+					$buffer1 = ob_get_clean();
 					
-					include $template[0];
-					include $template[1];
-					include $template[2];
-
-					if(_cacheStatus) {
-						$output = @ob_get_contents();
-
-						@ob_end_clean();
+					if(_cacheStatus) { 								 
+						$cache1 = $this->Cache->get(cacheSession($template[0]), "templates");
+						$cache2 = $this->Cache->get(cacheSession($template[1]), "templates");
+						$cache3 = $this->Cache->get(cacheSession($template[2]), "templates");
 						
-						$this->Cache->save($output, cacheSession($template[0]), "templates");
-						$this->Cache->save($output, cacheSession($template[1]), "templates");
-						$this->Cache->save($output, cacheSession($template[2]), "templates");
+						if($cache1 and $cache2 and $cache3) {
+							print $buffer1;
+							print $cache1;
+							print $cache2;
+							print $cache3;
+						} else {
+							ob_start();
+							
+							include $template[0];
+							
+							$buffer2 = ob_get_clean();
+
+							ob_start();
+
+							include $template[1];
+
+							$buffer3 = ob_get_clean();
+
+							ob_start();
+
+							include $template[2];
+
+							$buffer4 = ob_get_contents();
+							
+							@ob_end_clean();
 						
-						print $output;
+							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");
+							$this->Cache->save($buffer3, cacheSession($template[1]), "templates");
+							$this->Cache->save($buffer4, cacheSession($template[2]), "templates");	
+							
+							print $buffer1;
+							print $buffer2;
+							print $buffer3;
+							print $buffer4;
+						}
+					} else {
+						print $buffer1;
+						
+						include $template[0];
+						include $template[1];
+						include $template[2];
 					}
 				} elseif(count($template) === 4) {
-					@ob_clean();
+					$buffer1 = ob_get_clean();
 					
-					include $template[0];
-					include $template[1];
-					include $template[2];
-					include $template[3];
-
-					if(_cacheStatus) {
-						$output = @ob_get_contents();
-
-						@ob_end_clean();
+					if(_cacheStatus) { 								 
+						$cache1 = $this->Cache->get(cacheSession($template[0]), "templates");
+						$cache2 = $this->Cache->get(cacheSession($template[1]), "templates");
+						$cache3 = $this->Cache->get(cacheSession($template[2]), "templates");
+						$cache4 = $this->Cache->get(cacheSession($template[3]), "templates");
 						
-						$this->Cache->save($output, cacheSession($template[0]), "templates");
-						$this->Cache->save($output, cacheSession($template[1]), "templates");
-						$this->Cache->save($output, cacheSession($template[2]), "templates");
-						$this->Cache->save($output, cacheSession($template[3]), "templates");
-						
-						print $output;
-					}
-				} elseif(count($template) === 5) {
-					@ob_clean();
-					
-					include $template[0];
-					include $template[1];
-					include $template[2];
-					include $template[3];
-					include $template[4];
+						if($cache1 and $cache2 and $cache3 and $cache4) {
+							print $buffer1;
 
-					if(_cacheStatus) {
-						$output = @ob_get_contents();
+							print $cache1;
+							print $cache2;
+							print $cache3;
+							print $cache4;
+						} else {
+							ob_start();
+							
+							include $template[0];
+							
+							$buffer2 = ob_get_clean();
 
-						@ob_end_clean();
+							ob_start();
+
+							include $template[1];
+
+							$buffer3 = ob_get_clean();
+
+							ob_start();
+
+							include $template[2];
+
+							$buffer4 = ob_get_clean();
+
+							ob_start();
+
+							include $template[3];
+
+							$buffer5 = ob_get_contents();
+							
+							@ob_end_clean();
 						
-						$this->Cache->save($output, cacheSession($template[0]), "templates");
-						$this->Cache->save($output, cacheSession($template[1]), "templates");
-						$this->Cache->save($output, cacheSession($template[2]), "templates");
-						$this->Cache->save($output, cacheSession($template[3]), "templates");
-						$this->Cache->save($output, cacheSession($template[4]), "templates");
+							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");
+							$this->Cache->save($buffer3, cacheSession($template[1]), "templates");
+							$this->Cache->save($buffer4, cacheSession($template[2]), "templates");
+							$this->Cache->save($buffer5, cacheSession($template[3]), "templates");
+							
+							print $buffer1;
+							print $buffer2;
+							print $buffer3;
+							print $buffer4;
+						}
+					} else {
+						print $buffer1;
 						
-						print $output;
+						include $template[0];
+						include $template[1];
+						include $template[2];
+						include $template[3];
 					}
 				}
 			} else {
@@ -415,11 +505,11 @@ class ZP_Templates extends ZP_Load {
      * 
      */
 	public function themeCSS($theme = _webTheme) {
-		$file    = "lib/themes/". $theme . "/css/style.css";
+		$file    = "www/lib/themes/". $theme . "/css/style.css";
 		$browser = browser();
 		
 		if($browser === "Internet Explorer") {
-			$style = "lib/themes/". $theme ."/css/ie.style.css";
+			$style = "www/lib/themes/". $theme ."/css/ie.style.css";
 
 			if(file_exists($style)) {
 				return '<link rel="stylesheet" href="'. $this->themePath .'/css/ie.style.css" type="text/css">';
