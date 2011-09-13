@@ -213,7 +213,7 @@ function execute() {
 					getException($e);
 				}
 			} else {
-				redirect(_webBase);
+				$$controller->index();	
 			}
 		} else {
 			$$controller->index();	
