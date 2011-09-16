@@ -148,12 +148,12 @@ function formInput($attributes = FALSE) {
 			$HTML = '<input'. $attrs .' type="text" /> ' . "\n";
 		}
 
-		if(isset($p) and isset($field)) {
+		if(isset($p) and $p and isset($field)) {
 			$HTML = '	<p>
 							<span class="field">&raquo; '. $field .'</span><br />
 							'. $HTML .'
 						</p>';
-		} elseif(isset($p)) {
+		} elseif(isset($p) and $p) {
 			$HTML = '	<p>
 							'. $HTML .'
 						</p>';
@@ -311,7 +311,7 @@ function formSelect($attributes = FALSE, $options = FALSE, $select = FALSE) {
 			}
 		}
 		
-		$HTML = "\t" . '<select'. $attrs . '>'. "\n";
+		$HTML = "\t" . '<select'. $attrs .' size="1">'. "\n";
 		
 		if(is_array($options)) {
 			foreach($options as $option) {
@@ -321,7 +321,7 @@ function formSelect($attributes = FALSE, $options = FALSE, $select = FALSE) {
 					$select = FALSE;
 				}
 				
-				if(!is_array($option) and is_string($option)) {
+				if(is_string($option)) {
 					$HTML .= "\t\t" . '<option>'. $option .'</option>' . "\n";	
 				} else {
 					$selected = (isset($option["selected"]) and $option["selected"]) ? ' selected="selected"' : NULL;
@@ -396,6 +396,16 @@ function formTextarea($attributes = FALSE) {
 	} else {
 		return NULL;
 	}								
+}
+
+function formSave($action = NULL) {
+	$HTML = '	
+		<p class="save-cancel">
+			<input id="'. $action .'" name="'. $action .'" value="'. __(ucfirst($action)) .'" type="submit" class="submit save" />
+			<input id="cancel" name="cancel" value="'. __("Cancel") .'" type="submit" class="submit cancel" />
+		</p>';
+	
+	return $HTML;
 }
 
 function formUploadFrame($value, $events = NULL) {

@@ -328,13 +328,7 @@ class ZP_Scaffold extends ZP_Load {
 	}
 
 	public function values($values) {
-		if(is_array($values)) {
-			foreach($values as $field => $value) {
-				if($field !== "save" and $field !== "_table" and $field !== "_hide" and $field !== "_options") {
-					$this->values[$field] = $value;	
-				}
-			}	
-		}
+		$this->values = $values;
 	}
 	
 }

@@ -254,7 +254,7 @@ function slug($string) {
 						"à" => "a", "è" => "e", "ì" => "i", "ò" => "o", "ù" => "u"
 	);
 	
-	$string = strtr($string, $characters);
+	$string = strtr($string, $characters); 
 	$string = strtolower(trim($string));
 	$string = preg_replace("/[^a-z0-9-]/", "-", $string);
 	$string = preg_replace("/-+/", "-", $string);
@@ -299,66 +299,72 @@ function pageBreak($content, $URL = NULL) {
  * @param string $coding   = "decode"
  * @return mixed
  */ 
-function POST($position = FALSE, $coding = "decode", $filter = TRUE) {
-	if($position === TRUE) {
+function POST($position = FALSE, $coding = "decode", $filter = "escape") {
+	if($position === TRUE) {		
 		return $_POST;
 	} elseif(!$position) {
 		____($_POST);
 	} elseif(isset($_POST[$position]) and is_array($_POST[$position])) {
-		return $_POST[$position];
+		$POST = $_POST[$position];
 	} elseif(isset($_POST[$position]) and $_POST[$position] === "") {
 		return NULL;
 	} elseif(isset($_POST[$position])) {
 		if($coding === "b64") {
-			return base64_decode($_POST[$position]);
+			$POST = base64_decode($_POST[$position]);
 		} elseif($coding === "unserialize") {
-			return unserialize(base64_decode($_POST[$position]));
+			$POST = unserialize(base64_decode($_POST[$position]));
 		} elseif($coding === "encrypt") {
 			if($filter === TRUE) {
-				return encrypt(encode($_POST[$position]));
+				$POST = encrypt(encode($_POST[$position]));
 			} elseif($filter === "escape") {
-				return encrypt(filter(encode($_POST[$position]), "escape"));
+				$POST = encrypt(filter(encode($_POST[$position]), "escape"));
 			} else {
-				return encrypt(filter(encode($_POST[$position]), TRUE));
+				$POST = encrypt(filter(encode($_POST[$position]), TRUE));
 			}
 		} elseif($coding === "encode") {
 			if($filter === TRUE) {
-				return encode($_POST[$position]);
+				$POST = encode($_POST[$position]);
 			} elseif($filter === "escape") {
-				return filter(encode($_POST[$position]), "escape");
+				$POST = filter(encode($_POST[$position]), "escape");
 			}  else {
-				return filter(encode($_POST[$position]), TRUE);
+				$POST = filter(encode($_POST[$position]), TRUE);
 			}
 		} elseif($coding === "decode-encrypt") {
 			if($filter === TRUE) {
-				return encrypt(filter($_POST[$position], TRUE));
+				$POST = encrypt(filter($_POST[$position], TRUE));
 			} elseif($filter === "escape") {
-				return encrypt(filter($_POST[$position], "escape"));
+				$POST = encrypt(filter($_POST[$position], "escape"));
 			}  else {
-				return encrypt($_POST[$position]);
+				$POST = encrypt($_POST[$position]);
 			}		
 		} elseif($coding === "decode") {			
 			if($filter === TRUE) {
-				return filter(decode($_POST[$position]), TRUE);
+				$POST = filter(decode($_POST[$position]), TRUE);
 			} elseif($filter === "escape") {
-				return filter(decode($_POST[$position]), "escape");
+				$POST = filter(decode($_POST[$position]), "escape");
 			}  else {
 				$data = decode($_POST[$position]);
 				$data = str_replace("'", "\'", $data);
 				
-				return $data;
+				$POST = $data;
 			}
 		} else {
 			if($filter === TRUE) {
-				return filter($_POST[$position], TRUE);
+				$POST = filter($_POST[$position], TRUE);
 			} elseif($filter === "escape") {
-				return filter($_POST[$position], "escape");
+				$POST = filter($_POST[$position], "escape");
 			}  else {
-				return $_POST[$position];
+				$POST = $_POST[$position];
 			}		
 		}
 	} else {
 		return FALSE;
+	}
+	
+	if(isInjection($POST)) {
+		return FALSE;
+	} else {
+		return $POST;
 	}
 }
 

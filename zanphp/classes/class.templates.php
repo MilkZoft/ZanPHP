@@ -218,11 +218,16 @@ class ZP_Templates extends ZP_Load {
      * 
      */
 	public function js($js, $application = NULL, $extra = NULL, $getJs = FALSE) {
+		
 		if($getJs) {
 			return getScript($js, $application, $extra, $getJs);	
 		} 
 		
-		$this->js .= getScript($js, $application, $extra, $getJs);	
+		if(substr_count($js, "http") >= 1 or substr_count($js, "https") >= 1) {
+			$this->js .= getScript($js, $application, $extra, $getJs, TRUE);
+		} else {
+			$this->js .= getScript($js, $application, $extra, $getJs);
+		}
 	}
 	
     /**

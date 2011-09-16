@@ -184,6 +184,7 @@ class ZP_Db extends ZP_Load {
      * @return array value
      */	
 	public function call($procedure) {
+		
 		if($this->Cache->get(sha1("CALL $procedure"), "db")) {
 			return $this->Cache->get(sha1("CALL $procedure"), "db");
 		}
@@ -203,7 +204,9 @@ class ZP_Db extends ZP_Load {
 			
 			$this->caching = FALSE;
 		}
-
+		
+		self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
+		
 		return $data; 
 	}
 	
@@ -550,7 +553,7 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findBy($field, $value, $group = NULL, $order = NULL, $limit = NULL) {
+	public function findBy($field = NULL, $value = NULL, $group = NULL, $order = NULL, $limit = NULL) {
 		$SQL = NULL;
 		
 		if(!is_null($group)) {
@@ -568,9 +571,26 @@ class ZP_Db extends ZP_Load {
 		if(!is_null($limit)) {
 			$SQL .= " LIMIT ". $limit;
 		}
-		
-		$query = "SELECT $this->fields FROM $this->table WHERE $field = '$value'$SQL";
-		
+
+		if(is_array($field)) {
+			$i = 0;
+			$_SQL = NULL;
+
+			foreach($field as $_field => $_value) {
+				if($i === count($field) - 1) {
+					$_SQL .= "$_field = '$_value'";
+				} else {
+					$_SQL .= "$_field = '$_value' AND ";	
+				}
+
+				$i++;
+			}
+			
+			$query = "SELECT $this->fields FROM $this->table WHERE $_SQL";
+		} else {
+			$query = "SELECT $this->fields FROM $this->table WHERE $field = '$value'$SQL";
+		}
+
 		return $this->data($query);
 	}
 	
@@ -1180,8 +1200,6 @@ class ZP_Db extends ZP_Load {
 		$this->table  = _dbPfx . $table;  
 		$this->fields = $fields;
 		
-		self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
-		
 		$data = $this->Database->_execute("SHOW COLUMNS FROM $this->table");
 		
 		if(is_object($data)) { 
@@ -1231,9 +1249,21 @@ class ZP_Db extends ZP_Load {
 				$i++;	
 			}
 			
-			$query = "UPDATE $table SET $_values WHERE $this->primaryKey = $ID";
+			if($ID > 0) {
+				$query = "UPDATE $table SET $_values WHERE $this->primaryKey = $ID";	
+			} elseif(is_string($ID)) {
+				$query = "UPDATE $table SET $_values WHERE $ID";
+			} else {
+				$query = "UPDATE $table SET $_values";
+			}
 		} else {		
-			$query = "UPDATE $table SET $fields WHERE $this->primaryKey = $ID";
+			if($ID > 0) {
+				$query = "UPDATE $table SET $fields WHERE $this->primaryKey = $ID";	
+			} elseif(is_string($ID)) {
+				$query = "UPDATE $table SET $fields WHERE $ID";	
+			} else {
+				$query = "UPDATE $table SET $fields";
+			}
 		}	
 		
 		$this->Rs = $this->_query($query);

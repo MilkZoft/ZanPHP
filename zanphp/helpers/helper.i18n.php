@@ -248,3 +248,22 @@ function getLanguages($flags = FALSE) {
 	
 	return $data;
 }
+
+function getLanguageRadios($lang = NULL) {
+	$languages = getLanguages(TRUE);
+	$HTML = NULL;
+
+	foreach($languages as $language) {
+		if($language["default"]) {
+			$check = ' checked="checked"';
+		} elseif($lang === $language["name"]) {
+			$check = ' checked="checked"';
+		} else {
+			$check = NULL;
+		}	
+
+		$HTML .= '<input id="language" name="language" type="radio" value="'. $language["name"] .'" tabindex="4"'. $check.' /> '. $language["value"];
+	}
+
+	return $HTML;
+}
