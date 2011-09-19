@@ -155,13 +155,13 @@ function HTML($open = TRUE) {
 
 function img($src, $alt = NULL, $class = "no-border", $attributes = NULL) {
 	if(is_null($alt)) {
-		return '<img src="' . $src . '" ' . $attributes . ' />';
+		return '<img src="'. $src .'" '. $attributes .' />';
 	} elseif(!is_null($alt) and !is_null($class)) {
-		return '<img src="' . $src . '" alt="' . $alt . '" title="' . $alt . '" class="' . $class . '" ' . $attributes . ' />';
+		return '<img src="'. $src .'" alt="'. $alt .'" title="'. $alt .'" class="'. $class .'" '. $attributes .' />';
 	} elseif(!is_null($alt)) {
-		return '<img src="' . $src . '" alt="' . $alt . '" title="' . $alt . '" ' . $attributes . ' />';
+		return '<img src="'. $src .'" alt="'. $alt .'" title="' . $alt . '" '. $attributes .' />';
 	} elseif(!is_null($class)) {
-		return '<img src="' . $src . '" class="' . $class . '" ' . $attributes . ' />';
+		return '<img src="'. $src .'" class="'. $class .'" '. $attributes .' />';
 	}
 }
 	

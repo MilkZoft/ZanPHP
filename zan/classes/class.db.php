@@ -778,7 +778,7 @@ class ZP_Db extends ZP_Load {
 			
 			$query = "INSERT INTO $table ($fields) VALUES ($values)";
 		}	
-		
+
 		$this->Rs = $this->_query($query);
 		
 		if($this->Rs) {

@@ -107,7 +107,7 @@ class ZP_Data extends ZP_Load {
 					if(strlen(POST($field)) < $count) {
 						return array("error" => getAlert("$field must have at least $count characters"));
 					}
-				} elseif(isset($field["exists"]) and $this->table and POST("save")) {
+				} elseif(isset($field["exists"]) and isset($this->table) and POST("save")) {
 					if(is_array($validation)) {
 						$exists = $this->Db->findBy($validation);
 						
