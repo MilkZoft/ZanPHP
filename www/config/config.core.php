@@ -9,4 +9,4 @@ if(!defined("_access")) {
 /**
  * Core Path
  */
-define("_corePath", "zanphp");
+define("_corePath", "zan");
