@@ -67,7 +67,7 @@ class ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$helpers = array("autoload", "router");
+		$helpers = array("autoload", "router", "validations");
 		
 		$this->helper($helpers);
 		

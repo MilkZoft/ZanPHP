@@ -31,6 +31,24 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/string_helper
  */
 
+function bbCode($HTML) {
+   	$a = array( 
+		"/\[Video: (.*?)\]/is"
+   	); 
+
+   	$b = array(
+   		"<iframe width=\"560\" height=\"315\" src=\"$1\" frameborder=\"0\" allowfullscreen></iframe>"  
+   	);
+
+   	$HTML = preg_replace($a, $b, $HTML);
+	$HTML = str_replace("http://www.youtube.com/watch?v=", "http://www.youtube.com/embed/", $HTML);
+	$HTML = str_replace("&amp;feature=related", "", $HTML);
+	$HTML = str_replace("&amp;feature=player_embedded", "", $HTML);
+	$HTML = str_replace("&amp;feature=fvwrel", "", $HTML);
+
+	return $HTML;
+}
+
 /**
  * String Helper
  *
@@ -144,7 +162,11 @@ function cut($text, $length = 12, $type = "text", $slug = FALSE, $file = FALSE, 
 }
 
 function decode($text, $URL = FALSE) {
-	return (!$URL) ? utf8_decode($text) : urldecode($text);
+	if(is_string($text)) {
+		return (!$URL) ? utf8_decode($text) : urldecode($text);	
+	}
+
+	return $text;
 }
 
 /**
@@ -232,12 +254,22 @@ function getFileSize($size) {
 
 function getTotal($count, $singular, $plural) {
 	if((int) $count === 0) {
-		return $count ." ". __($plural);
+		return (int) $count ." ". __($plural);
 	} elseif((int) $count === 1) {
-		return $count ." ". __($singular);
+		return (int) $count ." ". __($singular);
 	} else {
-		return $count ." ". __($plural);
+		return (int) $count ." ". __($plural);
 	}
+}
+
+function repeat($string, $times = 2) {
+	$HTML = NULL;
+	
+	for($i = 0; $i <= $times; $i++) {
+		$HTML .= $string;
+	}
+
+	return $HTML;
 }
 
 /**

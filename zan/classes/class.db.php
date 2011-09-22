@@ -148,30 +148,14 @@ class ZP_Db extends ZP_Load {
 		
 		$this->connect();	
 	}
-	
-    /**
-     * 
-     *
-     * @param string
-     * @return void
-     */
-	public function _query($query) {
-		if($this->fetchMode === "assoc") {
-			$this->Database->setFetchMode(ADODB_FETCH_ASSOC);
-		} elseif($this->fetchMode === "array") {
-			$this->Database->setFetchMode(ADODB_FETCH_NUM);
-		}
-		
-		return $this->Database->_execute($query);
-	}
-		
+			
 	/**
      * Begin transaction
      *
      * @return void
      */
 	public function begin() {
-		return $this->Database->beginTrans();
+		return $this->Database->begin();
 	}
 
 	public function cache($status = FALSE) {
@@ -184,14 +168,11 @@ class ZP_Db extends ZP_Load {
      * @return array value
      */	
 	public function call($procedure) {
-		
 		if($this->Cache->get(sha1("CALL $procedure"), "db")) {
 			return $this->Cache->get(sha1("CALL $procedure"), "db");
 		}
 		
-		$this->Database->multiQuery = TRUE;
-		
-		$this->Rs = $this->Database->execute("CALL $procedure");	
+		$this->Rs = $this->Database->query("CALL $procedure");	
 		
 		if($this->encode) {
 			$data = isset($data) ? $this->encoding($data) : FALSE;
@@ -204,8 +185,6 @@ class ZP_Db extends ZP_Load {
 			
 			$this->caching = FALSE;
 		}
-		
-		self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
 		
 		return $data; 
 	}
@@ -233,7 +212,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */	
 	public function commit() {
-		return $this->Database->commitTrans();
+		return $this->Database->commit();
 	}
 	
     /**
@@ -241,36 +220,26 @@ class ZP_Db extends ZP_Load {
      *
      * @return void
      */
-	public function connect() {
+	public function connect() {		
 		if(!self::$connection) {
-			$this->library("AdoDB");
-			
-			if(_dbController === "odbc_mssql") {
-				try {
-					$this->Database = ADONewConnection("odbc_mssql");
+			if(_dbController === "mssql") {
+				$this->Database   = $this->core("MsSQL_Db");
 				
-					self::$connection = $this->Database->connect("Driver={SQL Server}; Server=". _dbHost .", ". _dbPort ."; Database=". _dbName .";", _dbUser, _dbPwd);	
-					
-					if(!self::$connection) {
-						throw new Exception(e("Connection Error"), 1);	
-					}
-				} catch(Exception $e) {
-					getException($e);	
-				}
-			} else {
-				try {
-					$this->Database = ADONewConnection(_dbController);
+				self::$connection = $this->Database->connect();
+			} elseif(_dbController === "mysql") {
+				$this->Database   = $this->core("MySQL_Db");
 				
-					self::$connection = $this->Database->connect(_dbHost, _dbUser, _dbPwd, _dbName);
-					
-					if(!self::$connection) {
-						throw new Exception(e("Connection Error"), 1);	
-					}
-				} catch(Exception $e) {
-					getException($e);
-				}
+				self::$connection = $this->Database->connect();			
+			} elseif(_dbController === "mysqli") {
+				$this->Database   = $this->core("MySQLi_Db");
+				
+				self::$connection = $this->Database->connect();
+			} elseif(_dbController === "pgsql") {
+				$this->Database   = $this->core("PgSQL_Db");
+				
+				self::$connection = $this->Database->connect();
 			}
-		}									
+		}			
 	}
 	
     /**
@@ -297,7 +266,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$query = "SELECT COUNT(*) AS Total FROM $this->table WHERE $SQL";
-
+		
 		$data = $this->data($query);
 		
 		return isset($data[0]["Total"]) ? $data[0]["Total"] : 0;
@@ -310,18 +279,14 @@ class ZP_Db extends ZP_Load {
 			if($query === "") {
 				return FALSE;	
 			}
-			
-			$this->Rs = $this->_query($query);
 
+			$this->Rs = $this->Database->query($query);
+						
 			if($this->rows() === 0) {
 				return FALSE;			
 			} else {
-				if($this->fetchMode === "array") {
-					while($row = $this->fetch($this->rows())) {
-						$rows[] = $row;	
-					}
-				} else { 
-					$rows = $this->fetch($this->rows());
+				while($row = $this->fetch($this->rows())) {
+					$rows[] = $row;	
 				}
 			}	
 
@@ -358,7 +323,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "DELETE FROM $this->table WHERE $this->primaryKey = $ID";
 		
-		return ($this->Database->_execute($query)) ? TRUE : FALSE;
+		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 	
     /**
@@ -381,7 +346,7 @@ class ZP_Db extends ZP_Load {
 			$query = "DELETE FROM $this->table WHERE $field = $value $limit";
 		}
 		
-		return ($this->Database->_execute($query)) ? TRUE : FALSE;
+		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 		
     /**
@@ -398,7 +363,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "DELETE FROM $this->table WHERE $SQL";
 		
-		return ($this->Database->_execute($query)) ? TRUE : FALSE;
+		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 	
     /**
@@ -480,13 +445,7 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / array value
      */
 	public function fetch($count = 0) {
-		if($this->fetchMode === "array") {
-			return (!$this->Rs) ? FALSE : $this->Rs->fetchRow($count);
-		} elseif($this->fetchMode === "assoc") {	
-			return (!$this->Rs) ? FALSE : $this->Rs->getArray($count);
-		} elseif($this->fetchMode === "object") {
-			return (!$this->Rs) ? FALSE : $this->Rs->fetchObject(FALSE);
-		}
+		return (!$this->Rs) ? FALSE : $this->Database->fetch($count);
 	}
 	
     /**
@@ -779,13 +738,13 @@ class ZP_Db extends ZP_Load {
 			$query = "INSERT INTO $table ($fields) VALUES ($values)";
 		}	
 
-		$this->Rs = $this->_query($query);
-		
+		$this->Rs = $this->Database->query($query);
+
 		if($this->Rs) {
 			if(!$this->primaryKey) {
 				return TRUE;
 			} else {
-				$insertID = $this->Database->insert_ID();
+				$insertID = $this->Database->insertID();
 						
 				return $insertID;
 			}
@@ -804,9 +763,11 @@ class ZP_Db extends ZP_Load {
 		if(!$table or !$data) {
 			return FALSE;
 		}
+
+		$table = $this->getTable($table);
 		
 		if(isset($data[0])) {
-			$count = count($data) - 1;
+			$count   = count($data) - 1;
 			$_fields = NULL;
 			$_values = NULL;
 			$query   = NULL;
@@ -814,10 +775,10 @@ class ZP_Db extends ZP_Load {
 			$j 		 = 0;
 			
 			foreach($data as $insert) {
-				$total = count($data[$i]);
+				$total = count($data[$i]) - 1;
 				
 				foreach($insert as $field => $value) {
-					if($i === $count) {
+					if($j === $total) {
 						$_fields .= "$field";
 						$_values .= "'$value'";
 					} else {
@@ -826,20 +787,21 @@ class ZP_Db extends ZP_Load {
 					}
 							
 					$j++;	
-					
-					$query .= "INSERT INTO $table ($_fields) VALUES ($_values);";
 				}
+
+				$query .= "INSERT INTO $table ($_fields) VALUES ($_values);";
 				
 				$_fields = NULL;
 				$_values = NULL;
 				
 				$i++;
+				$j = 0;
 			}
 		} else {
 			return FALSE;
 		}
-		
-		return ($this->Database->_execute($query)) ? TRUE : FALSE;
+
+		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 	
     /**
@@ -1087,7 +1049,7 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / integer value
      */	
 	public function rows() {
-		return (!$this->Rs) ? FALSE : $this->Rs->recordCount();	
+		return (!$this->Rs) ? FALSE : $this->Database->rows();	
 	}
 	
     /**
@@ -1200,13 +1162,15 @@ class ZP_Db extends ZP_Load {
 		$this->table  = _dbPfx . $table;  
 		$this->fields = $fields;
 		
-		$data = $this->Database->_execute("SHOW COLUMNS FROM $this->table");
+		$data = $this->Database->query("SHOW COLUMNS FROM $this->table");
 		
-		if(is_object($data)) { 
-			if($data->fields["Key"] === "PRI") {
-				$this->primaryKey = $data->fields["Field"];
-							
-				return $this->primaryKey;
+		if(is_array($data)) {
+			foreach($data as $column) {
+				if($column["Key"] === "PRI") {
+					$this->primaryKey = $column["Field"];
+					
+					return $this->primaryKey;
+				}
 			}
 		}
 		
@@ -1266,7 +1230,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}	
 		
-		$this->Rs = $this->_query($query);
+		$this->Rs = $this->Database->query($query);
 		
 		if($this->Rs) {
 			return TRUE;
@@ -1386,6 +1350,8 @@ class ZP_Db extends ZP_Load {
      */
 	public function whereIn($field, $data) {
 		if(is_array($data)) {
+			$values = NULL;
+			
 			for($i = 0; $i <= count($data) - 1; $i++) {
 				if($i === count($data) - 1) {
 					$values .= "'$data[$i]'";	

@@ -36,7 +36,7 @@ function a($text, $URL = NULL, $external = FALSE, $attributes = FALSE) {
 	
 	if(is_array($attributes)) {
 		foreach($attributes as $attribute => $value) {
-			$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
+			$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
 		}
 	}
 	
@@ -87,10 +87,6 @@ function char($char, $repeat = 1) {
 	}
 		
 	return $HTML;
-}
-
-function closeUl() {
-	return char("\t") . "</ul>" . char("\n");
 }
 
 function deleteImg($HTML) {
@@ -165,23 +161,27 @@ function img($src, $alt = NULL, $class = "no-border", $attributes = NULL) {
 	}
 }
 	
-function li($list) {
+function li($list, $open = NULL) {
 	$HTML = NULL;
 	
 	if(isMultiArray($list)) {		
 		foreach($list as $li) {
-			$class = (isset($li["class"])) ? ' class="' . $li["class"] . '"' : NULL;
+			$class = (isset($li["class"])) ? ' class="'. $li["class"] .'"' : NULL;
 			
 			if(strlen($li["item"]) > 1) {
-				$HTML .= char("\t", 2) . '<li' . $class . '>' . $li["item"] . '</li>' . char("\n");			
+				$HTML .= char("\t", 2) .'<li'. $class .'>'. $li["item"] .'</li>'. char("\n");			
 			}
 		}
 	} elseif(is_array($list)) {
 		for($i = 0; $i <= count($list) - 1; $i++) {
-			$HTML .= char("\t", 2) . '<li>' . $list[$i] . '</li>' . char("\n");
+			$HTML .= char("\t", 2) .'<li>'. $list[$i] .'</li>'. char("\n");
 		}
+	} elseif($list and $open) {
+		$HTML .= "\t\t <li>". $list;
+	} elseif($open === FALSE) {
+		$HTML .= "</li>". "\n";
 	} else {
-		$HTML .= char("\t", 2) . '<li>' . $list . '</li>' . char("\n");
+		$HTML .= "\t\t". '<li>'. $list .'</li>'. "\n";
 	}
 			
 	return $HTML;
@@ -212,6 +212,10 @@ function openUl($ID = NULL, $class = NULL) {
 	$class = (!is_null($class)) ? ' class="'. $class .'"' : NULL; 
 	
 	return '<ul'. $ID . $class .'>' . char("\n");
+}
+
+function closeUl() {
+	return '</ul>';
 }
 
 function p($text, $class = "left") {

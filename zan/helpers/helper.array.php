@@ -48,3 +48,15 @@ function isMultiArray($multiArray) {
 	
 	return FALSE; 
 }
+
+function string2Array($string, $char = ",") {
+	$string = str_replace(", ", ",", $string);
+
+	$array = explode($char, $string);
+
+	if(count($array) > 0) {
+		return $array; 
+	}
+
+	return FALSE;
+}

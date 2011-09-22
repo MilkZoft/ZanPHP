@@ -52,14 +52,16 @@ function isEmail($email) {
 }
 
 function isInjection($text, $count = 1) {
-	$text = html_entity_decode($text);
+	if(is_string($text)) {
+		$text = html_entity_decode($text);
 
-	if(substr_count($text, "<script") >= $count) {
-		return TRUE;
-	} elseif(substr_count($text, "<iframe") >= $count) {
-		return TRUE;
-	} elseif(substr_count($text, "<img") >= $count) {
-		return TRUE;
+		if(substr_count($text, "<script") >= $count) {
+			return TRUE;
+		} elseif(substr_count($text, "<iframe") >= $count) {
+			return TRUE;
+		} elseif(substr_count($text, "<img") >= $count) {
+			return TRUE;
+		}	
 	}
 	
 	return FALSE;

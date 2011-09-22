@@ -79,7 +79,7 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$helpers = array("array", "browser", "debugging", "forms", "html", "scripts");
+		$helpers = array("array", "browser", "debugging", "forms", "html", "scripts", "validations");
 		
 		$this->helper($helpers);
 		

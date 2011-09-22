@@ -72,4 +72,6 @@ function showAlert($message, $URL = FALSE) {
 	}
 	
 	print '</script>';
+
+	exit();
 }

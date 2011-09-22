@@ -38,21 +38,27 @@ function formCheckbox($attributes = FALSE) {
 		$attrs = NULL;
 		
 		foreach($attributes as $attribute => $value) {
-			if($attribute !== "position" and $attribute !== "text" and $attribute !== "type") {
+			if($attribute !== "position" and $attribute !== "text" and $attribute !== "type" and $attribute !== "checked") {
 				$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
 			} else {
 				$$attribute = encode($value);
 			}
 		}
+
+		if(isset($checked) and $checked) {
+			$check = ' checked="checked"';
+		} else {
+			$check = NULL;
+		}
 		
 		if(isset($position) and $position === "left" and isset($text)) {
-			return $text . ' <input' . $attrs . ' type="checkbox" />';
+			return $text .' <input'. $attrs .' type="checkbox"'. $check .' />';
 		} elseif(isset($position) and $position === "right" and isset($text)) {
-			return '<input' . $attrs . ' type="checkbox" /> ' . $text;
+			return '<input'. $attrs .' type="checkbox"'. $check .' /> '. $text;
 		} elseif(isset($text)) {
-			return $text . ' <input' . $attrs . ' type="checkbox" />';
+			return $text .' <input'. $attrs .' type="checkbox"'. $check .' />';
 		} else {
-			return '<input' . $attrs . ' type="checkbox" />';
+			return '<input'. $attrs .' type="checkbox"'. $check .' />';
 		}
 	} else {
 		return NULL;
@@ -233,11 +239,11 @@ function formRadio($attributes, $options = FALSE) {
 	if(isset($attributes) and is_array($attributes)) {
 		$attrs = NULL;
 		
-		foreach($attributes as $attribute => $value) {
-			if($attribute !== "position" and $attribute !== "text" and $attribute !== "type" and $attribute !== "p" and $attribute !== "field") {
-				$attrs .= ' '. strtolower($attribute) . '="' . encode($value) . '"';
+		foreach($attributes as $attr => $value) {
+			if($attr !== "position" and $attr !== "text" and $attr !== "type" and $attr !== "p" and $attr !== "field" and $attr !== "checked") {
+				$attrs .= ' '. strtolower($attr) .'="'. encode($value) .'"';
 			} else {
-				$$attribute = $value;
+				$$attr = $value;
 			}
 		}
 		
@@ -258,14 +264,20 @@ function formRadio($attributes, $options = FALSE) {
 				}	
 			}
 		} else {
-			if(isset($position) and $position === "left" and isset($text)) {
-				$HTML = $text . ' <input'. $attrs .' type="radio" />';
-			} elseif(isset($position) and $position === "right" and isset($text)) {
-				$HTML = '<input'. $attrs .' type="radio" /> '. $text;
-			} elseif(isset($text)) {
-				$HTML = $text . ' <input'. $attrs .' type="radio" />';
+			if(isset($checked) and $checked) {
+				$check = ' checked="checked"';
 			} else {
-				$HTML = '<input'. $attrs .' type="radio" />';
+				$check = NULL;
+			}
+
+			if(isset($position) and $position === "left" and isset($text)) {
+				$HTML = $text . ' <input'. $attrs .' type="radio"'. $check .' />';
+			} elseif(isset($position) and $position === "right" and isset($text)) {
+				$HTML = '<input'. $attrs .' type="radio"'. $check .' /> '. $text;
+			} elseif(isset($text)) {
+				$HTML = $text . ' <input'. $attrs .' type="radio"'. $check .' />';
+			} else {
+				$HTML = '<input'. $attrs .' type="radio"'. $check .' />';
 			}	
 		}
 		
