@@ -51,6 +51,14 @@ function isEmail($email) {
 	return FALSE;	
 }
 
+function isImage($image) {
+    if(!getimagesize($image)) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
+}
+
 function isInjection($text, $count = 1) {
 	if(is_string($text)) {
 		$text = html_entity_decode($text);

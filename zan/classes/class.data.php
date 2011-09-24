@@ -99,7 +99,11 @@ class ZP_Data extends ZP_Load {
 					if(isVulgar(POST($field))) {
 						return array("error" => getAlert("Your $field is very vulgar"));
 					}
-				}  elseif(is_string($validation) and substr($validation, 0, 6) === "length") {
+				} elseif($validation === "ping") {
+					if(!ping(POST($field))) {
+						return array("error" => getAlert("Invalid URL"));
+					}
+				} elseif(is_string($validation) and substr($validation, 0, 6) === "length") {
 					$count = (int) substr($validation, 7, 8);
 
 					$count = ($count > 0) ? $count : 6;

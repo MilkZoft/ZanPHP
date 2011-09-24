@@ -279,7 +279,7 @@ class ZP_Db extends ZP_Load {
 			if($query === "") {
 				return FALSE;	
 			}
-
+			
 			$this->Rs = $this->Database->query($query);
 						
 			if($this->rows() === 0) {
@@ -741,13 +741,9 @@ class ZP_Db extends ZP_Load {
 		$this->Rs = $this->Database->query($query);
 
 		if($this->Rs) {
-			if(!$this->primaryKey) {
-				return TRUE;
-			} else {
-				$insertID = $this->Database->insertID();
+			$insertID = $this->Database->insertID();
 						
-				return $insertID;
-			}
+			return $insertID;
 		}
 		
 		return FALSE;
@@ -768,12 +764,13 @@ class ZP_Db extends ZP_Load {
 		
 		if(isset($data[0])) {
 			$count   = count($data) - 1;
+			$values  = NULL;
 			$_fields = NULL;
 			$_values = NULL;
 			$query   = NULL;
 			$i 		 = 0;
 			$j 		 = 0;
-			
+
 			foreach($data as $insert) {
 				$total = count($data[$i]) - 1;
 				
@@ -788,20 +785,29 @@ class ZP_Db extends ZP_Load {
 							
 					$j++;	
 				}
-
-				$query .= "INSERT INTO $table ($_fields) VALUES ($_values);";
 				
+				if($i === $count) {
+					$values .= "($_values)";
+				} else {
+					$values .= "($_values), ";	
+				}
+			 	
+			 	$fields  = $_fields;
 				$_fields = NULL;
 				$_values = NULL;
 				
 				$i++;
 				$j = 0;
 			}
+
+			$query .= "INSERT INTO $table ($fields) VALUES $values;";
 		} else {
 			return FALSE;
 		}
 
-		return ($this->Database->query($query)) ? TRUE : FALSE;
+		$inserted = $this->Database->query($query);
+
+		return ($inserted) ? TRUE : FALSE;
 	}
 	
     /**

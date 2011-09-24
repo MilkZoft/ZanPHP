@@ -183,27 +183,6 @@ function encode($text, $URL = FALSE) {
 }
 
 /**
- * FILES
- * 
- * Gets a specific position value from $_FILES
- * 
- * @param mixed  $name   = FALSE
- * @param string $coding = NULL
- * @return mixed
- */ 
-function FILES($name = FALSE, $position = NULL, $i = NULL) {
-	if(!$name) {
-		____($_FILES);
-	} elseif($position === NULL) {
-		return isset($_FILES[$name]) ? $_FILES[$name] : FALSE;
-	} elseif($i !== NULL and is_numeric($i)) {
-		return isset($_FILES[$name][$position][$i]) ? $_FILES[$name][$position][$i] : FALSE;
-	} else {
-		return isset($_FILES[$name][$position]) ? $_FILES[$name][$position] : FALSE;
-	}
-}
-
-/**
  * filter
  * 
  * Cleans a string
@@ -233,23 +212,16 @@ function filter($text, $filter = FALSE) {
 	return $text;
 }
 
-/**
- * getFileSize
- * 
- * 
- *
- * @param string $position
- * @param string $coding = "decode"
- * @return string $coding = "decode"
- */
-function getFileSize($size) {	
-	if($size <= 0) {
-		return FALSE;		
-	} elseif($size < 1048576) {
-		return round($size / 1024, 2) ." Kb";
-	} else {
-		return round($size / 1048576, 2) ." Mb";
-	}
+function getBetween($content, $start, $end) {
+    $array = explode($start, $content);
+
+    if(isset($array[1])) {
+        $array = explode($end, $array[1]);
+
+        return $array[0];
+    }
+
+    return NULL;
 }
 
 function getTotal($count, $singular, $plural) {
@@ -261,6 +233,35 @@ function getTotal($count, $singular, $plural) {
 		return (int) $count ." ". __($plural);
 	}
 }
+
+function gravatar($email) {  
+   	return img("http://www.gravatar.com/avatar/". md5($email) ."");
+}
+
+function parseCSV($file) {
+	$fh = fopen($file, "r");
+	
+	while($line = fgetcsv($fh, 1000, ",")) {
+	    print $line[1];
+	}
+}
+
+function randomString($length = 6){  
+    $consonant = array("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "y", "z");  
+    $vocal	   = array("a", "e", "i", "o", "u");  
+    $string    = NULL;  
+    
+    srand((double) microtime() * 1000000);  
+    
+    $max = $length / 2;  
+
+    for($i = 1; $i <= $max; $i++) {  
+    	$string .= $consonant[rand(0, 19)];  
+    	$string .= $vocal[rand(0, 4)];  
+    }  
+
+    return $string;  
+} 
 
 function repeat($string, $times = 2) {
 	$HTML = NULL;

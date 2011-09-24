@@ -289,6 +289,10 @@ function howLong($value) {
 	return $date;
 }
 
+function isLeapYear($year) {
+	return ((((int) $year % 4 === 0) and ((int) $year % 100 !== 0 ) or ((int) $year % 400 === 0)));
+}
+
 function isDay($day) {
 	if(strlen($day) === 2) {
 		if($day > 0 and $day <= 31) {
