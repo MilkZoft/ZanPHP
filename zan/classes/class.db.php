@@ -1172,7 +1172,7 @@ class ZP_Db extends ZP_Load {
 		$this->table  = _dbPfx . $table;  
 		$this->fields = $fields;
 		
-		$data = $this->Database->query("SHOW COLUMNS FROM $this->table");
+		$data = $this->data("SHOW COLUMNS FROM $this->table");
 		
 		if(is_array($data)) {
 			foreach($data as $column) {
