@@ -1,4 +1,5 @@
 <?php
+/* ex: set tabstop=2 noexpandtab: */
 /**
  * Access from index.php:
  */
@@ -18,8 +19,9 @@ if($production) {
 	define("_dbUser", "root"); 
 	define("_dbPwd", "");
 	define("_dbName", "YOUR DATABASE");
-	define("_dbPort", "5432");
+	define("_dbPort", "3306");
 	define("_dbPfx", "zan_");
+	define("_dbSocket", NULL);
 	
 	//NoSQL Settings
 	define("_dbNoSQLHost", "localhost");
@@ -34,8 +36,9 @@ if($production) {
 	define("_dbUser", "root2"); 
 	define("_dbPwd", "");
 	define("_dbName", "zanphp");
-	define("_dbPort", "5432");
+	define("_dbPort", "3306");
 	define("_dbPfx", "zan_");
+	define("_dbSocket", NULL);
 	
 	//NoSQL Settings
 	define("_dbNoSQLHost", "localhost");
