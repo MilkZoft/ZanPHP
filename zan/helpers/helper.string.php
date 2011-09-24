@@ -412,7 +412,11 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
  */
 function recoverPOST($position, $value = NULL) { 
 	if(!$value) {
-		return (POST($position)) ? htmlentities(POST($position, "decode", FALSE)) : NULL;
+		if(is_array(POST($position))) {
+			return POST($position);
+		} else {
+			return (POST($position)) ? htmlentities(POST($position, "decode", FALSE)) : NULL;
+		}
 	} else {
 		if(is_array($value)) {
 			foreach($value as $val) {

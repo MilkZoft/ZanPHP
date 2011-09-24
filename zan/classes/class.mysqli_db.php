@@ -1,5 +1,4 @@
 <?php
-/* ex: set tabstop=2 noexpandtab: */
 /**
  * ZanPHP
  *
@@ -54,7 +53,7 @@ class ZP_MySQLi_Db extends ZP_Load {
      */
 	public function connect() {
 		if(self::$connection === NULL) {
-			self::$connection = mysqli_connect(_dbHost, _dbUser, _dbPwd, _dbName, _dbPort, _dbSocket);
+			self::$connection = mysqli_connect(_dbHost, _dbUser, _dbPwd, _dbName);
 		}
 		
 		return self::$connection;

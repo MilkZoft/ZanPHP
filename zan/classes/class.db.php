@@ -343,7 +343,11 @@ class ZP_Db extends ZP_Load {
 		if(_dbController === "odbc_mssql") {
 			$query = "DELETE TOP ($limit) FROM $this->table WHERE $field = $value";
 		} else {
-			$query = "DELETE FROM $this->table WHERE $field = $value $limit";
+			$query = "DELETE FROM $this->table WHERE $field = $value";
+			
+			if($limit !== NULL) {
+				$query .= " LIMIT $limit";
+			}
 		}
 		
 		return ($this->Database->query($query)) ? TRUE : FALSE;
@@ -737,7 +741,7 @@ class ZP_Db extends ZP_Load {
 			
 			$query = "INSERT INTO $table ($fields) VALUES ($values)";
 		}	
-
+		
 		$this->Rs = $this->Database->query($query);
 
 		if($this->Rs) {
