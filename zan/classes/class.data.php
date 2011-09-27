@@ -58,12 +58,6 @@ class ZP_Data extends ZP_Load {
 		$this->rename = TRUE;
   	}
 
-  	public function table($table) {
-  		$this->table = $table;	
-
-  		$this->Db->table($this->table);
-  	}
-
   	public function ignore($field = FALSE) {
   		if(is_array($field)) {
   			for($i = 0; $i <= count($field) - 1; $i++) {
@@ -149,5 +143,11 @@ class ZP_Data extends ZP_Load {
 
 		return $field;
 	} 
+
+  	public function table($table) {
+  		$this->table = $table;	
+
+  		$this->Db->table($this->table);
+  	}
 
 }

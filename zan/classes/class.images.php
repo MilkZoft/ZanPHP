@@ -44,6 +44,16 @@ class ZP_Images extends ZP_Load {
 	 * 
 	 */
 	public $imageType;
+
+    /**
+     * 
+     *
+     * @param string $filename
+     * @return void
+     */	
+	public function getHeight() {
+		return imagesy($this->image);
+	}
 	
  	/**
      * Resize an image into a small, medium and original sizes
@@ -132,16 +142,6 @@ class ZP_Images extends ZP_Load {
 		
 		return $size;
    	}
-	
-    /**
-     * 
-     *
-     * @param string $filename
-     * @return void
-     */	
-	public function getHeight() {
-		return imagesy($this->image);
-	}
 	
     /**
      * 

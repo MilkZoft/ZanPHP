@@ -2,17 +2,12 @@
 
 class ZP_Cache extends ZP_Load {
 	
-	private $filePath = NULL;
-	
-	private $filename = NULL;
-	
-	private $file = NULL;
+	private $file      = NULL;
+	private $filename  = NULL;
+	private $filePath  = NULL;
+	private $groupPath = NULL;	
+	private $status    = _cacheStatus;
 
-	private $groupPath = NULL;
-	
-	private $status = _cacheStatus;
-	
-	public function __construct () {}
 	
 	private function checkExpiration($expirationTime) {
 		return (time() < $expirationTime) ? TRUE : FALSE;

@@ -18,16 +18,19 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/classes/db_class
  */
 class ZP_MongoDB extends ZP_Load {
-	
+		
+	private $collection = NULL;
+
+	private $condition = FALSE;
+
 	/**
 	 * 
 	 * 
 	 * @var private static $connection = FALSE
 	 */
 	private static $connection = FALSE;
-	
-	private $collection = NULL;
-	
+
+	private $data = FALSE;
 	
 	/**
 	 * Contains the fields of the table
@@ -36,9 +39,11 @@ class ZP_MongoDB extends ZP_Load {
 	 */
 	private $fields;
 	
-	private $data = FALSE;
+	private $hint = FALSE;
+
+	public $json = NULL;
 	
-	private $sort = array("_id" => 1);
+	private $limit = FALSE;
 	
 	/**
 	 * Contains the query string
@@ -47,29 +52,24 @@ class ZP_MongoDB extends ZP_Load {
 	 */
 	private $query;
 	
-	public $json = NULL;
-	
 	/**
 	 * Contains the row content in fetch mode
 	 * 
 	 * @var private $row
 	 */
-	private $row;
-
-		
+	private $row;	
+	
+	private $skip = FALSE;
+	
+	private $sort = array("_id" => 1);
+	
 	/**
 	 * Contains the values of the query
 	 * 
 	 * @var private $values
 	 */
 	private $values;
-	
-	private $limit = FALSE;
-	private $skip = FALSE;
-	private $hint = FALSE;
-	private $condition = FALSE;
-	
-		
+
     /**
      * Load Database class
      *
@@ -80,6 +80,16 @@ class ZP_MongoDB extends ZP_Load {
 		
 		$this->config("database");
 		$this->connect();	
+	}
+
+	public function collection($collection = NULL) {
+		if(!is_null($collection)) {
+			$this->collection = $collection;
+		}
+	}
+
+	public function command($command) {
+		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->command($command);
 	}
 	
     /**
@@ -106,20 +116,14 @@ class ZP_MongoDB extends ZP_Load {
 			}
 		}									
 	}
-	
-	public function collection($collection = NULL) {
-		if(!is_null($collection)) {
-			$this->collection = $collection;
-		}
-	}
-	
+		
     /**
      * Count all records
      *
      * @return integer value
      */	
 	public function countAll() {				
-		return (is_object($this->cursor)) ? $this->cursor->count() : FALSE;
+		return (is_object($this->Cursor)) ? $this->Cursor->count() : FALSE;
 	}
 
     /**
@@ -130,94 +134,35 @@ class ZP_MongoDB extends ZP_Load {
 	public function countByQuery($query) {		
 		$this->find($query, FALSE);
 		
-		return (is_object($this->cursor)) ? $this->cursor->count() : FALSE;
+		return (is_object($this->Cursor)) ? $this->Cursor->count() : FALSE;
 	}
 
 	private function data() {			
-		if($this->cursor->count() === 0) {
+		if($this->Cursor->count() === 0) {
 			return FALSE;			
 		} else {
-			$this->cursor->sort($this->sort);
+			$this->Cursor->sort($this->sort);
 			
 			if($this->limit > 0) {
-				$this->cursor->limit($this->limit);
+				$this->Cursor->limit($this->limit);
 				
 				$this->limit = FALSE;
 			}
 			
 			if($this->skip > 0) {
-				$this->cursor->skip($this->skip);
+				$this->Cursor->skip($this->skip);
 			}
 			
 			if(is_array($this->hint)) {
-				$this->cursor->hint($this->hint);
+				$this->Cursor->hint($this->hint);
 			}
 			
-			$data = iterator_to_array($this->cursor, FALSE);
+			$data = iterator_to_array($this->Cursor, FALSE);
 		}	
 
 		return $data;
 	}
-	
-	public function drop() {
-		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->drop();
-		
-		return TRUE;
-	}
-	
-	public function upload($fname = "file") {
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
-		
-		$name = FILES($fname, "name");
-		
-		return $GridFS->storeUpload($fname, $name);
-	}
-	
-	public function getAllFiles() {
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
 
-		$cursor = $GridFS->find();
-		
-		$i = 0;
-		
-		foreach($cursor as $object) {
-			$files[$i]["filename"] = $object->getFilename();
-			$files[$i]["content"]  = $object->getBytes();
-			
-			$i++;
-		}
-		
-		return $files;
-	}
-	
-	public function getFile($_id, $mimeType = "image/jpeg", $return = FALSE) {
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
-
-		$ID = new MongoId($_id);
-		
-		$file = $GridFS->findOne(array("_id" => $ID));
-		
-		if($return) {
-			return $file;
-		} else {
-			header("Content-Type: $mimeType");
-			
-			print $file->getBytes();
-			
-			exit;	
-		}	
-	}
-	
-	public function deleteFile($_id) {
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
-
-		$ID = new MongoId($_id);
-		
-		$GridFS->delete($ID);
-		
-		return TRUE;
-	}
-	
 	public function delete($criteria, $justOne = TRUE, $safe = TRUE) {	
 		if(is_null($this->collection) or !$criteria) {
 			return FALSE;
@@ -241,27 +186,23 @@ class ZP_MongoDB extends ZP_Load {
 		
 		return $this->delete($criteria, $justOne, $safe);
 	}
-	
-	public function sort($field, $order = "ASC") {
-		$this->sort[$field] = ($order === "ASC") ? 1 : -1;
+
+	public function deleteFile($_id) {
+		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+
+		$ID = new MongoId($_id);
+		
+		$GridFS->delete($ID);
+		
+		return TRUE;
 	}
 	
-	public function limit($limit = 1) {
-		$this->limit = ($limit > 0) ? $limit : FALSE;
+	public function drop() {
+		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->drop();
+		
+		return TRUE;
 	}
-	
-	public function skip($skip = 1) {
-		$this->skip = ($skip > 0) ? $skip : FALSE;
-	}
-	
-	public function hint($field, $order = "ASC") {
-		if($order === "ASC") {
-			$this->hint[$field] = 1;
-		} else {
-			$this->hint[$field] = -1;
-		}
-	}
-	
+
 	public function ensureIndex($index = FALSE, $order = "ASC", $unique = FALSE) {
 		if($index and $order === "ASC" and $unique) {
 			$this->Mongo->ensureIndex(array($index => 1), array("unique" => TRUE));
@@ -275,89 +216,121 @@ class ZP_MongoDB extends ZP_Load {
 		
 		return FALSE;
 	}
-	
-	public function operator($field = NULL, $operator = "<", $value = 0, $json = FALSE) {
-		if($operator === "<") {
-			return (!$json) ? array($field => array('$lt'  => $value)) : '';
-		} elseif($operator === ">") {
-			return (!$json) ? array($field => array('$gt'  => $value)) : '';
-		} elseif($operator === "<=") {
-			return (!$json) ? array($field => array('$lte' => $value)) : '';
-		} elseif($operator === ">=") {
-			return (!$json) ? array($field => array('$gte' => $value)) : '';
-		} elseif($operator === "!=" or $operator === "<>") {
-			return (!$json) ? array($field => array('$ne'  => $value)) : '';
-		} elseif($operator === "in") {
-			return (!$json) ? array($field => array('$in'  => $value)) : '';
-		} elseif($operator === "all") {
-			return (!$json) ? array($field => array('$all'  => $value)) : '';
-		} elseif($operator === "exists") {
-			return (!$json) ? array($field => array('$exists' => $value)) : '';
-		} elseif($operator === "inc" or $operator === "++") {
-			return (!$json) ? array($field => array('$inc' => $value)) : '';
-		} elseif($operator === "or" or $operator === "||") {
-			if(is_array($field)) {
-				return (!$json) ? array('$or' => $field) : '';
-			} else {
-				return (!$json) ? array('$or' => array($field => $value)) : '';
-			}
-		} elseif($operator === "set") {
-			return (!$json) ? array('$set' => array($field => $value)) : '';
-		} elseif($operator === "unset") {
-			return (!$json) ? array('$unset' => array($field => $value)) : '';
-		} elseif($operator === "push") {
-			return (!$json) ? array('$push' => array($field => $value)) : '';
-		} elseif($operator === "pushAll") {
-			return (!$json) ? array('$pushAll' => $field) : '';
-		} elseif($operator === "addToSet") {
-			if(is_array($field)) {
-				return (!$json) ? array('$addToSet' => $field) : '';
-			} else {
-				return (!$json) ? array('$addToSet' => array($field => $value)) : '';
-			}
-		} elseif($operator === "pop") {
-			return (!$json) ? array('$pop' => array($field => $value)) : '';
-		} 
 
-		return FALSE;
-	}
-	
-	public function regex($regex, $field) {
-		$Regex = new MongoRegex($regex);
-		
-		return $this->find(array($field => $regex));
-	}
-	
-	public function getNext() {
-		return (is_object($this->cursor)) ? $this->cursor->getNext() : FALSE;
-	}
-	
-	public function slice($field, $count = 1) {
-		$this->condition = (object) array($field => array('$slice' => $count));
-	}
-   
 	public function find($query = NULL, $return = TRUE) {
 		if(is_null($query)) {
-			$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+			$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
 		} else { 
 			if(!is_array($query) and is_string($query)) {
 				$query = json_decode($query, TRUE);
 			}
 			
 			if($this->condition) {
-				$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query, $this->condition);
+				$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query, $this->condition);
 				
 				unset($this->condition);
 				
 				$this->condition = FALSE;
 			}
 			
-			$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
+			$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
 		}
 		
 		return $this->data();
 	}
 	
+    /**
+     * Find all records
+     *
+     * @param string $group = NULL
+     * @param string $order = NULL
+     * @param string $limit = NULL
+     * @return array value
+     */
+	public function findAll($group = NULL, $order = NULL, $limit = NULL) {
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+		
+		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+	
+		return $this->data();		
+	}
+		
+    /**
+     * Find records by specific field and value
+     *
+     * @param string $field
+     * @param string $value
+     * @param string $group = NULL
+     * @param string $order = NULL
+     * @param string $limit = NULL
+     * @return array value
+     */
+	public function findBy($field, $value) {
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+		
+		$query = array($field => $value);
+		
+		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
+	
+		return $this->data();
+	}
+
+    /**
+     * Find record by primary key
+     *
+     * @param integer $ID
+     * @return boolean value / array value
+     */
+	public function findByID($ID) {
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+		
+		if(strlen($ID) === 24) {
+			$ID = new MongoId($ID);
+		}
+		
+		$query = array("_id" => $ID);
+		
+		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
+	
+		return $this->data();
+	}
+	
+    /**
+     * Find the first record
+     *
+     * @return array value
+     */
+	public function findFirst() {
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+		
+		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->findOne();
+	
+		return $this->data();
+	}
+		
+    /**
+     * Find the last record
+     *
+     * @return array value
+     */
+	public function findLast() {		
+		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+		
+		$this->sort("_id", "DESC");
+		
+		$this->limit(1);
+		
+		return $this->data();
+	}
+
 	public function get($type = "AND", $array, $return = FALSE, $add = TRUE) {
 		if($add and !$return) {
 			if($type === "AND") {
@@ -465,9 +438,44 @@ class ZP_MongoDB extends ZP_Load {
 			return "{" . $return . "}";
 		}
 	}
+
+	public function getAllFiles() {
+		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+
+		$cursor = $GridFS->find();
+		
+		$i = 0;
+		
+		foreach($cursor as $object) {
+			$files[$i]["filename"] = $object->getFilename();
+			$files[$i]["content"]  = $object->getBytes();
+			
+			$i++;
+		}
+		
+		return $files;
+	}
 	
+	public function getFile($_id, $mimeType = "image/jpeg", $return = FALSE) {
+		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+
+		$ID = new MongoId($_id);
+		
+		$file = $GridFS->findOne(array("_id" => $ID));
+		
+		if($return) {
+			return $file;
+		} else {
+			header("Content-Type: $mimeType");
+			
+			print $file->getBytes();
+			
+			exit;	
+		}	
+	}
+
 	public function getLastID() {
-		$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
 		
 		$this->sort("_id", "DESC");
 		
@@ -477,99 +485,19 @@ class ZP_MongoDB extends ZP_Load {
 		
 		return $data["_id"];	
 	}
-	
-    /**
-     * Find record by primary key
-     *
-     * @param integer $ID
-     * @return boolean value / array value
-     */
-	public function findByID($ID) {
-		if(is_null($this->collection)) {
-			return FALSE;
-		}
-		
-		if(strlen($ID) === 24) {
-			$ID = new MongoId($ID);
-		}
-		
-		$query = array("_id" => $ID);
-		
-		$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
-	
-		return $this->data();
+
+	public function getNext() {
+		return (is_object($this->Cursor)) ? $this->Cursor->getNext() : FALSE;
 	}
-	
-    /**
-     * Find all records
-     *
-     * @param string $group = NULL
-     * @param string $order = NULL
-     * @param string $limit = NULL
-     * @return array value
-     */
-	public function findAll($group = NULL, $order = NULL, $limit = NULL) {
-		if(is_null($this->collection)) {
-			return FALSE;
+
+	public function hint($field, $order = "ASC") {
+		if($order === "ASC") {
+			$this->hint[$field] = 1;
+		} else {
+			$this->hint[$field] = -1;
 		}
-		
-		$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
-	
-		return $this->data();		
 	}
-		
-    /**
-     * Find records by specific field and value
-     *
-     * @param string $field
-     * @param string $value
-     * @param string $group = NULL
-     * @param string $order = NULL
-     * @param string $limit = NULL
-     * @return array value
-     */
-	public function findBy($field, $value) {
-		if(is_null($this->collection)) {
-			return FALSE;
-		}
-		
-		$query = array($field => $value);
-		
-		$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
-	
-		return $this->data();
-	}
-	
-    /**
-     * Find the first record
-     *
-     * @return array value
-     */
-	public function findFirst() {
-		if(is_null($this->collection)) {
-			return FALSE;
-		}
-		
-		$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->findOne();
-	
-		return $this->data();
-	}
-		
-    /**
-     * Find the last record
-     *
-     * @return array value
-     */
-	public function findLast() {		
-		$this->cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
-		
-		$this->sort("_id", "DESC");
-		
-		$this->limit(1);
-		
-		return $this->data();
-	}
-	
+
  	public function insert($_id = TRUE) {
 		if(is_array($this->data)) {
 			$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->insert($this->data, $_id);
@@ -581,23 +509,67 @@ class ZP_MongoDB extends ZP_Load {
 			print __("Insert error");
 		}
 	}
-		
-	public function join($table, $condition, $position = FALSE) {
-		
-	}
-	
-	public function like($data, $match = FALSE, $position = "both") {
 
+	public function limit($limit = 1) {
+		$this->limit = ($limit > 0) ? $limit : FALSE;
 	}
-	
+
+	public function operator($field = NULL, $operator = "<", $value = 0, $json = FALSE) {
+		if($operator === "<") {
+			return (!$json) ? array($field => array('$lt'  => $value)) : '';
+		} elseif($operator === ">") {
+			return (!$json) ? array($field => array('$gt'  => $value)) : '';
+		} elseif($operator === "<=") {
+			return (!$json) ? array($field => array('$lte' => $value)) : '';
+		} elseif($operator === ">=") {
+			return (!$json) ? array($field => array('$gte' => $value)) : '';
+		} elseif($operator === "!=" or $operator === "<>") {
+			return (!$json) ? array($field => array('$ne'  => $value)) : '';
+		} elseif($operator === "in") {
+			return (!$json) ? array($field => array('$in'  => $value)) : '';
+		} elseif($operator === "all") {
+			return (!$json) ? array($field => array('$all'  => $value)) : '';
+		} elseif($operator === "exists") {
+			return (!$json) ? array($field => array('$exists' => $value)) : '';
+		} elseif($operator === "inc" or $operator === "++") {
+			return (!$json) ? array($field => array('$inc' => $value)) : '';
+		} elseif($operator === "or" or $operator === "||") {
+			if(is_array($field)) {
+				return (!$json) ? array('$or' => $field) : '';
+			} else {
+				return (!$json) ? array('$or' => array($field => $value)) : '';
+			}
+		} elseif($operator === "set") {
+			return (!$json) ? array('$set' => array($field => $value)) : '';
+		} elseif($operator === "unset") {
+			return (!$json) ? array('$unset' => array($field => $value)) : '';
+		} elseif($operator === "push") {
+			return (!$json) ? array('$push' => array($field => $value)) : '';
+		} elseif($operator === "pushAll") {
+			return (!$json) ? array('$pushAll' => $field) : '';
+		} elseif($operator === "addToSet") {
+			if(is_array($field)) {
+				return (!$json) ? array('$addToSet' => $field) : '';
+			} else {
+				return (!$json) ? array('$addToSet' => array($field => $value)) : '';
+			}
+		} elseif($operator === "pop") {
+			return (!$json) ? array('$pop' => array($field => $value)) : '';
+		} 
+
+		return FALSE;
+	}
+		
+	public function regex($regex, $field) {
+		$Regex = new MongoRegex($regex);
+		
+		return $this->find(array($field => $regex));
+	}
+		
 	public function rows() {
-		return $this->cursor->count();
+		return $this->Cursor->count();
 	}
-	
-	public function command($command) {
-		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->command($command);
-	}
-	
+
 	public function save($option = NULL, $_id = TRUE) {	
 		if(is_null($option)) {
 			$this->insert($_id);
@@ -608,6 +580,18 @@ class ZP_MongoDB extends ZP_Load {
 	
 	public function set($field, $value) {
 		$this->data[$field] = $value;
+	}
+	
+	public function skip($skip = 1) {
+		$this->skip = ($skip > 0) ? $skip : FALSE;
+	}
+
+	public function slice($field, $count = 1) {
+		$this->condition = (object) array($field => array('$slice' => $count));
+	}
+
+	public function sort($field, $order = "ASC") {
+		$this->sort[$field] = ($order === "ASC") ? 1 : -1;
 	}
 	
 	public function update($criteria = FALSE, $update = FALSE, $options = FALSE) {	
@@ -624,6 +608,14 @@ class ZP_MongoDB extends ZP_Load {
 		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->update($criteria, $update, $options);
 		
 		return TRUE;
+	}
+
+	public function upload($fname = "file") {
+		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+		
+		$name = FILES($fname, "name");
+		
+		return $GridFS->storeUpload($fname, $name);
 	}
 	
 }

@@ -38,14 +38,7 @@ class ZP_Model extends ZP_Load {
 	 * 
 	 */
 	public $Db;
-	
-	/**
-	 * 
-	 * 
-	 * 
-	 */
-	public function __construct() {}
-	
+		
 	/**
 	 * 
 	 * 

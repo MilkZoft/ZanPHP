@@ -34,66 +34,6 @@ class ZP_RESTClient extends ZP_Load {
 	
 	private $auth = FALSE;
 	
-	public function __construct() {}
-	
-	public function setAuth($username = NULL, $password = NULL) {
-		if(!is_null($username) and !is_null($password)) {
-			$this->auth	 	= TRUE;
-			$this->username = $username;
-			$this->password = $password;
-		} else {
-			$this->auth	= FALSE;
-		}
-		
-		return FALSE;
-	}
-	
-	public function setURL($URL) {
-		if(substr($URL, 0, 7) !== "http://") {
-			$this->URL = "http://" . $URL;
-		} elseif(substr($URL, 0, 8) === "https://") {
-			$this->URL = "https://" . $URL;
-		} else {
-			$this->URL = $URL;
-		}
-	}
-	
-	public function GET($return = FALSE) {
-		if(is_null($this->URL)) {
-			return FALSE;
-		}
-		
-		if($ch = curl_init($this->URL)) {
-			curl_setopt($ch, CURLOPT_URL, $this->URL);
-			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, TRUE);
-			
-			if($this->auth) {
-				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
-				curl_setopt($ch, CURLOPT_USERPWD, $this->username .":". $this->password);
-			}
-			
-			$response = curl_exec($ch);
-
-			$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			
-			curl_close($ch);
-			
-			if($status === 200) {
-				if($return) {
-					return $response;
-				}
-				
-				if(strstr($response, "xml")) {
-					return new SimpleXMLElement($response);
-				} else {
-					return json_decode($response);
-				}
-			}
-		} 
-		
-		return FALSE;
-	}
-	
 	public function DELETE($data = FALSE, $return = FALSE) {
 		if($data !== TRUE) {
 			$data = is_array($data) ? http_build_query($data) : $data;
@@ -139,7 +79,43 @@ class ZP_RESTClient extends ZP_Load {
 		
 		return FALSE;
 	}
-	
+
+	public function GET($return = FALSE) {
+		if(is_null($this->URL)) {
+			return FALSE;
+		}
+		
+		if($ch = curl_init($this->URL)) {
+			curl_setopt($ch, CURLOPT_URL, $this->URL);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			
+			if($this->auth) {
+				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+				curl_setopt($ch, CURLOPT_USERPWD, $this->username .":". $this->password);
+			}
+			
+			$response = curl_exec($ch);
+
+			$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			
+			curl_close($ch);
+			
+			if($status === 200) {
+				if($return) {
+					return $response;
+				}
+				
+				if(strstr($response, "xml")) {
+					return new SimpleXMLElement($response);
+				} else {
+					return json_decode($response);
+				}
+			}
+		} 
+		
+		return FALSE;
+	}
+
 	public function POST($data = NULL, $return = FALSE) {		
 		if(is_null($this->URL) or is_null($data)) {
 			return FALSE;
@@ -216,5 +192,27 @@ class ZP_RESTClient extends ZP_Load {
 		
 		return FALSE;
 	} 
-
+	
+	public function setAuth($username = NULL, $password = NULL) {
+		if(!is_null($username) and !is_null($password)) {
+			$this->auth	 	= TRUE;
+			$this->username = $username;
+			$this->password = $password;
+		} else {
+			$this->auth	= FALSE;
+		}
+		
+		return FALSE;
+	}
+	
+	public function setURL($URL) {
+		if(substr($URL, 0, 7) !== "http://") {
+			$this->URL = "http://" . $URL;
+		} elseif(substr($URL, 0, 8) === "https://") {
+			$this->URL = "https://" . $URL;
+		} else {
+			$this->URL = $URL;
+		}
+	}
+		
 }

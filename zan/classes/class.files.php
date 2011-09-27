@@ -80,7 +80,7 @@ class ZP_Files extends ZP_Load {
      * @return void
      */
 	public function getType($ext, $mimeType = FALSE, $return = FALSE, $icons = FALSE) {	
-		if($mimeType === FALSE) {
+		if(!$mimeType) {
 			$ext   = strtolower($ext);		
 			$parts = explode("/", $ext);
 			
