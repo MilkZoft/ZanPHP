@@ -262,8 +262,8 @@ function getLanguageRadios($lang = NULL) {
 			$check = NULL;
 		}	
 
-		$HTML .= '<input id="language" name="language" type="radio" value="'. $language["name"] .'" tabindex="4"'. $check.' /> '. $language["value"];
+		$HTML .= '<input id="language" name="language" type="radio" value="'. $language["name"] .'" tabindex="4"'. $check .' /> '. $language["value"];
 	}
-
+	
 	return $HTML;
 }

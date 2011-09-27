@@ -109,6 +109,8 @@ class ZP_Db extends ZP_Load {
 	 */
 	private $select = "SELECT *";
 	
+	private $SQL = NULL;
+		
 	/**
 	 * Contains the name of the table
 	 * 
@@ -130,7 +132,6 @@ class ZP_Db extends ZP_Load {
 	 */
 	private $where = NULL;
 	
-	private $SQL = NULL;
 		
     /**
      * Load Database class
@@ -247,8 +248,12 @@ class ZP_Db extends ZP_Load {
      *
      * @return integer value
      */	
-	public function countAll() {		
-		$query = "SELECT COUNT(*) AS Total FROM $this->table";
+	public function countAll($table = NULL) {
+		if($table) {
+			$query = "SELECT COUNT(*) AS Total FROM $table";
+		} else {
+			$query = "SELECT COUNT(*) AS Total FROM $this->table";	
+		}	
 		
 		$data = $this->data($query);
 		
@@ -260,7 +265,7 @@ class ZP_Db extends ZP_Load {
      *
      * @return integer value
      */
-	public function countBySQL($SQL) {		
+	public function countBySQL($SQL, $table = NULL) {		
 		if($SQL	=== "") {
 			return FALSE;
 		}
@@ -316,9 +321,13 @@ class ZP_Db extends ZP_Load {
 	 * @param string $primaryKey
      * @return boolean value
      */
-	public function delete($ID = FALSE) {	
-		if(!$this->table or !$ID or !$this->primaryKey) {
+	public function delete($ID = 0, $table = NULL) {	
+		if($ID === 0) {
 			return FALSE;		
+		}
+
+		if($table) {
+			$this->table($table);
 		}
 		
 		$query = "DELETE FROM $this->table WHERE $this->primaryKey = $ID";
@@ -335,7 +344,7 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = "LIMIT 1"
      * @return boolean value
      */
-	public function deleteBy($field = FALSE, $value = FALSE, $limit = 1) {
+	public function deleteBy($field = NULL, $value = NULL, $limit = 1) {
 		if(!$this->table or !$field or !$value) {
 			return FALSE;
 		}
@@ -360,9 +369,13 @@ class ZP_Db extends ZP_Load {
      * @param string $SQL
      * @return boolean value
      */
-	public function deleteBySQL($SQL = FALSE) {
-		if(!$this->table or !$SQL) {
+	public function deleteBySQL($SQL = NULL, $table = NULL) {
+		if(!$SQL) {
 			return FALSE;
+		}
+
+		if($table) {
+			$this->table($table);
 		}
 		
 		$query = "DELETE FROM $this->table WHERE $SQL";
@@ -468,7 +481,11 @@ class ZP_Db extends ZP_Load {
      * @param integer $ID
      * @return boolean value / array value
      */
-	public function find($ID) {
+	public function find($ID, $table = NULL) {
+		if($table) {
+			$this->table($table);
+		}
+
 		$query = "SELECT $this->fields FROM $this->table WHERE $this->primaryKey = $ID";
 	
 		return $this->data($query);
@@ -482,7 +499,7 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findAll($group = NULL, $order = NULL, $limit = NULL) {
+	public function findAll($table = NULL, $group = NULL, $order = NULL, $limit = NULL) {
 		$SQL = NULL;
 		
 		if(!is_null($group)) {
@@ -501,6 +518,10 @@ class ZP_Db extends ZP_Load {
 			$SQL .= " LIMIT ". $limit;
 		}
 		
+		if($table) {
+			$this->table($table);	
+		}
+
 		$query = "SELECT $this->fields FROM $this->table$SQL";
 
 		return $this->data($query);
@@ -516,8 +537,12 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findBy($field = NULL, $value = NULL, $group = NULL, $order = NULL, $limit = NULL) {
+	public function findBy($field = NULL, $value = NULL, $table = NULL, $group = NULL, $order = NULL, $limit = NULL) {
 		$SQL = NULL;
+
+		if($table) {
+			$this->table($table);
+		}
 		
 		if(!is_null($group)) {
 			$SQL .= " GROUP BY " . $group;
@@ -540,14 +565,10 @@ class ZP_Db extends ZP_Load {
 			$_SQL = NULL;
 
 			foreach($field as $_field => $_value) {
-				if($i === count($field) - 1) {
-					$_SQL .= "$_field = '$_value'";
-				} else {
-					$_SQL .= "$_field = '$_value' AND ";	
-				}
-
-				$i++;
+				$_SQL .= "$_field = '$_value' AND ";	
 			}
+			
+			$_SQL = rtrim($_SQL, "AND ");
 			
 			$query = "SELECT $this->fields FROM $this->table WHERE $_SQL";
 		} else {
@@ -566,9 +587,13 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findBySQL($SQL, $group = NULL, $order = NULL, $limit = NULL) {					
+	public function findBySQL($SQL, $table = NULL, $group = NULL, $order = NULL, $limit = NULL) {					
 		if(!is_null($group)) {
 			$SQL .= " GROUP BY ". $group;
+		}
+
+		if($table) {
+			$this->table($table);
 		}
 		
 		if(!$order) {
@@ -584,7 +609,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
-
+		
 		return $this->data($query);
 	}
 	
@@ -593,7 +618,11 @@ class ZP_Db extends ZP_Load {
      *
      * @return array value
      */
-	public function findFirst() {
+	public function findFirst($table = NULL) {
+		if($table) {
+			$this->table($table);	
+		}
+
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey ASC LIMIT 1";return $this->data($query);	
 	}
 		
@@ -633,7 +662,7 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function get($table = FALSE, $limit = 0, $offset = 0) {
+	public function get($table = NULL, $limit = 0, $offset = 0) {
 		$table = str_replace(_dbPfx, "", $table);
 		
 		if($table !== "") {
@@ -671,19 +700,12 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function getWhere($table, $data, $limit = 0, $offset = 0) {
-		$i = 0;
-		$count = count($data) - 1;
-		
-		foreach($data as $field => $value) {
-			if($i === $count) {
-				$_where = "$field = '$value'";
-			} else {
-				$_where = "$field = '$value' AND ";
-			}
-			
-			$i++;
+	public function getWhere($table, $where, $limit = 0, $offset = 0) {		
+		foreach($where as $field => $value) {
+			$_where = "$field = '$value' AND ";
 		}
+		
+		$_where = rtrim($_where, "AND ");
 		
 		if($limit === 0 and $offset === 0) {
 			$query = "$this->select FROM $table WHERE $_where"; 
@@ -702,7 +724,7 @@ class ZP_Db extends ZP_Load {
      * @param string $values
      * @return object or boolean value
      */		
-	public function insert($table = FALSE, $fields = FALSE, $values = FALSE) {
+	public function insert($table = NULL, $data = NULL) {
 		if(!$table or !$fields) {
 			if(!$this->table or !$this->fields or !$this->values) {
 				return FALSE;
@@ -715,13 +737,13 @@ class ZP_Db extends ZP_Load {
 		
 		$table = $this->getTable($table);
 		
-		if(is_array($fields)) {
-			$count   = count($fields) - 1;
+		if(is_array($data)) {
+			$count   = count($data) - 1;
 			$_fields = NULL;
 			$_values = NULL;
 			$i 		 = 0;
 			
-			foreach($fields as $field => $value) {
+			foreach($data as $field => $value) {
 				if($i === $count) {
 					$_fields .= "$field";
 					$_values .= "'$value'";
@@ -819,7 +841,7 @@ class ZP_Db extends ZP_Load {
      *
      * @return boolean value / integer value
      */
-	public function insertID($table = FALSE) {
+	public function insertID($table = NULL) {
 		if($table) {
 			$query = "SELECT TOP 1 $this->primaryKey FROM $this->table ORDER BY $this->primaryKey DESC";
 			 	
@@ -839,15 +861,15 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function join($table, $_Status, $position = FALSE) {
-		if(!$table or !$_Status) {
+	public function join($table, $condition, $position = FALSE) {
+		if(!$table or !$condition) {
 			return FALSE;	
 		}
 		
 		if(!$position) {
-			$this->join = "JOIN $table ON $_Status";
+			$this->join = "JOIN $table ON $condition";
 		} else {
-			$this->join = "$position JOIN $table ON $_Status";	
+			$this->join = "$position JOIN $table ON $condition";	
 		}
 	}
 	
@@ -857,7 +879,7 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function like($data, $match = FALSE, $position = "both") {
+	public function like($data, $match = NULL, $position = "both") {
 		if(is_array($data)) {
 			$count  = count($data) - 1;
 			$_where = NULL;
@@ -1050,7 +1072,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */	
 	public function rollBack() {
-		return $this->Database->rollbackTrans();
+		return $this->Database->rollBack();
 	}
 	
     /**
@@ -1099,7 +1121,7 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function selectAvg($field, $as = FALSE) {
+	public function selectAvg($field, $as = NULL) {
 		if(isset($field) and $as) {
 			$this->select = "SELECT AVG($field) as $as";	
 		} else {
@@ -1113,7 +1135,7 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function selectMax($field, $as = FALSE) {
+	public function selectMax($field, $as = NULL) {
 		if(isset($field) and $as) {
 			$this->select = "SELECT MAX($field) as $as";	
 		} else {
@@ -1127,7 +1149,7 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function selectMin($min, $as = FALSE) {
+	public function selectMin($field, $as = NULL) {
 		if(isset($min) and $as) {
 			$this->select = "SELECT MIN($field) as $as";	
 		} else {
@@ -1141,24 +1163,14 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function selectSum($field, $as = FALSE) {
+	public function selectSum($field, $as = NULL) {
 		if(isset($field) and $as) {
 			$this->select = "SELECT SUM($field) as $as";	
 		} else {
 			$this->select = "SELECT SUM($field) as $field";
 		}	
 	}
-	
-    /**
-     * 
-     *
-     * @param string 
-     * @return void
-     */
-	public function set($field, $value) {
-		$this->data[$field] = $value;
-	}
-	
+		
     /**
      * Set table and fields to make a SQL query
      *
@@ -1195,7 +1207,7 @@ class ZP_Db extends ZP_Load {
      * @param integer $ID
      * @return boolean value
      */
-	public function update($table = FALSE, $fields = FALSE, $ID = FALSE) {		
+	public function update($table = NULL, $fields = NULL, $ID = 0) {		
 		if(!$table or !$fields) {
 			if(!$this->table or !$this->fields) {
 				return FALSE;
@@ -1214,14 +1226,10 @@ class ZP_Db extends ZP_Load {
 			$i 		 = 0;
 			
 			foreach($fields as $field => $value) {
-				if($i === $count) {
-					$_values .= "$field = '$value'";
-				} else {
-					$_values .= "$field = '$value', ";	
-				}
-						
-				$i++;	
+				$_values .= "$field = '$value', ";
 			}
+			
+			$_values = rtrim($_values, ", ");
 			
 			if($ID > 0) {
 				$query = "UPDATE $table SET $_values WHERE $this->primaryKey = $ID";	
@@ -1289,7 +1297,7 @@ class ZP_Db extends ZP_Load {
      * @param string 
      * @return void
      */
-	public function where($data, $value = FALSE) {
+	public function where($data, $value = NULL) {
 		if(is_array($data)) {
 			$count 		 = count($data) - 1;
 			$i 			 = 0;
