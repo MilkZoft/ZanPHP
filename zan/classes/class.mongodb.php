@@ -123,7 +123,17 @@ class ZP_MongoDB extends ZP_Load {
      * @return integer value
      */	
 	public function countAll() {				
-		return (is_object($this->Cursor)) ? $this->Cursor->count() : FALSE;
+		if(is_object($this->Cursor)) {
+			return $this->Cursor->count();
+		} else {
+			if($this->collection) {
+		 		$this->find();
+		 		
+		 		return $this->Cursor->count();	
+			} else {
+				return FALSE;
+			}
+		} 
 	}
 
     /**
@@ -197,8 +207,12 @@ class ZP_MongoDB extends ZP_Load {
 		return TRUE;
 	}
 	
-	public function drop() {
-		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->drop();
+	public function drop($collection = NULL) {
+		if($collection) {
+			$this->Mongo->selectCollection(_dbNoSQLDatabase, $collection)->drop();
+		} else {
+			$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->drop();	
+		}
 		
 		return TRUE;
 	}
@@ -247,7 +261,11 @@ class ZP_MongoDB extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findAll($group = NULL, $order = NULL, $limit = NULL) {
+	public function findAll($collection = NULL, $group = NULL, $order = NULL, $limit = NULL) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
 		if(is_null($this->collection)) {
 			return FALSE;
 		}
@@ -267,7 +285,11 @@ class ZP_MongoDB extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findBy($field, $value) {
+	public function findBy($field, $value, $collection = NULL) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
 		if(is_null($this->collection)) {
 			return FALSE;
 		}
@@ -285,7 +307,11 @@ class ZP_MongoDB extends ZP_Load {
      * @param integer $ID
      * @return boolean value / array value
      */
-	public function findByID($ID) {
+	public function findByID($ID, $collection = NULL) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
 		if(is_null($this->collection)) {
 			return FALSE;
 		}
@@ -306,7 +332,11 @@ class ZP_MongoDB extends ZP_Load {
      *
      * @return array value
      */
-	public function findFirst() {
+	public function findFirst($collection = NULL) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
 		if(is_null($this->collection)) {
 			return FALSE;
 		}
@@ -321,7 +351,15 @@ class ZP_MongoDB extends ZP_Load {
      *
      * @return array value
      */
-	public function findLast() {		
+	public function findLast($collection = NULL) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+				
 		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
 		
 		$this->sort("_id", "DESC");
@@ -439,16 +477,24 @@ class ZP_MongoDB extends ZP_Load {
 		}
 	}
 
-	public function getAllFiles() {
+	public function getAllFiles($collection = NULL) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+
 		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
 
-		$cursor = $GridFS->find();
+		$Cursor = $GridFS->find();
 		
 		$i = 0;
 		
-		foreach($cursor as $object) {
-			$files[$i]["filename"] = $object->getFilename();
-			$files[$i]["content"]  = $object->getBytes();
+		foreach($Cursor as $Object) {
+			$files[$i]["filename"] = $Object->getFilename();
+			$files[$i]["content"]  = $Object->getBytes();
 			
 			$i++;
 		}
@@ -456,7 +502,15 @@ class ZP_MongoDB extends ZP_Load {
 		return $files;
 	}
 	
-	public function getFile($_id, $mimeType = "image/jpeg", $return = FALSE) {
+	public function getFile($_id, $collection = NULL, $mimeType = "image/jpeg", $return = FALSE) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+
 		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
 
 		$ID = new MongoId($_id);
@@ -474,7 +528,15 @@ class ZP_MongoDB extends ZP_Load {
 		}	
 	}
 
-	public function getLastID() {
+	public function getLastID($collection = NULL) {
+		if($collection) {
+			$this->collection = $collection;	
+		}
+
+		if(is_null($this->collection)) {
+			return FALSE;
+		}
+
 		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
 		
 		$this->sort("_id", "DESC");
@@ -498,16 +560,22 @@ class ZP_MongoDB extends ZP_Load {
 		}
 	}
 
- 	public function insert($_id = TRUE) {
-		if(is_array($this->data)) {
+ 	public function insert($collection = NULL, $data = NULL, $_id = TRUE) {
+ 		if($collection and is_array($data)) {
+ 			$this->Mongo->selectCollection(_dbNoSQLDatabase, $collection)->insert($data, $_id);
+
+ 			return TRUE;
+ 		} elseif(is_array($this->data)) {
 			$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->insert($this->data, $_id);
 				
 			unset($this->data);
 				
 			$this->data = array();
-		} else {	
-			print __("Insert error");
-		}
+
+			return TRUE;
+		} 
+
+		return FALSE;
 	}
 
 	public function limit($limit = 1) {
