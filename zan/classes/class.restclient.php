@@ -52,6 +52,7 @@ class ZP_RESTClient extends ZP_Load {
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 			curl_setopt($ch, CURLOPT_HEADER, FALSE);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			
 			if($this->auth) {
 				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);

@@ -34,10 +34,6 @@ class ZP_RESTServer extends ZP_Load {
 	
 	private $data = array();
 	
-	public function __construct() {
-		$this->application = wichApplication();
-	}
-	
 	public function application($application = NULL) {
 		$this->application = $application;
 	}
