@@ -1,9 +1,22 @@
-<div id="contacts">
+<div id="agenda">
 	<?php
-		if(is_array($contacts)) {
-			foreach($contacts as $contact) {
-				print $contact["Name"] . "<br />" . $contact["Email"];
-			}
+		foreach($contacts as $contact) {
+		?>
+			<p>
+				<span class="bold"><?php print __("Name"); ?>:</span> 
+				<?php print $contact["Name"]; ?>
+			</p>
+	
+			<p>
+				<span class="bold"><?php print __("Email"); ?>:</span> 
+				<?php print $contact["Email"]; ?>
+			</p>
+
+			<p>
+				<span class="bold italic underline"><?php print __("Phone"); ?>:</span> 
+				<?php print $contact["Name"]; ?>
+			</p>	
+		<?php
 		}
 	?>
 </div>

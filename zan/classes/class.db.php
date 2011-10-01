@@ -691,6 +691,8 @@ class ZP_Db extends ZP_Load {
 	private function getTable($table) {
 		$table = str_replace(_dbPfx, "", $table);
 		
+		$this->table($table);
+		
 		return _dbPfx . $table; 	
 	}
 	
@@ -725,7 +727,7 @@ class ZP_Db extends ZP_Load {
      * @return object or boolean value
      */		
 	public function insert($table = NULL, $data = NULL) {
-		if(!$table or !$fields) {
+		if(!$table) {
 			if(!$this->table or !$this->fields or !$this->values) {
 				return FALSE;
 			} else {
@@ -1247,7 +1249,7 @@ class ZP_Db extends ZP_Load {
 				$query = "UPDATE $table SET $fields";
 			}
 		}	
-		
+	
 		$this->Rs = $this->Database->query($query);
 		
 		if($this->Rs) {

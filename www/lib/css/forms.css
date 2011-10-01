@@ -1,0 +1,12 @@
+.input {
+	width: 500px;
+	border: 1px solid #000;
+	background-color: #EEE;
+}
+
+.textarea {
+	width: 500px;
+	height: 300px;
+	border: 1px solid #000;
+	background-color: #EEE;
+}

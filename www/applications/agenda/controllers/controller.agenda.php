@@ -12,95 +12,51 @@ class Agenda_Controller extends ZP_Controller {
 		$this->application = $this->app("agenda");
 		
 		$this->Agenda_Model = $this->model("Agenda_Model");
-		
-		$this->RESTServer = $this->core("RESTServer");
-		
+				
 		$this->Templates = $this->core("Templates");
 		
 		$this->Templates->theme(_webTheme);
 	}
 	
-	public function index() {		
-		print __("Hi, I'm the default application");
-	}
-	
-	public function add() {
-		if($this->RESTServer->isREST(TRUE, "POST")) {
-			$data = $this->Agenda_Model->add();
-			
-			if($data) {
-				$message = $this->RESTServer->message("The contact has been inserted correctly");
-			} else {
-				$message = $this->RESTServer->message("Insert fail", TRUE);
-			}
-		} else {
-			$message = $this->RESTServer->message("Invalid REST request", TRUE);
-		}
+	public function contact($contactID) {
+		$this->title("Mostrando contacto");
+		$this->CSS("default");
+		$this->CSS("agenda", $this->application, TRUE);
 		
-		$this->RESTServer->response($message, FALSE, "POST");
-	}
-	
-	public function contact($contactID = 0) { 
-		$data = $this->Agenda_Model->contact($contactID);
+		$data = $this->Agenda_Model->getContact($contactID);
 		
-		if($data) {
-			if($this->RESTServer->isREST(4)) {
-				$this->RESTServer->process($data, 5);
-			} else {
-				$vars["contacts"] = $data;
-				$vars["view"]	  = $this->view("contacts", TRUE);
-				
-				$this->template("content", $vars);	
-				$this->render();
-			}
-		} else {
-			$this->template("error404");	
-			$this->render();			
-		}
+		$vars["contact"] = $data[0];
+		#$vars["view"]    = $this->view("contact", TRUE);
+	
+		#$this->template("content", $vars);
+		
+		#$this->render();
+		
+		//Cargar una vista directamente sin cargar el theme.
+		$this->view("contact", $vars);
 	}
 	
 	public function contacts() {
-		$data = $this->Agenda_Model->contacts();
+		$data = $this->Agenda_Model->getAllContacts();
 		
-		if($this->RESTServer->isREST(3)) {
-			$this->RESTServer->process($data);	
-		} else {
-			$vars["contacts"] = $data;
-			$vars["view"]	  = $this->view("contacts", TRUE);
-			
-			$this->template("content", $vars);
-			
-			$this->render();
-		}
+		$vars["contacts"] = $data;
+		$vars["view"]	  = $this->view("contacts", TRUE);
+		
+		$this->template("content", $vars);
+		
+		$this->render();
 	}
 	
-	public function edit($contactID = 0) {
-		if($this->RESTServer->isREST(TRUE, "PUT")) {
-			$data = $this->RESTServer->data();
-			
-			$response = $this->Agenda_Model->edit($contactID, $data);
-			
-			if($response) {
-				$message = $this->RESTServer->message("The contact has been edited correctly");
-			} else {
-				$message = $this->RESTServer->message("Update Fail", TRUE);
-			}
-			
-			$this->RESTServer->response($message, FALSE, "PUT");
-		}
+	public function email($email) {
+		$data = $this->Agenda_Model->getContactByEmail($email);
+		
+		____($data);
 	}
 	
-	public function delete($contactID = 0) {
-		if($this->RESTServer->isREST(TRUE, "DELETE")) {
-			$response = $this->Agenda_Model->delete($contactID);
-			
-			if($response) {
-				$message = $this->RESTServer->message("The contact has been deleted correctly");
-			} else {
-				$message = $this->RESTServer->message("Delete Fail", TRUE);
-			}
-			
-			$this->RESTServer->response($message, FALSE, "DELETE");
-		}
+	public function name($name, $phone) {
+		$data = $this->Agenda_Model->getContactByNameAndPhone($name, $phone);
+		
+		____($data);
 	}
+	
 }
