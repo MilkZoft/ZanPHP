@@ -9,57 +9,30 @@ if(!defined("_access")) {
 class Blog_Model extends ZP_Model {
 	
 	public function __construct() {
-		$this->Db = $this->db("mongo");
-		
+		$this->Db = $this->db();
+
 		$this->helpers();
 		
-		$this->collection = "blog";
-		
 		$this->language = whichLanguage();
+		$this->table 	= "blog";
 	}
 	
-	public function getPosts($limit, $skip) {
-		$this->Db->collection($this->collection);
-		$this->Db->limit($limit);
-		$this->Db->skip($skip);
-		$this->Db->sort("_id", "DESC");
+	public function getPosts($year = FALSE, $month = FALSE, $day = FALSE, $slug = FALSE) {
+		$this->Db->table($this->table);
 		
-		$data = $this->Db->find();
-
-		return $data;
-	}
-	
-	public function getByDate($limit, $skip, $year = FALSE, $month = FALSE, $day = FALSE) {
-		$this->Db->collection($this->collection);
-		$this->Db->limit($limit);
-		$this->Db->skip($skip);
-		$this->Db->sort("_id", "DESC");
-		
-		if($year and $month and $day) {
-			$query = array(
-						"Language" 	=> $this->language, 
-						"Year" 		=> $year,
-						"Month"		=> $month, 
-						"Day"		=> $day,
-						"State" 	=> "Active"
-					);
+		if($year and $month and $day and $slug) {
+			$data = $this->Db->findBySQL("Year = '$year' AND Month = '$month' AND Day = '$day' AND Slug = '$slug'");
+		} elseif($year and $month and $day) {
+			$data = $this->Db->findBySQL("Year = '$year' AND Month = '$month' AND Day = '$day'");
 		} elseif($year and $month) {
-			$query = array(
-						"Language" 	=> $this->language, 
-						"Year" 		=> $year,
-						"Month"		=> $month, 
-						"State" 	=> "Active"
-					);
+			$data = $this->Db->findBySQL("Year = '$year' AND Month = '$month'");
 		} elseif($year) {
-			$query = array(
-						"Language" 	=> $this->language, 
-						"Year" 		=> $year, 
-						"State" 	=> "Active"
-					);
+			$data = $this->Db->findBySQL("Year = '$year'");
+		} else {
+			$data = $this->Db->findAll(NULL, NULL, "ID_Post DESC", 10);
 		}
 		
-		$data = $this->Db->find($query);
-		
 		return $data;
 	}
+			
 }
