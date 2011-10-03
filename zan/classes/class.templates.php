@@ -218,7 +218,6 @@ class ZP_Templates extends ZP_Load {
      * 
      */
 	public function js($js, $application = NULL, $extra = NULL, $getJs = FALSE) {
-		
 		if($getJs) {
 			return getScript($js, $application, $extra, $getJs);	
 		} 

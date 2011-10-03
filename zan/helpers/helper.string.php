@@ -333,7 +333,9 @@ function pageBreak($content, $URL = NULL) {
  * @return mixed
  */ 
 function POST($position = FALSE, $coding = "decode", $filter = "escape") {
-	if($position === TRUE) {		
+	if($coding === "clean") {
+		return $_POST[$position];
+	} elseif($position === TRUE) {		
 		return $_POST;
 	} elseif(!$position) {
 		____($_POST);
@@ -375,7 +377,7 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
 				$POST = filter(decode($_POST[$position]), TRUE);
 			} elseif($filter === "escape") {
 				$POST = filter(decode($_POST[$position]), "escape");
-			}  else {
+			} else {
 				$data = decode($_POST[$position]);
 				$data = str_replace("'", "\'", $data);
 				

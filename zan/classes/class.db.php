@@ -224,19 +224,19 @@ class ZP_Db extends ZP_Load {
 	public function connect() {		
 		if(!self::$connection) {
 			if(_dbController === "mssql") {
-				$this->Database   = $this->core("MsSQL_Db");
+				$this->Database   = $this->driver("MsSQL_Db");
 				
 				self::$connection = $this->Database->connect();
 			} elseif(_dbController === "mysql") {
-				$this->Database   = $this->core("MySQL_Db");
+				$this->Database   = $this->driver("MySQL_Db");
 				
 				self::$connection = $this->Database->connect();			
 			} elseif(_dbController === "mysqli") {
-				$this->Database   = $this->core("MySQLi_Db");
+				$this->Database   = $this->driver("MySQLi_Db");
 				
 				self::$connection = $this->Database->connect();
 			} elseif(_dbController === "pgsql") {
-				$this->Database   = $this->core("PgSQL_Db");
+				$this->Database   = $this->driver("PgSQL_Db");
 				
 				self::$connection = $this->Database->connect();
 			}
@@ -591,25 +591,25 @@ class ZP_Db extends ZP_Load {
 		if(!is_null($group)) {
 			$SQL .= " GROUP BY ". $group;
 		}
-
+		
 		if($table) {
 			$this->table($table);
 		}
 		
-		if(!$order) {
+		if(is_null($order)) { 
 			$SQL .= "";		
-		} elseif(!is_null($order)) {
+		} elseif(!is_null($order)) {  
 			$SQL .= " ORDER BY ". $order;
-		} elseif($order === "") {
+		} elseif($order === "") { 
 			$SQL .= " ORDER BY $this->primaryKey";
 		}
-		
+
 		if(!is_null($limit)) {
 			$SQL .= " LIMIT ". $limit;
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
-		
+
 		return $this->data($query);
 	}
 	
@@ -690,7 +690,7 @@ class ZP_Db extends ZP_Load {
 	
 	private function getTable($table) {
 		$table = str_replace(_dbPfx, "", $table);
-		
+
 		$this->table($table);
 		
 		return _dbPfx . $table; 	
@@ -759,11 +759,7 @@ class ZP_Db extends ZP_Load {
 			
 			$query = "INSERT INTO $table ($_fields) VALUES ($_values)";
 		} else {
-			if(!$values) {
-				return FALSE;	
-			}
-			
-			$query = "INSERT INTO $table ($fields) VALUES ($values)";
+			return FALSE;
 		}	
 		
 		$this->Rs = $this->Database->query($query);
@@ -1249,7 +1245,7 @@ class ZP_Db extends ZP_Load {
 				$query = "UPDATE $table SET $fields";
 			}
 		}	
-	
+		
 		$this->Rs = $this->Database->query($query);
 		
 		if($this->Rs) {
