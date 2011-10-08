@@ -75,7 +75,7 @@ class Twitter extends API_Twitter {
 	}
 	
 	public function welcome() {
-		return $this->tweet("I've registered at " .  _webName . " " . SESSION("redirect"));
+		return $this->tweet("I've registered at ".  _webName ." ". SESSION("redirect"));
 	}
 	
 	public function getURL($token) {

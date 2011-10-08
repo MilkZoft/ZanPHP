@@ -240,7 +240,13 @@ function small($text) {
 	return '<span class="small">'. $text .'</span>';
 }	
 
-function span($class, $value) {
+function span($class, $value, $ID = FALSE) {
+	if($ID) {
+		$class = !is_null($class) ? ' class="'. $class .'"' : NULL;
+		
+		return '<span id="'. $ID .'"'. $class .'>'. $value .'</span>';	
+	}
+
 	return '<span class="'. $class .'">'. $value .'</span>';
 }
 

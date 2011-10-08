@@ -144,8 +144,8 @@ function execute() {
 
 		}
 	}
-	
-	if(_webState !== "Active" and !SESSION("ZanUserID") and $control !== _cpanel) {
+
+	if(_webSituation !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
 		die(_webMessage);
 	}
 	

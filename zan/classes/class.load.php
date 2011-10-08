@@ -449,18 +449,19 @@ class ZP_Load {
      * @param string $library
      * @return void
      */
-	public function library($name, $library = NULL) {	
-		$lib = str_replace("class.", "", $name);
+	public function library($name, $library = NULL, $application = NULL) {	
+		$lib = str_replace("library.", "", $name);
 		
-		if($name === "AdoDB") {
-			if(file_exists(_corePath . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP)) {
-				include_once _corePath . _sh . _libraries . _sh . "adodb" . _sh . "adodb.inc" . _PHP;				
-			} else {
-				die("$name library doesn't exists");
-			}			
-		} elseif(isset($name) and $library !== NULL) {
+		if(isset($name) and $library !== NULL) {
 			if(file_exists(_corePath . _sh . _libraries . _sh . $library . _sh . $name . _PHP)) {
 				include_once _corePath . _sh . _libraries . _sh . $library . _sh . $name . _PHP;				
+			} else {
+				die("$name library doesn't exists");
+			}
+		} elseif(isset($name) and !is_null($application)) {
+	
+			if(file_exists(_www . _sh . _applications . _sh . $application . _sh . _libraries . _sh . _library . "." . $name . _PHP)) {
+				include_once _www . _sh . _applications . _sh . $application . _sh . _libraries . _sh . _library . "." . $name . _PHP;				
 			} else {
 				die("$name library doesn't exists");
 			}
