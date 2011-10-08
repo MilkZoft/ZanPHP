@@ -12,7 +12,8 @@ if(!defined("_access")) {
 define("_webURL", "http://localhost/ZanPHP");
 define("_webName", "ZanPHP");
 define("_webTheme", "zanphp");
-define("_webState", "Active");
+define("_webSituation", "Active");
+define("_webMessage", "Under construction");
 define("_webLanguage", "Spanish");
 define("_webLang", "es");
 
