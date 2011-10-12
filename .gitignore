@@ -2,3 +2,4 @@
 *.swp
 *~
 www/config/config.database.php
+www/config/config.basics.php
