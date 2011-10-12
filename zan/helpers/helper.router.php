@@ -162,7 +162,7 @@ function execute() {
 		
 		$$controller = $Load->controller($controller);
 	}
-	
+
 	if(file_exists($controllerFile)) {
 		if(isset($method) and isset($params)) { 
 			if(method_exists($$controller, $method)) {
@@ -284,8 +284,10 @@ function isNumber($number) {
  * @return array		
  */
 function route() {
-	$URL = explode("/", substr($_SERVER["REQUEST_URI"], 1));
-	
+	$URL   = explode("/", substr($_SERVER["REQUEST_URI"], 1));
+	$paths = explode("/", dirname($_SERVER["SCRIPT_FILENAME"]));
+	$path  = $paths[count($paths) - 1];
+
 	if(is_array($URL)) {		 
 		$URL = array_diff($URL, array(""));
 		
@@ -293,8 +295,12 @@ function route() {
 			$vars[] = array_shift($URL);
 		}
 		
+		if(isset($URL[0]) and $URL[0] === $path) {
+			$vars[] = array_shift($URL);
+		}
+
 		if(!_modRewrite and isset($URL[0])) { 
-			if($URL[0] == basename($_SERVER["SCRIPT_FILENAME"])) {
+			if($URL[0] === basename($_SERVER["SCRIPT_FILENAME"])) { 
 				$vars[] = array_shift($URL);
 			}
 		}
