@@ -90,7 +90,7 @@ function char($char, $repeat = 1) {
 }
 
 function deleteImg($HTML) {
-	return eregi_replace("<img[^<>]*/>", "", $HTML);	
+	return preg_replace("<img[^<>]*/>", "", $HTML);	
 }
 	
 function div($ID, $type = "id", $style = NULL, $content = NULL) { 
