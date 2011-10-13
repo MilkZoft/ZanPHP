@@ -189,7 +189,7 @@ class Gettext_Reader {
 				$header = $this->get_translation_string(0);
 			}
 			
-			if(eregi("plural-forms: ([^\n]*)\n", $header, $regs)) {
+			if(preg_match("/(^|\n)plural-forms: ([^\n]*)\n/i", $header, $regs)) {
 				$expr = $regs[1];
 			} else {
 				$expr = "nplurals=2; plural=n == 1 ? 0 : 1;";
