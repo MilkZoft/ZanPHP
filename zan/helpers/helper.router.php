@@ -46,18 +46,18 @@ function execute() {
 	
 	if(!segment(0)) {
 		$application = _defaultApplication;	
-	} elseif(segment(0) and !segment(1)) {
+	} elseif(segment(0) and !segment(1)) { 
 		if(isLang()) {
 			$application = _defaultApplication;
 		} else {
 			$application = segment(0);	
 		}
-	} else {	
+	} else { 
 		if(isLang()) {
 			$application = segment(1);
 			
 			if(segment(2)) {
-				if(isController(segment(2), segment(1))) {
+				if(isController(segment(2), segment(1))) { 
 					$applicationController = segment(2);
 					
 					if(segment(3) and !isNumber(segment(3))) {
@@ -65,8 +65,8 @@ function execute() {
 					} else {
 						$method = "index";	
 					}
-				} else {
-					if(!isNumber(segment(2))) {
+				} else { 
+					if(!isNumber(segment(2))) { 
 						$method = segment(2);
 					}
 				}
@@ -75,9 +75,9 @@ function execute() {
 			if($applicationController) {
 				if(segments() > 4) {
 					$j = 4;
-					
+				
 					for($i = 0; $i < segments(); $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 						
 							$j++;	
@@ -89,7 +89,7 @@ function execute() {
 					$j = 3;
 					
 					for($i = 0; $i < segments(); $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 						
 							$j++;	
@@ -121,7 +121,7 @@ function execute() {
 					$j = 3;
 					
 					for($i = 0; $i <= segments() - 1; $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 							
 							$j++;
@@ -133,7 +133,7 @@ function execute() {
 					$j = 2;
 					
 					for($i = 0; $i <= segments() - 1; $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 							
 							$j++;
@@ -144,7 +144,7 @@ function execute() {
 
 		}
 	}
-
+	
 	if(_webSituation !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
 		die(_webMessage);
 	}
@@ -162,7 +162,7 @@ function execute() {
 		
 		$$controller = $Load->controller($controller);
 	}
-
+	
 	if(file_exists($controllerFile)) {
 		if(isset($method) and isset($params)) { 
 			if(method_exists($$controller, $method)) {
@@ -172,7 +172,7 @@ function execute() {
 					if(!$reflection->isPublic()) {
 						throw new RuntimeException("The called method is not public.", 100);
 					}
-	
+					
 					call_user_func_array(array($$controller, $method), $params);
 				} catch(RuntimeException $e) {
 					getException($e);
@@ -321,7 +321,11 @@ function segment($segment = 0) {
 	$route = route();
 	
 	if(count($route) > 0) {		
-		if(isset($route[$segment])) {
+		if(isset($route[$segment]) and strlen($route[$segment]) > 0) {
+			if($route[$segment] === "0") {
+				return (int) 0;
+			}
+			
 			return filter($route[$segment]);
 		} else {
 			return FALSE;
