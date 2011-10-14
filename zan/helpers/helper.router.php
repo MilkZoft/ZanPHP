@@ -77,7 +77,7 @@ function execute() {
 					$j = 4;
 					
 					for($i = 0; $i < segments(); $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 						
 							$j++;	
@@ -89,7 +89,7 @@ function execute() {
 					$j = 3;
 					
 					for($i = 0; $i < segments(); $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 						
 							$j++;	
@@ -121,7 +121,7 @@ function execute() {
 					$j = 3;
 					
 					for($i = 0; $i <= segments() - 1; $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 							
 							$j++;
@@ -133,7 +133,7 @@ function execute() {
 					$j = 2;
 					
 					for($i = 0; $i <= segments() - 1; $i++) {
-						if(segment($j)) {
+						if(segment($j) or segment($j) === 0) {
 							$params[$i] = segment($j);
 							
 							$j++;
