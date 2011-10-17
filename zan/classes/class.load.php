@@ -54,6 +54,8 @@ class ZP_Load {
 	 */
 	public $Templates;
 	
+	var $autoRender = TRUE;
+	
 	/**
 	 * Contains the array of views
 	 * 
@@ -573,6 +575,7 @@ class ZP_Load {
 			
 			$this->right();
 			$this->footer();
+			$this->autoRender = false;
 		}
 	}
 	
