@@ -1,4 +1,5 @@
 <?php
+/* ex: set tabstop=2 noexpandtab: */
 /**
  * ZanPHP
  *
@@ -162,7 +163,7 @@ function execute() {
 		
 		$$controller = $Load->controller($controller);
 	}
-	
+
 	if(file_exists($controllerFile)) {
 		if(isset($method) and isset($params)) { 
 			if(method_exists($$controller, $method)) {
@@ -218,6 +219,7 @@ function execute() {
 		} else {
 			$$controller->index();	
 		}
+		$$controller->afterFinish();
 	}
 }
 

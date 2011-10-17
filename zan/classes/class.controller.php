@@ -1,4 +1,5 @@
 <?php
+/* ex: set tabstop=2 noexpandtab: */
 /**
  * ZanPHP
  *
@@ -47,6 +48,12 @@ class ZP_Controller extends ZP_Load {
 		$helpers = array("alerts", "debugging", "time", "string", "forms", "security");
 		
 		$this->helper($helpers);	
+	}
+
+	public function afterFinish() {
+		if( $this->autoRender ) {
+			$this->render();
+		}
 	}
 	
 }
