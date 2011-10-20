@@ -12,10 +12,19 @@ class Default_Controller extends ZP_Controller {
 		$this->app("default");
 				
 		$this->Templates = $this->core("Templates");
+
+		$this->Templates->theme(_webTheme);
 	}
 	
 	public function index() {		
 		print "Welcome to ZanPHP";
+	}
+
+	public function show($message) {
+		$vars["message"] = $message;
+		$vars["view"]	 = $this->view("show", TRUE);
+		
+		$this->template("content", $vars);
 	}
 
 }
