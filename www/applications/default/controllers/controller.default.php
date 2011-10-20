@@ -14,6 +14,8 @@ class Default_Controller extends ZP_Controller {
 		$this->Templates = $this->core("Templates");
 
 		$this->Templates->theme(_webTheme);
+
+		$this->autoRender(FALSE);
 	}
 	
 	public function index() {		
@@ -24,7 +26,7 @@ class Default_Controller extends ZP_Controller {
 		$vars["message"] = $message;
 		$vars["view"]	 = $this->view("show", TRUE);
 		
-		$this->template("content", $vars);
+		#$this->template("content", $vars);
 	}
 
 }

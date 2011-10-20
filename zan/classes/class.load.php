@@ -89,6 +89,10 @@ class ZP_Load {
 		
 		return $application;	
 	}
+
+	public function autoRender($render = TRUE) {
+		$this->autoRender = $render;
+	}  
 	
 	/**
      * Loads an application class
