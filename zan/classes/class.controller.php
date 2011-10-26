@@ -49,11 +49,5 @@ class ZP_Controller extends ZP_Load {
 		
 		$this->helper($helpers);	
 	}
-
-	public function afterFinish() {
-		if($this->autoRender) {
-			$this->render();
-		}
-	}
 	
 }

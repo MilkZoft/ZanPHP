@@ -219,8 +219,6 @@ function execute() {
 		} else {
 			$$controller->index();	
 		}
-		
-		$$controller->afterFinish();
 	}
 }
 

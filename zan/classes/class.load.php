@@ -54,8 +54,6 @@ class ZP_Load {
 	 */
 	public $Templates;
 	
-	public $autoRender = TRUE;
-	
 	/**
 	 * Contains the array of views
 	 * 
@@ -89,10 +87,6 @@ class ZP_Load {
 		
 		return $application;	
 	}
-
-	public function autoRender($render = TRUE) {
-		$this->autoRender = $render;
-	}  
 	
 	/**
      * Loads an application class
@@ -579,7 +573,6 @@ class ZP_Load {
 			
 			$this->right();
 			$this->footer();
-			$this->autoRender = FALSE;
 		}
 	}
 	
@@ -626,6 +619,8 @@ class ZP_Load {
 			$this->views[$i]["name"] = $name;
 			$this->views[$i]["vars"] = FALSE;		
 		}
+
+		$this->render();
 	}
 	
     /**
