@@ -113,7 +113,7 @@ class ZP_Files extends ZP_Load {
 		} elseif($ext === "x-rar") {
 			$ext = "rar";
 		} elseif($ext === "octet-stream") {
-			$ext = $ext2[1];
+			$ext = $ext[1];
 		} elseif($ext === "pjpeg") {
 			$ext = "jpg";
 		} elseif($ext === "x-png") {
