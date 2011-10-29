@@ -126,25 +126,25 @@ The controllers are very important in ZanPHP they are indispensable for the use 
 
 However, this section will analyze the structure that a controller must have for proper operation:
 
- class MyApplication_Controller extends ZP_Controller {
- 
-    public function __construct() {
-        $this->Templates = $this->core("Templates");
- 
-        $this->MyApplication_Model = $this->model("MyApplication_Model");
- 
-        $this->helpers();
- 
-        $this->application = $this->app("myapplication");
- 
-        $this->Templates->theme(_webTheme);
+    class MyApplication_Controller extends ZP_Controller {
+     
+        public function __construct() {
+            $this->Templates = $this->core("Templates");
+     
+            $this->MyApplication_Model = $this->model("MyApplication_Model");
+     
+            $this->helpers();
+     
+            $this->application = $this->app("myapplication");
+     
+            $this->Templates->theme(_webTheme);
+        }
+     
+        public function index() {
+            print __("Hi, I'm MyApplication");
+        }
+     
     }
- 
-    public function index() {
-        print __("Hi, I'm MyApplication");
-    }
- 
- }
 
 This is the basic structure that any controller should have and fulfill for the proper functioning of the framework.
 
@@ -162,17 +162,17 @@ Models are a fundamental part of an application, since they are in charge of int
 
 Like the controllers, models have a basic structure that must be met to work correctly with ZanPHP:
 
-class MyApplication_Model extends ZP_Model {
- 
-    public function __construct() {
-        $this->Db = $this->db();
- 
-        $this->helpers();
- 
-        $this->table = "mytable";
+    class MyApplication_Model extends ZP_Model {
+     
+        public function __construct() {
+            $this->Db = $this->db();
+     
+            $this->helpers();
+     
+            $this->table = "mytable";
+        }
+     
     }
- 
-}
 
 This is the basic structure that any controller should have and fulfill for the proper functioning of the framework. 
 
