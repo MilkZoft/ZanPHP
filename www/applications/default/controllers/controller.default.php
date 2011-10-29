@@ -20,6 +20,10 @@ class Default_Controller extends ZP_Controller {
 		print "Welcome to ZanPHP";
 	}
 
+	public function prueba($param1, $param2) {
+		print "Funciona el nuevo sistema de rutas: $param1, $param2";
+	}
+
 	public function show($message) {
 		$vars["message"] = $message;
 		$vars["view"]	 = $this->view("show", TRUE);

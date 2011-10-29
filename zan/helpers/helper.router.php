@@ -44,108 +44,135 @@ function execute() {
 	global $Load;
 	
 	$applicationController = FALSE;
+
+	include "www/config/config.routes.php";
 	
-	if(!segment(0)) {
-		$application = _defaultApplication;	
-	} elseif(segment(0) and !segment(1)) { 
-		if(isLang()) {
-			$application = _defaultApplication;
-		} else {
-			$application = segment(0);	
-		}
-	} else { 
+	if(is_array($routes)) {
 		if(isLang()) {
 			$application = segment(1);
-			
-			if(segment(2)) {
-				if(isController(segment(2), segment(1))) { 
-					$applicationController = segment(2);
-					
-					if(segment(3) and !isNumber(segment(3))) {
-						$method = segment(3);
-					} else {
-						$method = "index";	
-					}
-				} else { 
-					if(!isNumber(segment(2))) { 
-						$method = segment(2);
-					}
-				}
-			}
-			
-			if($applicationController) {
-				if(segments() > 4) {
-					$j = 4;
-				
-					for($i = 0; $i < segments(); $i++) {
-						if(segment($j) or segment($j) === 0) {
-							$params[$i] = segment($j);
-						
-							$j++;	
-						}
-					}
-				}			
-			} else {
-				if(segments() > 3) {
-					$j = 3;
-					
-					for($i = 0; $i < segments(); $i++) {
-						if(segment($j) or segment($j) === 0) {
-							$params[$i] = segment($j);
-						
-							$j++;	
-						}
-					}
-				}	
-			}
 		} else {
 			$application = segment(0);
-			
-			if(segment(1)) { 
-				if(isController(segment(1), segment(0))) {
-					$applicationController = segment(1);
-					
-					if(segment(2) and !isNumber(segment(2))) {
-						$method = segment(2); 
-					} else {
-						$method = "index";	
-					}
-				} else {
-					if(!isNumber(segment(1))) { 
-						$method = segment(1);
-					} 
-				}	
-			}
-			
-			if($applicationController) {
-				if(segments() > 3) {
-					$j = 3;
-					
-					for($i = 0; $i <= segments() - 1; $i++) {
-						if(segment($j) or segment($j) === 0) {
-							$params[$i] = segment($j);
-							
-							$j++;
-						}	
-					} 
-				}			
-			} else {
-				if(segments() > 2) {
-					$j = 2;
-					
-					for($i = 0; $i <= segments() - 1; $i++) {
-						if(segment($j) or segment($j) === 0) {
-							$params[$i] = segment($j);
-							
-							$j++;
-						}	
-					} 
-				}
-			}
-
 		}
+
+		foreach($routes as $route) {
+			$pattern = $route["pattern"]; 
+			$match   = preg_match($pattern, $application);
+			
+			if($match) {
+				$application 		   = $route["application"];
+				$applicationController = $route["controller"];
+				$method                = $route["method"];
+				$params      		   = $route["params"];
+
+				break;
+			}	
+		}
+		
 	}
 	
+	if(!$match) {
+		if(!segment(0)) {
+			$application = _defaultApplication;	
+		} elseif(segment(0) and !segment(1)) { 
+			if(isLang()) {
+				$application = _defaultApplication;
+			} else {
+				$application = segment(0);	
+			}
+		} else { 
+			if(isLang()) {
+				$application = segment(1);
+				
+				if(segment(2)) {
+					if(isController(segment(2), segment(1))) { 
+						$applicationController = segment(2);
+						
+						if(segment(3) and !isNumber(segment(3))) {
+							$method = segment(3);
+						} else {
+							$method = "index";	
+						}
+					} else { 
+						if(!isNumber(segment(2))) { 
+							$method = segment(2);
+						}
+					}
+				}
+				
+				if($applicationController) {
+					if(segments() > 4) {
+						$j = 4;
+					
+						for($i = 0; $i < segments(); $i++) {
+							if(segment($j) or segment($j) === 0) {
+								$params[$i] = segment($j);
+							
+								$j++;	
+							}
+						}
+					}			
+				} else {
+					if(segments() > 3) {
+						$j = 3;
+						
+						for($i = 0; $i < segments(); $i++) {
+							if(segment($j) or segment($j) === 0) {
+								$params[$i] = segment($j);
+							
+								$j++;	
+							}
+						}
+					}	
+				}
+			} else {
+				$application = segment(0);
+				
+				if(segment(1)) { 
+					if(isController(segment(1), segment(0))) {
+						$applicationController = segment(1);
+						
+						if(segment(2) and !isNumber(segment(2))) {
+							$method = segment(2); 
+						} else {
+							$method = "index";	
+						}
+					} else {
+						if(!isNumber(segment(1))) { 
+							$method = segment(1);
+						} 
+					}	
+				}
+				
+				if($applicationController) {
+					if(segments() > 3) {
+						$j = 3;
+						
+						for($i = 0; $i <= segments() - 1; $i++) {
+							if(segment($j) or segment($j) === 0) {
+								$params[$i] = segment($j);
+								
+								$j++;
+							}	
+						} 
+					}			
+				} else {
+					if(segments() > 2) {
+						$j = 2;
+						
+						for($i = 0; $i <= segments() - 1; $i++) {
+							if(segment($j) or segment($j) === 0) {
+								$params[$i] = segment($j);
+								
+								$j++;
+							}	
+						} 
+					}
+				}
+
+			}
+		}
+	}
+
 	if(_webSituation !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
 		die(_webMessage);
 	}
