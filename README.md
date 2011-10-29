@@ -182,14 +182,14 @@ ZanPHP a user-friendly translations system, you only need to use a function and 
 
 The function is used as follows:
 
-<?php print __("Some text to translate"); ?>
+    <?php print __("Some text to translate"); ?>
 
 To complete the translation process, you must add the translation in the following file /core/languages/language.spanish.php, you must add as follows:
 
-function translation($text) {
-    switch($text) {
-        case "Some text to translate": return "Algún texto para traducir"; break;
+    function translation($text) {
+        switch($text) {
+            case "Some text to translate": return "Algún texto para traducir"; break;
+        }
+     
+        return $text;
     }
- 
-    return $text;
-}
