@@ -45,29 +45,33 @@ function execute() {
 	
 	$applicationController = FALSE;
 
-	include "www/config/config.routes.php";
-	
-	if(is_array($routes)) {
-		if(isLang()) {
-			$application = segment(1);
-		} else {
-			$application = segment(0);
-		}
+	$match = FALSE;
 
-		foreach($routes as $route) {
-			$pattern = $route["pattern"]; 
-			$match   = preg_match($pattern, $application);
-			
-			if($match) {
-				$application 		   = $route["application"];
-				$applicationController = $route["controller"];
-				$method                = $route["method"];
-				$params      		   = $route["params"];
-
-				break;
-			}	
-		}
+	if(file_exists("www/config/config.routes.php")) {
+		include "www/config/config.routes.php";
 		
+		if(is_array($routes)) {
+			if(isLang()) {
+				$application = segment(1);
+			} else {
+				$application = segment(0);
+			}
+
+			foreach($routes as $route) {
+				$pattern = $route["pattern"]; 
+				$match   = preg_match($pattern, $application);
+				
+				if($match) {
+					$application 		   = $route["application"];
+					$applicationController = $route["controller"];
+					$method                = $route["method"];
+					$params      		   = $route["params"];
+
+					break;
+				}	
+			}
+			
+		}
 	}
 	
 	if(!$match) {
