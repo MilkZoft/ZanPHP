@@ -52,6 +52,7 @@ class ZP_Data extends ZP_Load {
 			"dPath", 
 			"dDirname", 
 			"dDirbase", 
+			"iDirbase",
 			"ID"
 		);
 
@@ -126,7 +127,7 @@ class ZP_Data extends ZP_Load {
 		foreach($POST as $field => $value) {
 			if(!in_array($field, $this->ignore)) { 
 				if(!isset($data[$this->rename($field)])) {
-					$data[$this->rename($field)] = decode($value);	
+					$data[$this->rename($field)] = decode(filter($value, "escape"));	
 				}
 			}
 		}

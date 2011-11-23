@@ -125,7 +125,7 @@ function parseHTTP($string) {
  */
 function ping($domain) {
 	$domain = str_replace("http://", "", $domain);
-	
+
 	if(!@file_get_contents("http://" . $domain)) {
 		return FALSE; 
 	} else {

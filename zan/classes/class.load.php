@@ -466,6 +466,8 @@ class ZP_Load {
 				die("$name library doesn't exists");
 			}
 		} else {
+			$lib = str_replace("class.", "", $name);
+			
 			if(file_exists(_corePath . _sh . _libraries . _sh . $lib . _sh . strtolower($name) . _PHP)) {
 				include_once _corePath . _sh . _libraries . _sh . $lib . _sh . strtolower($name) . _PHP;										
 			} else {
@@ -620,7 +622,9 @@ class ZP_Load {
 			$this->views[$i]["vars"] = FALSE;		
 		}
 
-		$this->render();
+		if($name !== "include" and _autoRender) {
+			$this->render();
+		}
 	}
 	
     /**

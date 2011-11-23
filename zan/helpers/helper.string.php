@@ -372,12 +372,14 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
 			}  else {
 				$POST = encrypt($_POST[$position]);
 			}		
-		} elseif($coding === "decode") {			
+		} elseif($coding === "decode") {	
 			if($filter === TRUE) {
 				$POST = filter(decode($_POST[$position]), TRUE);
 			} elseif($filter === "escape") {
 				$POST = filter(decode($_POST[$position]), "escape");
-			} else {
+			} elseif($filter === NULL) {
+				$POST = decode($_POST[$position]);
+			} else { 
 				$data = decode($_POST[$position]);
 				$data = str_replace("'", "\'", $data);
 				
@@ -392,6 +394,7 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
 				$POST = $_POST[$position];
 			}		
 		}
+		
 	} else {
 		return FALSE;
 	}
