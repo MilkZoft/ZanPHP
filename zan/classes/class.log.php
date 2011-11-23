@@ -41,7 +41,7 @@ class ZP_Log {
         fclose($fhandle);
     }
     protected function setLevel() {
-        $str = strtoupper(_oldloglevel);
+        $str = strtoupper(_oldLogLevel);
         switch ($str) {
     case "FATAL":
         $this->logLevel = 5;
