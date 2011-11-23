@@ -9,5 +9,5 @@ if(!defined("_access")) {
 /**
  * Cache
  */
-define("_oldloglevel", 'trace');
+define("_oldLogLevel", 'trace');
 
