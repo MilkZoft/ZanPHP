@@ -16,7 +16,7 @@ define("_cacheExt", ".cache");
 
 #new cache system
 if(!defined("_cacheDriver")) {
-	define("_cacheDriver", "file");
+	define("_cacheDriver", "File");
 }
 if(!defined("_cacheTime")) {
 	define("_cacheTime", 3600); /*yes is used in new cache system*/

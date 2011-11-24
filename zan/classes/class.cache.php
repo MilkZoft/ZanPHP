@@ -12,7 +12,9 @@ class ZP_Cache extends ZP_Load {
 	}
 	
 	private function setCache(){
-		$this->driver = $this->driver(_cacheDriver ."_Cache", "cache");
+		$driverName = _cacheDriver ."_Cache";
+		/*TODO: crear sistema para que $driverName siempre tenga las capitalisaciones correctas*/
+		$this->driver = $this->driver($driverName, "cache");
 		$this->driver->setUP(_cacheHost, _cachePort, _cacheTime);
 	}
 	
