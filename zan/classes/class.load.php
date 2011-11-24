@@ -256,6 +256,8 @@ class ZP_Load {
 				return ZP_Singleton::instance("ZP_". $driver);
 			} else {
 				die("$driver driver does not exists");
+			}
+		}
 	}
 	
 	public function exception($exception) {
