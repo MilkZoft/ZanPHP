@@ -1,6 +1,6 @@
 <?php
 
-class ZP_Cache extends ZP_Load {
+class ZP_file_cache extends ZP_Load {
 	
 	private $file      = NULL;
 	private $filename  = NULL;
