@@ -222,7 +222,7 @@ class ZP_Load {
 		} else {
 			$file = FALSE;	
 		}
-		if(!$type == "cache"){
+		if($type !== "cache"){
 			$this->Cache = $this->core("Cache");
 		
 			if(file_exists($file)) {							
