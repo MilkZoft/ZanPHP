@@ -8,7 +8,11 @@ class ZP_file_cache extends ZP_Load {
 	private $groupPath = NULL;	
 	private $status    = _cacheStatus;
 
-	
+	public function setUp($host = "www/lib/cache", $port = ".cache", $defaulExpire = 3600){
+		define("_cacheDir", $host);
+		define("_cacheTime", $defaulExpire);
+		define("_cacheExt", $port);
+	}
 	private function checkExpiration($expirationTime) {
 		return (time() < $expirationTime) ? TRUE : FALSE;
 	}
