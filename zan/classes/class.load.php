@@ -216,39 +216,47 @@ class ZP_Load {
 		$this->Templates->CSS($CSS, $application, $print);
 	}
 
-	public function driver($driver = NULL) {
-		if(file_exists(_corePath . _sh . _drivers . _sh . _driver . _dot . strtolower($driver) . _PHP)) {
-			$file = _corePath . _sh . _drivers . _sh . _driver . _dot . strtolower($driver) . _PHP;	
+	public function driver($driver = NULL, $type = "db") {
+		if(file_exists(_corePath . _sh . _drivers . _sh . $type . _sh . _driver . _dot . strtolower($driver) . _PHP)) {
+			$file = _corePath . _sh . _drivers . _sh . $type . _sh . _driver . _dot . strtolower($driver) . _PHP;	
 		} else {
 			$file = FALSE;	
 		}
+		if($type !== "cache"){
+			$this->Cache = $this->core("Cache");
 		
-		$this->Cache = $this->core("Cache");
-		
-		if(file_exists($file)) {							
-			if(class_exists($driver)) {
+			if(file_exists($file)) {							
+				if(class_exists($driver)) {
+					if($this->Cache->get($driver, "drivers")) {
+						return $this->Cache->get($driver, "drivers");	
+					} else {
+						return ZP_Singleton::instance("ZP_". $driver);
+					}
+				}
+			
 				if($this->Cache->get($driver, "drivers")) {
 					return $this->Cache->get($driver, "drivers");	
 				} else {
-					return ZP_Singleton::instance("ZP_". $driver);
+					include $file;
 				}
-			}
 			
-			if($this->Cache->get($driver, "drivers")) {
-				return $this->Cache->get($driver, "drivers");	
-			} else {
-				include $file;
-			}
-			
-			if(_cacheStatus) {
-				$$driver= ZP_Singleton::instance("ZP_". $driver);
-				
-				$this->Cache->save($$driver, $driver, "drivers");	
-			}
+				if(_cacheStatus) {
+					$$driver= ZP_Singleton::instance("ZP_". $driver);
+					
+					$this->Cache->save($$driver, $driver, "drivers");	
+				}
 
-			return ZP_Singleton::instance("ZP_". $driver);
-		} else {
-			die("$driver driver does not exists");
+				return ZP_Singleton::instance("ZP_". $driver);
+			} else {
+				die("$driver driver does not exists");
+			}
+		}else{
+			if(file_exists($file)) {	
+				include $file;
+				return ZP_Singleton::instance("ZP_". $driver);
+			} else {
+				die("$driver driver does not exists");
+			}
 		}
 	}
 	
