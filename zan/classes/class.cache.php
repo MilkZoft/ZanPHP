@@ -47,6 +47,22 @@ class ZP_Cache extends ZP_Load {
 		return rmdir($dir);
 	}
 
+	private function setFileRoutes($ID, $groupID) {
+		$keyName  = $this->getKey($ID);
+		$keyGroup = $this->getKey($groupID);
+		
+		$levelOne = $keyGroup;
+		$levelTwo = substr($keyName, 0, 5);
+		
+		$this->groupPath = _cacheDir . _sh . $levelOne . _sh;
+		$this->filePath	 = _cacheDir . _sh . $levelOne . _sh . $levelTwo . _sh;
+		$this->filename	 = $keyName . _cacheExt;
+		$this->file		 = $this->filePath . $this->filename;
+	}
+	
+	private function getKey($ID) {
+		return sha1($ID);
+	}
 	public function get($ID, $groupID = "default") {
 		if($this->status) {
 			$this->setFileRoutes($ID, $groupID);
@@ -79,9 +95,6 @@ class ZP_Cache extends ZP_Load {
 		return FALSE;
 	}
 
-	private function getKey($ID) {
-		return sha1($ID);
-	}
 
 	public function getStatus() {
 		return $this->status;
@@ -136,22 +149,9 @@ class ZP_Cache extends ZP_Load {
 		
 		return FALSE;
 	}
-
-	private function setFileRoutes($ID, $groupID) {
-		$keyName  = $this->getKey($ID);
-		$keyGroup = $this->getKey($groupID);
-		
-		$levelOne = $keyGroup;
-		$levelTwo = substr($keyName, 0, 5);
-		
-		$this->groupPath = _cacheDir . _sh . $levelOne . _sh;
-		$this->filePath	 = _cacheDir . _sh . $levelOne . _sh . $levelTwo . _sh;
-		$this->filename	 = $keyName . _cacheExt;
-		$this->file		 = $this->filePath . $this->filename;
-	}
-
+	
 	public function setStatus($status) {
 		$this->status = $status;
-	}	
+	}
 
 }
