@@ -231,7 +231,9 @@ class ZP_MongoDB extends ZP_Load {
 		return FALSE;
 	}
 
-	public function find($query = NULL, $return = TRUE) {
+	public function find($query = NULL, $collection = NULL) {
+		$this->collection = isset($collection) ? $collection : $this->collection;
+
 		if(is_null($query)) {
 			$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
 		} else { 
@@ -246,7 +248,7 @@ class ZP_MongoDB extends ZP_Load {
 				
 				$this->condition = FALSE;
 			}
-			
+		
 			$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
 		}
 		

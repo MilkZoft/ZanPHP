@@ -26,10 +26,10 @@ class Default_Controller extends ZP_Controller {
 
 	public function show($message) {
 		$vars["message"] = $message;
-		#$vars["view"]	 = $this->view("show", TRUE);
+		$vars["view"]	 = $this->view("show", TRUE);
 		
-		#$this->template("content", $vars);
-		$this->view("show", $vars);
+		$this->template("content", $vars);
+		#$this->view("show", $vars);
 	}
 
 }

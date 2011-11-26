@@ -11,7 +11,7 @@ class Nuevo_Controller extends ZP_Controller {
 	public function __construct() {
 		$this->app("default");
 		
-		$this->Default_Model = $this->model("Default_Model");
+		#$this->Default_Model = $this->model("Default_Model");
 		
 		$this->Templates = $this->core("Templates");
 	}
