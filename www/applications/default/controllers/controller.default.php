@@ -17,7 +17,7 @@ class Default_Controller extends ZP_Controller {
 	}
 	
 	public function index() {		
-		print "Welcome to ZanPHP";
+		print __("Welcome to ZanPHP");
 	}
 
 	public function prueba($param1 = NULL, $param2 = NULL) {

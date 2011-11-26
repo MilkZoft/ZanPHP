@@ -9,6 +9,7 @@ if(!defined("_access")) {
 function translation($text) {
 	switch($text) {
 		//Agenda
+		case "Welcome to ZanPHP": return "Bienvenidos a ZanPHP :D"; break;
 		case "Name": return "Nombre"; break;
 		case "Email": return "Correo electr&oacute;nico"; break;
 		case "Phone": return "Tel&eacute;fono"; break;

@@ -14,8 +14,9 @@ define("_webName", "ZanPHP");
 define("_webTheme", "zanphp");
 define("_webSituation", "Active");
 define("_webMessage", "Under construction");
-define("_webLanguage", "Spanish");
-define("_webLang", "es");
+define("_webLanguage", "English");
+define("_webLang", "en");
+define("_autoRender", TRUE);
 
 define("_domain", FALSE);
 define("_modRewrite", FALSE);
