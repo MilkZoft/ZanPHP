@@ -16,6 +16,30 @@ class Agenmongo_Model extends ZP_Model {
 		$this->collection = "agenmongo";
 	}
 
+	public function add() {
+		if(!POST("Name")) {
+			return FALSE;
+		} elseif(!isEmail(POST("Email"))) {
+			return FALSE;
+		}
+		
+		$data = POST(TRUE);
+		
+		$this->Db->collection($this->collection);
+		
+		$this->Db->save($data);
+		
+		return TRUE;
+	}
+
+	public function update($contactID, $data) {
+ 		$this->Db->collection($this->collection);
+ 
+    	$response = $this->Db->update(array("_id" => new MongoId($contactID)), $data);
+ 
+    	return $response;
+	}
+
 	public function getAllContacts() {
 		$data = $this->Db->findAll($this->collection);
 

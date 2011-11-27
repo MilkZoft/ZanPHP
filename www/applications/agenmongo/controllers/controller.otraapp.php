@@ -6,20 +6,29 @@ if(!defined("_access")) {
 	die("Error: You don't have permission to access here...");
 }
 
-class Agenmongo_Controller extends ZP_Controller {
+class Otraapp_Controller extends ZP_Controller {
 	
 	public function __construct() {
-		$this->application = $this->app("agenmongo");
+		$this->application = $this->app("otraapp");
 
-		$this->Agenmongo_Model = $this->model("Agenmongo_Model");
-				
-		$this->Templates = $this->core("Templates");
+		$this->helpers();
 
-		$this->Templates->theme(_webTheme);
+		$this->RESTClient = $this->core("RESTClient");
+	}
 
-		$this->RESTServer = $this->core("RESTServer");
+	public function addRecord() {		 
+		$this->RESTClient->setURL("http://127.0.0.1/ZanPHP/index.php/agenmongo/add");
+		$this->RESTClient->setAuth("zanphp", "12345");
+		 
+		$data = array(
+		    "Name"  => "Héctor",
+		    "Email" => "ceron@milkzoft.com",
+		    "Phone" => "1111111111"
+		);
+		 
+		$response = $this->RESTClient->POST($data);
 
-		$this->RESTServer->application($this->application);
+		____($response);
 	}
 	
 	public function index() {		
