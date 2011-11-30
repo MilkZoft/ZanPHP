@@ -410,7 +410,7 @@ function formTextarea($attributes = FALSE) {
 	}								
 }
 
-function formSave($action = NULL) {
+function formSave($action = NULL, $events = TRUE) {
 	if(isLang()) {
 		if($action === "save") {
 				$href = _webPath . segment(1) . _sh . _cpanel . _sh . _add . _sh;
@@ -425,8 +425,12 @@ function formSave($action = NULL) {
 		}
 	}
 
-	$onclick = 'onclick="document.getElementById(\'form-add\').target=\'\'; document.getElementById(\'form-add\').action=\''. $href .'\'"';
-
+	if($events) {
+		$onclick = 'onclick="document.getElementById(\'form-add\').target=\'\'; document.getElementById(\'form-add\').action=\''. $href .'\'"';
+	} else {
+		$onclick = '';
+	}
+	
 	$HTML = '	
 		<p class="save-cancel">
 			<input id="'. $action .'" name="'. $action .'" value="'. __(ucfirst($action)) .'" '. $onclick .' type="submit" class="submit save">
