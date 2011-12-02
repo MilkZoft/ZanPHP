@@ -23,6 +23,10 @@ if($production) {
 	define("_dbPfx", "zan_");
 	define("_dbSocket", NULL);
 	
+	//SQLite Settings
+	define("_dbFilename", "mydatabase.db");
+	define("_dbMode", 0666);
+	
 	//NoSQL Settings
 	define("_dbNoSQLHost", "localhost");
 	define("_dbNoSQLPort", 27017);
@@ -39,6 +43,10 @@ if($production) {
 	define("_dbPort", "3306");
 	define("_dbPfx", "zan_");
 	define("_dbSocket", NULL);
+	
+	//SQLite Settings
+	define("_dbFilename", "mydatabase.db");
+	define("_dbMode", 0666);
 	
 	//NoSQL Settings
 	define("_dbNoSQLHost", "localhost");

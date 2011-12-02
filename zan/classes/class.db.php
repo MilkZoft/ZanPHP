@@ -239,6 +239,14 @@ class ZP_Db extends ZP_Load {
 				$this->Database   = $this->driver("PgSQL_Db");
 				
 				self::$connection = $this->Database->connect();
+			} elseif(_dbController === "sqlite") {
+				$this->Database   = $this->driver("SQLite_Db");
+				
+				self::$connection = $this->Database->connect();
+			} elseif(_dbController === "oracle") {
+				$this->Database   = $this->driver("Oracle_Db");
+				
+				self::$connection = $this->Database->connect();
 			}
 		}			
 	}

@@ -14,10 +14,10 @@ function getException($e) {
             </p>
             
         	<div style="width: 500px; border: 1px solid #000; background-color: #e3f5f9; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 0.8em; padding: 10px;">
-            	<p><strong><?php print __(_("Error Code")); ?>:</strong> <br /> <?php print $e->getCode(); ?></p>
-                <p><strong><?php print __(_("Error Message")); ?>:</strong> <br /> <?php print $e->getMessage(); ?></p>
-                <p><strong><?php print __(_("Error File")); ?>:</strong> <br /> <?php print $e->getFile(); ?></p>
-                <p><strong><?php print __(_("Error Line")); ?>:</strong> <br /> <?php print $e->getLine(); ?></p>
+            	<p><strong><?php print __("Error Code"); ?>:</strong> <br /> <?php print $e->getCode(); ?></p>
+                <p><strong><?php print __("Error Message"); ?>:</strong> <br /> <?php print $e->getMessage(); ?></p>
+                <p><strong><?php print __("Error File"); ?>:</strong> <br /> <?php print $e->getFile(); ?></p>
+                <p><strong><?php print __("Error Line"); ?>:</strong> <br /> <?php print $e->getLine(); ?></p>
             </div>
         <?php
 		

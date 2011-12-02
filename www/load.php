@@ -24,7 +24,7 @@ include _corePath . "/classes/class.model.php";
 
 $Load = new ZP_Load(); 
 
-$helpers = array("i18n", "router", "benchmark", "string", "sessions", "security");
+$helpers = array("i18n", "router", "benchmark", "exceptions", "string", "sessions", "security");
 
 $Load->helper($helpers);
 

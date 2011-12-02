@@ -11,7 +11,7 @@ if(!defined("_access")) {
  */
 define("_webURL", "http://127.0.0.1/ZanPHP");
 define("_webName", "ZanPHP");
-define("_webTheme", "zanphp");
+define("_webTheme", "default");
 define("_webSituation", "Active");
 define("_webMessage", "Under construction");
 define("_webLanguage", "English");

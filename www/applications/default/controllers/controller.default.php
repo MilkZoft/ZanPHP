@@ -17,11 +17,14 @@ class Default_Controller extends ZP_Controller {
 	}
 	
 	public function index() {		
-		print __("Welcome to ZanPHP");
+		$vars["message"] = "Welcome to ZanPHP";
+		$vars["view"]	 = $this->view("welcome", TRUE);
+		
+		$this->template("content", $vars);
 	}
 
-	public function prueba($param1 = NULL, $param2 = NULL) {
-		print "Funciona el nuevo sistema de rutas: $param1, $param2";
+	public function test($param1, $param2) {
+		print "New dispatcher it's works fine: $param1, $param2";
 	}
 
 	public function show($message) {
