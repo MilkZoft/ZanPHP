@@ -1,4 +1,12 @@
-<?php if(!defined("_access")) die("Error: You don't have permission to access here..."); ?>
+<?php 
+	if(!defined("_access")) {
+		die("Error: You don't have permission to access here..."); 
+	}
+	
+	if(isMobile()) {
+		include "mobile/header.php";
+	} else {
+?>
 <!DOCTYPE html>
 <html lang="<?php print _webLang; ?>">
 	<head>
@@ -44,3 +52,4 @@
 				</div>
 				
 				<div class="row">
+<?php } ?>
