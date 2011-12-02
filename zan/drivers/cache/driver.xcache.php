@@ -1,7 +1,7 @@
 <?php
 
 if(!function_exists("xcache_get")) {
-	die("EAccelerator extension doesn't exists");
+	die("XCache extension doesn't exists");
 }
 
 class ZP_XCache extends ZP_Load {
