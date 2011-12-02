@@ -9,7 +9,7 @@ if(!defined("_access")) {
 /**
  * General
  */
-define("_webURL", "http://www.zanphp.com/demo");
+define("_webURL", "http://127.0.0.1/ZanPHP");
 define("_webName", "ZanPHP");
 define("_webTheme", "default");
 define("_webSituation", "Active");
@@ -18,7 +18,7 @@ define("_webLanguage", "English");
 define("_webLang", "en");
 define("_autoRender", TRUE);
 
-define("_domain", TRUE);
+define("_domain", FALSE);
 define("_modRewrite", FALSE);
 define("_defaultApplication", "default");
 define("_translation", "normal");
