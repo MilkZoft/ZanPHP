@@ -199,7 +199,7 @@ class ZP_SQLite_Db extends ZP_Load {
      * @return void
      */
 	public function free() {
-	 	return FALSE
+	 	return FALSE;
 	}
 	
 	/**

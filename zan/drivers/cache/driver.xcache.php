@@ -15,7 +15,7 @@ class ZP_XCache extends ZP_Load {
 	}
 
 	public function fetch($key) {
-		return (_cacheStatus) ? xcache_get($key); : FALSE;
+		return (_cacheStatus) ? xcache_get($key) : FALSE;
 	}
 
 	public function store($key, $value, $time = 3600) {

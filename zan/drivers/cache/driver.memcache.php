@@ -7,7 +7,7 @@ class ZP_Memcache extends ZP_Load {
 
 	private $Memcache = NULL;
 
-	public function add($key, value, $flag = FALSE, $expire = 30) {
+	public function add($key, $value, $flag = FALSE, $expire = 30) {
 		if(!_cacheStatus) {
 			return FALSE;
 		}
