@@ -308,6 +308,14 @@ function isNumber($number) {
 	return FALSE;
 }
 
+function path($path, $URL = FALSE) {
+	if($URL) {
+		return _webURL  . _sh . $path;
+	} else {
+		return _webBase . _sh . _webLang . _sh . $path;
+	}
+}
+
 /**
  * route
  *

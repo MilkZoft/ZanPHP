@@ -294,7 +294,7 @@ class ZP_Db extends ZP_Load {
 			}
 			
 			$this->Rs = $this->Database->query($query);
-						
+			
 			if($this->rows() === 0) {
 				return FALSE;			
 			} else {
@@ -595,7 +595,7 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findBySQL($SQL, $table = NULL, $group = NULL, $order = NULL, $limit = NULL) {					
+	public function findBySQL($SQL, $table = NULL, $group = NULL, $order = NULL, $limit = NULL) {		
 		if(!is_null($group)) {
 			$SQL .= " GROUP BY ". $group;
 		}

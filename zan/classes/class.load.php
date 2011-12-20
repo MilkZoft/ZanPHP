@@ -142,12 +142,18 @@ class ZP_Load {
      * @param bool $application = FALSE
      * @return void
      */
-	public function config($name) {
-		if(file_exists(_www . _sh . _config . _sh . _config . _dot . $name . _PHP)) {
-			include_once _www . _sh . _config . _sh . _config . _dot . $name . _PHP;
+	public function config($name, $application = FALSE) {
+		if($application) {
+			if(file_exists("www/applications/$application/config/config.$name.php")) {
+				include_once "www/applications/$application/config/config.$name.php";
+			} else {
+				die("$name config doesn't exists");
+			}
+		} elseif(file_exists("www/config/config.$name.php")) {
+			include_once "www/config/config.$name.php";
 		} else {
-			if(file_exists(_www . _sh . _applications . _sh . $name . _sh . _config . _sh . _config . _dot . $name . _PHP)) {
-				include_once _www . _sh . _applications . _sh . $name . _sh . _config . _sh . _config . _dot . $name . _PHP;
+			if(file_exists("www/applications/$name/config/config.$name.php")) {
+				include_once "www/applications/$name/config/config.$name.php";
 			} else {
 				die("$name config doesn't exists");
 			}

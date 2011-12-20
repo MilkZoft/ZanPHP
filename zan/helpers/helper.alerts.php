@@ -45,15 +45,27 @@ function getAlert($message, $type = "error", $URL = NULL) {
 	}
 	
 	if($type === "error") {
-		return '<div class="flashdata error">'. __($message) .'</div>';
+		return '<div class="alert-message error">
+					<a class="close" href="#">×</a>
+					<p>'. __($message) .'</p>
+				</div>';
 	} elseif($type === "success") {
 		unset($_POST);
 		
-		return '<div class="flashdata success">'. __($message) .'</div>';
+		return '<div class="alert-message sucess">
+					<a class="close" href="#">×</a>
+					<p>'. __($message) .'</p>
+				</div>';
 	} elseif($type === "warning") {
-		return '<div class="flashdata warning">'. __($message) .'</div>';
+		return '<div class="alert-message warning">
+					<a class="close" href="#">×</a>
+					<p>'. __($message) .'</p>
+				</div>';
 	} elseif($type === "notice") {
-		return '<div class="flashdata notice">'. __($message) .'</div>';
+		return '<div class="alert-message info">
+					<a class="close" href="#">×</a>
+					<p>'. __($message) .'</p>
+				</div>';
 	}
 }
 

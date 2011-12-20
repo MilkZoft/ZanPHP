@@ -135,8 +135,16 @@ class ZP_Data extends ZP_Load {
 		return $data;
 	}
 
+	public function change($field, $newField) {
+		$this->changes[$field] = $newField;
+	}
+
 	public function rename($field) {
 		if($this->rename) {
+			if(isset($this->changes[$field])) {
+				$field = $this->changes[$field];
+			}
+			
 			$field = str_replace("_", " ", $field);
 			$field = ucwords($field);
 			$field = str_replace(" ", "_", $field);	
