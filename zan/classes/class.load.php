@@ -281,7 +281,7 @@ class ZP_Load {
 			$this->$Class = $this->model($Class);
 		}
 
-		call_user_func_array(array($this->$Class, $method), $params);
+		return call_user_func_array(array($this->$Class, $method), is_array($params) ? $params : array());
 	}
 	
     /**

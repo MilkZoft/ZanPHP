@@ -257,15 +257,13 @@ class ZP_Db extends ZP_Load {
      * @return integer value
      */	
 	public function countAll($table = NULL) {
-		if($table) {
-			$query = "SELECT COUNT(*) AS Total FROM $table";
-		} else {
-			$query = "SELECT COUNT(*) AS Total FROM $this->table";	
-		}	
+		$this->table($table);
+		
+		$query = "SELECT COUNT(*) AS Total FROM $this->table";	
 		
 		$data = $this->data($query);
 		
-		return isset($data[0]["Total"]) ? $data[0]["Total"] : 0;
+		return isset($data[0]["Total"]) ? (int) $data[0]["Total"] : 0;
 	}
 
     /**
@@ -277,12 +275,14 @@ class ZP_Db extends ZP_Load {
 		if($SQL	=== "") {
 			return FALSE;
 		}
+
+		$this->table($table);
 		
 		$query = "SELECT COUNT(*) AS Total FROM $this->table WHERE $SQL";
-		
+			
 		$data = $this->data($query);
 		
-		return isset($data[0]["Total"]) ? $data[0]["Total"] : 0;
+		return (isset($data[0]["Total"]) and $data[0]["Total"]) ? (int) $data[0]["Total"] : 0;
 	}
 
 	private function data($query) {
@@ -626,12 +626,18 @@ class ZP_Db extends ZP_Load {
      *
      * @return array value
      */
-	public function findFirst($table = NULL) {
+	public function findFirst($table = NULL, $SQL = FALSE) {
 		if($table) {
 			$this->table($table);	
 		}
 
-		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey ASC LIMIT 1";return $this->data($query);	
+		if(!$SQL) {
+			$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey ASC LIMIT 1";
+		} else {
+			$query = "SELECT $this->fields FROM $this->table WHERE $SQL ORDER BY $this->primaryKey ASC LIMIT 1";
+		}
+
+		return $this->data($query);	
 	}
 		
     /**
@@ -639,8 +645,20 @@ class ZP_Db extends ZP_Load {
      *
      * @return array value
      */
-	public function findLast() {		
-		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey DESC LIMIT 1";return $this->data($query);
+	public function findLast($table = NULL, $SQL = FALSE) {
+		if($table) {
+			$this->table($table);	
+		}
+
+		if(!$SQL) {		
+			$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey DESC LIMIT 1";
+
+			return $this->data($query);
+		} else {
+			$query = "SELECT $this->fields FROM $this->table WHERE $SQL ORDER BY $this->primaryKey DESC LIMIT 1";
+
+			return $this->data($query);
+		}
 	}
 	
     /**
