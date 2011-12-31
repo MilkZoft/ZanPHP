@@ -679,7 +679,9 @@ class ZP_Db extends ZP_Load {
 	public function from($table) {
 		$table = str_replace(_dbPfx, "", $table); 
 		
-		$this->from = _dbPfx . $table;	
+		$this->from = _dbPfx . $table;
+
+		return $this;
 	}
 	
     /**
@@ -710,7 +712,7 @@ class ZP_Db extends ZP_Load {
 				$query = "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";	
 			}
 		}
-		
+
 		return $this->data($query);
 	}
 	
@@ -895,6 +897,8 @@ class ZP_Db extends ZP_Load {
 		} else {
 			$this->join = "$position JOIN $table ON $condition";	
 		}
+
+		return $this;
 	}
 	
     /**
@@ -947,6 +951,8 @@ class ZP_Db extends ZP_Load {
 				}
 			}
 		}
+
+		return $this;
 	}
 	
    	/**
@@ -988,6 +994,8 @@ class ZP_Db extends ZP_Load {
 				$this->where .= " OR $field NOT IN ('$data')";
 			}
 		}
+
+		return $this;
 	}
 	
    	/**
@@ -1029,6 +1037,8 @@ class ZP_Db extends ZP_Load {
 				$this->where .= " OR $field NOT IN ('$data')";
 			}
 		}
+
+		return $this;
 	}
 	
    	/**
@@ -1054,6 +1064,8 @@ class ZP_Db extends ZP_Load {
 				$this->where .= " OR $field IN ('$data')";
 			}
 		}
+
+		return $this;
 	}
 	
    	/**
@@ -1079,6 +1091,8 @@ class ZP_Db extends ZP_Load {
 				$this->where .= " OR $field NOT IN ('$data')";
 			}
 		}
+
+		return $this;
 	}
 	
    /**
@@ -1137,6 +1151,8 @@ class ZP_Db extends ZP_Load {
 		} else {
 			$this->select = "SELECT $fields";	
 		}
+
+		return $this;
 	}
 	
     /**
@@ -1151,6 +1167,8 @@ class ZP_Db extends ZP_Load {
 		} else {
 			$this->select = "SELECT AVG($field) as $field";
 		}	
+
+		return $this;
 	}
 	
     /**
@@ -1165,6 +1183,8 @@ class ZP_Db extends ZP_Load {
 		} else {
 			$this->select = "SELECT MAX($field) as $field";
 		}
+
+		return $this;
 	}
 	
     /**
@@ -1179,6 +1199,8 @@ class ZP_Db extends ZP_Load {
 		} else {
 			$this->select = "SELECT MIN($field) as $field";
 		}	
+
+		return $this;
 	}
 	
     /**
@@ -1193,6 +1215,8 @@ class ZP_Db extends ZP_Load {
 		} else {
 			$this->select = "SELECT SUM($field) as $field";
 		}	
+
+		return $this;
 	}
 		
     /**
@@ -1220,7 +1244,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		return NULL;
+		return FALSE;
 	}
 	
     /**
@@ -1231,18 +1255,19 @@ class ZP_Db extends ZP_Load {
      * @param integer $ID
      * @return boolean value
      */
-	public function update($table = NULL, $fields = NULL, $ID = 0) {		
+	public function update($table = NULL, $fields = NULL, $ID = 0, $primaryKey = NULL) {		
 		if(!$table or !$fields) {
 			if(!$this->table or !$this->fields) {
 				return FALSE;
 			} else {
 				$table  = $this->table;
-				$fields = $this->values;
+				$fields = $this->values;				
 			}
 		}
 		
-		$table = $this->getTable($table);
-		
+		$table 		= $this->getTable($table);
+		$primaryKey = is_null($primaryKey) ? $this->primaryKey : $primaryKey;
+
 		if(is_array($fields)) {
 			$count   = count($fields) - 1;
 			$_fields = NULL;
@@ -1256,7 +1281,7 @@ class ZP_Db extends ZP_Load {
 			$_values = rtrim($_values, ", ");
 			
 			if($ID > 0) {
-				$query = "UPDATE $table SET $_values WHERE $this->primaryKey = $ID";	
+				$query = "UPDATE $table SET $_values WHERE $primaryKey = $ID";	
 			} elseif(is_string($ID)) {
 				$query = "UPDATE $table SET $_values WHERE $ID";
 			} else {
@@ -1264,7 +1289,7 @@ class ZP_Db extends ZP_Load {
 			}
 		} else {		
 			if($ID > 0) {
-				$query = "UPDATE $table SET $fields WHERE $this->primaryKey = $ID";	
+				$query = "UPDATE $table SET $fields WHERE $primaryKey = $ID";	
 			} elseif(is_string($ID)) {
 				$query = "UPDATE $table SET $fields WHERE $ID";	
 			} else {
@@ -1313,6 +1338,8 @@ class ZP_Db extends ZP_Load {
      */
 	public function values($values) {
 		$this->values = $values;	
+
+		return $this;
 	}
 	
     /**
@@ -1382,6 +1409,8 @@ class ZP_Db extends ZP_Load {
 				}	
 			}
 		}
+
+		return $this;
 	}
 	
     /**
@@ -1414,6 +1443,8 @@ class ZP_Db extends ZP_Load {
 				$this->where .= " AND $field IN ('$data')";
 			}
 		}
+
+		return $this;
 	}
 	
     /**
@@ -1444,6 +1475,8 @@ class ZP_Db extends ZP_Load {
 				$this->where .= " AND $field NOT IN ('$data')";
 			}
 		}
+
+		return $this;
 	}
 	
     /**
@@ -1513,6 +1546,8 @@ class ZP_Db extends ZP_Load {
 				}	
 			}
 		}
+
+		return $this;
 	}
 
 }

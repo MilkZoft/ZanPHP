@@ -8,10 +8,6 @@ if(!defined("_access")) {
 
 class Default_Model extends ZP_Model {
 	
-	private $route;
-	private $table;
-	private $primaryKey;
-	
 	public function __construct() {
 		$this->Db = $this->db();
 		
