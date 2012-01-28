@@ -26,15 +26,13 @@ class Polls_Controller extends ZP_Controller {
 	public function last() {	
 		$this->config("polls");
 		$this->CSS("polls", $this->application, TRUE);
-		
-		$this->Polls_Model = $this->model("Polls_Model");
-		
+				
 		$data = $this->Polls_Model->getLastPoll();
 
 		if($data) {
 			$vars["poll"] = $data;			
 			
-			$this->view("poll", $vars, "polls");
+			$this->view("poll", $vars, $this->application);
 		} else {
 			return FALSE;
 		}

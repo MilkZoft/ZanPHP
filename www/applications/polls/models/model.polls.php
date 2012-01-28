@@ -91,12 +91,12 @@ class Polls_Model extends ZP_Model {
 		if($lastID) {
 			for($i = 0; $i <= count($this->answers) - 1; $i++) {
 				if($this->answers[$i] !== "") {
-					$answers[$i]["ID_Poll"] = $lastID;
-					$answers[$i]["Answer"]  = decode($this->answers[$i]);
+					$data[$i]["ID_Poll"] = $lastID;
+					$data[$i]["Answer"]  = decode($this->answers[$i]);
 				}
 			}
 			
-			$this->Db->insertBatch("polls_answers", $answers);
+			$this->Db->insertBatch("polls_answers", $data);
 			
 			unsetSessions(FALSE);
 
@@ -105,43 +105,43 @@ class Polls_Model extends ZP_Model {
 		
 		return getAlert("Insert error");
 	}
+
+	public function delete($ID) {
+		#$this->Db->deleteBy("ID_Poll", $ID, "polls_ips");
+		#$this->Db->deleteBy("ID_Poll", $ID, "polls_answers");
+		$this->Db->delete($ID, $this->table);
+
+		showAlert("Poll deleted correctly", path("polls/cpanel/results"));
+	}
 	
 	private function edit() {
-		$this->Db->table($this->table);
+		$this->Db->update($this->table, $this->data, POST("ID"));
 		
-		$this->Db->values("Title = '$this->title', Type = '$this->type', State = '$this->state'");								
-		$this->Db->save($this->ID);
+		$this->Db->deleteBySQL("ID_Poll = '". POST("ID") ."'", "polls_answers");
 		
-		$this->Db->table("polls_answers");
-		$this->Db->deleteBySQL("ID_Poll = '$this->ID'");
-		
-		$this->Db->table("polls_answers", "ID_Poll, Answer");
-		
-		foreach($this->answers as $key => $answer) {
-			if($answer !== "") {
-				$this->Db->values("'$this->ID', '$answer'");
-				$this->Db->save();
+		for($i = 0; $i <= count($this->answers) - 1; $i++) {
+			if($this->answers[$i] !== "") {
+				$data[$i]["ID_Poll"] = POST("ID");
+				$data[$i]["Answer"]  = decode($this->answers[$i]);
 			}
 		}
+			
+		$this->Db->insertBatch("polls_answers", $data);
 		
 		return getAlert("The poll has been edit correctly", "success");
 	}
 	
-	public function getByID($ID) {
-		$this->Db->table($this->table);
+	public function getByID($ID) {			
+		$data  = $this->Db->find($ID, $this->table);
+
+		$data1 = $this->Db->findBy("ID_Poll", $ID, "polls_answers");
 		
-		$data = $this->Db->find($ID);
-		
-		$this->Db->table("polls_answers", "Answer");
-		
-		$data2 = $this->Db->findBy("ID_Poll", $ID);
-		
-		if($data2) {
-			foreach($data2 as $answer) {
-				$data[1][] = $answer["Answer"];
+		if($data1) {
+			foreach($data1 as $answer) {
+				$data[1][] = decode($answer["Answer"]);
 			}
 		}
-		
+	
 		return $data;
 	}
 	
@@ -159,6 +159,12 @@ class Polls_Model extends ZP_Model {
 			return FALSE;
 		}
 	}
+
+	public function getAllPolls() {
+		$data = $this->Db->findAll($this->table);
+
+		return $data;
+	}
 	
 	public function vote() {
 		$ID_Poll   = POST("ID_Poll");
@@ -174,7 +180,7 @@ class Polls_Model extends ZP_Model {
 		} else {			
 			$this->Db->table("polls_answers");
 			
-			$values  = "Votes = (Votes) + 1";
+			$values = "Votes = (Votes) + 1";
 			
 			$this->Db->values($values);								
 			$this->Db->save($ID_Answer);
@@ -187,8 +193,6 @@ class Polls_Model extends ZP_Model {
 			$this->Db->insert("polls_ips", $data);
 
 			SESSION("ZanPoll", $ID_Poll);
-			
-			showAlert("Thank you for your vote!", _webBase);
 		}
 		
 		return TRUE;

@@ -1,9 +1,8 @@
 <div id="poll">
 	<p>
 		<ul>
-			<li><a href="<?php print path("polls/cpanel/add"); ?>"><?php print __(_("Add Poll")); ?></a></li>
-			<li><a href=""><?php print __(_("Edit Polls")); ?></a></li>
-			<li><a href=""><?php print __(_("Delete Polls")); ?></a></li>
+			<li><a href="<?php print path("polls/cpanel/add"); ?>"><?php print __("Add Poll"); ?></a></li>
+			<li><a href="<?php print path("polls/cpanel/results"); ?>"><?php print __("All Polls"); ?></a></li>
 		</ul>
 	</p>
 
@@ -57,7 +56,7 @@
 								$percentage = 0;
 								
 								foreach($poll["answers"] as $answers) {
-									if((int) $answers["Votes"] > 0) {								
+									if((int) $answers["Votes"] > 0) {
 										$percentage = ($answers["Votes"] * 100) / $total;
 										
 										if($percentage >= 10) {

@@ -9,17 +9,24 @@
 			
 			print isset($alert) ? $alert : NULL;
 
-			print formInput(array("name" => "title", "class" => "required", "field" => __("Question"), "p" => TRUE, "value" => $title));
+			print formInput(array(
+								"name" 	=> "title", 
+								"class" => "required", 
+								"field" => __("Question"), 
+								"p" 	=> TRUE, 
+								"value" => $title));
 						
 			print div("answers");
 				print formField(NULL, __("Answers") ." (". __("Empty answers not be added") . ")");
 				
 				if(is_array($answers)) { 
 					foreach($answers as $key => $answer) { 
-						print p(TRUE, "field panswer");	
-							print span("count", ($key + 1) . ".-");
-							print formInput(array("name" => "answers[]", "class" => "input required", "value" => $answer));	
-						print p(FALSE);
+							print formInput(array(
+											"name"  => "answers[]", 
+											"class" => "required", 
+											"value" => $answer,
+											"p" 	=> TRUE)
+										);	
 					}
 				} else { 
 					print formInput(array("name" => "answers[]", "class" => "required", "value" => $answers, "p" => TRUE));

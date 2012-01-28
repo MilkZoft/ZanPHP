@@ -120,7 +120,7 @@ function formInput($attributes = FALSE) {
 			if($attribute === "events") {
 				$attrs .= ' '. $value .' ';
 			} elseif($attribute !== "type" and $attribute !== "p" and $attribute !== "field") {
-				$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
+				$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
 			} else {
 				$$attribute = $value;
 			}
@@ -241,7 +241,7 @@ function formRadio($attributes, $options = FALSE) {
 		
 		foreach($attributes as $attr => $value) {
 			if($attr !== "position" and $attr !== "text" and $attr !== "type" and $attr !== "p" and $attr !== "field" and $attr !== "checked") {
-				$attrs .= ' '. strtolower($attr) .'="'. encode($value) .'"';
+				$attrs .= ' '. strtolower($attr) .'="'. $value .'"';
 			} else {
 				$$attr = $value;
 			}
@@ -317,7 +317,7 @@ function formSelect($attributes = FALSE, $options = FALSE, $select = FALSE) {
 		
 		foreach($attributes as $attribute => $value) {
 			if($attribute !== "p" and $attribute !== "field") {
-				$attrs .= ' '. strtolower($attribute) .'="'. encode($value) .'"';
+				$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
 			} else {
 				$$attribute = $value;
 			}
@@ -386,7 +386,7 @@ function formTextarea($attributes = FALSE) {
 		
 		foreach($attributes as $attribute => $val) {
 			if($attribute !== "type" and $attribute !== "value" and $attribute !== "p" and $attribute !== "field") {
-				$attrs .= ' '. strtolower($attribute) .'="'. encode($val) .'"';
+				$attrs .= ' '. strtolower($attribute) .'="'. $val .'"';
 			} else {
 				$$attribute = $val;
 			}
