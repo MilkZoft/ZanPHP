@@ -1,0 +1,33 @@
+#polls {
+	text-align: left;
+}
+
+.polls-graphic {
+    position: relative;
+    width: 180px;
+	height: 20px;
+	line-height: 20px;
+    padding: 2px;
+	margin-bottom: 3px;
+	margin-left: 5px;
+}
+
+.poll-graphic-bar {
+    display: block;
+    position: relative;
+    text-align: left;
+    color: #333333;
+    height: 20px;
+    line-height: 20px;
+}
+
+.poll-graphic-bar span {
+    position: absolute; 
+	left: 1em;
+}
+
+.poll-submit {
+	border:1px solid #333333;
+	background-color: #999999;
+	color: #000000;
+}

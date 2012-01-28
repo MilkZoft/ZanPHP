@@ -52,7 +52,7 @@ function getAlert($message, $type = "error", $URL = NULL) {
 	} elseif($type === "success") {
 		unset($_POST);
 		
-		return '<div class="alert-message sucess">
+		return '<div class="alert-message success">
 					<a class="close" href="#">×</a>
 					<p>'. __($message) .'</p>
 				</div>';

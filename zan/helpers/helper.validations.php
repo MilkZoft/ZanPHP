@@ -96,7 +96,7 @@ function isSPAM($string, $max = 2) {
 	return ($count > $max) ? TRUE : FALSE;
 }
 
-function isVulgar($content, $max = 1) {	
+function isVulgar($string, $max = 1) {	
 	$words = array(	
 		"puto", "puta", "perra", "tonto", "tonta", "pene", "pito", "chinga", "tu madre", "hijo de puta", "verga", "pendejo", "baboso",
 		"estupido", "idiota", "joto", "gay", "maricon", "marica", "chingar", "jodete", "pinche", "panocha", "vagina", "zorra", "fuck",

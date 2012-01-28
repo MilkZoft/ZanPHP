@@ -39,7 +39,7 @@ if($production) {
 	define("_dbHost", "localhost");
 	define("_dbUser", "root"); 
 	define("_dbPwd", "");
-	define("_dbName", "zanphp");
+	define("_dbName", "polls");
 	define("_dbPort", "3306");
 	define("_dbPfx", "zan_");
 	define("_dbSocket", NULL);

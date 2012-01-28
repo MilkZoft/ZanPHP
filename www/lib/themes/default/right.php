@@ -13,5 +13,11 @@
 		<li><a href="#" title="Option 2">Option 2</a></li>
 		<li><a href="#" title="Option 3">Option 3</a></li>
 	</ul>
+
+	<?php $this->execute("Polls_Controller", "last"); ?>
 </div>
-<?php } ?>
+
+<?php 
+	} 
+?>
+

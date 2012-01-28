@@ -105,7 +105,7 @@ class ZP_RESTClient extends ZP_Load {
 				if($return) {
 					return $response;
 				}
-				
+				____($response);
 				if(strstr($response, "xml")) {
 					return new SimpleXMLElement($response);
 				} else {

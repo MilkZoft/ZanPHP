@@ -101,7 +101,9 @@ function SESSION($session, $value = FALSE) {
 function unsetCookie($cookie, $URL = _webBase) {
 	setcookie($cookie);	
 	
-	redirect($URL);
+	if($URL) {
+		redirect($URL);
+	}
 }
 
 /**
@@ -116,5 +118,7 @@ function unsetSessions($URL = _webBase) {
 	session_unset(); 
 	session_destroy();	
 	
-	redirect($URL);
+	if($URL) {
+		redirect($URL);
+	}
 }

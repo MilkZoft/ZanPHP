@@ -413,15 +413,15 @@ function formTextarea($attributes = FALSE) {
 function formSave($action = NULL, $events = TRUE) {
 	if(isLang()) {
 		if($action === "save") {
-				$href = _webBase . _sh . _webLang . _sh . segment(1) . _sh . _cpanel . _sh . "add" . _sh;
+				$href = _webBase . _sh . _webLang . _sh . segment(1) . _sh . "cpanel" . _sh . "add" . _sh;
 			} else {
-				$href = _webBase . _sh . _webLang . _sh . segment(1) . _sh . _cpanel . _sh . "edit" . _sh;
+				$href = _webBase . _sh . _webLang . _sh . segment(1) . _sh . "cpanel" . _sh . "edit" . _sh;
 			} 
 	} else {
 		if($action === "save") {
-			$href = _webBase . _sh . _webLang . _sh . segment(0) . _sh . _cpanel . _sh . "add" . _sh;
+			$href = _webBase . _sh . _webLang . _sh . segment(0) . _sh . "cpanel" . _sh . "add" . _sh;
 		} else {
-			$href = _webBase . _sh . _webLang . _sh . segment(0) . _sh . _cpanel . _sh . "edit" . _sh;
+			$href = _webBase . _sh . _webLang . _sh . segment(0) . _sh . "cpanel" . _sh . "edit" . _sh;
 		}
 	}
 
@@ -433,8 +433,8 @@ function formSave($action = NULL, $events = TRUE) {
 	
 	$HTML = '	
 		<p class="save-cancel">
-			<input id="'. $action .'" name="'. $action .'" value="'. __(ucfirst($action)) .'" '. $onclick .' type="submit" class="submit save">
-			<input id="cancel" name="cancel" value="'. __("Cancel") .'" type="submit" class="submit cancel" />
+			<input id="'. $action .'" name="'. $action .'" value="'. __(ucfirst($action)) .'" '. $onclick .' type="submit" class="btn success">
+			<input id="cancel" name="cancel" value="'. __("Cancel") .'" type="submit" class="btn danger" />
 		</p>';
 	
 	return $HTML;

@@ -246,7 +246,7 @@ function parseCSV($file) {
 	}
 }
 
-function randomString($length = 6){  
+function randomString($length = 6) {  
     $consonant = array("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "y", "z");  
     $vocal	   = array("a", "e", "i", "o", "u");  
     $string    = NULL;  
@@ -261,7 +261,7 @@ function randomString($length = 6){
     }  
 
     return $string;  
-} 
+}
 
 function repeat($string, $times = 2) {
 	$HTML = NULL;
