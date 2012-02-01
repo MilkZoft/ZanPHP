@@ -94,24 +94,24 @@ class ZP_Templates extends ZP_Load {
      */	
 	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
 		if(is_null($application)) {
-			$file = _www . _sh . _lib . _sh . _CSS . _sh . $CSS . _dot . _CSS;
+			$file = "www/lib/css/$CSS.css";
 		} else {
-			$file = _www . _sh . _applications . _sh . $application . _sh . _views . _sh . _CSS . _sh . $CSS . _dot . _CSS;
+			$file = "www/applications/$application/views/css/$CSS.css";
 		}
 		
 		if(is_null($this->CSS)) {
 			if($print) {
-				print '<link rel="stylesheet" href="' . _webURL . _sh . _www . _sh . _lib . _sh . _CSS . '/default.css" type="text/css">';
+				print '<link rel="stylesheet" href="' . _webURL . "/ww/lib/css" . '/default.css" type="text/css">';
 			} else {
-				$this->CSS = '<link rel="stylesheet" href="' . _webURL . _sh . _www . _sh . _lib . _sh . _CSS . '/default.css" type="text/css">';
+				$this->CSS = '<link rel="stylesheet" href="' . _webURL . "/ww/lib/css" . '/default.css" type="text/css">';
 			}			
 		}
 		
 		if(file_exists($file)) {
 			if($print) {
-				print '<link rel="stylesheet" href="' . _webURL . _sh . $file . '" type="text/css">' . "\n";
+				print '<link rel="stylesheet" href="' . _webURL . "/" . $file . '" type="text/css">' . "\n";
 			} else {
-				$this->CSS .= '<link rel="stylesheet" href="' . _webURL . _sh . $file . '" type="text/css">' . "\n";
+				$this->CSS .= '<link rel="stylesheet" href="' . _webURL . "/" . $file . '" type="text/css">' . "\n";
 			}
 		}
 	}
@@ -123,10 +123,10 @@ class ZP_Templates extends ZP_Load {
      */
 	public function exists($template, $view = FALSE) {
 		if(!$view) {
-			if(file_exists(_www . _sh . _lib . _sh . _themes . _sh . $this->theme . _sh . $template . _PHP)) {
+			if(file_exists("www/lib/themes/$this->theme/$template.php")) {
 				return TRUE; 
 			} 
-		} elseif(file_exists(_www . _sh . _applications . _sh . $view . _sh . _views . _sh . _view . _dot . $template . _PHP)) {
+		} elseif(file_exists("www/applications/$view/views/view.$template.php")) {
 			return TRUE; 
 		} 
 		
@@ -157,7 +157,7 @@ class ZP_Templates extends ZP_Load {
      * @return array value
      */	
 	public function getThemes($theme) {
-		$path    = _www . _sh . _lib . _sh . _themes . _sh;
+		$path    = "www/lib/themes/";
 		$dir	 = dir($path);
 		$options = FALSE;
 		
@@ -166,7 +166,7 @@ class ZP_Templates extends ZP_Load {
 		while($element = $dir->read()) {
 			$directory = $path . $element . _sh;						
 			
-			if($element !== ".." and $element !== "." and is_dir($directory) and $element !== _cpanel) {
+			if($element !== ".." and $element !== "." and is_dir($directory) and $element !== "cpanel") {
 				if($element === $theme) {
 					$options[$i]["value"]    = $element;
 					$options[$i]["option"]   = $element;
@@ -202,7 +202,7 @@ class ZP_Templates extends ZP_Load {
      */
 	public function isTheme() {
 		if(!is_null($this->theme)) {
-			$this->path = _www . _sh . _lib . _sh . _themes . _sh . $this->theme;
+			$this->path = "www/lib/themes/$this->theme";
 		} else {
 			$this->path = FALSE;
 		}
@@ -469,7 +469,7 @@ class ZP_Templates extends ZP_Load {
 				}
 			}
 		} else { 
-			$template = _www . _sh . _lib . _sh . _themes . _sh . $this->theme . _sh . $template . _PHP;
+			$template = "www/lib/themes/$this->theme/$template.php";
 			
 			if(!file_exists($template)) {
 				die("Error 404: Theme Not Found: " . $template);									
@@ -500,7 +500,7 @@ class ZP_Templates extends ZP_Load {
      */
 	public function theme($theme) {
 		$this->theme     = $theme;
-		$this->themePath = _webURL . _sh . _www . _sh . _lib . _sh . _themes . _sh . $this->theme;
+		$this->themePath = _webURL . "/www/lib/themes/$this->theme";
 		
 		if(!$this->isTheme()) {
 			die("You need to create a valid theme");

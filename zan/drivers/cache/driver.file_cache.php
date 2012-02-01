@@ -50,7 +50,7 @@ class ZP_File_Cache extends ZP_Load {
 			}
 			
 			if(is_dir($dir . $item)) {
-				$this->delete($dir . $item . _sh);
+				$this->delete($dir . $item . "/");
 			} else {
 				unlink($dir . $item);
 			}
@@ -66,8 +66,8 @@ class ZP_File_Cache extends ZP_Load {
 		$levelOne = $keyGroup;
 		$levelTwo = substr($keyName, 0, 5);
 		
-		$this->groupPath = _cacheDir . _sh . $levelOne . _sh;
-		$this->filePath	 = _cacheDir . _sh . $levelOne . _sh . $levelTwo . _sh;
+		$this->groupPath = _cacheDir . "/" . $levelOne . "/";
+		$this->filePath	 = _cacheDir . "/" . $levelOne . "/" . $levelTwo . "/";
 		$this->filename	 = $keyName . _cacheExt;
 		$this->file		 = $this->filePath . $this->filename;
 	}
@@ -129,7 +129,7 @@ class ZP_File_Cache extends ZP_Load {
 	}
 	
 	public function removeAll($groupID = "default") {
-		$this->delete(_cacheDir . _sh . $this->getKey($groupID) . _sh);
+		$this->delete(_cacheDir . "/" . $this->getKey($groupID) . "/");
 	}
 
 	public function save($data, $ID, $groupID = "default", $time = _cacheTime) {

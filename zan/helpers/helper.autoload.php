@@ -38,9 +38,9 @@ if(!defined("_access")) {
  * @return void
  */
 function __autoload($class) {	
-	$class = str_replace("ZP_", "", $class);
-	
-	if(file_exists(_corePath . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP)) {
-		include _corePath . _sh . _classes . _sh . _class . _dot . strtolower($class) . _PHP;					
+	$class = strtolower(str_replace("ZP_", "", $class));
+
+	if(file_exists(_corePath . "/classes/class.". strtolower($class) .".php")) {
+		include _corePath . "/classes/class.". strtolower($class) .".php";				
 	}
 }

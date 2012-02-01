@@ -211,7 +211,7 @@ function formLabel($for, $text, $br = TRUE) {
 function formOpen($action = NULL, $class = "forms", $ID = NULL, $legend = NULL, $method = "post", $enctype = "multipart/form-data") {	
 	$ID     = (isset($ID))     ? ' id="'. $ID .'"' 			  			 : NULL;
 	$legend = (isset($legend)) ? "<legend>$legend</legend>" . "\n" : NULL;
-	$action = (strstr($action, "http://")) ? $action : _webBase . _sh . $action;
+	$action = (strstr($action, "http://")) ? $action : _webBase . "/" . $action;
 	
 	$HTML  = '<form'. $ID .' action="'. $action .'" method="'. $method .'" class="'. $class .'" enctype="'. $enctype .'">' . "\n\t";
 	$HTML .= '<fieldset>' . "\n\t\t";
@@ -413,15 +413,15 @@ function formTextarea($attributes = FALSE) {
 function formSave($action = NULL, $events = TRUE) {
 	if(isLang()) {
 		if($action === "save") {
-				$href = _webBase . _sh . _webLang . _sh . segment(1) . _sh . "cpanel" . _sh . "add" . _sh;
+				$href = _webBase . "/" . _webLang . "/" . segment(1) . "/" . "cpanel" . "/" . "add" . "/";
 			} else {
-				$href = _webBase . _sh . _webLang . _sh . segment(1) . _sh . "cpanel" . _sh . "edit" . _sh;
+				$href = _webBase . "/" . _webLang . "/" . segment(1) . "/" . "cpanel" . "/" . "edit" . "/";
 			} 
 	} else {
 		if($action === "save") {
-			$href = _webBase . _sh . _webLang . _sh . segment(0) . _sh . "cpanel" . _sh . "add" . _sh;
+			$href = _webBase . "/" . _webLang . "/" . segment(0) . "/" . "cpanel" . "/" . "add" . "/";
 		} else {
-			$href = _webBase . _sh . _webLang . _sh . segment(0) . _sh . "cpanel" . _sh . "edit" . _sh;
+			$href = _webBase . "/" . _webLang . "/" . segment(0) . "/" . "cpanel" . "/" . "edit" . "/";
 		}
 	}
 

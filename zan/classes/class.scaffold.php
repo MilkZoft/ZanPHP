@@ -223,7 +223,7 @@ class ZP_Scaffold extends ZP_Load {
 	}
 	
 	public function make() {
-		$this->action = isLang() ? _webBase . _sh . segment(0) . _sh . segment(1) . _sh . segment(2) : _webBase . _sh . segment(0) . _sh . segment(1);
+		$this->action = isLang() ? _webBase . "/" . segment(0) . "/" . segment(1) . "/" . segment(2) : _webBase . "/" . segment(0) . "/" . segment(1);
 		
 		if(is_array($this->columns)) {
 			$this->CSS("scaffold");

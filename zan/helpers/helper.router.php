@@ -172,7 +172,6 @@ function execute() {
 						} 
 					}
 				}
-
 			}
 		}
 	}
@@ -185,12 +184,12 @@ function execute() {
 
 	if(isController($applicationController, $application)) {
 		$controller 	= ucfirst($applicationController) . "_Controller";
-		$controllerFile = _www . _sh . _applications . _sh . strtolower($application) . _sh . _controllers . _sh . _controller . _dot . strtolower($applicationController) . _PHP;
+		$controllerFile = "www/applications/". strtolower($application) . "/controllers/controller." . strtolower($applicationController). ".php";
 		
 		$$controller = $Load->controller($controller);
 	} else { 
 		$controller 	= ucfirst($application) . "_Controller";
-		$controllerFile = _www . _sh . _applications . _sh . strtolower($application) . _sh . _controllers . _sh . _controller . _dot . strtolower($application) . _PHP;
+		$controllerFile = "www/applications/" . strtolower($application) . "/controllers/controller." . strtolower($application) . ".php";
 		
 		$$controller = $Load->controller($controller);
 	}
@@ -264,16 +263,16 @@ function getURL() {
 	$URL = NULL;
 
 	for($i = 0; $i <= segments() - 1; $i++) {
-		$URL .= segment($i) . _sh; 	
+		$URL .= segment($i) . "/"; 	
 	}
 	
-	$URL = _webBase . _sh . $URL;
+	$URL = _webBase . "/$URL";
 	
 	return $URL;
 }
 
 function isController($controller, $application) {
-	$file = _www . _sh . _applications . _sh . $application . _sh . _controllers . _sh . _controller . _dot . $controller . _PHP;
+	$file = "www/applications/$application/controllers/controller.$controller.php";
 
 	if(file_exists($file)) {
 		return TRUE;	
@@ -283,15 +282,15 @@ function isController($controller, $application) {
 }
 
 function whichApplication() {
-	if(file_exists(_www . _sh . _applications . _sh . segment(0) . _sh . _controllers . _sh . _controller . _dot . segment(0) . _PHP)) {
+	if(file_exists("www/applications/" . segment(0) . "/controllers/controller." . segment(0) . ".php")) {
 		return segment(0); 
-	} elseif(file_exists(_www . _sh . _applications . _sh . segment(1) . _sh . _controllers . _sh . _controller . _dot . segment(1) . _PHP)) {
+	} elseif(file_exists("www/applications/". segment(1) ."/controllers/controller.". segment(1) .".php")) {
 		return segment(1);
-	} elseif(file_exists(_www . _sh . _applications . _sh . segment(0) . _sh . _models . _sh . _model . _dot . segment(0) . _PHP)) {
+	} elseif(file_exists("www/applications/". segment(0) ."/models/model.". segment(0) .".php")) {
 		return segment(0);
-	} elseif(file_exists(_www . _sh . _applications . _sh . segment(1) . _sh . _models . _sh . _model . _dot . segment(1) . _PHP)) {
+	} elseif(file_exists("www/applications/". segment(1) ."/models/model.". segment(1) .".php")) {
 		return segment(1);
-	} elseif(file_exists(_www . _sh . _applications . _sh . _defaultApplication . _sh . _controllers . _sh . _controller . _dot . _defaultApplication . _PHP)) {
+	} elseif(file_exists("www/applications/". _defaultApplication ."/controllers/controller.". _defaultApplication .".php")) {
 		return _defaultApplication;	
 	}
 	

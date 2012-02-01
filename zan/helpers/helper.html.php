@@ -196,20 +196,20 @@ function li($list, $open = NULL) {
 }
 
 function loadCSS($CSS) {
-	return '<link rel="stylesheet" href="'. _webURL . _sh . $CSS .'" type="text/css" media="all" />';
+	return '<link rel="stylesheet" href="'. _webURL . "/" . $CSS .'" type="text/css" media="all" />';
 }
 
 function loadScript($js, $application = NULL, $external = FALSE) {
 	if(file_exists($js)) {		
-		return '<script type="text/javascript" src="'. _webURL . _sh . $js .'"></script>';
+		return '<script type="text/javascript" src="'. _webURL . "/" . $js .'"></script>';
 	} if($external) {
 		return '<script type="text/javascript" src="'. $js .'"></script>';
 	} else {
 		if(isset($application)) {
-			$file = _www . _sh . _applications . _sh . $application . _sh . _views . _sh . _js . _sh . $js . _dot . _js;
+			$file = "www/applications/$application/views/js/$js.js";
 			
 			if(file_exists($file)) {
-				return '<script type="text/javascript" src="'. _webURL . _sh . $file .'"></script>';
+				return '<script type="text/javascript" src="'. _webURL . "/" . $file .'"></script>';
 			}
 		}
 	}
@@ -234,6 +234,72 @@ function p($text, $class = "left") {
 	} else {
 		return '</p>';
 	}
+}
+
+function paginate($count, $end, $start, $URL, $anchor = "#top") {
+	$pageNav 	  = NULL;
+	$pagePrevious = NULL;
+	$pageFirst    = NULL;
+	$pageLast     = NULL;
+	$pageNext     = NULL;
+	
+	if($count > $end) {				
+		$rest = $count % $end;	
+					
+		if($rest === 0) {
+			$pages = $count / $end;
+		} else {
+			$pages = (($count - $rest) / $end) + 1;
+		}
+
+		if($pages > 10) {	
+			$currentPage = ($start / $end) + 1;
+			
+			if($start === 0) {
+				$firstPage = 0;
+				$lastPage  = 10;
+			} elseif($currentPage >= 5 and $currentPage <= ($pages - 5)) {					
+				$firstPage = $currentPage - 5;
+				$lastPage  = $currentPage + 5;					
+			} elseif($currentPage < 5) {					
+				$firstPage = 0;
+				$lastPage  = $currentPage + 5 + (5 - $currentPage);					
+			} else {					
+				$firstPage = $currentPage - 5 - (($currentPage + 5) - $pages);
+				$lastPage	= $pages;					
+			}								
+		} else {			
+			$firstPage = 0;
+			$lastPage  = $pages;			
+		}
+			
+		for($i = $firstPage; $i < $lastPage; $i++) {
+			$pge  = $i + 1;
+			$next = $i * $end;		
+					
+			if($start == $next) {				
+				$pageNav .= '<span class="current">'. $pge .'</span> ';					
+			} else {				
+				$pageNav .= '<span class="bold"><a href="'. $URL . $pge . "/" . $anchor .'" title="'. $pge .'">'. $pge .'</a></span> ';
+			}
+		}
+	
+		if($start == 0) { 			
+			$currentPage = 1; 			
+		} else { 			
+			$currentPage = ($start / $end) + 1; 			
+		}
+	
+		if($currentPage < $pages) {			
+			$pageNext = '<a href="'. $URL . ($currentPage + 1) . "/" . $anchor .'" title="'. __(_("Next")) .'">'. __(_("Next")) .'</a> ';
+		}
+	
+		if($start > 0) {
+			$pagePrevious = '<a href="'. $URL . ($currentPage - 1) . "/" . $anchor .'" title="'. __(_("Previous")) .'">'. __(_("Previous")) .'</a> ';
+		}			
+	}		
+		
+	return '<div id="pagination">'. $pageFirst . $pagePrevious . $pageNav . $pageNext . $pageLast .'</div>';
 }
 
 function small($text) {

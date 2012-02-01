@@ -36,7 +36,7 @@ function cacheSession($cacheID) {
 		return $cacheID . _dot . SESSION("ZanUser");
 	}
 
-	return $cacheID . _dot . _guest;
+	return $cacheID . ".guest";
 }
 
 function COOKIE($cookie) {

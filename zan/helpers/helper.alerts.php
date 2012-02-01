@@ -45,24 +45,24 @@ function getAlert($message, $type = "error", $URL = NULL) {
 	}
 	
 	if($type === "error") {
-		return '<div class="alert-message error">
+		return '<div id="alert-message" class="alert-message error">
 					<a class="close" href="#">×</a>
 					<p>'. __($message) .'</p>
 				</div>';
 	} elseif($type === "success") {
 		unset($_POST);
 		
-		return '<div class="alert-message success">
+		return '<div id="alert-message" class="alert-message success">
 					<a class="close" href="#">×</a>
 					<p>'. __($message) .'</p>
 				</div>';
 	} elseif($type === "warning") {
-		return '<div class="alert-message warning">
+		return '<div id="alert-message" class="alert-message warning">
 					<a class="close" href="#">×</a>
 					<p>'. __($message) .'</p>
 				</div>';
 	} elseif($type === "notice") {
-		return '<div class="alert-message info">
+		return '<div id="alert-message" class="alert-message info">
 					<a class="close" href="#">×</a>
 					<p>'. __($message) .'</p>
 				</div>';

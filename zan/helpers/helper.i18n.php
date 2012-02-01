@@ -249,7 +249,7 @@ function getLanguages($flags = FALSE) {
 	return $data;
 }
 
-function getLanguageRadios($lang = NULL) {
+function getLanguageRadios($lang = NULL, $name = "language") {
 	$languages = getLanguages(TRUE);
 	$HTML = NULL;
 
@@ -262,7 +262,7 @@ function getLanguageRadios($lang = NULL) {
 			$check = NULL;
 		}	
 
-		$HTML .= '<input id="language" name="language" type="radio" value="'. $language["name"] .'" tabindex="4"'. $check .' /> '. $language["value"];
+		$HTML .= '<input id="language" name="'. $name .'" type="radio" value="'. $language["name"] .'" '. $check .' /> '. $language["value"];
 	}
 	
 	return $HTML;
