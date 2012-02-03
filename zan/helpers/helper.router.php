@@ -316,6 +316,60 @@ function path($path, $URL = FALSE) {
 }
 
 /**
+ * ping
+ *
+ * Pings a URL
+ * 
+ * @param string $domain
+ * @return void
+ */
+function ping($domain) {
+	$domain = str_replace("http://", "", $domain);
+
+	if(!@file_get_contents("http://" . $domain)) {
+		return FALSE; 
+	} else {
+		return TRUE;
+	}
+}
+
+/**
+ * redirect
+ *
+ * Redirects to a URL
+ * 
+ * @param string $domain
+ * @param mixed  $time
+ * @return void
+ */
+function redirect($URL = FALSE, $time = FALSE) {
+	if(!$time) {		
+		if(!$URL) {
+			header("location: ". _webBase);
+		} elseif(substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
+			header("location: ". path($URL));
+			
+			exit;
+		} else {
+			header("location: $URL");
+			
+			exit;
+		}
+	} elseif(!is_bool($time) and $time > 0) {
+		$time = $time * 1000;
+		
+		print '
+			<script type="text/javascript">
+				function delayedRedirect() { 
+					window.location.replace("' . $URL . '"); 
+				}
+				
+				setTimeout("delayedRedirect()", ' . $time . ');
+			</script>';
+	}
+}
+
+/**
  * route
  *
  * Returns an Array from $_SERVER["REQUEST_URI"] exploding each position with slashes
