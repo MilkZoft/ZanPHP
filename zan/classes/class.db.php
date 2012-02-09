@@ -100,7 +100,7 @@ class ZP_Db extends ZP_Load {
 	 * 
 	 * @var private
 	 */
-	private $Rs = NULL;
+	public $Rs = NULL;
 	
 	/**
 	 * 
@@ -294,7 +294,7 @@ class ZP_Db extends ZP_Load {
 			}
 			
 			$this->Rs = $this->Database->query($query);
-			
+		
 			if($this->rows() === 0) {
 				return FALSE;			
 			} else {
@@ -510,28 +510,30 @@ class ZP_Db extends ZP_Load {
 	public function findAll($table = NULL, $group = NULL, $order = NULL, $limit = NULL) {
 		$SQL = NULL;
 		
+		if($table) {
+			$this->table($table);	
+		} 
+
 		if(!is_null($group)) {
 			$SQL .= " GROUP BY ".$group;
 		}
 		
 		if(!$order) {
 			$SQL .= "";		
+		} elseif($order === "DESC") {
+			$SQL .= " ORDER BY $this->primaryKey DESC";
 		} elseif(!is_null($order)) {
 			$SQL .= " ORDER BY ". $order;
 		} elseif(is_null($order)) {
 			$SQL .= " ORDER BY $this->primaryKey";
 		}
-		
+	
 		if(!is_null($limit)) {
 			$SQL .= " LIMIT ". $limit;
 		}
-		
-		if($table) {
-			$this->table($table);	
-		}
 
 		$query = "SELECT $this->fields FROM $this->table$SQL";
-
+		
 		return $this->data($query);
 	}
 		
@@ -558,6 +560,8 @@ class ZP_Db extends ZP_Load {
 		
 		if(!$order) {
 			$SQL .= "";
+		} elseif($order === "DESC") {
+			$SQL .= " ORDER BY $this->primaryKey";
 		} elseif(!is_null($order)) {
 			$SQL .= " ORDER BY " . $order;
 		} elseif($order === "") {
@@ -606,7 +610,9 @@ class ZP_Db extends ZP_Load {
 		
 		if(is_null($order)) { 
 			$SQL .= "";		
-		} elseif(!is_null($order)) {  
+		} elseif($order === "DESC") {
+			$SQL .= " ORDER BY $this->primaryKey";
+		}  elseif(!is_null($order)) {  
 			$SQL .= " ORDER BY ". $order;
 		} elseif($order === "") { 
 			$SQL .= " ORDER BY $this->primaryKey";
