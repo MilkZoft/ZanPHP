@@ -611,8 +611,13 @@ class ZP_Db extends ZP_Load {
 		if(is_null($order)) { 
 			$SQL .= "";		
 		} elseif($order === "DESC") {
+<<<<<<< HEAD
 			$SQL .= " ORDER BY $this->primaryKey DESC";
 		} elseif(!is_null($order)) {  
+=======
+			$SQL .= " ORDER BY $this->primaryKey";
+		}  elseif(!is_null($order)) {  
+>>>>>>> 2a91c889e374b4f18df5c506db9de4d6a003a0d3
 			$SQL .= " ORDER BY ". $order;
 		} elseif($order === "") { 
 			$SQL .= " ORDER BY $this->primaryKey";
