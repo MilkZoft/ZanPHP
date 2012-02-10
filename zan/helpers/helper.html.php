@@ -72,7 +72,7 @@ function bold($text, $br = TRUE) {
 function br($jumps = 1) {
 	$br = NULL;
 	
-	for($i = 0; $i <= $jumps; $i++) {
+	for($i = 0; $i < $jumps; $i++) {
 		$br .= "<br />" . char("\n");
 	}
 	

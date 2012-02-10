@@ -192,7 +192,7 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function getTitle() {
-		return (is_null($this->title)) ? _webName : $this->title;
+		return (is_null($this->title)) ? _webName : __(_($this->title));
 	}
 	
     /**

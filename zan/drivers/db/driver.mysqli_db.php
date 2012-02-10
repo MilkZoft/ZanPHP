@@ -52,10 +52,10 @@ class ZP_MySQLi_Db extends ZP_Load {
      * @return object value
      */
 	public function connect() {
-		if(self::$connection === NULL) {
+		if(!self::$connection) {
 			self::$connection = mysqli_connect(_dbHost, _dbUser, _dbPwd, _dbName);
 		}
-		
+	
 		return self::$connection;
 	}
 	
@@ -96,12 +96,12 @@ class ZP_MySQLi_Db extends ZP_Load {
 	public function query($SQL) {
 		if($SQL !== "") {
 			if(stristr($SQL, "call") and stripos($SQL, "call") === 0) {
-				@mysqli_multi_query(self::$connection, $SQL);
+				mysqli_multi_query(self::$connection, $SQL);
 				
-				$this->query = @mysqli_store_result(self::$connection);        
+				$this->query = mysqli_store_result(self::$connection);        
             
-				if(@mysqli_more_results(self::$connection)) {
-					@mysqli_next_result(self::$connection);            
+				if(mysqli_more_results(self::$connection)) {
+					mysqli_next_result(self::$connection);            
 				}
             
 			} else {
@@ -221,7 +221,7 @@ class ZP_MySQLi_Db extends ZP_Load {
      * @return integer value
      */
 	public function rows() {
-		return (!$this->query) ? FALSE : (int) @mysqli_num_rows($this->query);	
+		return (!$this->query) ? FALSE : (int) mysqli_num_rows($this->query);	
 	}
 
 	/**

@@ -413,15 +413,15 @@ function formTextarea($attributes = FALSE) {
 function formSave($action = NULL, $events = TRUE) {
 	if(isLang()) {
 		if($action === "save") {
-				$href = _webBase . "/" . _webLang . "/" . segment(1) . "/" . "cpanel" . "/" . "add" . "/";
+				$href = path(segment(1) ."/cpanel/add/");
 			} else {
-				$href = _webBase . "/" . _webLang . "/" . segment(1) . "/" . "cpanel" . "/" . "edit" . "/";
+				$href = path(segment(1) ."/cpanel/edit/");
 			} 
 	} else {
 		if($action === "save") {
-			$href = _webBase . "/" . _webLang . "/" . segment(0) . "/" . "cpanel" . "/" . "add" . "/";
+			$href = path(segment(0) ."/cpanel/add/");
 		} else {
-			$href = _webBase . "/" . _webLang . "/" . segment(0) . "/" . "cpanel" . "/" . "edit" . "/";
+			$href = path(segment(0) ."/cpanel/edit/");
 		}
 	}
 
@@ -433,16 +433,16 @@ function formSave($action = NULL, $events = TRUE) {
 	
 	$HTML = '	
 		<p class="save-cancel">
-			<input id="'. $action .'" name="'. $action .'" value="'. __(ucfirst($action)) .'" '. $onclick .' type="submit" class="btn success">
-			<input id="cancel" name="cancel" value="'. __("Cancel") .'" type="submit" class="btn danger" />
+			<input id="'. $action .'" name="'. $action .'" value="'. __(_(ucfirst($action))) .'" '. $onclick .' type="submit" class="btn btn-success">
+			<input id="cancel" name="cancel" value="'. __(_("Cancel")) .'" type="submit" class="btn btn-danger" />
 		</p>';
 	
 	return $HTML;
 }
 
 function formUploadFrame($value, $events = NULL) {
-	$HTML  = '<input type="file" name="'. $value .'File" /> ';
-	$HTML .= '<input type="submit" class="small-submit" name="'. $value .'Upload" value="'. __("Upload") .'" '. $events .' /><br />';
+	$HTML  = '<input type="file" class="required" name="'. $value .'File" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+	$HTML .= '<input type="submit" class="btn btn-success" name="'. $value .'Upload" value="'. __("Upload") .'" '. $events .' />&nbsp';
 	$HTML .= '<iframe name="'. $value .'Upload" class="no-display"></iframe>';
 	
 	return $HTML;

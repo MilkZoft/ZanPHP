@@ -38,14 +38,14 @@ if(!defined("_access")) {
  */
 function ____($var, $dump = TRUE, $exit = TRUE) {
 	print '<pre style="font-size: 1.3em; color: #FF0000; line-height: 18px;">';
-		if($dump === FALSE) {
+		if(!$dump) {
 			print_r($var);
 		} else {
 			var_dump($var);
 		}
 	print '</pre>';	
 	
-	if($exit === TRUE) {
+	if($exit) {
 		exit();
 	}
 }

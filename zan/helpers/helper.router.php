@@ -307,7 +307,11 @@ function isNumber($number) {
 	return FALSE;
 }
 
-function path($path, $URL = FALSE) {
+function path($path = FALSE, $URL = FALSE) {
+	if(!$path) {
+		return _webBase . _sh . _webLang . _sh;	
+	}
+
 	if($URL) {
 		return _webURL  . _sh . $path;
 	} else {
@@ -410,15 +414,16 @@ function route() {
  * @param int $segment
  * @return mixed		
  */
-function segment($segment = 0) {
-	$route = route();
-	
+function segment($segment = 0, $isLang = FALSE) {
+	$route   = route();
+	$segment = ($isLang) ? $segment + 1 : $segment;
+
 	if(count($route) > 0) {		
 		if(isset($route[$segment]) and strlen($route[$segment]) > 0) {
 			if($route[$segment] === "0") {
 				return (int) 0;
 			}
-			
+				
 			return filter($route[$segment]);
 		} else {
 			return FALSE;

@@ -64,7 +64,7 @@ class ZP_Model extends ZP_Load {
 	 * 
 	 */
 	public function helpers() {
-		$helpers = array("alerts", "debugging", "files", "time", "string", "security", "validations");
+		$helpers = array("array", "alerts", "debugging", "files", "time", "string", "html", "security", "validations");
 		
 		$this->helper($helpers);
 	}

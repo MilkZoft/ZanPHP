@@ -170,12 +170,12 @@ class ZP_Load {
      */
 	public function controller($controller, $application = NULL) {
 		$parts = explode("_", $controller);
-		
+	
 		if(!$this->application) { 
 			if(file_exists("www/applications/$application/controllers/controller.". strtolower($parts[0]) .".php")) {
 				$file = "www/applications/$application/controllers/controller.". strtolower($parts[0]) .".php";
 			} elseif(count($parts) === 2) {
-				$file = "www/applications/$controller/controllers/controller.". strtolower($parts[0]) .".php";
+				$file = "www/applications/". strtolower($parts[0]) ."/controllers/controller.". strtolower($parts[0]) .".php";
 			}		
 		} else {
 			if(file_exists("www/applications/$application/controllers/controller.". strtolower($parts[0]) .".php")) {
@@ -288,7 +288,7 @@ class ZP_Load {
 		} elseif($type === "model") {
 			$this->$Class = $this->model($Class);
 		}
-
+	
 		return call_user_func_array(array($this->$Class, $method), is_array($params) ? $params : array());
 	}
 	
@@ -517,19 +517,21 @@ class ZP_Load {
 			if(count($parts) === 2) {
 				if(file_exists("www/applications/$this->application/models/model.". strtolower($parts[0]) .".php")) {
 					$file = "www/applications/$this->application/models/model.". strtolower($parts[0]) .".php";
-				} else {
+				} elseif(file_exists("www/applications/$this->application/models/model.". strtolower($parts[0]) .".php")) {
 					$file = "www/applications/$this->application/models/model.". strtolower($parts[0]) .".php";
+				} else {
+					$file = "www/applications/". strtolower($parts[0]) ."/models/model.". strtolower($parts[0]) .".php";
 				}
 			}
 		}
-	
+
 		if(file_exists($file)) {							
 			if(class_exists($model)) { 
 				return ZP_Singleton::instance($model);
 			}
 	
 			include $file;
-							
+
 			return ZP_Singleton::instance($model);
 		}	
 		

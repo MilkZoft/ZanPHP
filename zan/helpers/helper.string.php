@@ -238,6 +238,14 @@ function gravatar($email) {
    	return img("http://www.gravatar.com/avatar/". md5($email) ."");
 }
 
+function json($json, $encode = TRUE) {
+	if($encode) {
+		return json_encode($json);
+	}
+
+	return json_decode($json);
+}
+
 function parseCSV($file) {
 	$fh = fopen($file, "r");
 	

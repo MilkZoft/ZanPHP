@@ -45,26 +45,25 @@ function getAlert($message, $type = "error", $URL = NULL) {
 	}
 	
 	if($type === "error") {
-		return '<div id="alert-message" class="alert-message error">
-					<a class="close" href="#">×</a>
-					<p>'. __($message) .'</p>
+		return '<div id="alert-message" class="alert alert-error">
+    				<a class="close">×</a>
+					'. __(_($message)) .'
 				</div>';
 	} elseif($type === "success") {
 		unset($_POST);
-		
-		return '<div id="alert-message" class="alert-message success">
-					<a class="close" href="#">×</a>
-					<p>'. __($message) .'</p>
+		return '<div id="alert-message" class="alert alert-success">
+    				<a class="close">×</a>
+					'. __(_($message)) .'
 				</div>';
 	} elseif($type === "warning") {
-		return '<div id="alert-message" class="alert-message warning">
-					<a class="close" href="#">×</a>
-					<p>'. __($message) .'</p>
+		return '<div id="alert-message" class="alert alert-warning">
+    				<a class="close">×</a>
+					'. __(_($message)) .'
 				</div>';
 	} elseif($type === "notice") {
-		return '<div id="alert-message" class="alert-message info">
-					<a class="close" href="#">×</a>
-					<p>'. __($message) .'</p>
+		return '<div id="alert-message" class="alert alert-info">
+    				<a class="close">×</a>
+					'. __(_($message)) .'
 				</div>';
 	}
 }
