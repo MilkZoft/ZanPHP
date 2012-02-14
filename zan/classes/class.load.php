@@ -288,8 +288,8 @@ class ZP_Load {
 		} elseif($type === "model") {
 			$this->$Class = $this->model($Class);
 		}
-	
-		return call_user_func_array(array($this->$Class, $method), is_array($params) ? $params : array());
+		
+		return ($this->$Class) ? call_user_func_array(array($this->$Class, $method), is_array($params) ? $params : array()) : FALSE;
 	}
 	
     /**

@@ -14,6 +14,7 @@ class Nuevo_Controller extends ZP_Controller {
 		#$this->Default_Model = $this->model("Default_Model");
 		
 		$this->Templates = $this->core("Templates");
+		$this->Templates->theme("zanphp");
 	}
 	
 	public function index() {		
@@ -21,7 +22,10 @@ class Nuevo_Controller extends ZP_Controller {
 	}
 	
 	public function imprime($texto) {
-		print $texto;
+		$vars["message"] = "Hola";
+		$vars["view"]	 = $this->view("welcome", TRUE);
+
+		$this->template("content", $vars);
 	}
 
 }
