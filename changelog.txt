@@ -1,0 +1,329 @@
+Version 2.5.4
+February 13, 2012
+
+    Fixed: execute() on class.load.php https://github.com/MilkZoft/ZanPHP/commit/7f3bc169bda4fcee08e73ca9e16f4a8248653f93
+
+February 09, 2012
+
+    Fixed: ORDER BY (DESC) on findBySQL https://github.com/MilkZoft/ZanPHP/commit/3df6e91f185c240db501ea2ac79fe8cd96b5e965
+
+    Fixed: several bugs https://github.com/MilkZoft/ZanPHP/commit/fd88afb163ccb2959f41b077419e129c05c8d438
+
+    Fixed: ORDER BY (DESC) https://github.com/MilkZoft/ZanPHP/commit/2a91c889e374b4f18df5c506db9de4d6a003a0d3
+
+Version 2.5.3
+February 04, 2012
+
+    Fixed: right.php fixed https://github.com/MilkZoft/ZanPHP/commit/0d378840b6ac7a2d17a4f706d6a7863619fb61bf
+
+February 02, 2012
+
+    Fixed: move ping() function from security to router helper https://github.com/MilkZoft/ZanPHP/commit/25f60fb2c32181f8dc27431e2e1e15f379ee263f
+
+January 31, 2012
+
+    Fixed: replace all string constants https://github.com/MilkZoft/ZanPHP/commit/539d891dac9d7a0e968754abd9d057bdf615451b
+
+January 28, 2012
+
+    Fixed: remove encode() on forms helper https://github.com/MilkZoft/ZanPHP/commit/632c5aa76aca3f1bcd735334bfa4578d43603c6c
+
+    Fixed: restclient, alerts, forms, sessions, string and validations https://github.com/MilkZoft/ZanPHP/commit/8e97565d69e5c6d8bbe419b26e90a18695812adb
+
+December 31, 2011
+
+    New feature: Method Chaining https://github.com/MilkZoft/ZanPHP/commit/455598cb5adb06e2e5fbf0b27144f6e488af8081
+
+Version 2.5.2
+December 24, 2011
+
+    Fixed: countAll() on class.db.php and fix bug on class.load.php https://github.com/MilkZoft/ZanPHP/commit/54208d8ac1f51a8f95b718a9f0c267c731f8f943
+
+December 19, 2011
+
+    Fixed: data, db, load classes and alerts, forms and router helpers https://github.com/MilkZoft/ZanPHP/commit/cce528e808c49fee823a543947458e33a6922c99
+
+Version 2.5.1
+December 07, 2011
+
+    Fixed: Syntax errors corrected https://github.com/MilkZoft/ZanPHP/commit/0b2b21d56d71d884f07a3e71ccce3d761bac799f
+
+Version 2.5
+December 01, 2011
+
+    New feature: jQuery mobile https://github.com/MilkZoft/ZanPHP/commit/12b45a034ff4e39f0e0bfa83d9f33a069a378c32
+
+    New feature: XCache https://github.com/MilkZoft/ZanPHP/commit/f0c9780588a9094d52e31267f6597b8e7b364ec0
+
+    New version ZanPHP v.2.5 https://github.com/MilkZoft/ZanPHP/commit/df85bcca8527439acd2dc578c46ca25c62fc8ccb
+
+Version 2.4.4
+November 29, 2011
+
+    Fixed: forms helper https://github.com/MilkZoft/ZanPHP/commit/36de28616ff2663089f8fdb332bba850c8474dff
+
+    New feature: Memcache https://github.com/MilkZoft/ZanPHP/commit/5064af9ee7bb0f8511c161ae551a54f821cad0c1
+
+    New feature: EAccelerator https://github.com/MilkZoft/ZanPHP/commit/c70504f5a2d1464a3b9c8b72c403b29565f9d295
+
+    New feature: APC Cache https://github.com/MilkZoft/ZanPHP/commit/148b08bad64ced670435193544859e8f7c439afe
+
+November 26, 2011
+
+    Fixed: Class MongoDB modified, added parameter collection https://github.com/MilkZoft/ZanPHP/commit/0ce1702e71b0c3d69b0f7fd82556b4f9deedcf84
+
+    Fixed: https://github.com/MilkZoft/ZanPHP/commit/0ce1702e71b0c3d69b0f7fd82556b4f9deedcf84
+
+    Fixed: Fixed constant cache https://github.com/MilkZoft/ZanPHP/commit/6c41dbe0ec5701d71136a112241e44409a5c49fd
+
+    Fixed: AutoRender https://github.com/MilkZoft/ZanPHP/commit/260d4e575fd471f3e8873c09912316961578e5d0
+
+November 24, 2011
+
+    Fixed: fixed style error, and create TODO entry https://github.com/MilkZoft/ZanPHP/commit/eaa97c25ade1c804089b5bd6ff277f3d04a0d632
+
+    Fixed: fixed bug (unclosed {}) https://github.com/MilkZoft/ZanPHP/commit/5f9c133b962ee30888f320d083a257c232ee49d0
+
+    Fixed: new cache system, now driveable (yes a new word) expose original api... https://github.com/MilkZoft/ZanPHP/commit/1bd0ce5a8b67be2b6b2185bf72cc59832ebd6a85
+
+    Rename file: zan/drivers/cache/{ZP_oldCache.php → driver.file_cache.php} https://github.com/MilkZoft/ZanPHP/commit/9224e9dcb740d60fe0c9fad1050ac78aa4fb37e6
+
+    Fixed: changing functions of place, for public and private group functions https://github.com/MilkZoft/ZanPHP/commit/f6d6ac91673dc1c8a03d846afa66ca0f1da2ba26
+
+    Fixed: class.load.php https://github.com/MilkZoft/ZanPHP/commit/4ee1d1d7ff6d64bea4b893ba4807611c8ceea0de
+
+    Fixed: patch to prepare the way for different cache systems https://github.com/MilkZoft/ZanPHP/commit/b716cc5cc7f6411fee6659fb0a46e2272b502bcd
+
+November 22, 2011
+
+    Fixed: fix CamelCase error https://github.com/MilkZoft/ZanPHP/commit/5498d5b3af72aa1174fac85ab5a8467f31ee2ba7
+
+    New feature: patch to offer more log levels, in preparation to log4php patch https://github.com/MilkZoft/ZanPHP/commit/ca0bc21eba896c2f86636b16f3102d1b05a9b4fd
+
+    Fixed: data, db and load classes, forms, security and string helpers fixed https://github.com/MilkZoft/ZanPHP/commit/8e835d8c922a705799ae616f448a19e5540288e3
+
+Version 2.4.3
+October 29, 2011
+
+    New README https://github.com/MilkZoft/ZanPHP/commit/519b36c70e2e60d48af3190c44950c80768af342
+
+    Fixed: router helper https://github.com/MilkZoft/ZanPHP/commit/4cb46aee867de804a8bbc94fed7c2a3697154bd8
+
+    New feature: New router Django style https://github.com/MilkZoft/ZanPHP/commit/2d1e40e77cb9234fb5be486b943addca04a7239e
+
+Version 2.4.2
+October 25, 2011
+
+    Fixed: class.files.php https://github.com/MilkZoft/ZanPHP/commit/a52dc7a64a8e3400a517d8f6db850a5823659463
+
+    Fixed: AutoRender https://github.com/MilkZoft/ZanPHP/commit/d56465377116fd8c332fec9049bfa60e4bd4581e
+
+October 20, 2011
+
+    Fixed: AutoRender https://github.com/MilkZoft/ZanPHP/commit/1521060ba78d6663623371062192f9a448b5c2af
+
+October 17, 2011
+
+    New feature: AutoRender https://github.com/MilkZoft/ZanPHP/commit/244f2bfeafcb330786a10aa5fa9cc9bfb3ae47de
+
+October 14, 2011
+
+    Fixed: router helper https://github.com/MilkZoft/ZanPHP/commit/c493be778b5aa1951e312f0f5c2e1e2e6b67a96f
+
+October 13, 2011
+
+    Fixed: replace eregi() with preg_match() https://github.com/MilkZoft/ZanPHP/commit/8e27729768d0bdaeee17d88c0e210ff527e5d408
+
+    Fixed: preg_replace() instead of eregi_replace() https://github.com/MilkZoft/ZanPHP/commit/3b7d9a4e4924a3ce2467393fd306fb9516fa8f69
+
+October 11, 2011
+
+    Fixed: router helper https://github.com/MilkZoft/ZanPHP/commit/3b7d9a4e4924a3ce2467393fd306fb9516fa8f69
+
+Version 2.4.1
+October 08, 2011
+
+    Add new constants _webSituation and _webMessage https://github.com/MilkZoft/ZanPHP/commit/9592ba73693cf6971e553121a6209f632f474c20
+
+    Fixed: Load, temlates, html, router and twitter https://github.com/MilkZoft/ZanPHP/commit/e4bb5ac69de9ddd0d4a8bf16431f8fb555365b7f
+
+Version 2.4
+October 02, 2011
+
+    Fixed: Some bugs fixed on db, load and templates classes https://github.com/MilkZoft/ZanPHP/commit/14236f6deda2634394ac44c4f2223f9395252bea
+
+September 30, 2011
+
+    Fixed: bugs con class.db.php https://github.com/MilkZoft/ZanPHP/commit/40911c98942a8d36f1bfdfb1faddbe32b9a904b8
+
+September 28, 2011
+
+    Fixed: RESTClient and RESTServer classes https://github.com/MilkZoft/ZanPHP/commit/e02183f7a5acfca01d0d37fd571850cfe01472fb
+
+September 27, 2011
+
+    New feature: Mongo DB https://github.com/MilkZoft/ZanPHP/commit/56b94460e093e331f6accfa2dbe8e859e53185bf
+
+    New feature: Twitter API and all classes re-organized https://github.com/MilkZoft/ZanPHP/commit/6d22a0b84453bfbbf991f5a9afc8f6bb345f8579
+
+Version 2.3
+September 26, 2011
+
+    Fixed: bugs on class.db.php, html and i18n helpers https://github.com/MilkZoft/ZanPHP/commit/a65614959e85bbf21db97f29fdcc16e8a0ce3e2e
+
+September 24, 2011
+
+    Fixed: Primary Key on class.db.php https://github.com/MilkZoft/ZanPHP/commit/133c7b045c65977f60ea052baad630d6ab26cd9f
+
+September 23, 2011
+
+    Fixed: deleteBy() on class.db.php https://github.com/MilkZoft/ZanPHP/commit/1fc940fb6e2e7d84416caf5bfba4768e897961a2
+
+    New constant _dbSocket https://github.com/MilkZoft/ZanPHP/commit/5886da3bd76b62b23f1646e8d2998a01528cdc0b
+
+    New feature: Class Log, and some bugs fixed on class data, db, model, and new function createZip() on helper files and others new functions on string, validations and time helpers https://github.com/MilkZoft/ZanPHP/commit/714fa63ced01aaac889ad1d15539e1964407ffd8
+
+September 22, 2011
+
+    AdoDB Deleted https://github.com/MilkZoft/ZanPHP/commit/3966c5eef2ebcb2a81159db337ad6ce6ec5c829f
+
+Version 2.2
+September 19, 2011
+
+    Change: ZanPHP Core folder renamed to "zan" https://github.com/MilkZoft/ZanPHP/commit/4a8ea744e439968f66089ebd6c6f124afe361548
+
+September 15, 2011
+
+    New Feature: New class Data and some bugs fixed on helpers https://github.com/MilkZoft/ZanPHP/commit/24bffbbf766ac8c14ce49125d28636046c2bee2c
+
+September 13, 2011
+
+    Fixed: router, security and string helpers https://github.com/MilkZoft/ZanPHP/commit/83d5564d1bf2a0e46e59336a268900e45d61f08e
+
+September 11, 2011
+
+    New feature: Proposal for Scaffolding https://github.com/MilkZoft/ZanPHP/commit/c4ccdfdd2a8e8051b520b49fd831262bd8b27d7b
+
+    New feature: encoding() on class.db.php and others fixed bugs on load, templates classes and others helpers https://github.com/MilkZoft/ZanPHP/commit/7083cd9f6790400e3fb9f6e02778b0e8dd5f0a2c
+
+Version 2.1
+September 09, 2011
+
+    Fixed: update() on class.db.php and bugs fixed on class.files.php https://github.com/MilkZoft/ZanPHP/commit/6eab460a88a537828304c1125cbdafe7d6c0b393
+
+    Fixed: some bugs on helpers and db class https://github.com/MilkZoft/ZanPHP/commit/ba3f71f8e5a43eda0fd0100654b4cefcc27fb5d7
+
+September 08, 2011
+
+    Fixed: some bugs fixed on classes and helpers https://github.com/MilkZoft/ZanPHP/commit/7b3251de129d29808acbe4562ef0f0987760be77
+
+    New files icons added https://github.com/MilkZoft/ZanPHP/commit/fd9a87b47e84c79c1d2e822dbf1d85598c47c8da
+
+    Fixed: Some bugs fixed and new helper.scripts.php added https://github.com/MilkZoft/ZanPHP/commit/4576dfa8ce5eb613e1a9256c4e8f000f0bad8142
+
+September 07, 2011
+
+    Fixed: some classes and Reflection method added on helper.router.php https://github.com/MilkZoft/ZanPHP/commit/76e607cf07e2c865ff022acf8f655d85a0b399c1
+
+    Fixed: whichApplication() on helper.router.php https://github.com/MilkZoft/ZanPHP/commit/add69562c6f92187eeba5c004d8abce2d602b583
+
+September 06, 2011
+
+    Fixed: counts on class.db.php https://github.com/MilkZoft/ZanPHP/commit/75ae16bc335c968b590a52be0947376879be6575
+
+    New feature: exceptions https://github.com/MilkZoft/ZanPHP/commit/a28fef51127b701e3fde5fca310504f172c48594
+
+September 05, 2011
+
+    Fixed: view() on class.load.php https://github.com/MilkZoft/ZanPHP/commit/e9a46296c8d2257cda29ea7b81ea646e451b03bd
+
+Version 2.0
+September 03, 2011
+
+    Simplifying the view() method on class.load.php https://github.com/MilkZoft/ZanPHP/commit/8270f44eba48fd4b8d65766caff5910f207bdf0b
+
+    Ignoring files config.basics.php and config.database.php (.gitignore) https://github.com/MilkZoft/ZanPHP/commit/f8e5e9355e2e012ed535cd97b8fb63a641799417
+
+September 02, 2011
+
+    Improvement: Change in the architecture of the framework https://github.com/MilkZoft/ZanPHP/commit/332c791f2097b310eff0500ef6c0875d64bef9a8
+
+Version 1.2
+August 24, 2011
+
+    Fixed: Gettext on helper.i18n.php https://github.com/MilkZoft/ZanPHP/commit/0bc2a9ec7367f93e3498053d2235b93917ce7cc1
+
+    Add: constants _translation, _getText and _mo https://github.com/MilkZoft/ZanPHP/commit/e27b39e8b396ba94c7954fb6829c6a78bb34a82e
+
+    New feature: Gettext adapted https://github.com/MilkZoft/ZanPHP/commit/46fc3e7528007ac51356f5e28b62653e957574a2
+
+August 15, 2011
+
+    Fixed: remove spaces with RegExp https://github.com/MilkZoft/ZanPHP/commit/e17deadab548e4371b652f761104d3a83ae21e32
+
+August 10, 2011
+
+Fixed: helper.forms.php and helper.string.php https://github.com/MilkZoft/ZanPHP/commit/90c98251927a111f3e0dfcea2eecb17be123fdb3
+
+Fixed: helper.forms.php https://github.com/MilkZoft/ZanPHP/commit/e68d66901597a6c3d18ad332bc38d1febd97fcb3
+August 07, 2011
+
+    Fixed: cache, db, load, templates classes, html, i18n, router, string helpers, load.php and add new flags images.
+
+    _cacheStatus constant on class.db.php https://github.com/MilkZoft/ZanPHP/commit/e94a1c14044ccc1f68e853f0a0090f4396aee551
+
+August 06, 2011
+
+    Cache integrated to ActiveRecord on class.db.php https://github.com/MilkZoft/ZanPHP/commit/7f7d555385ee01f95412b0ea0633a76416668f3f
+
+August 04, 2011
+
+    Cache extension https://github.com/MilkZoft/ZanPHP/commit/f931d8315ae43283a4750049d82f4b0e8d9cd754
+
+    New feature: Class Cache integrated https://github.com/MilkZoft/ZanPHP/commit/4b3d8b4e7934f9b943728672079540ad80a2e1d9
+
+Version 1.1
+July 30, 2011
+
+    Fixed: helper() on class.load.php https://github.com/MilkZoft/ZanPHP/commit/ab710aaeb4befb38a7840569e90d46462f747c74
+
+    Re-organized all helpers and helper.web.php deleted https://github.com/MilkZoft/ZanPHP/commit/4e908786650d85dba669ef14a0e37c1563932c18
+
+    Re-organized all method on all classes https://github.com/MilkZoft/ZanPHP/commit/f48c987c077d5eb1a1c96d9535fd3e48f961c53b
+
+Version 1
+July 29, 2011
+
+    Re-organized all metods on class.db.php https://github.com/MilkZoft/ZanPHP/commit/7991a15e0857383f1144ebe8ef469cd2cfd7ff89
+
+    Fixed: helper.router.php call_user_func_array() adapted https://github.com/MilkZoft/ZanPHP/commit/9d00b6e73fa457237f5d06eb9a4825db4fc7d9f5
+
+July 28, 2011
+
+    Fixed: class.controller.php and helper.router.php https://github.com/MilkZoft/ZanPHP/commit/03ae39480452fa8abf968cfc2f0cafa4c512677b
+
+    Add: new files class.controller.php and class.model.php https://github.com/MilkZoft/ZanPHP/commit/1f27f23f85d96487cdbb7692de84b4aeaa318a89
+
+    Fixed: class.db.php, class.load.php and helper.router.php fixed https://github.com/MilkZoft/ZanPHP/commit/b810aff286d4b2ed9e682f13a6e4cad29c138d84
+
+    Fixed: some methods changed on class.db.php https://github.com/MilkZoft/ZanPHP/commit/46f76d29fb046e38ed18025289e2560a0954855b
+
+    Fixed: all methods changed on class.db.php https://github.com/MilkZoft/ZanPHP/commit/5122d7653aaf88f1136cdb8f0396a21a1d3b8c89
+
+    class.mssql_db.php, class.mysql_db.php, class.mysqli_db.php, class.orm.php, class.pgsql_db.php deleted https://github.com/MilkZoft/ZanPHP/commit/2188781659d912c561c4e3304aefe2d7537df610
+
+    class.database.php deleted, integrated on class.db.php https://github.com/MilkZoft/ZanPHP/commit/cba4abae3376272522605bf8f3c5d5e0e6fd66bf
+
+July 27, 2011
+
+    Fixed: where() method from class.db.php https://github.com/MilkZoft/ZanPHP/commit/67667ef6f5eec21be19acf66aeef19dcd2388752
+
+    New feature: AdoDB adapted to ZanPHP https://github.com/MilkZoft/ZanPHP/commit/c26fe812d5df6b6651b0286d902aee8fdcc590d2
+
+    i18n adapted to HMVC https://github.com/MilkZoft/ZanPHP/commit/e898473b00f73efa3aaa903f277a6761372095e0
+
+    New feature: HMVC Implementation https://github.com/MilkZoft/ZanPHP/commit/8de55abc89306e5d71fb187d9512d30a0464b604
+
+July 21, 2011
+
+    Remove all Logs from class.db.php https://github.com/MilkZoft/ZanPHP/commit/15997610c059edae7e0ff3844e45a37fc3605cf3
