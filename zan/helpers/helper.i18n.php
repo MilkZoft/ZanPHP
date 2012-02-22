@@ -51,18 +51,15 @@ function __($text, $normal = FALSE) {
 	} else {
 		global $Load;
 		
-		$language = whichLanguage();
+		$lang      = whichLanguage();
+		$languages = getLanguagesFromDir();
 		
-		if($language === "English") {
-			$Load->language("English");
-		} elseif($language === "Spanish") {
-			$Load->language("Spanish");
-		} elseif($language === "French") {
-			$Load->language("French");
-		} elseif($language === "Portuguese") {
-			$Load->language("Portuguese");
-		} else {
-			$Load->language("English");
+		foreach($languages as $language) {
+			if($language["language"] === $lang) {
+				$Load->language($lang);
+
+				break;
+			}	
 		}
 
 		return encode(translation($text)); 	
@@ -77,68 +74,21 @@ function __($text, $normal = FALSE) {
  * @param boolean $invert = TRUE
  * @return string value
  */
-function getLanguage($language, $flags = FALSE) {
-	if($flags) {
-		if($language === "Spanish") {
-			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/spanish.png" alt="' . __("Spanish") . '" />';
-		} elseif($language === "English") {
-			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/english.png" alt="' . __("English") . '" />';
-		} elseif($language === "French") {
-			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/french.png" alt="' . __("French") . '" />';
-		} elseif($language === "Portuguese") {
-			return '<img class="no-border" src="'. _webURL . '/www/lib/images/icons/flags/portuguese.png" alt="' . __("Portuguese") . '" />';
-		}
-	} else {
-		if($language === "Spanish") {
-			return __("Spanish");
-		} elseif($language === "English") {
-			return __("English");
-		} elseif($language === "French") {
-			return __("French");
-		} elseif($language === "Portuguese") {
-			return __("Portuguese");		
-		}
-	}
-}
+function getLanguage($lang, $flags = FALSE) {
+	$languages = getLanguagesFromDir();
 
-/**
- * getXMLang()
- *
- * Returns the standard XML language
- * 
- * @param string $language
- * @param string $invert   = FALSE
- * @return string $language / bool
- */
-function getXMLang($language, $invert = FALSE) {
-	if($invert === TRUE) {
-		if($language === "en") {
-			return "English";
-		} elseif($language === "es") {
-			return "Spanish";
-		} elseif($language === "fr") {
-			return "French";
-		} elseif($language === "it") {
-			return "Italian";
-		} elseif($language === "pt") {
-			return "Portuguese";
+	foreach($languages as $language) {
+		if($flags) {
+			if($language["language"] === $lang) {
+				return '<img class="no-border" src="'. _webURL .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __(_($lang)) .'" />';	
+			}
+		} else {
+			if($language["language"] === $lang) {
+				return __(_($lang));
+			}
 		}
-	} elseif($invert === FALSE) {
-		if($language === "English") {
-			return "en";
-		} elseif($language === "Spanish") {
-			return "es";
-		} elseif($language === "French") {
-			return "fr";
-		} elseif($language === "Italian") {
-			return "it";
-		} elseif($language === "Portuguese") {
-			return "pt";
-		}
-	} else {
-		return $language;	
 	}
-	
+
 	return FALSE;
 }
 
@@ -150,24 +100,14 @@ function getXMLang($language, $invert = FALSE) {
  * @param boolean $invert = TRUE
  * @return string value
  */
-function isLang($language = FALSE) {
-	if(!$language) {
-		$language = segment(0);	
+function isLang($lang = FALSE) {
+	if(!$lang) {
+		$lang = segment(0);	
 	}
 	
-	if($language === "en") {
-		return TRUE;
-	} elseif($language === "es") {
-		return TRUE;
-	} elseif($language === "fr") {
-		return TRUE;
-	} elseif($language === "it") {
-		return TRUE;
-	} elseif($language === "pt") {
-		return TRUE;
-	}
+	$langs = array("ar", "bs", "be", "bu", "ca", "ch", "cr", "cz", "da", "du", "en", "et", "fi", "fr", "ga", "ge", "gr", "he", "hu", "in", "it", "jp", "ku", "li", "ma", "pe", "po", "pt", "ro", "ru", "se", "sk", "sn", "es", "sw", "th", "tk", "uk", "ur", "vi");
 	
-	return FALSE;
+	return in_array($lang, $langs) ? TRUE : FALSE;
 }
 
 
@@ -179,26 +119,26 @@ function isLang($language = FALSE) {
  * @param boolean $invert = TRUE
  * @return string value
  */
-function whichLanguage($invert = TRUE) {
+function whichLanguage($invert = TRUE, $lower = FALSE) {
 	global $Load;
 	
 	$Load->helper("router");
-	
-	if(segment(0) === "en" or segment(0) === "es" or segment(0) === "fr" or segment(0) === "pt") {
-		if(segment(0) and $invert === FALSE) {
+
+	if(isLang(segment(0))) {
+		if(segment(0) and !$invert) {
 			return segment(0);
-		} elseif(segment(0) and getXMLang(segment(0), TRUE) != FALSE) {
-			return getXMLang(segment(0), TRUE);
-		} elseif($invert === FALSE) {
-			return getXMLang(_webLanguage, FALSE);
+		} elseif(segment(0) and getLang(segment(0), TRUE)) { 
+			return ($lower) ? strtolower(getLang(segment(0), TRUE)) : getLang(segment(0), TRUE);
+		} elseif(!$invert) {
+			return getLang(_webLanguage);
 		} else {
-			return _webLanguage;
+			return ($lower) ? strtolower(_webLanguage) : _webLanguage;
 		}	
 	} else {
-		if($invert === FALSE) {
-			return getXMLang(_webLanguage, FALSE);
+		if(!$invert) {
+			return getLang(_webLanguage);
 		} else {
-			return _webLanguage;
+			return ($lower) ? strtolower(_webLanguage) : _webLanguage;
 		}	
 	}
 }
@@ -206,44 +146,12 @@ function whichLanguage($invert = TRUE) {
 function getLanguages($flags = FALSE) {
 	$data = array();
 
-	if(_Spanish) {
-		if(_webLanguage === "Spanish") {
-			$default = TRUE;	
-		} else {
-			$default = FALSE;
-		}
+	$languages = getLanguagesFromDir();
 
-		$data[] = array("default" => $default, "name" => "Spanish", "value" => getLanguage("Spanish", $flags));
-	}
-	
-	if(_English) {
-		if(_webLanguage === "English") {
-			$default = TRUE;	
-		} else {
-			$default = FALSE;
-		}
+	foreach($languages as $language) {
+		$default = ($language["language"] === _webLanguage) ? TRUE : FALSE;
 
-		$data[] = array("default" => $default, "name" => "English", "value" => getLanguage("English", $flags));
-	}
-	
-	if(_French) {
-		if(_webLanguage === "French") {
-			$default = TRUE;	
-		} else {
-			$default = FALSE;
-		}
-
-		$data[] = array("default" => $default, "name" => "French", "value" => getLanguage("French", $flags));
-	}
-	
-	if(_Portuguese) {
-		if(_webLanguage === "Portuguese") {
-			$default = TRUE;	
-		} else {
-			$default = FALSE;
-		}
-
-		$data[] = array("default" => $default, "name" => "Portuguese", "value" => getLanguage("Portuguese", $flags));
+		$data[] = array("default" => $default, "name" => $language["language"], "value" => getLanguage($language["language"], $flags));
 	}
 	
 	return $data;
@@ -266,4 +174,93 @@ function getLanguageRadios($lang = NULL, $name = "language") {
 	}
 	
 	return $HTML;
+}
+
+function getLang($lg, $invert = FALSE) {
+	$languages = array(
+					"Arabic"	 => "ar",
+					"Basque"	 => "bs",
+					"Belarusian" => "be",
+					"Bulgarian"  => "bu",
+					"Catalan"	 => "ca",
+					"Chinese"	 => "ch",
+					"Croatian"   => "cr",
+					"Czech"		 => "cz",
+					"Danish"	 => "da",
+					"Dutch"		 => "du",
+					"English" 	 => "en",
+					"Estonian"   => "et",
+					"Finnish"	 => "fi",
+					"French"  	 => "fr",
+					"Galician"   => "ga",
+					"German"	 => "ge",
+					"Greek"		 => "gr",
+					"Hebrew"	 => "he",
+					"Hungarian"  => "hu",
+					"Indonesian" => "in",
+					"Italian"	 => "it",
+					"Japanese"	 => "jp",
+					"Kurdish"	 => "ku",
+					"Lithuanian" => "li",
+					"Macedonian" => "ma",
+					"Persian"	 => "pe",
+					"Polish"	 => "po",
+					"Portuguese" => "pt",
+					"Romanian"   => "ro",
+					"Russian"	 => "ru",
+					"Serbian"	 => "se",
+					"Slovak"	 => "sk",
+					"Slovenian"	 => "sn",
+					"Spanish" 	 => "es",
+					"Swedish"	 => "sw",
+					"Thai"		 => "th",
+					"Turkish"	 => "tk",
+					"Ukrainian"  => "uk",
+					"Urdu"		 => "ur",
+					"Vietnamese" => "vi"
+				);	
+	
+	foreach($languages as $language => $lang) {
+		if($invert) {
+			if($lg === $lang) {
+				return $language;
+			}	
+		} else {
+			if($language === $lg) {
+				return $lang;
+			}
+		}
+	}
+
+	return ($invert) ? "English" : "en";
+}
+
+function getLanguagesFromDir() {
+	$path = "www/lib/languages/gettext";
+	$dir  = dir($path);
+	
+	$languages[0]["language"] = "English";
+	$languages[0]["lang"]	  = "en";
+
+	$i = 1;
+	
+	while($element = $dir->read()) { 
+		if($element !== ".." and $element !== "." and $element !== ".DS_Store" and $element !== "index.html") {
+			$language  = str_replace("language.", "", $element);
+			$parts = explode(".", $language);
+
+			if(count($parts) > 1) {
+				if($parts[1] === "mo") {
+					$languages[$i]["language"] = ucfirst($parts[0]);			
+					$languages[$i]["lang"]	   = getLang(ucfirst($parts[0]));
+						
+					$i++;		
+				}
+			}
+		}
+	}	
+		
+	$dir->close();		
+	
+	return $languages;
 }

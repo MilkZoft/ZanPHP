@@ -322,7 +322,7 @@ class ZP_Files extends ZP_Load {
 		} elseif($this->getType($this->fileType) !== $type) {
 			$error["upload"]  = FALSE;
 			$error["message"] = "The file type is not permited"; 
-		} elseif(move_uploaded_file($this->fileTmp, $file)) {
+		} elseif(@move_uploaded_file($this->fileTmp, $file)) {
 			@chmod($path . $filename, 0777);
 			
 			$error["upload"]   = TRUE;

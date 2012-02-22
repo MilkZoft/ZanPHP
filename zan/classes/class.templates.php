@@ -93,6 +93,22 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */	
 	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
+		if($CSS === "bootstrap") {
+			if(is_null($this->CSS)) {
+				if($print) {
+					print '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+				} else {
+					$this->CSS  = '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+				}
+			} else {
+				if($print) {
+					print '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+				} else {
+					$this->CSS .= '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+				}	
+			}
+		}
+
 		if(is_null($application)) {
 			$file = "www/lib/css/$CSS.css";
 		} else {
@@ -101,17 +117,17 @@ class ZP_Templates extends ZP_Load {
 		
 		if(is_null($this->CSS)) {
 			if($print) {
-				print '<link rel="stylesheet" href="' . _webURL . "/ww/lib/css" . '/default.css" type="text/css">';
+				print '<link rel="stylesheet" href="'. _webURL .'/ww/lib/css/default.css" type="text/css" />' . "\n";
 			} else {
-				$this->CSS = '<link rel="stylesheet" href="' . _webURL . "/ww/lib/css" . '/default.css" type="text/css">';
+				$this->CSS = '<link rel="stylesheet" href="'. _webURL .'/ww/lib/css/default.css" type="text/css" />' . "\n";
 			}			
 		}
 		
 		if(file_exists($file)) {
 			if($print) {
-				print '<link rel="stylesheet" href="' . _webURL . "/" . $file . '" type="text/css">' . "\n";
+				print '<link rel="stylesheet" href="'. _webURL .'/'. $file .'" type="text/css" />' . "\n";
 			} else {
-				$this->CSS .= '<link rel="stylesheet" href="' . _webURL . "/" . $file . '" type="text/css">' . "\n";
+				$this->CSS .= '<link rel="stylesheet" href="'. _webURL .'/'. $file .'" type="text/css" />' . "\n";
 			}
 		}
 	}

@@ -33,7 +33,7 @@ if(_translation === "gettext") {
 	$Load->library("class.streams", "gettext");
 	$Load->config("languages");
 	
-	$languageFile = _dir . _sh . _lib . _sh . _languages . _sh . _gettext . _sh . _sh . _language . _dot . strtolower(whichLanguage()) . _dot . _mo;
+	$languageFile = _dir ."/lib/languages/gettext/language.". whichLanguage(TRUE, TRUE) .".mo";
 
 	if(file_exists($languageFile)) {
 		$Gettext_Reader = new Gettext_Reader($languageFile);
