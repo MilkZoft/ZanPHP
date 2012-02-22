@@ -1,3 +1,8 @@
+Version 2.5.5
+February 21, 2012
+
+    New feature: add support for 40 new languages.
+
 Version 2.5.4
 February 13, 2012
 
