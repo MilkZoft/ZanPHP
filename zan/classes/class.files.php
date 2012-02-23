@@ -85,7 +85,8 @@ class ZP_Files extends ZP_Load {
 			$parts = explode("/", $ext);
 			
 			if(count($parts) === 2) {
-				$ext = $parts[1];
+				$ext   = $parts[1];
+				$parts = explode(".", $ext);
 			}
 		} else {
 			$ext   = strtolower($ext);		
@@ -97,18 +98,18 @@ class ZP_Files extends ZP_Load {
 		}
 		
 		$extensions = array(
-			     	"vnd.openxmlformats-officedocument.spreadsheetml.sheet" 	=> "xlsx",
-			     	"vnd.openxmlformats-officedocument.presentationml.presentation" => "pptx",
-			     	"vnd.openxmlformats-officedocument.wordprocessingml.document"	=> "docx",
-			     	"msword"							=> "doc",
-			      	"vnd.ms-excel"							=> "xls",
-			      	"vnd.ms-powerpoint"						=> "ppt",
-			      	"plain"								=> "txt",
-			      	"x-rar"								=> "rar",
-			      	"octet-stream"							=> $ext2[1],
-			      	"pjpeg"								=> "jpg",
-			      	"x-png"								=> "png"
-			      );
+			     		"vnd.openxmlformats-officedocument.spreadsheetml.sheet" 		=> "xlsx",
+			     		"vnd.openxmlformats-officedocument.presentationml.presentation" => "pptx",
+			     		"vnd.openxmlformats-officedocument.wordprocessingml.document"	=> "docx",
+			     		"msword"														=> "doc",
+			      		"vnd.ms-excel"													=> "xls",
+			      		"vnd.ms-powerpoint"												=> "ppt",
+			      		"plain"															=> "txt",
+			      		"x-rar"															=> "rar",
+			      		"octet-stream"													=> $parts[1],
+			      		"pjpeg"															=> "jpg",
+			      		"x-png"															=> "png"
+			      	);
 		
 		foreach($extensions as $extension => $e) {
 			if($ext === $extension) {
@@ -120,30 +121,28 @@ class ZP_Files extends ZP_Load {
 		
 		if($icons) {
 			$icons = array(
-					"txt"  => array("www/lib/images/icons/files/text.png", __(_("Text File"))),
-					"doc"  => array("/www/lib/images/icons/files/doc.png", __(_("Document File"))),
-					"docx" => array("/www/lib/images/icons/files/doc.png", __(_("Document File"))),
-				 	"pdf"  => array("/www/lib/images/icons/files/pdf.png", __(_("PDF File"))),
-				 	"ppt"  => array("/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
-				 	"pptx" => array("/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
-				 	"rar"  => array("/www/lib/images/icons/files/rar.png", __(_("WinRAR File"))),
-				 	"iso"  => array("/www/lib/images/icons/files/rar.png", __(_("ISO File"))),
-				 	"xls"  => array("/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"xlsx" => array("/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"csv"  => array("/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"zip"  => array("/www/lib/images/icons/files/zip.png", __(_("WinZIP File"))),
-				 	"7z"   => array("/www/lib/images/icons/files/7z.png",  __(_("7z File"))),
-				 	"ai"   => array("/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
-				 	"svg"  => array("/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
-				 	"cdr"  => array("/www/lib/images/icons/files/cdr.png", __(_("Corel Draw File"))),
-				 	"msi"  => array("/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+					"txt"  => array(_webURL ."www/lib/images/icons/files/text.png", __(_("Text File"))),
+					"doc"  => array(_webURL ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
+					"docx" => array(_webURL ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
+				 	"pdf"  => array(_webURL ."/www/lib/images/icons/files/pdf.png", __(_("PDF File"))),
+				 	"ppt"  => array(_webURL ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
+				 	"pptx" => array(_webURL ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
+				 	"rar"  => array(_webURL ."/www/lib/images/icons/files/rar.png", __(_("WinRAR File"))),
+				 	"iso"  => array(_webURL ."/www/lib/images/icons/files/rar.png", __(_("ISO File"))),
+				 	"xls"  => array(_webURL ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+				 	"xlsx" => array(_webURL ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+				 	"csv"  => array(_webURL ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+				 	"zip"  => array(_webURL ."/www/lib/images/icons/files/zip.png", __(_("WinZIP File"))),
+				 	"7z"   => array(_webURL ."/www/lib/images/icons/files/7z.png",  __(_("7z File"))),
+				 	"ai"   => array(_webURL ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
+				 	"svg"  => array(_webURL ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
+				 	"cdr"  => array(_webURL ."/www/lib/images/icons/files/cdr.png", __(_("Corel Draw File"))),
+				 	"msi"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
 				 );
 						
-			foreach($icons as $icon => $i) {
+			foreach($icons as $extension => $icon) {
 				if($ext === $extension) {
-					$ext = $e;
-					
-					break;
+					return $icon;
 				}
 			}	
 			
@@ -153,86 +152,21 @@ class ZP_Files extends ZP_Load {
 		if($return) {
 			return $ext;
 		}
-					
-		if($ext	=== "wav") {
+
+		$audio 	  = array("wav", "midi", "mid", "mp3", "wma");
+		$document = array("7z", "ai", "cdr", "csv", "doc", "docx", "fla", "exe", "iso", "msi", "pdf", "ppt", "pptx", "psd", "rar", "svg", "swf", "txt", "xls", "xlsx", "zip");
+		$image    = array("jpg", "jpeg", "png", "gif", "bmp");
+		$video 	  = array("mpg", "mpeg", "avi", "wmv", "asf", "mp4", "flv", "mov");
+
+		if(in_array($ext, $audio)) {
 			return "audio";
-		} elseif($ext === "midi") {
-			return "audio";
-		} elseif($ext === "mid") {
-			return "audio";
-		} elseif($ext === "mp3") {
-			return "audio";
-		} elseif($ext === "wma") {
-			return "audio";
-		} elseif($ext === "7z") {
+		} elseif(in_array($ext, $document)) {
 			return "document";
-		} elseif($ext === "ai") {
-			return "document";
-		} elseif($ext === "cdr") {
-			return "document";
-		} elseif($ext === "csv") {
-			return "document";
-		} elseif($ext === "doc") {
-			return "document";
-		} elseif($ext === "docx") {
-			return "document";
-		} elseif($ext === "fla") {
-			return "document";
-		} elseif($ext === "exe") {
-			return "document";
-		} elseif($ext === "iso") {
-			return "document";
-		} elseif($ext === "msi") {
-			return "document";
-		} elseif($ext === "pdf") {
-			return "document";
-		} elseif($ext === "ppt") {
-			return "document";
-		} elseif($ext === "pptx") {
-			return "document";
-		} elseif($ext === "psd") {
-			return "document";
-		} elseif($ext === "rar") {
-			return "document";
-		} elseif($ext === "svg") {
-			return "document";
-		} elseif($ext === "swf") {
-			return "document";
-		} elseif($ext === "txt") {
-			return "document";
-		} elseif($ext === "xls") {
-			return "document";
-		} elseif($ext === "xlsx") {
-			return "document";
-		} elseif($ext === "zip") {
-			return "document";
-		} elseif($ext === "jpg") {
+		} elseif(in_array($ext, $image)) {
 			return "image";
-		} elseif($ext === "jpeg") {
-			return "image";
-		} elseif($ext === "png") {
-			return "image";
-		} elseif($ext === "gif") {
-			return "image";
-		} elseif($ext === "bmp") {
-			return "image";	
-		} elseif($ext === "mpg") {
+		} elseif(in_array($ext, $video)) {
 			return "video";
-		} elseif($ext === "mpeg") {
-			return "video";
-		} elseif($ext === "avi") {
-			return "video";
-		} elseif($ext === "wmv") {
-			return "video";
-		} elseif($ext === "asf") {
-			return "video";		
-		} elseif($ext === "mp4") {
-			return "video";
-		} elseif($ext === "flv") {
-			return "video";
-		} elseif($ext === "mov") {
-			return "video";			
-		} 
+		}
 		
 		return FALSE;
 	}
@@ -253,36 +187,39 @@ class ZP_Files extends ZP_Load {
 		$ext   = strtolower($this->fileType);		
 		$parts = explode("/", $ext);
 		
+		if($ext === "") {
+			$error["upload"]  = FALSE;
+			$error["message"] = "A problem occurred when trying to upload file";
+
+			return $error;
+		}
+
 		if(count($parts) === 2) {
 			$ext = $parts[1];	
 		} 
 
 		$ext2 = explode(".", $this->filename);
 		
-		if($ext === "vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-			$ext = "xlsx";
-		} elseif($ext === "vnd.openxmlformats-officedocument.presentationml.presentation") {
-			$ext = "pptx";
-		} elseif($ext === "vnd.openxmlformats-officedocument.wordprocessingml.document") {
-			$ext = "docx";
-		} elseif($ext === "msword") {
-			$ext = "doc";
-		} elseif($ext === "vnd.ms-excel") {
-			$ext = "xls";
-		} elseif($ext === "vnd.ms-powerpoint") {
-			$ext = "ppt";		
-		} elseif($ext === "plain") {
-			$ext = "txt";
-		} elseif($ext === "x-rar") {
-			$ext = "rar";
-		} elseif($ext === "octet-stream") {
-			$ext = $ext2[1];
-		} elseif($ext === "pjpeg") {
-			$ext = "jpg";
-		} elseif($ext === "jpeg") {
-			$ext = "jpg";
-		} elseif($ext === "x-png") {
-			$ext = "png";
+		$extensions = array(
+			     		"vnd.openxmlformats-officedocument.spreadsheetml.sheet" 		=> "xlsx",
+			     		"vnd.openxmlformats-officedocument.presentationml.presentation" => "pptx",
+			     		"vnd.openxmlformats-officedocument.wordprocessingml.document"	=> "docx",
+			     		"msword"														=> "doc",
+			      		"vnd.ms-excel"													=> "xls",
+			      		"vnd.ms-powerpoint"												=> "ppt",
+			      		"plain"															=> "txt",
+			      		"x-rar"															=> "rar",
+			      		"octet-stream"													=> $ext2[1],
+			      		"pjpeg"															=> "jpg",
+			      		"x-png"															=> "png"
+			      	);
+		
+		foreach($extensions as $extension => $e) {
+			if($ext === $extension) {
+				$ext = $e;
+				
+				break;
+			}
 		}
 
 		if($this->filename !== "") {

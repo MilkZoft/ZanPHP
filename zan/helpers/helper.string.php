@@ -401,17 +401,12 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
 			}  else {
 				$POST = $_POST[$position];
 			}		
-		}
-		
+		}	
 	} else {
 		return FALSE;
 	}
-	
-	if(isInjection($POST)) {
-		return FALSE;
-	} else {
-		return $POST;
-	}
+
+	return $POST;
 }
 
 /**
