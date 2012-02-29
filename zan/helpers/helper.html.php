@@ -149,7 +149,7 @@ function HTML($open = TRUE) {
 	}
 }
 
-function img($src, $alt = NULL, $class = "no-border", $attributes = NULL) {
+function img($src, $attributes = NULL) {
 	$attrs = NULL;
 
 	if(is_array($attributes)) {
@@ -158,15 +158,7 @@ function img($src, $alt = NULL, $class = "no-border", $attributes = NULL) {
 		}	
 	}
 
-	if(is_null($alt)) {
-		return '<img src="'. $src .'" '. $attrs .' />';
-	} elseif(!is_null($alt) and !is_null($class)) {
-		return '<img src="'. $src .'" alt="'. $alt .'" title="'. $alt .'" class="'. $class .'" '. $attrs .' />';
-	} elseif(!is_null($alt)) {
-		return '<img src="'. $src .'" alt="'. $alt .'" title="' . $alt . '" '. $attrs .' />';
-	} elseif(!is_null($class)) {
-		return '<img src="'. $src .'" class="'. $class .'" '. $attrs .' />';
-	}
+	return '<img src="'. $src .'"'. $attrs .' />';
 }
 	
 function li($list, $open = NULL) {

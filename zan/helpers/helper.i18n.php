@@ -102,7 +102,7 @@ function getLanguage($lang, $flags = FALSE) {
  */
 function isLang($lang = FALSE) {
 	if(!$lang) {
-		$lang = segment(0);	
+		$lang = strtolower(segment(0));	
 	}
 	
 	$langs = array("ar", "bs", "be", "bu", "ca", "ch", "cr", "cz", "da", "du", "en", "et", "fi", "fr", "ga", "ge", "gr", "he", "hu", "in", "it", "jp", "ku", "li", "ma", "pe", "po", "pt", "ro", "ru", "se", "sk", "sn", "es", "sw", "th", "tk", "uk", "ur", "vi");
@@ -157,20 +157,30 @@ function getLanguages($flags = FALSE) {
 	return $data;
 }
 
-function getLanguageRadios($lang = NULL, $name = "language") {
+function getLanguagesInput($lang = NULL, $name = "language", $input = "radio") {
 	$languages = getLanguages(TRUE);
 	$HTML = NULL;
 
+	if($input === "select") {
+		$HTML = '<select name="'. $name .'" size="1">';
+	}
+
 	foreach($languages as $language) {
-		if($language["default"]) {
-			$check = ' checked="checked"';
-		} elseif($lang === $language["name"]) {
-			$check = ' checked="checked"';
+		if($language["default"] or $lang === $language["name"]) {
+			$check = ($input === "radio") ? ' checked="checked"' : ' selected="selected"';
 		} else {
 			$check = NULL;
 		}	
 
-		$HTML .= '<input id="language" name="'. $name .'" type="radio" value="'. $language["name"] .'" '. $check .' /> '. $language["value"];
+		if($input === "radio") {
+			$HTML .= '<input id="language" name="'. $name .'" type="radio" value="'. $language["name"] .'" '. $check .' /> '. $language["value"];
+		} elseif($input === "select") {
+			$HTML .= '<option value="'. $language["name"] .'"'. $check .'>'. __(_($language["name"])) .'</option>';
+		}
+	}
+
+	if($input === "select") {
+		$HTML .= '</select>';
 	}
 	
 	return $HTML;

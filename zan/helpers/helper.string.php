@@ -192,6 +192,10 @@ function encode($text, $URL = FALSE) {
  * @return string $text
  */
 function filter($text, $filter = FALSE) {
+	if(is_null($text) or !is_string($text)) {
+		return FALSE;
+	}
+	
 	if($filter === TRUE) {
 		$text = cleanHTML($text);
 	} elseif($filter === "escape") {		

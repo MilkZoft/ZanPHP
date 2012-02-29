@@ -93,6 +93,14 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */	
 	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
+		if(file_exists($CSS)) { 
+			if($print) {
+				print '<link rel="stylesheet" href="'. _webURL . _sh . $CSS .'" type="text/css" />' . "\n";
+			} else { 
+				$this->CSS .= '<link rel="stylesheet" href="'. _webURL . _sh . $CSS .'" type="text/css" />' . "\n";
+			}
+		} 
+
 		if($CSS === "bootstrap") {
 			if(is_null($this->CSS)) {
 				if($print) {
@@ -117,9 +125,9 @@ class ZP_Templates extends ZP_Load {
 		
 		if(is_null($this->CSS)) {
 			if($print) {
-				print '<link rel="stylesheet" href="'. _webURL .'/ww/lib/css/default.css" type="text/css" />' . "\n";
+				print '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/default.css" type="text/css" />' . "\n";
 			} else {
-				$this->CSS = '<link rel="stylesheet" href="'. _webURL .'/ww/lib/css/default.css" type="text/css" />' . "\n";
+				$this->CSS = '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/default.css" type="text/css" />' . "\n";
 			}			
 		}
 		

@@ -36,90 +36,79 @@ class ZP_Files extends ZP_Load {
 	 * 
 	 * @var public $fileError
 	 */
-	public $fileError;	
+	public $fileError = NULL;	
 	
 	/**
 	 * Contains the name of the file
 	 * 
 	 * @var public $filename
 	 */
-	public $filename;
+	public $filename = NULL;
 	
 	/**
 	 * Contains the size in bytes of the file
 	 * 
 	 * @var public $fileSize
 	 */
-	public $fileSize;
+	public $fileSize = NULL;
 	
 	/**
 	 * Contains the temporal name of the file
 	 * 
 	 * @var public $fileTmp
 	 */
-	public $fileTmp;
+	public $fileTmp = NULL;
 	
 	/**
 	 * Contains the mime type of the file
 	 * 
 	 * @var public $fileType
 	 */
-	public $fileType;
+	public $fileType = NULL;
 	
 	public function __construct() {
 		$this->config("files");
 		$this->config("images");	
 	}
 	
-    /**
-     * Get the type of a file and divide into audios, documents, images or videos
-     *
-     * @param string $ext
-     * @param boolean $mimeType = FALSE
-     * @param boolean $return = FALSE
-     * @return void
-     */
-	public function getType($ext, $mimeType = FALSE, $return = FALSE, $icons = FALSE) {	
-		if(!$mimeType) {
-			$ext   = strtolower($ext);		
-			$parts = explode("/", $ext);
-			
-			if(count($parts) === 2) {
-				$ext   = $parts[1];
-				$parts = explode(".", $ext);
-			}
+	public function getFileInformation($filename = FALSE) {
+		if(!$this->filename and !$filename) {
+			return FALSE;
 		} else {
-			$ext   = strtolower($ext);		
-			$parts = explode(".", $ext);
-			
-			if(count($parts) === 2) {
-				$ext = $parts[1];
-			}
+			$filename = ($this->filename) ? $this->filename : $filename;
 		}
-		
-		$extensions = array(
-			     		"vnd.openxmlformats-officedocument.spreadsheetml.sheet" 		=> "xlsx",
-			     		"vnd.openxmlformats-officedocument.presentationml.presentation" => "pptx",
-			     		"vnd.openxmlformats-officedocument.wordprocessingml.document"	=> "docx",
-			     		"msword"														=> "doc",
-			      		"vnd.ms-excel"													=> "xls",
-			      		"vnd.ms-powerpoint"												=> "ppt",
-			      		"plain"															=> "txt",
-			      		"x-rar"															=> "rar",
-			      		"octet-stream"													=> $parts[1],
-			      		"pjpeg"															=> "jpg",
-			      		"x-png"															=> "png"
-			      	);
-		
-		foreach($extensions as $extension => $e) {
-			if($ext === $extension) {
-				$ext = $e;
-				
-				break;
+
+		$file["icon"] = NULL;
+
+		$parts = explode(".", $filename);
+
+		if(is_array($parts)) {
+			$file["name"] 	   = $parts[0]; 
+			$file["extension"] = array_pop($parts);
+
+			$audio 	  = array("wav", "midi", "mid", "mp3", "wma");
+			$codes    = array("asp", "php", "c", "as", "html", "js", "css", "rb");
+			$document = array("csv", "doc", "docx", "pdf", "ppt", "pptx", "txt", "xls", "xlsx");
+			$image    = array("jpg", "jpeg", "png", "gif", "bmp");
+			$programs = array("7z", "ai", "cdr", "fla", "exe", "dmg", "pkg", "iso", "msi", "psd", "rar", "svg", "swf", "zip");
+			$video 	  = array("mpg", "mpeg", "avi", "wmv", "asf", "mp4", "flv", "mov");
+
+			if(in_array($file["extension"], $audio)) {
+				$file["type"] = "audio";
+			} elseif(in_array($file["extension"], $codes)) {
+			 	$file["type"] = "codes";
+			} elseif(in_array($file["extension"], $document)) {
+				$file["type"] = "documents";
+			} elseif(in_array($file["extension"], $image)) {
+				$file["type"] = "images";
+			} elseif(in_array($file["extension"], $video)) {
+				$file["type"] = "programs";
+			} elseif(in_array($file["extension"], $video)) {
+				$file["type"] = "videos";
+			} else {
+				$file["type"] = "unknown";
 			}
-		}
-		
-		if($icons) {
+
 			$icons = array(
 					"txt"  => array(_webURL ."www/lib/images/icons/files/text.png", __(_("Text File"))),
 					"doc"  => array(_webURL ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
@@ -138,36 +127,22 @@ class ZP_Files extends ZP_Load {
 				 	"svg"  => array(_webURL ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
 				 	"cdr"  => array(_webURL ."/www/lib/images/icons/files/cdr.png", __(_("Corel Draw File"))),
 				 	"msi"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+				 	"exe"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+				 	"dmg"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+				 	"pkg"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
 				 );
 						
-			foreach($icons as $extension => $icon) {
-				if($ext === $extension) {
-					return $icon;
+			foreach($icons as $extension => $icon) { 
+				if($file["extension"] === $extension) {
+					$file["icon"] = $icon;
+
+					break;
 				}
 			}	
 			
-			return $icon;
-		}
-					
-		if($return) {
-			return $ext;
+			return $file;
 		}
 
-		$audio 	  = array("wav", "midi", "mid", "mp3", "wma");
-		$document = array("7z", "ai", "cdr", "csv", "doc", "docx", "fla", "exe", "iso", "msi", "pdf", "ppt", "pptx", "psd", "rar", "svg", "swf", "txt", "xls", "xlsx", "zip");
-		$image    = array("jpg", "jpeg", "png", "gif", "bmp");
-		$video 	  = array("mpg", "mpeg", "avi", "wmv", "asf", "mp4", "flv", "mov");
-
-		if(in_array($ext, $audio)) {
-			return "audio";
-		} elseif(in_array($ext, $document)) {
-			return "document";
-		} elseif(in_array($ext, $image)) {
-			return "image";
-		} elseif(in_array($ext, $video)) {
-			return "video";
-		}
-		
 		return FALSE;
 	}
 	
@@ -183,80 +158,39 @@ class ZP_Files extends ZP_Load {
 		ini_set("upload_max_filesize", 18388608);
 		ini_set("max_execution_time", "1000");
 		ini_set("max_input_time", "1000");	
+
+		$file = $this->getFileInformation();
 		
-		$ext   = strtolower($this->fileType);		
-		$parts = explode("/", $ext);
-		
-		if($ext === "") {
+		if(!$file) {
 			$error["upload"]  = FALSE;
 			$error["message"] = "A problem occurred when trying to upload file";
 
 			return $error;
 		}
-
-		if(count($parts) === 2) {
-			$ext = $parts[1];	
-		} 
-
-		$ext2 = explode(".", $this->filename);
 		
-		$extensions = array(
-			     		"vnd.openxmlformats-officedocument.spreadsheetml.sheet" 		=> "xlsx",
-			     		"vnd.openxmlformats-officedocument.presentationml.presentation" => "pptx",
-			     		"vnd.openxmlformats-officedocument.wordprocessingml.document"	=> "docx",
-			     		"msword"														=> "doc",
-			      		"vnd.ms-excel"													=> "xls",
-			      		"vnd.ms-powerpoint"												=> "ppt",
-			      		"plain"															=> "txt",
-			      		"x-rar"															=> "rar",
-			      		"octet-stream"													=> $ext2[1],
-			      		"pjpeg"															=> "jpg",
-			      		"x-png"															=> "png"
-			      	);
+		$filename = code(5, FALSE) ."_". slug($file["name"]) .".". $file["extension"];
+		$URL 	  = $path . $filename;		
 		
-		foreach($extensions as $extension => $e) {
-			if($ext === $extension) {
-				$ext = $e;
-				
-				break;
-			}
-		}
-
-		if($this->filename !== "") {
-			$parts = explode(".", $this->filename);
-		}
-		
-		if(count($parts) > 0) {
-			if($parts[1] === "csv") {
-				$ext = "csv";
-			} elseif($parts[1] === "msi") {
-				$ext = "msi";
-			}
-		}
-		
-		$filename = code(5, FALSE) . "_" . slug($parts[0]) . "." . $ext;
-		$file     = $path . $filename;		
-		
-		if(file_exists($file)) {
+		if(file_exists($URL)) {
 			$error["upload"]   = FALSE;
 			$error["message"]  = "The file already exists";
 			$error["filename"] = $filename; 
 		} elseif($this->fileSize > _fileSize) {
 			$error["upload"]  = FALSE;
 			$error["message"] = "The file size exceed the permited limit"; 
-		} elseif($this->fileError === 1) {
+		} elseif($this->fileError === 1) { 
 			$error["upload"]  = FALSE;
 			$error["message"] = "An error has ocurred"; 
-		} elseif($this->getType($this->fileType) !== $type) {
+		} elseif($file["type"] !== $type) { 
 			$error["upload"]  = FALSE;
 			$error["message"] = "The file type is not permited"; 
-		} elseif(@move_uploaded_file($this->fileTmp, $file)) {
-			@chmod($path . $filename, 0777);
-			
+		} elseif(@move_uploaded_file($this->fileTmp, $URL)) {
+			@chmod($URL, 0777);
+		
 			$error["upload"]   = TRUE;
-			$error["message"]  = "The image has been upload correctly"; 
-			$error["filename"] = $filename; 
-		} else {
+			$error["message"]  = "The file has been upload correctly"; 
+			$error["filename"] = $filename;
+		} else { 
 			$error["upload"]  = FALSE;
 			$error["message"] = "A problem occurred when trying to upload file";
 		}
@@ -325,6 +259,27 @@ class ZP_Files extends ZP_Load {
 				return $dir . $upload["filename"];
 			}
 		}
+	}
+
+	public function uploadResource() {
+		ini_set("post_max_size", "128M");
+		ini_set("upload_max_filesize", "128M");
+		ini_set("max_execution_time", "1000");
+		ini_set("max_input_time", "1000");
+
+		$filename = isset($_SERVER["HTTP_X_FILENAME"]) ? $_SERVER["HTTP_X_FILENAME"] : FALSE;
+
+		$file = $this->getFileInformation($filename);
+		
+		if($filename) {
+			if(file_put_contents("www/lib/multimedia/". $file["type"] ."/". $filename, file_get_contents("php://input"))) {
+				return __(_("Upload success!"));
+			} else {
+				return __(_("Permission problems!"));
+			}
+		}
+
+		return __(_("Upload failed!"));
 	}
 	
 }

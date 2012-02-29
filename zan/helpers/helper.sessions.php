@@ -78,7 +78,7 @@ function createCookie($cookie = NULL, $value, $time = 604800, $redirect = FALSE,
 function SESSION($session, $value = FALSE) {
 	if(!$value) {
 		if(isset($_SESSION[$session])) {
-			return filter($_SESSION[$session]);
+			return $_SESSION[$session];
 		} else {
 			return FALSE;
 		}

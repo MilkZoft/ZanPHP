@@ -441,7 +441,7 @@ function formSave($action = NULL, $events = TRUE) {
 }
 
 function formUploadFrame($value, $events = NULL) {
-	$HTML  = '<input type="file" class="required" name="'. $value .'File" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+	$HTML  = '<input type="file" class="required" style="width: 280px;" name="'. $value .'File" /> ';
 	$HTML .= '<input type="submit" class="btn btn-success" name="'. $value .'Upload" value="'. __("Upload") .'" '. $events .' />&nbsp';
 	$HTML .= '<iframe name="'. $value .'Upload" class="no-display"></iframe>';
 	
