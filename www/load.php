@@ -29,13 +29,15 @@ $helpers = array("i18n", "router", "benchmark", "exceptions", "string", "session
 $Load->helper($helpers);
 
 if(_translation === "gettext") {
-	$languageFile = _dir ."/lib/languages/gettext/language.". whichLanguage(TRUE, TRUE) .".mo";
-		
-	if(file_exists($languageFile)) { 			
-		$Load->library("class.streams", NULL, NULL, "gettext");
-		$Gettext_Reader = $Load->library("class.gettext", "Gettext_Reader", array($languageFile), "gettext");
-		$Load->config("languages");
+	$Load->library("class.gettext", "gettext");
+	$Load->library("class.streams", "gettext");
+	$Load->config("languages");
 	
+	$languageFile = _dir ."/lib/languages/gettext/language.". whichLanguage(TRUE, TRUE) .".mo";
+
+	if(file_exists($languageFile)) {
+		$Gettext_Reader = new Gettext_Reader($languageFile);
+		
 		$Gettext_Reader->load_tables();
 	}
 }
