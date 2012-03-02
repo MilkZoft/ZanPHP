@@ -83,15 +83,15 @@ class ZP_Email extends ZP_Load {
 	 * @return @mixed
 	*/
 	public function send() {
-		if($this->library === "PHPMailer") {
-			$this->library("class.phpmailer");
-			
-			$this->PHPMailer = new PHPMailer();
+		if($this->library === strtolower("phpmailer")) {
+			$this->config("email");
+
+			$this->PHPMailer = $this->library("class.phpmailer", "PHPMailer");
 
 			$this->PHPMailer->isHTML(TRUE);		
 			$this->PHPMailer->isSMTP();
 			$this->PHPMailer->addAddress($this->email);
-
+			
 			$this->PHPMailer->FromName = $this->fromName;
 			$this->PHPMailer->Subject  = $this->subject;
 			$this->PHPMailer->Body     = $this->message;
@@ -101,7 +101,7 @@ class ZP_Email extends ZP_Load {
 			$this->PHPMailer->Password = _gPwd;
 			$this->PHPMailer->SMTPAuth = TRUE;
 			
-			if($this->PHPMailer->Send() === FALSE) {
+			if(!$this->PHPMailer->Send()) {
 				return FALSE;
 			} else { 
 				return TRUE;

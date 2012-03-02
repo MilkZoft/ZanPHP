@@ -225,7 +225,6 @@ class ZP_Load {
 	}
 
 	public function driver($driver = NULL, $type = "db") {
-		
 		if(file_exists(_corePath . "/drivers/$type/driver.".strtolower($driver).".php")) {
 			$file = _corePath . "/drivers/$type/driver.".strtolower($driver).".php";	
 		} else {
@@ -476,12 +475,17 @@ class ZP_Load {
      */
 	public function library($name, $className = NULL, $params = array(), $application = NULL) {	
 		$lib = str_replace("library.", "", $name);
-		
-		if(isset($name) and $application !== NULL) {
+		$lib = str_replace("class.", "", $name);
+
+		if(isset($name) and $application) {
 			if(file_exists(_corePath . "/libraries/$application/$name.php")) {
 				include_once _corePath . "/libraries/$application/$name.php";	
 
-				return ($className and $params) ? ZP_Singleton::instance($className, $params) : TRUE;
+				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;
+			} elseif(file_exists(_corePath . "/libraries/$lib/$name.php")) {
+				include_once _corePath . "/libraries/$lib/$name.php";	
+
+				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;
 			} elseif(file_exists("www/applications/$application/libraries/library.$name.php")) {
 				include_once "www/applications/$application/libraries/library.$name.php";	
 			
@@ -494,7 +498,9 @@ class ZP_Load {
 			$name = strtolower($name);
 
 			if(file_exists(_corePath . "/libraries/$lib/$name.php")) {
-				include_once _corePath . "/libraries/$lib/$name.php";										
+				include_once _corePath . "/libraries/$lib/$name.php";
+
+				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;										
 			} else {
 				die("$name library doesn't exists");
 			}			
@@ -685,7 +691,7 @@ class ZP_Load {
      * @param string $vars        = NULL
      * @return string value / void
      */	
-	public function view($name, $vars = NULL, $application = NULL) {
+	public function view($name, $vars = NULL, $application = NULL, $return = FALSE) {
 		if(is_null($application)) {
 			$application = whichApplication();
 		} 
@@ -706,6 +712,10 @@ class ZP_Load {
 			}
 				
 			if(file_exists($view)) {
+				if($return) {
+					return file_get_contents($view);
+				}
+
 				$this->Cache = $this->core("Cache");	
 
 				if($this->Cache->get($cacheID, "views")) {
