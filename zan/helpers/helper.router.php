@@ -252,6 +252,20 @@ function execute() {
 	}
 }
 
+function currentPath($path = NULL) {
+	$URL = getURL();
+	
+	if($path) {
+		if($URL === path($path)) {
+			return ' class="current"';
+		}
+	} else {
+		if($URL === path()) {
+			return ' class="current"';
+		}
+	}
+}
+
 /**
  * getURL
  *
@@ -263,7 +277,11 @@ function getURL() {
 	$URL = NULL;
 
 	for($i = 0; $i <= segments() - 1; $i++) {
-		$URL .= segment($i) . "/"; 	
+		if($i === (segments() - 1)) {
+			$URL .= segment($i); 	
+		} else {
+			$URL .= segment($i) . "/";
+		}
 	}
 	
 	$URL = _webBase . "/$URL";
@@ -309,8 +327,12 @@ function isNumber($number) {
 
 function path($path = FALSE, $URL = FALSE) {
 	if(!$path) {
-		return _webBase . _sh . _webLang . _sh;	
-	}
+		if(isLang()) {
+			return _webBase . _sh . _webLang;
+		} else {
+			return _webBase . _sh;
+		}	
+	} 
 
 	if($URL) {
 		return _webURL  . _sh . $path;
