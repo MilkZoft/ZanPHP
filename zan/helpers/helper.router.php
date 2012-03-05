@@ -45,17 +45,14 @@ function execute() {
 	
 	$applicationController = FALSE;
 
-	$match = FALSE;
+	$match   = FALSE;
+	$special = FALSE;
 
 	if(file_exists("www/config/config.routes.php")) {
 		include "www/config/config.routes.php";
 		
 		if(is_array($routes)) {
-			if(isLang()) {
-				$application = segment(1);
-			} else {
-				$application = segment(0);
-			}
+			$application = segment(0, isLang());
 
 			foreach($routes as $route) {
 				$pattern = $route["pattern"]; 
@@ -77,103 +74,71 @@ function execute() {
 	if(!$match) {
 		if(!segment(0)) {
 			$application = _defaultApplication;	
-		} elseif(segment(0) and !segment(1)) { 
+		} elseif(segment(0) and !segment(1)) {
 			if(isLang()) {
 				$application = _defaultApplication;
 			} else {
 				$application = segment(0);	
 			}
 		} else { 
-			if(isLang()) {
-				$application = segment(1);
-				
-				if(segment(2)) {
-					if(isController(segment(2), segment(1))) { 
-						$applicationController = segment(2);
-						
-						if(segment(3) and !isNumber(segment(3))) {
-							$method = segment(3);
-						} else {
-							$method = "index";	
-						}
-					} else { 
-						if(!isNumber(segment(2))) { 
-							$method = segment(2);
-						}
-					}
-				}
-				
-				if($applicationController) {
-					if(segments() > 4) {
-						$j = 4;
-					
-						for($i = 0; $i < segments(); $i++) {
-							if(segment($j) or segment($j) === 0) {
-								$params[$i] = segment($j);
-							
-								$j++;	
-							}
-						}
-					}			
-				} else {
-					if(segments() > 3) {
-						$j = 3;
-						
-						for($i = 0; $i < segments(); $i++) {
-							if(segment($j) or segment($j) === 0) {
-								$params[$i] = segment($j);
-							
-								$j++;	
-							}
-						}
-					}	
-				}
-			} else {
-				$application = segment(0);
-				
-				if(segment(1)) { 
-					if(isController(segment(1), segment(0))) {
-						$applicationController = segment(1);
-						
-						if(segment(2) and !isNumber(segment(2))) {
-							$method = segment(2); 
-						} else {
-							$method = "index";	
-						}
+			$application = segment(0, isLang());
+			$params      = array();
+
+			if(segment(1, isLang())) { 
+				if(isController(segment(1, isLang()), segment(0, isLang()))) { 
+					$applicationController = segment(1, isLang());
+					$Controller     	   = getController($applicationController, $application);
+					$controllerFile        = getController($applicationController, $application, TRUE);
+
+					if(segment(2, isLang()) and !isNumber(segment(2, isLang()))) {
+						$method = segment(2, isLang());
 					} else {
-						if(!isNumber(segment(1))) { 
-							$method = segment(1);
-						} 
-					}	
-				}
-				
-				if($applicationController) {
-					if(segments() > 3) {
-						$j = 3;
-						
-						for($i = 0; $i <= segments() - 1; $i++) {
-							if(segment($j) or segment($j) === 0) {
-								$params[$i] = segment($j);
-								
-								$j++;
-							}	
-						} 
-					}			
+						$method = "index";	
+					}
 				} else {
-					if(segments() > 2) {
-						$j = 2;
-						
-						for($i = 0; $i <= segments() - 1; $i++) {
-							if(segment($j) or segment($j) === 0) {
-								$params[$i] = segment($j);
-								
-								$j++;
-							}	
-						} 
+					$Controller     = getController(NULL, $application);
+					$controllerFile = getController(NULL, $application, TRUE);
+
+					if(!isNumber(segment(1, isLang()))) { 
+						if(method_exists($Controller, segment(1, isLang()))) {
+							$method = segment(1, isLang());
+						} else {
+							$special = TRUE;
+						}
 					}
 				}
 			}
-		}
+			
+			if($applicationController) {
+				if(segments() > 3) {
+					$j = isLang() ? 4 : 3;
+					$j = ($special) ? $j - 1 : $j; 
+
+					for($i = 0; $i < segments(); $i++) {
+						if(segment($j) or segment($j) === 0) {
+							$params[$i] = segment($j);
+							
+							$j++;	
+						}
+					}
+				}			
+			} else {
+				$count = ($special) ? 1 : 2;
+
+				if(segments() > $count) {
+					$j = isLang() ? 3 : 2;
+					$j = ($special) ? $j - 1 : $j;
+
+					for($i = 0; $i < segments(); $i++) {
+						if(segment($j) or segment($j) === 0) {
+							$params[$i] = segment($j);
+							
+							$j++;	
+						}
+					}
+				}	
+			}
+		} 
 	}
 
 	if(_webSituation !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
@@ -182,17 +147,8 @@ function execute() {
 	
 	$Load->app($application);
 
-	if(isController($applicationController, $application)) {
-		$controller 	= ucfirst($applicationController) . "_Controller";
-		$controllerFile = "www/applications/". strtolower($application) . "/controllers/controller." . strtolower($applicationController). ".php";
-		
-		$$controller = $Load->controller($controller);
-	} else { 
-		$controller 	= ucfirst($application) . "_Controller";
-		$controllerFile = "www/applications/" . strtolower($application) . "/controllers/controller." . strtolower($application) . ".php";
-		
-		$$controller = $Load->controller($controller);
-	}
+	$Controller     = isset($Controller) ? $Controller : getController(NULL, $application);
+	$controllerFile = ($applicationController) ? getController($applicationController, $application, TRUE) : getController(NULL, $application, TRUE);
 
 	if(file_exists($controllerFile)) {
 		if(isset($method) and isset($params)) { 
@@ -209,7 +165,7 @@ function execute() {
 					getException($e);
 				}
 			} else {
-				$$controller->index();
+				call_user_func_array(array($$controller, "index"), $params);
 			}
 		} elseif(isset($method)) {
 			if(method_exists($$controller, $method)) {
@@ -244,10 +200,14 @@ function execute() {
 					getException($e);
 				}
 			} else {
-				$$controller->index();	
+				$params = !isset($params) ? array() : $params;
+
+				call_user_func_array(array($$controller, "index"), $params);
 			}
 		} else {
-			$$controller->index();	
+			$params = !isset($params) ? array() : $params;
+
+			call_user_func_array(array($Controller, "index"), $params);
 		}
 	}
 }
@@ -297,6 +257,24 @@ function isController($controller, $application) {
 	}
 	
 	return FALSE;
+}
+
+function getController($applicationController = NULL, $application, $file = FALSE) {
+	global $Load;
+
+	if(isController($applicationController, $application)) {
+		$controller 	= ucfirst($applicationController) ."_Controller";
+		$controllerFile = "www/applications/". strtolower($application) ."/controllers/controller.". strtolower($applicationController). ".php";
+		
+		$$controller = (!$file) ? $Load->controller($controller) : FALSE;
+	} else { 
+		$controller 	= ucfirst($application) ."_Controller";
+		$controllerFile = "www/applications/". strtolower($application) ."/controllers/controller.". strtolower($application) .".php";
+		
+		$$controller = (!$file) ? $Load->controller($controller) : FALSE;
+	}
+
+	return (!$file) ? $$controller : $controllerFile;
 }
 
 function whichApplication() {
