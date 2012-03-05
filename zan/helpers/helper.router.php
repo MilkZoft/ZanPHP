@@ -152,25 +152,25 @@ function execute() {
 
 	if(file_exists($controllerFile)) {
 		if(isset($method) and isset($params)) { 
-			if(method_exists($$controller, $method)) {
+			if(method_exists($Controller, $method)) {
 				try {
-					$reflection = new ReflectionMethod($$controller, $method);
+					$reflection = new ReflectionMethod($Controller, $method);
 				
 					if(!$reflection->isPublic()) {
 						throw new RuntimeException("The called method is not public.", 100);
 					}
 					
-					call_user_func_array(array($$controller, $method), $params);
+					call_user_func_array(array($Controller, $method), $params);
 				} catch(RuntimeException $e) {
 					getException($e);
 				}
 			} else {
-				call_user_func_array(array($$controller, "index"), $params);
+				call_user_func_array(array($Controller, "index"), $params);
 			}
 		} elseif(isset($method)) {
-			if(method_exists($$controller, $method)) {
+			if(method_exists($Controller, $method)) {
 				try {
-					$Reflection = new ReflectionMethod($$controller, $method);
+					$Reflection = new ReflectionMethod($Controller, $method);
 					
 					if(!$Reflection->isPublic()) {
 						throw new RuntimeException("The called method is not public.", 100);
@@ -202,7 +202,7 @@ function execute() {
 			} else {
 				$params = !isset($params) ? array() : $params;
 
-				call_user_func_array(array($$controller, "index"), $params);
+				call_user_func_array(array($Controller, "index"), $params);
 			}
 		} else {
 			$params = !isset($params) ? array() : $params;
