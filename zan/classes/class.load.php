@@ -170,14 +170,14 @@ class ZP_Load {
      */
 	public function controller($controller, $application = NULL) {
 		$parts = explode("_", $controller);
-	
+		
 		if(!$this->application) { 
 			if(file_exists("www/applications/$application/controllers/controller.". strtolower($parts[0]) .".php")) {
 				$file = "www/applications/$application/controllers/controller.". strtolower($parts[0]) .".php";
 			} elseif(count($parts) === 2) {
 				$file = "www/applications/". strtolower($parts[0]) ."/controllers/controller.". strtolower($parts[0]) .".php";
 			}		
-		} else {
+		} else { 
 			if(file_exists("www/applications/$application/controllers/controller.". strtolower($parts[0]) .".php")) {
 				$file = "www/applications/$application/controllers/controller.". strtolower($parts[0]) .".php";
 			} elseif(file_exists("www/applications/$this->application/controllers/controller.". strtolower($parts[0]) .".php")) {

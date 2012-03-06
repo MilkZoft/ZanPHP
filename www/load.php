@@ -28,6 +28,8 @@ $helpers = array("i18n", "router", "benchmark", "exceptions", "string", "session
 
 $Load->helper($helpers);
 
+define("_webLang", whichLanguage(FALSE));
+
 if(_translation === "gettext") {
 	$Load->library("class.gettext", "gettext");
 	$Load->library("class.streams", "gettext");

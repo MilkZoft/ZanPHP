@@ -15,7 +15,6 @@ define("_webTheme", "default");
 define("_webSituation", "Active");
 define("_webMessage", "Under construction");
 define("_webLanguage", "English");
-define("_webLang", "en");
 define("_autoRender", TRUE);
 
 define("_domain", FALSE);

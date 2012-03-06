@@ -89,9 +89,9 @@ function execute() {
 					$applicationController = segment(1, isLang());
 					$Controller     	   = getController($applicationController, $application);
 					$controllerFile        = getController($applicationController, $application, TRUE);
-
+				
 					if(segment(2, isLang()) and !isNumber(segment(2, isLang()))) {
-						$method = segment(2, isLang());
+						$method = segment(2, isLang());	
 					} else {
 						$method = "index";	
 					}
@@ -151,7 +151,7 @@ function execute() {
 	$controllerFile = ($applicationController) ? getController($applicationController, $application, TRUE) : getController(NULL, $application, TRUE);
 
 	if(file_exists($controllerFile)) {
-		if(isset($method) and isset($params)) { 
+		if(isset($method) and count($params) > 0) {
 			if(method_exists($Controller, $method)) {
 				try {
 					$reflection = new ReflectionMethod($Controller, $method);
@@ -167,14 +167,14 @@ function execute() {
 			} else {
 				call_user_func_array(array($Controller, "index"), $params);
 			}
-		} elseif(isset($method)) {
+		} elseif(isset($method)) { 
 			if(method_exists($Controller, $method)) {
 				try {
 					$Reflection = new ReflectionMethod($Controller, $method);
 					
 					if(!$Reflection->isPublic()) {
 						throw new RuntimeException("The called method is not public.", 100);
-					} elseif($Reflection->getNumberOfRequiredParameters() > 0 and !isset($params)) {
+					} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {
 						$params 	= $Reflection->getParameters();
 						$parameters = NULL;
 						
@@ -195,18 +195,14 @@ function execute() {
 						throw new RuntimeException("The called method need required parameters ($parameters).", 200);
 					}
 	
-					$$controller->$method();
+					$Controller->$method();
 				} catch(RuntimeException $e) {
 					getException($e);
 				}
 			} else {
-				$params = !isset($params) ? array() : $params;
-
 				call_user_func_array(array($Controller, "index"), $params);
 			}
 		} else {
-			$params = !isset($params) ? array() : $params;
-
 			call_user_func_array(array($Controller, "index"), $params);
 		}
 	}
@@ -266,7 +262,7 @@ function getController($applicationController = NULL, $application, $file = FALS
 		$controller 	= ucfirst($applicationController) ."_Controller";
 		$controllerFile = "www/applications/". strtolower($application) ."/controllers/controller.". strtolower($applicationController). ".php";
 		
-		$$controller = (!$file) ? $Load->controller($controller) : FALSE;
+		$$controller = (!$file) ? $Load->controller($controller, $application) : FALSE;
 	} else { 
 		$controller 	= ucfirst($application) ."_Controller";
 		$controllerFile = "www/applications/". strtolower($application) ."/controllers/controller.". strtolower($application) .".php";
