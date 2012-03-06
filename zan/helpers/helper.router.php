@@ -83,7 +83,6 @@ function execute() {
 			}
 		} else { 
 			$application = segment(0, isLang());
-			$params      = array();
 
 			if(segment(1, isLang())) { 
 				if(isController(segment(1, isLang()), segment(0, isLang()))) { 
