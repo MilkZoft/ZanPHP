@@ -47,6 +47,7 @@ function execute() {
 
 	$match   = FALSE;
 	$special = FALSE;
+	$params  = array();
 
 	if(file_exists("www/config/config.routes.php")) {
 		include "www/config/config.routes.php";
