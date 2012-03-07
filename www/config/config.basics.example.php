@@ -20,7 +20,7 @@ define("_autoRender", TRUE);
 define("_domain", FALSE);
 define("_modRewrite", FALSE);
 define("_defaultApplication", "default");
-define("_translation", "normal");
+define("_translation", "gettext");
 define("_sh", "/");
 define("_dot", ".");
 define("_PHP", ".php");

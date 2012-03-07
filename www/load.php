@@ -31,15 +31,13 @@ $Load->helper($helpers);
 define("_webLang", whichLanguage(FALSE));
 
 if(_translation === "gettext") {
-	$Load->library("class.gettext", "gettext");
-	$Load->library("class.streams", "gettext");
-	$Load->config("languages");
-	
 	$languageFile = _dir ."/lib/languages/gettext/language.". whichLanguage(TRUE, TRUE) .".mo";
-
-	if(file_exists($languageFile)) {
-		$Gettext_Reader = new Gettext_Reader($languageFile);
 		
+	if(file_exists($languageFile)) { 			
+		$Load->library("class.streams", NULL, NULL, "gettext");
+		$Gettext_Reader = $Load->library("class.gettext", "Gettext_Reader", array($languageFile), "gettext");
+		$Load->config("languages");
+	
 		$Gettext_Reader->load_tables();
 	}
 }
