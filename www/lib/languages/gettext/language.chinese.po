@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZanPHP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-10 18:37-0600\n"
-"PO-Revision-Date: 2012-02-10 18:37-0600\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2012-03-06 20:23-0600\n"
+"PO-Revision-Date: 2012-03-06 20:24-0600\n"
+"Last-Translator: Carlos Santana <carlos@milkzoft.com>\n"
 "Language-Team: Carlos Santana <carlos@santana.ws>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,1126 +13,32 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: MEXICO\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: /Applications/XAMPP/htdocs/MuuCMS\n"
+"X-Poedit-Basepath: /Applications/XAMPP/htdocs/ZanPHP\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: www/applications/ads/controllers/controller.cpanel.php:165
-#: www/applications/blog/controllers/controller.cpanel.php:210
-msgid "Manage "
-msgstr "Administrar "
-
-#: www/applications/ads/views/view.add.php:27
-#: www/applications/blog/views/view.add.php:25
-msgid "Title"
-msgstr "Título"
-
-#: www/applications/ads/views/view.add.php:32
-msgid "View Banner"
-msgstr "Ver Banner"
-
-#: www/applications/ads/views/view.add.php:39
-msgid "Image"
-msgstr "Imagen"
-
-#: www/applications/ads/views/view.add.php:45
-msgid "Top"
-msgstr "Superior"
-
-#: www/applications/ads/views/view.add.php:51
-msgid "Left"
-msgstr "Izquierda"
-
-#: www/applications/ads/views/view.add.php:57
-msgid "Right"
-msgstr "Derecha"
-
-#: www/applications/ads/views/view.add.php:63
-msgid "Bottom"
-msgstr "Inferior"
-
-#: www/applications/ads/views/view.add.php:69
-msgid "Center"
-msgstr "Centro"
-
-#: www/applications/ads/views/view.add.php:78
-msgid "Position"
-msgstr "Posición"
-
-#: www/applications/ads/views/view.add.php:84
-msgid "URL"
-msgstr "URL"
-
-#: www/applications/ads/views/view.add.php:92
-msgid "Code"
-msgstr "Código"
-
-#: www/applications/ads/views/view.add.php:99
-#: www/applications/blog/views/view.add.php:59
-msgid "Yes"
-msgstr "Si"
-
-#: www/applications/ads/views/view.add.php:105
-#: www/applications/blog/views/view.add.php:60
-msgid "No"
-msgstr "No"
-
-#: www/applications/ads/views/view.add.php:114
-msgid "Principal"
-msgstr "Principal"
-
-#: www/applications/ads/views/view.add.php:120
-#: www/applications/blog/views/view.add.php:71
-msgid "Active"
-msgstr "Activo"
-
-#: www/applications/ads/views/view.add.php:126
-#: www/applications/blog/views/view.add.php:72
-msgid "Inactive"
-msgstr "Inactivo"
-
-#: www/applications/ads/views/view.add.php:135
-#: www/applications/blog/views/view.add.php:79
-msgid "Situation"
-msgstr "Situación"
-
-#: www/applications/applications/models/model.applications.php:125
-msgid "Add"
-msgstr "Agregar"
-
-#: www/applications/applications/models/model.applications.php:137
-msgid "Trash"
-msgstr "Papelera"
-
-#: www/applications/applications/models/model.applications.php:139
-msgid "In trash"
-msgstr "En Papelera:"
-
-#: www/applications/blog/views/view.access.php:6
-msgid "Private post"
-msgstr "Post Privado"
-
-#: www/applications/blog/views/view.access.php:9
-msgid "Post password"
-msgstr "Contraseña del post"
-
-#: www/applications/blog/views/view.access.php:14
-msgid "Access"
-msgstr "Acceso"
-
-#: www/applications/blog/views/view.add.php:34
-msgid "Content"
-msgstr "Contenido"
-
-#: www/applications/blog/views/view.add.php:56
-msgid "Languages"
-msgstr "Idiomas"
-
-#: www/applications/blog/views/view.add.php:67
-msgid "Enable Comments"
-msgstr "Habilitar Comentarios"
-
-#: www/applications/blog/views/view.add.php:86
-#: www/applications/blog/views/view.add.php:90
-msgid "Password"
-msgstr "Contraseña"
-
-#: www/applications/blog/views/view.add.php:109
-msgid "Image for this post"
-msgstr "Imagen para el post"
-
-#: www/applications/blog/views/view.add.php:120
-msgid "Mural image"
-msgstr "Imagen de mural"
-
-#: www/applications/blog/views/view.add.php:128
-msgid "Current mural image"
-msgstr "Imagen de mural actual"
-
-#: www/applications/blog/views/view.add.php:139
-msgid "Delete Mural"
-msgstr "Eliminar Mural"
-
-#: www/applications/blog/views/view.archive.php:13
-msgid "Archive"
-msgstr "Archivo"
-
-#: www/applications/blog/views/view.comments.php:16
-msgid "Comments"
-msgstr "Comentarios"
-
-#: www/applications/blog/views/view.comments.php:53
-msgid "There are no comments for this post.Be the first to leave a comment!"
-msgstr "No hay nuevos comentarios, ¿Por qué no comentas?"
-
-#: www/applications/blog/views/view.comments.php:75
+#: www/applications/contacts/views/view.contact.php:2
+#: www/applications/contacts/views/view.contacts.php:2
 msgid "Name"
-msgstr "Nombre"
+msgstr "名称"
 
-#: www/applications/blog/views/view.comments.php:80
+#: www/applications/contacts/views/view.contact.php:3
+#: www/applications/contacts/views/view.contacts.php:3
 msgid "Email"
-msgstr "E-Mail"
+msgstr "电子邮件"
 
-#: www/applications/blog/views/view.comments.php:85
-msgid "Website"
-msgstr "Sitio Web"
-
-#: www/applications/blog/views/view.comments.php:95
-msgid "Comment"
-msgstr "Comentario"
-
-#: www/applications/blog/views/view.post.php:16
-#: www/applications/blog/views/view.post.php:32
-#: www/applications/blog/views/view.posts.php:26
-#: www/applications/blog/views/view.posts.php:42
-msgid "and"
-msgstr "y"
-
-#: www/applications/blog/views/view.post.php:42
-msgid "in"
-msgstr "en"
-
-#: www/applications/blog/views/view.post.php:57
-#: www/applications/blog/views/view.posts.php:73
-msgid "Published"
-msgstr "Publicado"
-
-#: www/applications/blog/views/view.post.php:57
-#: www/applications/blog/views/view.posts.php:73
-msgid "by"
-msgstr "por"
-
-#: www/applications/blog/views/view.post.php:61
-#: www/applications/blog/views/view.posts.php:77
-msgid "Tags"
-msgstr "Etiquetas"
-
-#: www/applications/categories/views/view.categories.php:4
-msgid "Click to show or hide"
-msgstr "Clic para mostrar o esconder"
-
-#: www/applications/categories/views/view.categories.php:5
-msgid "Categories"
-msgstr "Categorías"
-
-#: www/applications/categories/views/view.categories.php:16
-msgid "New category"
-msgstr "Nueva Categoría"
-
-#: www/applications/categories/views/view.categories.php:23
-msgid "Parent category"
-msgstr "Categoría Padre"
-
-#: www/applications/categories/views/view.categories.php:29
-msgid "Add category"
-msgstr "Agregar Categoría"
-
-#: www/applications/configuration/views/view.edit.php:34
-msgid "Name of the Website"
-msgstr "Nombre del Sitio Web"
-
-#: www/applications/configuration/views/view.edit.php:41
-msgid "URL of the Website"
-msgstr "URL del Sitio Web"
-
-#: www/applications/configuration/views/view.edit.php:48
-#: www/applications/configuration/views/view.edit.php:55
-#: www/applications/configuration/views/view.edit.php:62
-#: www/applications/configuration/views/view.edit.php:69
-msgid "Slogan of the Website"
-msgstr "Slogan de la Web"
-
-#: www/applications/configuration/views/view.edit.php:76
-msgid "E-Mail for recieve notifications"
-msgstr "Email para recibir notificaciones"
-
-#: www/applications/configuration/views/view.edit.php:83
-msgid "Email for send notifications"
-msgstr "Email para enviar notificaciones"
-
-#: www/applications/configuration/views/view.edit.php:91
-msgid "Default theme"
-msgstr "Diseño por Defecto"
-
-#: www/applications/configuration/views/view.edit.php:97
-msgid "Default application"
-msgstr "Aplicación por Defecto"
-
-#: www/applications/configuration/views/view.edit.php:117
-msgid "Comments validations"
-msgstr "Validación de comentarios"
-
-#: www/applications/configuration/views/view.edit.php:122
-msgid "User"
-msgstr "Usuario"
-
-#: www/applications/configuration/views/view.edit.php:128
-msgid "Administrator"
-msgstr "Administrador"
-
-#: www/applications/configuration/views/view.edit.php:137
-msgid "Accounts activation"
-msgstr "Activación de Cuenta"
-
-#: www/applications/configuration/views/view.edit.php:163
-msgid "Message when the Website is inactive"
-msgstr "Mensaje que se mostrará cuando la web este inactiva"
-
-#: www/applications/cpanel/classes/class.library.php:75
-#: www/applications/cpanel/helpers/helper.library.php:72
-msgid "Images library"
-msgstr "Librería de imágenes"
-
-#: www/applications/cpanel/classes/class.library.php:79
-#: www/applications/cpanel/helpers/helper.library.php:76
-msgid "Documents library"
-msgstr "Librería de documentos"
-
-#: www/applications/cpanel/classes/class.library.php:94
-msgid "Do you want to delete the file?"
-msgstr "¿Deseas eliminar el archivo?"
-
-#: www/applications/cpanel/classes/class.library.php:215
-#: www/applications/cpanel/helpers/helper.library.php:183
-msgid "Make directory"
-msgstr "Crear Directorio"
-
-#: www/applications/cpanel/classes/class.library.php:233
-#: www/applications/cpanel/helpers/helper.library.php:156
-msgid "Go"
-msgstr "Ir"
-
-#: www/applications/cpanel/classes/class.library.php:246
-msgid "The new folders will be created and the files will be uploaded in"
-msgstr "Las nuevas carpetas serán creadas y los archivos serán subidos en"
-
-#: www/applications/cpanel/classes/class.library.php:251
-#: www/applications/cpanel/classes/class.library.php:254
-#: www/applications/cpanel/helpers/helper.library.php:188
-#: www/applications/cpanel/helpers/helper.library.php:191
-msgid "Support files"
-msgstr "Archivos soportados"
-
-#: www/applications/cpanel/classes/class.library.php:273
-#: www/applications/cpanel/helpers/helper.cpanel.php:283
-#: www/applications/cpanel/helpers/helper.cpanel.php:285
-#: www/applications/cpanel/helpers/helper.library.php:208
-#: www/applications/cpanel/models/model.cpanel.php:114
-msgid "Delete"
-msgstr "Eliminar"
-
-#: www/applications/cpanel/classes/class.library.php:448
-msgid "Insert Image"
-msgstr "Insertar Imagen"
-
-#: www/applications/cpanel/classes/class.library.php:473
-msgid "Insert file"
-msgstr "Insertar Archivo"
-
-#: www/applications/cpanel/classes/class.library.php:482
-#: www/applications/cpanel/helpers/helper.library.php:341
-msgid "Download file"
-msgstr "Descargar archivo"
-
-#: www/applications/cpanel/controllers/controller.cpanel.php:46
-msgid "Last posts"
-msgstr "Últimos Posts"
-
-#: www/applications/cpanel/controllers/controller.cpanel.php:47
-msgid "Last pages"
-msgstr "Últimas Páginas"
-
-#: www/applications/cpanel/controllers/controller.cpanel.php:48
-msgid "Last links"
-msgstr "Últimos Enlaces"
-
-#: www/applications/cpanel/controllers/controller.cpanel.php:49
-msgid "Last users"
-msgstr "Últimos Usuarios"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:34
-msgid "Total"
-msgstr "Total"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:173
-#: www/applications/cpanel/helpers/helper.cpanel.php:182
-#: www/applications/cpanel/helpers/helper.cpanel.php:189
-#: www/applications/cpanel/helpers/helper.cpanel.php:196
-#: www/applications/cpanel/helpers/helper.cpanel.php:213
-#: www/applications/cpanel/helpers/helper.cpanel.php:258
-msgid "Preview"
-msgstr "Previsualizar"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:277
-msgid "Select"
-msgstr "Seleccionar:"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:278
-msgid "All"
-msgstr "Todos"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:279
-msgid "None"
-msgstr "Ningúno"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:282
-#: www/applications/cpanel/models/model.cpanel.php:113
-msgid "Restore"
-msgstr "Restaurar"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:287
-#: www/applications/cpanel/models/model.cpanel.php:39
-#: www/applications/cpanel/models/model.cpanel.php:94
-#: www/applications/cpanel/models/model.cpanel.php:102
-msgid "Send to trash"
-msgstr "Enviar a la papelera"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:618
-#: www/applications/cpanel/views/view.login.php:18
-msgid "Username"
-msgstr "Usuario"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:639
-msgid "Search"
-msgstr "Búsqueda"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:649
-msgid "Field"
-msgstr "Campo"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:663
-msgid "Order"
-msgstr "Ordenar"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:666
-msgid "Ascending"
-msgstr "Ascendente"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:669
-msgid "Descending"
-msgstr "Descendente"
-
-#: www/applications/cpanel/helpers/helper.cpanel.php:673
-msgid "Seek"
-msgstr "Buscar"
-
-#: www/applications/cpanel/helpers/helper.library.php:184
-msgid "The new folders will be created and the files will be uploaded in:"
-msgstr "Las nuevas carpetas serán creadas y los archivos serán subidos en:"
-
-#: www/applications/cpanel/helpers/helper.library.php:212
-msgid "Upload"
-msgstr "Subir archivo"
-
-#: www/applications/cpanel/helpers/helper.library.php:319
-msgid "Preview image"
-msgstr "Previsualizar imagen"
-
-#: www/applications/cpanel/helpers/helper.library.php:323
-msgid "Insert image"
-msgstr "Insertar Imagen"
-
-#: www/applications/cpanel/helpers/helper.routes.php:20
-#: www/applications/cpanel/helpers/helper.routes.php:28
-#: www/applications/cpanel/helpers/helper.routes.php:35
-#: www/applications/cpanel/helpers/helper.routes.php:41
-#: www/applications/cpanel/helpers/helper.routes.php:46
-#: www/applications/cpanel/helpers/helper.routes.php:48
-msgid "Home"
-msgstr "Portada"
-
-#: www/applications/cpanel/models/model.cpanel.php:38
-msgid "Validate comment"
-msgstr "Validar comentario"
-
-#: www/applications/cpanel/models/model.cpanel.php:40
-#: www/applications/cpanel/models/model.cpanel.php:84
-msgid "Do you want to validate the comment?"
-msgstr "¿Deseas validar el comentario?"
-
-#: www/applications/cpanel/models/model.cpanel.php:41
-#: www/applications/cpanel/models/model.cpanel.php:54
-#: www/applications/cpanel/models/model.cpanel.php:65
-#: www/applications/cpanel/models/model.cpanel.php:74
-#: www/applications/cpanel/models/model.cpanel.php:85
-#: www/applications/cpanel/models/model.cpanel.php:96
-#: www/applications/cpanel/models/model.cpanel.php:103
-msgid "Do you want to send to the trash the record?"
-msgstr "¿Desea enviar a la papelera el registro?"
-
-#: www/applications/cpanel/models/model.cpanel.php:52
-msgid "Read Comment"
-msgstr "Leer Comentario"
-
-#: www/applications/cpanel/models/model.cpanel.php:53
-#: www/applications/cpanel/models/model.cpanel.php:64
-#: www/applications/cpanel/models/model.cpanel.php:73
-#: www/applications/cpanel/models/model.cpanel.php:83
-msgid "Send to Trash"
-msgstr "Enviar a la papelera"
-
-#: www/applications/cpanel/models/model.cpanel.php:63
-#: www/applications/cpanel/models/model.cpanel.php:72
-msgid "Read Message"
-msgstr "Leer Mensaje"
-
-#: www/applications/cpanel/models/model.cpanel.php:82
-msgid "Validate Comment"
-msgstr "Validar Comentario"
-
-#: www/applications/cpanel/models/model.cpanel.php:93
-msgid "Edit"
-msgstr "Editar"
-
-#: www/applications/cpanel/models/model.cpanel.php:95
-msgid "Do you want to edit the record?"
-msgstr "¿Desea editar el registro?"
-
-#: www/applications/cpanel/models/model.cpanel.php:115
-msgid "Do you want to restore the record?"
-msgstr "¿Desea restaurar el registro?"
-
-#: www/applications/cpanel/models/model.cpanel.php:116
-msgid "Do you want to delete the record permanently?"
-msgstr "¿Desea eliminar el registro permanentemente?"
-
-#: www/applications/cpanel/models/model.cpanel.php:201
-msgid "There are no new records"
-msgstr "No hay nuevos registros"
-
-#: www/applications/cpanel/models/model.cpanel.php:459
-#: www/applications/cpanel/models/model.cpanel.php:463
-msgid "Records founded"
-msgstr "Registros encontrados"
-
-#: www/applications/cpanel/models/model.cpanel.php:461
-msgid "Record found"
-msgstr "Registro encontrado"
-
-#: www/applications/cpanel/views/view.login.php:5
-msgid "Login"
-msgstr "Conectar"
-
-#: www/applications/cpanel/views/view.login.php:9
-msgid "Incorrect Login"
-msgstr "Login Incorrecto"
-
-#: www/applications/cpanel/views/view.login.php:14
-msgid "Authentification"
-msgstr "Autentificación"
-
-#: www/applications/cpanel/views/view.login.php:28
-msgid "Connect"
-msgstr "Conectar"
-
-#: www/applications/feedback/models/model.feedback.php:112
-msgid "Automatic response"
-msgstr "Respuesta automática"
-
-#: www/applications/feedback/models/model.feedback.php:114
-msgid "Your message has been sent successfully, we will contact you as soon as possible, thank you very much!"
-msgstr "Su mensaje ha sido enviado satisfactoriamente, nosotros lo contactaremos tan pronto como sea posible, muchas gracias!"
-
-#: www/applications/feedback/models/model.feedback.php:122
-msgid "New Message"
-msgstr "Nuevo Mensaje"
-
-#: www/applications/feedback/models/model.feedback.php:124
-#: www/applications/feedback/models/model.feedback.php:130
-#: www/applications/feedback/views/view.read.php:52
-#: www/applications/feedback/views/view.send.php:26
-msgid "Message"
-msgstr "Mensaje"
-
-#: www/applications/feedback/models/model.feedback.php:127
-#: www/applications/feedback/views/view.read.php:47
-msgid "Company"
-msgstr "Empresa"
-
-#: www/applications/feedback/models/model.feedback.php:128
-#: www/applications/feedback/views/view.read.php:42
+#: www/applications/contacts/views/view.contact.php:4
+#: www/applications/contacts/views/view.contacts.php:4
 msgid "Phone"
-msgstr "Teléfono"
-
-#: www/applications/feedback/models/model.feedback.php:129
-#: www/applications/feedback/views/view.read.php:37
-msgid "Subject"
-msgstr "Asunto"
-
-#: www/applications/feedback/views/view.add.php:4
-msgid "There are no new feedbacks"
-msgstr "No hay nuevos mensajes de contacto"
-
-#: www/applications/feedback/views/view.read.php:32
-msgid "Date"
-msgstr "Fecha"
-
-#: www/applications/feedback/views/view.read.php:57
-#: www/applications/forums/views/view.forum.php:33
-#: www/applications/forums/views/view.forum.php:55
-msgid "Back"
-msgstr "Regresar"
-
-#: www/applications/feedback/views/view.send.php:6
-msgid "Feedback"
-msgstr "Contacto"
-
-#: www/applications/feedback/views/view.send.php:22
-msgid "E-Mail"
-msgstr "E-Mail"
-
-#: www/applications/feedback/views/view.send.php:33
-msgid "Send"
-msgstr "Enviar"
-
-#: www/applications/forums/models/model.forums.php:121
-#: www/applications/forums/models/model.forums.php:222
-msgid "There are not replies"
-msgstr "No hay nuevas respuestas"
-
-#: www/applications/forums/models/model.forums.php:277
-msgid "I posted on"
-msgstr "Publique en"
-
-#: www/applications/forums/views/view.add.php:33
-msgid "Description"
-msgstr "Descripción"
-
-#: www/applications/forums/views/view.forum.php:20
-msgid "Welcome to the forum, "
-msgstr "Bienvenido al foro,"
-
-#: www/applications/forums/views/view.forum.php:22
-msgid "Feel free of generate new topics"
-msgstr "Sientasé libre de generar nuevos temas"
-
-#: www/applications/forums/views/view.forum.php:27
-#: www/applications/forums/views/view.forum.php:54
-msgid "Options"
-msgstr "Opciones"
-
-#: www/applications/forums/views/view.forum.php:29
-msgid "Post a topic"
-msgstr "Publica un tema"
-
-#: www/applications/forums/views/view.forum.php:30
-#: www/applications/forums/views/view.forum.php:178
-msgid "New topic"
-msgstr "Nuevo Tema"
-
-#: www/applications/forums/views/view.forum.php:33
-#: www/applications/forums/views/view.forum.php:55
-msgid "Forums"
-msgstr "Foros"
-
-#: www/applications/forums/views/view.forum.php:35
-#: www/applications/forums/views/view.forum.php:36
-msgid "Edit Profile"
-msgstr "Editar Perfil"
-
-#: www/applications/forums/views/view.forum.php:40
-msgid "Logout"
-msgstr "Desconectar"
-
-#: www/applications/forums/views/view.forum.php:48
-msgid "Welcome to the forums of"
-msgstr "Bienvenido a los foros de"
-
-#: www/applications/forums/views/view.forum.php:49
-msgid "please login to enjoy the forums or register if you don't have an account"
-msgstr "por favor conectate para disfrutar de los foros o registrate si aún no tienes una cuenta"
-
-#: www/applications/forums/views/view.forum.php:62
-#: www/applications/forums/views/view.forum.php:63
-#: www/applications/forums/views/view.forum.php:212
-#: www/applications/forums/views/view.forum.php:213
-#: www/applications/forums/views/view.forum.php:295
-msgid "Sign up"
-msgstr "Registrate"
-
-#: www/applications/forums/views/view.forum.php:81
-msgid "Topic"
-msgstr "Tema"
-
-#: www/applications/forums/views/view.forum.php:81
-msgid "Author"
-msgstr "Autor"
-
-#: www/applications/forums/views/view.forum.php:82
-msgid "Last Message"
-msgstr "Último Mensaje"
-
-#: www/applications/forums/views/view.forum.php:83
-#: www/applications/forums/views/view.forum.php:250
-#: www/applications/forums/views/view.forum.php:272
-msgid "Replies"
-msgstr "Respuestas"
-
-#: www/applications/forums/views/view.forum.php:84
-#: www/applications/forums/views/view.forum.php:251
-#: www/applications/forums/views/view.forum.php:273
-msgid "Visits"
-msgstr "Visitas"
-
-#: www/applications/forums/views/view.forum.php:88
-msgid "Actions"
-msgstr "Acciones"
-
-#: www/applications/forums/views/view.forum.php:134
-msgid "written by"
-msgstr "escrito por"
-
-#: www/applications/forums/views/view.forum.php:157
-msgid "Do you want to edit the topic?"
-msgstr "¿Deseas editar el tema?"
-
-#: www/applications/forums/views/view.forum.php:163
-msgid "Do you want to delete the topic?"
-msgstr "¿Deseas eliminar el tema?"
-
-#: www/applications/forums/views/view.forum.php:173
-msgid "Reply"
-msgstr "Respuesta"
-
-#: www/applications/forums/views/view.forum.php:194
-msgid "There are no topics, be the first!"
-msgstr "No hay nuevos temas en este foro, se el primero en publicar!"
-
-#: www/applications/forums/views/view.forum.php:196
-#: www/applications/forums/views/view.forum.php:197
-msgid "Post a topic!"
-msgstr "Publica un tema!"
-
-#: www/applications/forums/views/view.forum.php:206
-msgid "There are no topics, be the first! but first"
-msgstr "No hay nuevos temas en este foro, se el primero en publicar!, pero primero"
-
-#: www/applications/forums/views/view.forum.php:229
-msgid "Extra information"
-msgstr "Información extra"
-
-#: www/applications/forums/views/view.forum.php:231
-msgid "Sign up, please"
-msgstr "Regístrese, porfavor"
-
-#: www/applications/forums/views/view.forum.php:231
-msgid "A user avatar"
-msgstr "Un avatar de usuario"
-
-#: www/applications/forums/views/view.forum.php:240
-#: www/applications/forums/views/view.forum.php:269
-msgid "Hi there!, "
-msgstr "Hola!,"
-
-#: www/applications/forums/views/view.forum.php:246
-#: www/applications/forums/views/view.forum.php:269
-msgid "Here are your statistics"
-msgstr "Tus estadísticas"
-
-#: www/applications/forums/views/view.forum.php:249
-#: www/applications/forums/views/view.forum.php:271
-msgid "Topics"
-msgstr "Temas"
-
-#: www/applications/forums/views/view.forum.php:257
-msgid "You can"
-msgstr "Usted puede"
-
-#: www/applications/forums/views/view.forum.php:258
-msgid "Create Forums"
-msgstr "Crear Foros"
-
-#: www/applications/forums/views/view.forum.php:259
-msgid "create"
-msgstr "crear"
-
-#: www/applications/forums/views/view.forum.php:260
-msgid "new forums"
-msgstr "nuevos foros"
-
-#: www/applications/forums/views/view.forum.php:262
-#: www/applications/forums/views/view.forum.php:279
-msgid "You can create new topics"
-msgstr "Puedes crear nuevos temas"
-
-#: www/applications/forums/views/view.forum.php:263
-#: www/applications/forums/views/view.forum.php:280
-msgid "You can reply to topics"
-msgstr "Puedes responder temas"
-
-#: www/applications/forums/views/view.forum.php:264
-#: www/applications/forums/views/view.forum.php:281
-msgid "You can send private messages"
-msgstr "Puedes enviar mensajes privados"
-
-#: www/applications/forums/views/view.forum.php:278
-#: www/applications/forums/views/view.forum.php:299
-msgid "You can <strong>NOT</strong> create new forums"
-msgstr "<strong>No puedes</strong> crear nuevos foros"
-
-#: www/applications/forums/views/view.forum.php:290
-msgid "Hi there!, you should"
-msgstr "Hola!, deberías"
-
-#: www/applications/forums/views/view.forum.php:291
-msgid "login"
-msgstr "Conectar"
-
-#: www/applications/forums/views/view.forum.php:292
-msgid "to enjoy full access to the forums"
-msgstr "para disfrutar de acceso total a los foros"
-
-#: www/applications/forums/views/view.forum.php:294
-msgid "If you don't have an account, you can create it"
-msgstr "¿No tienes una cuenta?, puedes crear una"
-
-#: www/applications/forums/views/view.forum.php:295
-msgid "here"
-msgstr "aqui"
-
-#: www/applications/forums/views/view.forum.php:300
-msgid "You can <strong>NOT</strong> create new topics"
-msgstr "<strong>No puedes</strong> crear nuevos temas"
-
-#: www/applications/forums/views/view.forum.php:301
-msgid "You can <strong>NOT</strong> reply to topics"
-msgstr "<strong>No puedes</strong> responder temas"
-
-#: www/applications/forums/views/view.forum.php:302
-msgid "You can <strong>NOT</strong> send private messages"
-msgstr "<strong>No puedes</strong> enviar mensajes privados"
-
-#: www/applications/forums/views/view.forum.php:310
-msgid "Last registered users"
-msgstr "Últimos Registrados"
-
-#: www/applications/forums/views/view.forums.php:64
-msgid "Forum"
-msgstr "Foro"
-
-#: www/applications/forums/views/view.forums.php:67
-msgid "Messages"
-msgstr "Mensajes"
-
-#: www/applications/forums/views/view.forums.php:130
-msgid "Do you want to edit the forum?"
-msgstr "¿Desea editar el foro?"
-
-#: www/applications/forums/views/view.forums.php:137
-msgid "Do you want to delete the forum?"
-msgstr "¿Deseas eliminar el foro?"
-
-#: www/applications/forums/views/view.newtopic.php:12
-msgid "New Topic"
-msgstr "Nuevo Tema"
-
-#: www/applications/forums/views/view.newtopic.php:16
-msgid "Edit Topic"
-msgstr "Editar Tema"
-
-#: www/applications/forums/views/view.newtopic.php:36
-#: www/applications/forums/views/view.reply.php:36
-msgid "Post in Twitter"
-msgstr "Publicar en Twitter"
-
-#: www/applications/forums/views/view.newtopic.php:43
-#: www/applications/forums/views/view.reply.php:44
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: www/applications/forums/views/view.reply.php:11
-msgid "New Reply"
-msgstr "Nueva Respuesta"
-
-#: www/applications/forums/views/view.reply.php:15
-msgid "Edit Reply"
-msgstr "Editar Respuesta"
-
-#: www/applications/forums/views/view.reply.php:43
-msgid "reply"
-msgstr "respuesta"
-
-#: www/applications/forums/views/view.topic.php:20
-msgid "Welcome to this topic"
-msgstr "Bienvenido a este tema"
-
-#: www/applications/forums/views/view.topic.php:24
-msgid "Feel free of reply to the topic"
-msgstr "Siéntase libre de responder el tema"
-
-#: www/applications/forums/views/view.topic.php:30
-msgid "Reply the topic"
-msgstr "Responder al tema"
-
-#: www/applications/forums/views/view.topic.php:34
-#: www/applications/forums/views/view.topic.php:56
-msgid "Back to the forum"
-msgstr "Regresar al foro"
-
-#: www/applications/forums/views/view.topic.php:281
-msgid "Do you want to edit the reply?"
-msgstr "¿Desea editar la respuesta?"
-
-#: www/applications/forums/views/view.topic.php:284
-msgid "Do you want to delete the reply?"
-msgstr "¿Deseas eliminar la respuesta?"
-
-#: www/applications/gallery/views/view.add.php:67
-#: www/applications/gallery/views/view.image.php:46
-msgid "Album"
-msgstr "Álbum"
-
-#: www/applications/gallery/views/view.add.php:67
-msgid "Write a album or select"
-msgstr "Escribe un álbum o selecciona algúno"
-
-#: www/applications/gallery/views/view.gallery.php:7
-#: www/applications/gallery/views/view.gallery.php:16
-#: www/applications/gallery/views/view.image.php:6
-msgid "Gallery"
-msgstr "Galería"
-
-#: www/applications/gallery/views/view.gallery.php:11
-msgid "Images"
-msgstr "Imagénes"
-
-#: www/applications/gallery/views/view.image.php:13
-msgid "Previous"
-msgstr "Anterior"
-
-#: www/applications/gallery/views/view.image.php:14
-msgid "Next"
-msgstr "Siguiente"
-
-#: www/applications/links/views/view.add.php:34
-msgid "Follow"
-msgstr "Seguimiento"
-
-#: www/applications/links/views/view.add.php:37
-msgid "Web Friends"
-msgstr "Webs Amigas"
-
-#: www/applications/links/views/view.add.php:38
-msgid "Directory"
-msgstr "Directorio"
-
-#: www/applications/polls/views/view.add.php:21
-msgid "Question"
-msgstr "Pregunta"
-
-#: www/applications/polls/views/view.add.php:24
-msgid "Answers"
-msgstr "Respuestas"
-
-#: www/applications/polls/views/view.add.php:24
-msgid "Empty answers not be added"
-msgstr "Respuestas vacías no se agregarán"
-
-#: www/applications/polls/views/view.add.php:45
-msgid "Simple"
-msgstr "Simple"
-
-#: www/applications/polls/views/view.add.php:46
-msgid "Multiple"
-msgstr "Multiple"
-
-#: www/applications/polls/views/view.add.php:49
-msgid "Type"
-msgstr "Tipo"
-
-#: www/applications/twitter/views/view.form.php:4
-msgid "Your comment"
-msgstr "Tu comentario"
-
-#: www/applications/users/models/model.users.php:356
-#: www/applications/users/models/model.users.php:361
-#: www/applications/users/models/model.users.php:393
-#: www/applications/users/models/model.users.php:397
-#: www/applications/users/views/view.recover.php:44
-msgid "Recover Password"
-msgstr "Recuperar Contraseña"
-
-#: www/applications/users/models/model.users.php:358
-#: www/applications/users/models/model.users.php:395
-msgid "To recover your password, you need to access here"
-msgstr "Para recuperar su contraseña, necesitas acceder aquí"
-
-#: www/applications/users/models/model.users.php:360
-#: www/applications/users/models/model.users.php:396
-#: www/applications/users/models/model.users.php:469
-#: www/applications/users/models/model.users.php:476
-msgid "You need access to this link:"
-msgstr "Necesitas acceder a este enlace:"
-
-#: www/applications/users/models/model.users.php:464
-msgid "Account Activation"
-msgstr "Activación de Cuenta"
-
-#: www/applications/users/models/model.users.php:468
-#: www/applications/users/models/model.users.php:475
-msgid "Your account has been created"
-msgstr "La cuenta se ha creado satisfactoriamente"
-
-#: www/applications/users/models/model.users.php:470
-#: www/applications/users/models/model.users.php:477
-msgid "Activate account"
-msgstr "Activar Cuenta"
-
-#: www/applications/users/models/model.users.php:485
-msgid "The account has been created correctly, we will send you an e-mail so you can activate your account"
-msgstr "Su cuenta ha sido creada correctamente, verifique su e-mail para activar su cuenta."
-
-#: www/applications/users/views/view.add.php:29
-msgid "Privilege"
-msgstr "Privilegio"
-
-#: www/applications/users/views/view.editprofile.php:11
-msgid "Profile"
-msgstr "Perfil"
-
-#: www/applications/users/views/view.editprofile.php:77
-msgid "Main Information"
-msgstr "Información principal"
-
-#: www/applications/users/views/view.editprofile.php:93
-msgid "Rank"
-msgstr "Rango"
-
-#: www/applications/users/views/view.editprofile.php:97
-msgid "Join Date"
-msgstr "Fecha de entrada"
-
-#: www/applications/users/views/view.editprofile.php:113
-msgid "Personal Information"
-msgstr "Información Personal"
-
-#: www/applications/users/views/view.editprofile.php:127
-msgid "Gender"
-msgstr "Sexo"
-
-#: www/applications/users/views/view.editprofile.php:135
-msgid "Birthday"
-msgstr "Cumpleaños"
-
-#: www/applications/users/views/view.editprofile.php:151
-msgid "Telephone"
-msgstr "Teléfono"
-
-#: www/applications/users/views/view.editprofile.php:159
-msgid "User Statistics"
-msgstr "Estadísticas del usuario"
-
-#: www/applications/users/views/view.editprofile.php:164
-msgid "Receive Messages"
-msgstr "Mensajes recibidos"
-
-#: www/applications/users/views/view.editprofile.php:166
-msgid "Subscribed"
-msgstr "Suscrito"
-
-#: www/applications/users/views/view.editprofile.php:179
-msgid "User Location"
-msgstr "Ubicación del usuario"
-
-#: www/applications/users/views/view.editprofile.php:186
-msgid "Country"
-msgstr "País"
-
-#: www/applications/users/views/view.editprofile.php:193
-msgid "District"
-msgstr "Estado"
-
-#: www/applications/users/views/view.editprofile.php:201
-msgid "Town"
-msgstr "Ciudad"
-
-#: www/applications/users/views/view.editprofile.php:218
-msgid "Social Information"
-msgstr "Información Social"
-
-#: www/applications/users/views/view.editprofile.php:224
-msgid "Sign"
-msgstr "Regístrate"
-
-#: www/applications/users/views/view.errorprofile.php:4
-msgid "The profile that you are looking for doesn't exists"
-msgstr "El perfil que estas buscando no existe"
-
-#: www/applications/users/views/view.login.php:43
-#: www/applications/users/views/view.login.php:44
-#: www/applications/users/views/view.login.php:53
-#: www/applications/users/views/view.login.php:54
-msgid "Lost your password?"
-msgstr "¿Olvidó su contraseña?"
-
-#: www/applications/users/views/view.login.php:47
-#: www/applications/users/views/view.login.php:48
-#: www/applications/users/views/view.register.php:14
-#: www/applications/users/views/view.register.php:23
-#: www/applications/users/views/view.register.php:42
-msgid "Register"
-msgstr "Registrar"
-
-#: www/applications/users/views/view.login.php:67
-msgid "You have been authentified correctly!"
-msgstr "Usted ha sido autenticado correctamente!"
-
-#: www/applications/users/views/view.login.php:71
-msgid "Click on the close button below, or out of the box, to enjoy the forums!"
-msgstr "Da clic en el botón de cerrar, o sal de la caja, disfruta de los foros!"
-
-#: www/applications/users/views/view.recover.php:12
-#: www/applications/users/views/view.recover.php:62
-msgid "Recover"
-msgstr "Recuperar"
-
-#: www/applications/users/views/view.recover.php:22
-msgid "Change your Password"
-msgstr "Cambiar contraseña"
-
-#: www/applications/users/views/view.recover.php:26
-msgid "New Password"
-msgstr "Nueva Contraseña"
-
-#: www/applications/users/views/view.recover.php:31
-msgid "Confirm Password"
-msgstr "Confirmar Contraseña"
-
-#: www/applications/users/views/view.recover.php:36
-msgid "Change Password"
-msgstr "Cambiar Contraseña"
-
-#: www/applications/users/views/view.recover.php:48
-msgid "To recover your password, please enter your username or your e-mail"
-msgstr "Para recuperar tu contraseña, por favor escribe tu nombre de usuario o tu e-mail"
-
-#: www/applications/users/views/view.register.php:53
-msgid "Click on the close button below, or out of the box, to return to the forums"
-msgstr "Da click en cerrar, o sal de la caja, para regresar a los foros"
-
-#: www/applications/videos/views/view.add.php:26
-msgid "Add Video"
-msgstr "Agregar Video"
-
-#: www/applications/videos/views/view.add.php:42
-msgid "YouTube"
-msgstr "YouTube"
-
-#: www/applications/videos/views/view.add.php:70
-msgid "There were no results for this search"
-msgstr "No hay resultados para esta búsqueda"
-
-#: www/applications/videos/views/view.add.php:81
-#: www/applications/videos/views/view.add.php:83
-msgid "Next results"
-msgstr "Siguientes resultados"
-
-#: www/applications/videos/views/view.add.php:108
-msgid "State"
-msgstr "Estado"
-
-#: www/applications/works/views/view.add.php:33
-msgid "Add Work"
-msgstr "Agregar Portafolio"
+msgstr "电话"
+
+#: www/applications/default/controllers/controller.default.php:20
+msgid "Welcome to ZanPHP"
+msgstr ""
+
+#: www/applications/default/views/view.welcome.php:4
+#, fuzzy
+msgid "Execute"
+msgstr "Archivo Ejecutable"
 
 #: www/lib/exceptions/exception.database.php:11
 msgid "An unknown error has occurred"
@@ -1142,162 +48,1020 @@ msgstr "Un error desconocido ha ocurrido"
 msgid "Connection error"
 msgstr "Error de conexión"
 
-#: www/lib/languages/words.php:2
-msgid "Ads"
-msgstr "Anuncios"
+#: zan/classes/class.files.php:113
+msgid "Text File"
+msgstr "Archivo de Texto"
 
-#: www/lib/languages/words.php:3
-msgid "Configuration"
-msgstr "Configuración"
+#: zan/classes/class.files.php:114
+#: zan/classes/class.files.php:115
+msgid "Document File"
+msgstr "Documento"
 
-#: www/lib/languages/words.php:4
-msgid "Links"
-msgstr "Enlaces"
+#: zan/classes/class.files.php:116
+msgid "PDF File"
+msgstr "Archivo PDF"
 
-#: www/lib/languages/words.php:5
-msgid "Pages"
-msgstr "Páginas"
+#: zan/classes/class.files.php:117
+#: zan/classes/class.files.php:118
+msgid "Power Point File"
+msgstr "Archivo Power Point"
 
-#: www/lib/languages/words.php:6
-msgid "Polls"
-msgstr "Encuestas"
+#: zan/classes/class.files.php:119
+#, fuzzy
+msgid "WinRAR File"
+msgstr "Archivo Winrar"
 
-#: www/lib/languages/words.php:7
-msgid "Users"
-msgstr "Usuarios"
+#: zan/classes/class.files.php:120
+#, fuzzy
+msgid "ISO File"
+msgstr "Archivo 7z"
 
-#: www/lib/languages/words.php:8
-msgid "Works"
-msgstr "Portafolio"
+#: zan/classes/class.files.php:121
+#: zan/classes/class.files.php:122
+#: zan/classes/class.files.php:123
+msgid "Excel File"
+msgstr "Archivo Excel"
 
-#: www/lib/languages/words.php:9
-msgid "Results"
-msgstr "Resultados"
+#: zan/classes/class.files.php:124
+#, fuzzy
+msgid "WinZIP File"
+msgstr "Archivo Winrar"
 
-#: www/lib/languages/words.php:10
-msgid "record"
-msgstr "registro"
+#: zan/classes/class.files.php:125
+msgid "7z File"
+msgstr "Archivo 7z"
 
-#: www/lib/languages/words.php:11
-msgid "Manage Users"
-msgstr "Administrar Usuarios"
+#: zan/classes/class.files.php:126
+#: zan/classes/class.files.php:127
+msgid "Adobe Illustrator File"
+msgstr "Archivo de Adobe Illustrator"
 
-#: www/lib/languages/words.php:12
-msgid "Action"
-msgstr "Acción"
+#: zan/classes/class.files.php:128
+msgid "Corel Draw File"
+msgstr "Archivo de Corel Draw"
 
-#: www/lib/languages/words.php:13
-msgid "Manage Ads"
-msgstr "Administrar Anuncios"
+#: zan/classes/class.files.php:129
+#: zan/classes/class.files.php:130
+#: zan/classes/class.files.php:131
+#: zan/classes/class.files.php:132
+msgid "Executable File"
+msgstr "Archivo Ejecutable"
 
-#: www/lib/languages/words.php:14
-msgid "records"
-msgstr "registros"
+#: zan/classes/class.files.php:276
+#, fuzzy
+msgid "Upload success!"
+msgstr "Subir Documento"
 
-#: www/lib/languages/words.php:15
-msgid "Save"
-msgstr "Guardar"
+#: zan/classes/class.files.php:278
+#, fuzzy
+msgid "Permission problems!"
+msgstr "Permisos"
 
-#: www/lib/languages/words.php:16
-msgid "Manage Feedback"
-msgstr "Administrar Mensajes de Contacto"
+#: zan/classes/class.files.php:282
+#, fuzzy
+msgid "Upload failed!"
+msgstr "Descargar archivo"
 
-#: www/lib/languages/words.php:17
-msgid "Manage Polls"
-msgstr "Administrar Encuestas"
+#: zan/helpers/helper.forms.php:437
+msgid "Cancel"
+msgstr "Cancelar"
 
-#: www/lib/languages/words.php:18
-msgid "Manage Blog"
-msgstr "Administrar Blog"
+#: zan/helpers/helper.html.php:286
+msgid "Next"
+msgstr "Siguiente"
 
-#: www/lib/languages/words.php:19
-msgid "Manage Categories"
-msgstr "Administrar Categorías"
+#: zan/helpers/helper.html.php:290
+msgid "Previous"
+msgstr "Anterior"
 
-#: www/lib/languages/words.php:20
-msgid "posts"
-msgstr "publicaciones"
+#~ msgid "Hello World!"
+#~ msgstr "你好世界"
 
-#: www/lib/languages/words.php:21
-msgid "Application"
-msgstr "Aplicación"
+#~ msgid "Bye World"
+#~ msgstr "再见世界"
 
-#: www/lib/languages/words.php:22
-msgid "Language"
-msgstr "Idioma"
+#~ msgid "Manage "
+#~ msgstr "Administrar "
 
-#: www/lib/languages/words.php:23
-msgid "feedback"
-msgstr "contacto"
+#~ msgid "Title"
+#~ msgstr "Título"
 
-#: www/lib/languages/words.php:24
-msgid "Manage Forums"
-msgstr "Administrar Foros"
+#~ msgid "Image"
+#~ msgstr "Imagen"
 
-#: www/lib/languages/words.php:25
-msgid "Support"
-msgstr "Soporte Técnico"
+#~ msgid "Top"
+#~ msgstr "Superior"
 
-#: www/lib/languages/words.php:26
-msgid "Title is required"
-msgstr "El título es requerido"
+#~ msgid "Left"
+#~ msgstr "Izquierda"
 
-#: www/lib/languages/words.php:27
-msgid "Invalid URL"
-msgstr "URL Inválida"
+#~ msgid "Right"
+#~ msgstr "Derecha"
 
-#: www/lib/languages/words.php:28
-msgid "You need to upload an image or write the ad code"
-msgstr "Necesitas subir una imagen o escribir el código del anuncio"
+#~ msgid "Bottom"
+#~ msgstr "Inferior"
 
-#: www/lib/languages/words.php:29
-msgid "The ad has been saved correctly"
-msgstr "El anuncio se ha guardado correctamente"
+#~ msgid "Center"
+#~ msgstr "Centro"
 
-#: www/lib/languages/words.php:30
-msgid "Deleted"
-msgstr "Eliminado"
+#~ msgid "Position"
+#~ msgstr "Posición"
 
-#: www/lib/themes/cpanel/footer.php:6
-msgid "All rights reserved"
-msgstr "Todos los derechos reservados"
+#~ msgid "URL"
+#~ msgstr "URL"
 
-#: www/lib/themes/cpanel/footer.php:6
-msgid "Powered by"
-msgstr "Desarrollado por"
+#~ msgid "Code"
+#~ msgstr "Código"
 
-#: www/lib/themes/cpanel/header.php:36
-#: www/lib/themes/cpanel/header.php:50
-msgid "Go back"
-msgstr "Regresar"
+#~ msgid "Yes"
+#~ msgstr "Si"
 
-#: www/lib/themes/cpanel/header.php:37
-msgid "Welcome"
-msgstr "Bienvenido"
+#~ msgid "No"
+#~ msgstr "No"
 
-#: www/lib/themes/cpanel/header.php:38
-msgid "Online users"
-msgstr "Usuarios conectados"
+#~ msgid "Principal"
+#~ msgstr "Principal"
 
-#: www/lib/themes/cpanel/header.php:39
-msgid "Registered users"
-msgstr "Usuarios registrados"
+#~ msgid "Active"
+#~ msgstr "Activo"
 
-#: www/lib/themes/cpanel/header.php:40
-msgid "Last user"
-msgstr "Último usuario"
+#~ msgid "Inactive"
+#~ msgstr "Inactivo"
 
-#: www/lib/themes/cpanel/header.php:85
-msgid "Gallery Comments"
-msgstr "Comentarios de la Galería"
+#~ msgid "Situation"
+#~ msgstr "Situación"
 
-#: www/lib/themes/cpanel/header.php:95
-msgid "You are in"
-msgstr "Usted está en"
+#~ msgid "Add"
+#~ msgstr "Agregar"
 
-#: www/lib/themes/cpanel/left.php:3
-msgid "Applications"
-msgstr "Aplicaciones"
+#~ msgid "Trash"
+#~ msgstr "Papelera"
+
+#~ msgid "In trash"
+#~ msgstr "En Papelera:"
+
+#~ msgid "Private post"
+#~ msgstr "Post Privado"
+
+#~ msgid "Post password"
+#~ msgstr "Contraseña del post"
+
+#~ msgid "Access"
+#~ msgstr "Acceso"
+
+#~ msgid "Content"
+#~ msgstr "Contenido"
+
+#, fuzzy
+#~ msgid "Language of the post"
+#~ msgstr "Imagen para el post"
+
+#~ msgid "Enable Comments"
+#~ msgstr "Habilitar Comentarios"
+
+#~ msgid "Password"
+#~ msgstr "Contraseña"
+
+#~ msgid "Image for this post"
+#~ msgstr "Imagen para el post"
+
+#~ msgid "Mural image"
+#~ msgstr "Imagen de mural"
+
+#~ msgid "Current mural image"
+#~ msgstr "Imagen de mural actual"
+
+#~ msgid "Delete Mural"
+#~ msgstr "Eliminar Mural"
+
+#~ msgid "Archive"
+#~ msgstr "Archivo"
+
+#~ msgid "Comments"
+#~ msgstr "Comentarios"
+
+#~ msgid "There are no comments for this post.Be the first to leave a comment!"
+#~ msgstr "No hay nuevos comentarios, ¿Por qué no comentas?"
+
+#~ msgid "Website"
+#~ msgstr "Sitio Web"
+
+#~ msgid "Comment"
+#~ msgstr "Comentario"
+
+#~ msgid "and"
+#~ msgstr "y"
+
+#~ msgid "in"
+#~ msgstr "en"
+
+#~ msgid "Published"
+#~ msgstr "Publicado"
+
+#~ msgid "by"
+#~ msgstr "por"
+
+#~ msgid "Tags"
+#~ msgstr "Etiquetas"
+
+#~ msgid "Click to show or hide"
+#~ msgstr "Clic para mostrar o esconder"
+
+#~ msgid "Categories"
+#~ msgstr "Categorías"
+
+#~ msgid "New category"
+#~ msgstr "Nueva Categoría"
+
+#~ msgid "Parent category"
+#~ msgstr "Categoría Padre"
+
+#~ msgid "Add category"
+#~ msgstr "Agregar Categoría"
+
+#~ msgid "Name of the Website"
+#~ msgstr "Nombre del Sitio Web"
+
+#~ msgid "URL of the Website"
+#~ msgstr "URL del Sitio Web"
+
+#~ msgid "Slogan of the Website"
+#~ msgstr "Slogan de la Web"
+
+#~ msgid "E-Mail for recieve notifications"
+#~ msgstr "Email para recibir notificaciones"
+
+#~ msgid "Email for send notifications"
+#~ msgstr "Email para enviar notificaciones"
+
+#~ msgid "Default theme"
+#~ msgstr "Diseño por Defecto"
+
+#~ msgid "Default application"
+#~ msgstr "Aplicación por Defecto"
+
+#~ msgid "Comments validations"
+#~ msgstr "Validación de comentarios"
+
+#~ msgid "User"
+#~ msgstr "Usuario"
+
+#~ msgid "Administrator"
+#~ msgstr "Administrador"
+
+#~ msgid "Accounts activation"
+#~ msgstr "Activación de Cuenta"
+
+#~ msgid "Message when the Website is inactive"
+#~ msgstr "Mensaje que se mostrará cuando la web este inactiva"
+
+#~ msgid "Languages"
+#~ msgstr "Idiomas"
+
+#~ msgid "Images library"
+#~ msgstr "Librería de imágenes"
+
+#~ msgid "Documents library"
+#~ msgstr "Librería de documentos"
+
+#~ msgid "Do you want to delete the file?"
+#~ msgstr "¿Deseas eliminar el archivo?"
+
+#~ msgid "Make directory"
+#~ msgstr "Crear Directorio"
+
+#~ msgid "Go"
+#~ msgstr "Ir"
+
+#~ msgid "The new folders will be created and the files will be uploaded in"
+#~ msgstr "Las nuevas carpetas serán creadas y los archivos serán subidos en"
+
+#~ msgid "Support files"
+#~ msgstr "Archivos soportados"
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
+
+#~ msgid "Insert Image"
+#~ msgstr "Insertar Imagen"
+
+#~ msgid "Preview image"
+#~ msgstr "Previsualizar imagen"
+
+#~ msgid "Insert file"
+#~ msgstr "Insertar Archivo"
+
+#~ msgid "Download file"
+#~ msgstr "Descargar archivo"
+
+#~ msgid "Last posts"
+#~ msgstr "Últimos Posts"
+
+#~ msgid "Last pages"
+#~ msgstr "Últimas Páginas"
+
+#~ msgid "Last links"
+#~ msgstr "Últimos Enlaces"
+
+#~ msgid "Last users"
+#~ msgstr "Últimos Usuarios"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Preview"
+#~ msgstr "Previsualizar"
+
+#~ msgid "Select"
+#~ msgstr "Seleccionar:"
+
+#~ msgid "All"
+#~ msgstr "Todos"
+
+#~ msgid "None"
+#~ msgstr "Ningúno"
+
+#~ msgid "Restore"
+#~ msgstr "Restaurar"
+
+#~ msgid "Send to trash"
+#~ msgstr "Enviar a la papelera"
+
+#~ msgid "Username"
+#~ msgstr "Usuario"
+
+#~ msgid "Search"
+#~ msgstr "Búsqueda"
+
+#~ msgid "Field"
+#~ msgstr "Campo"
+
+#~ msgid "Order"
+#~ msgstr "Ordenar"
+
+#~ msgid "Ascending"
+#~ msgstr "Ascendente"
+
+#~ msgid "Descending"
+#~ msgstr "Descendente"
+
+#~ msgid "Seek"
+#~ msgstr "Buscar"
+
+#~ msgid "The new folders will be created and the files will be uploaded in:"
+#~ msgstr "Las nuevas carpetas serán creadas y los archivos serán subidos en:"
+
+#~ msgid "Upload"
+#~ msgstr "Subir archivo"
+
+#~ msgid "Insert image"
+#~ msgstr "Insertar Imagen"
+
+#~ msgid "Home"
+#~ msgstr "Portada"
+
+#~ msgid "Validate comment"
+#~ msgstr "Validar comentario"
+
+#~ msgid "Do you want to validate the comment?"
+#~ msgstr "¿Deseas validar el comentario?"
+
+#~ msgid "Do you want to send to the trash the record?"
+#~ msgstr "¿Desea enviar a la papelera el registro?"
+
+#~ msgid "Read Comment"
+#~ msgstr "Leer Comentario"
+
+#~ msgid "Send to Trash"
+#~ msgstr "Enviar a la papelera"
+
+#~ msgid "Read Message"
+#~ msgstr "Leer Mensaje"
+
+#~ msgid "Validate Comment"
+#~ msgstr "Validar Comentario"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
+
+#~ msgid "Do you want to edit the record?"
+#~ msgstr "¿Desea editar el registro?"
+
+#~ msgid "Do you want to restore the record?"
+#~ msgstr "¿Desea restaurar el registro?"
+
+#~ msgid "Do you want to delete the record permanently?"
+#~ msgstr "¿Desea eliminar el registro permanentemente?"
+
+#~ msgid "There are no new records"
+#~ msgstr "No hay nuevos registros"
+
+#~ msgid "Records founded"
+#~ msgstr "Registros encontrados"
+
+#~ msgid "Record found"
+#~ msgstr "Registro encontrado"
+
+#~ msgid "Login"
+#~ msgstr "Conectar"
+
+#~ msgid "Incorrect Login"
+#~ msgstr "Login Incorrecto"
+
+#~ msgid "Authentification"
+#~ msgstr "Autentificación"
+
+#~ msgid "Connect"
+#~ msgstr "Conectar"
+
+#~ msgid "Automatic response"
+#~ msgstr "Respuesta automática"
+
+#~ msgid ""
+#~ "Your message has been sent successfully, we will contact you as soon as "
+#~ "possible, thank you very much!"
+#~ msgstr ""
+#~ "Su mensaje ha sido enviado satisfactoriamente, nosotros lo contactaremos "
+#~ "tan pronto como sea posible, muchas gracias!"
+
+#~ msgid "New Message"
+#~ msgstr "Nuevo Mensaje"
+
+#~ msgid "Message"
+#~ msgstr "Mensaje"
+
+#~ msgid "Company"
+#~ msgstr "Empresa"
+
+#~ msgid "Subject"
+#~ msgstr "Asunto"
+
+#~ msgid "There are no new feedbacks"
+#~ msgstr "No hay nuevos mensajes de contacto"
+
+#~ msgid "Date"
+#~ msgstr "Fecha"
+
+#~ msgid "Back"
+#~ msgstr "Regresar"
+
+#~ msgid "Feedback"
+#~ msgstr "Contacto"
+
+#~ msgid "E-Mail"
+#~ msgstr "E-Mail"
+
+#~ msgid "Send"
+#~ msgstr "Enviar"
+
+#~ msgid "There are not replies"
+#~ msgstr "No hay nuevas respuestas"
+
+#~ msgid "I posted on"
+#~ msgstr "Publique en"
+
+#~ msgid "Description"
+#~ msgstr "Descripción"
+
+#~ msgid "Welcome to the forum, "
+#~ msgstr "Bienvenido al foro,"
+
+#~ msgid "Feel free of generate new topics"
+#~ msgstr "Sientasé libre de generar nuevos temas"
+
+#~ msgid "Options"
+#~ msgstr "Opciones"
+
+#~ msgid "Post a topic"
+#~ msgstr "Publica un tema"
+
+#~ msgid "New topic"
+#~ msgstr "Nuevo Tema"
+
+#~ msgid "Forums"
+#~ msgstr "Foros"
+
+#~ msgid "Edit Profile"
+#~ msgstr "Editar Perfil"
+
+#~ msgid "Logout"
+#~ msgstr "Desconectar"
+
+#~ msgid "Welcome to the forums of"
+#~ msgstr "Bienvenido a los foros de"
+
+#~ msgid ""
+#~ "please login to enjoy the forums or register if you don't have an account"
+#~ msgstr ""
+#~ "por favor conectate para disfrutar de los foros o registrate si aún no "
+#~ "tienes una cuenta"
+
+#~ msgid "Sign up"
+#~ msgstr "Registrate"
+
+#~ msgid "Topic"
+#~ msgstr "Tema"
+
+#~ msgid "Author"
+#~ msgstr "Autor"
+
+#~ msgid "Last Message"
+#~ msgstr "Último Mensaje"
+
+#~ msgid "Replies"
+#~ msgstr "Respuestas"
+
+#~ msgid "Visits"
+#~ msgstr "Visitas"
+
+#~ msgid "Actions"
+#~ msgstr "Acciones"
+
+#~ msgid "written by"
+#~ msgstr "escrito por"
+
+#~ msgid "Do you want to edit the topic?"
+#~ msgstr "¿Deseas editar el tema?"
+
+#~ msgid "Do you want to delete the topic?"
+#~ msgstr "¿Deseas eliminar el tema?"
+
+#~ msgid "Reply"
+#~ msgstr "Respuesta"
+
+#~ msgid "There are no topics, be the first!"
+#~ msgstr "No hay nuevos temas en este foro, se el primero en publicar!"
+
+#~ msgid "Post a topic!"
+#~ msgstr "Publica un tema!"
+
+#~ msgid "There are no topics, be the first! but first"
+#~ msgstr ""
+#~ "No hay nuevos temas en este foro, se el primero en publicar!, pero primero"
+
+#~ msgid "Extra information"
+#~ msgstr "Información extra"
+
+#~ msgid "Sign up, please"
+#~ msgstr "Regístrese, porfavor"
+
+#~ msgid "A user avatar"
+#~ msgstr "Un avatar de usuario"
+
+#~ msgid "Hi there!, "
+#~ msgstr "Hola!,"
+
+#~ msgid "Here are your statistics"
+#~ msgstr "Tus estadísticas"
+
+#~ msgid "Topics"
+#~ msgstr "Temas"
+
+#~ msgid "You can"
+#~ msgstr "Usted puede"
+
+#~ msgid "Create Forums"
+#~ msgstr "Crear Foros"
+
+#~ msgid "create"
+#~ msgstr "crear"
+
+#~ msgid "new forums"
+#~ msgstr "nuevos foros"
+
+#~ msgid "You can create new topics"
+#~ msgstr "Puedes crear nuevos temas"
+
+#~ msgid "You can reply to topics"
+#~ msgstr "Puedes responder temas"
+
+#~ msgid "You can send private messages"
+#~ msgstr "Puedes enviar mensajes privados"
+
+#~ msgid "You can <strong>NOT</strong> create new forums"
+#~ msgstr "<strong>No puedes</strong> crear nuevos foros"
+
+#~ msgid "Hi there!, you should"
+#~ msgstr "Hola!, deberías"
+
+#~ msgid "login"
+#~ msgstr "Conectar"
+
+#~ msgid "to enjoy full access to the forums"
+#~ msgstr "para disfrutar de acceso total a los foros"
+
+#~ msgid "If you don't have an account, you can create it"
+#~ msgstr "¿No tienes una cuenta?, puedes crear una"
+
+#~ msgid "here"
+#~ msgstr "aqui"
+
+#~ msgid "You can <strong>NOT</strong> create new topics"
+#~ msgstr "<strong>No puedes</strong> crear nuevos temas"
+
+#~ msgid "You can <strong>NOT</strong> reply to topics"
+#~ msgstr "<strong>No puedes</strong> responder temas"
+
+#~ msgid "You can <strong>NOT</strong> send private messages"
+#~ msgstr "<strong>No puedes</strong> enviar mensajes privados"
+
+#~ msgid "Last registered users"
+#~ msgstr "Últimos Registrados"
+
+#~ msgid "Forum"
+#~ msgstr "Foro"
+
+#~ msgid "Messages"
+#~ msgstr "Mensajes"
+
+#~ msgid "Do you want to edit the forum?"
+#~ msgstr "¿Desea editar el foro?"
+
+#~ msgid "Do you want to delete the forum?"
+#~ msgstr "¿Deseas eliminar el foro?"
+
+#~ msgid "New Topic"
+#~ msgstr "Nuevo Tema"
+
+#~ msgid "Edit Topic"
+#~ msgstr "Editar Tema"
+
+#~ msgid "Post in Twitter"
+#~ msgstr "Publicar en Twitter"
+
+#~ msgid "New Reply"
+#~ msgstr "Nueva Respuesta"
+
+#~ msgid "Edit Reply"
+#~ msgstr "Editar Respuesta"
+
+#~ msgid "reply"
+#~ msgstr "respuesta"
+
+#~ msgid "Welcome to this topic"
+#~ msgstr "Bienvenido a este tema"
+
+#~ msgid "Feel free of reply to the topic"
+#~ msgstr "Siéntase libre de responder el tema"
+
+#~ msgid "Reply the topic"
+#~ msgstr "Responder al tema"
+
+#~ msgid "Back to the forum"
+#~ msgstr "Regresar al foro"
+
+#~ msgid "Do you want to edit the reply?"
+#~ msgstr "¿Desea editar la respuesta?"
+
+#~ msgid "Do you want to delete the reply?"
+#~ msgstr "¿Deseas eliminar la respuesta?"
+
+#~ msgid "Album"
+#~ msgstr "Álbum"
+
+#~ msgid "Write a album or select"
+#~ msgstr "Escribe un álbum o selecciona algúno"
+
+#~ msgid "Gallery"
+#~ msgstr "Galería"
+
+#~ msgid "Images"
+#~ msgstr "Imagénes"
+
+#~ msgid "Follow"
+#~ msgstr "Seguimiento"
+
+#~ msgid "Web Friends"
+#~ msgstr "Webs Amigas"
+
+#~ msgid "Directory"
+#~ msgstr "Directorio"
+
+#, fuzzy
+#~ msgid "Upload files"
+#~ msgstr "Descargar archivo"
+
+#~ msgid "Question"
+#~ msgstr "Pregunta"
+
+#~ msgid "Answers"
+#~ msgstr "Respuestas"
+
+#~ msgid "Empty answers not be added"
+#~ msgstr "Respuestas vacías no se agregarán"
+
+#~ msgid "Simple"
+#~ msgstr "Simple"
+
+#~ msgid "Multiple"
+#~ msgstr "Multiple"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "Your comment"
+#~ msgstr "Tu comentario"
+
+#~ msgid "Recover Password"
+#~ msgstr "Recuperar Contraseña"
+
+#~ msgid "To recover your password, you need to access here"
+#~ msgstr "Para recuperar su contraseña, necesitas acceder aquí"
+
+#~ msgid "You need access to this link:"
+#~ msgstr "Necesitas acceder a este enlace:"
+
+#~ msgid "Account Activation"
+#~ msgstr "Activación de Cuenta"
+
+#~ msgid "Your account has been created"
+#~ msgstr "La cuenta se ha creado satisfactoriamente"
+
+#~ msgid "Activate account"
+#~ msgstr "Activar Cuenta"
+
+#~ msgid ""
+#~ "The account has been created correctly, we will send you an e-mail so you "
+#~ "can activate your account"
+#~ msgstr ""
+#~ "Su cuenta ha sido creada correctamente, verifique su e-mail para activar "
+#~ "su cuenta."
+
+#~ msgid "Privilege"
+#~ msgstr "Privilegio"
+
+#~ msgid "Profile"
+#~ msgstr "Perfil"
+
+#~ msgid "Main Information"
+#~ msgstr "Información principal"
+
+#~ msgid "Rank"
+#~ msgstr "Rango"
+
+#~ msgid "Join Date"
+#~ msgstr "Fecha de entrada"
+
+#~ msgid "Personal Information"
+#~ msgstr "Información Personal"
+
+#~ msgid "Gender"
+#~ msgstr "Sexo"
+
+#~ msgid "Birthday"
+#~ msgstr "Cumpleaños"
+
+#~ msgid "Telephone"
+#~ msgstr "Teléfono"
+
+#~ msgid "User Statistics"
+#~ msgstr "Estadísticas del usuario"
+
+#~ msgid "Receive Messages"
+#~ msgstr "Mensajes recibidos"
+
+#~ msgid "Subscribed"
+#~ msgstr "Suscrito"
+
+#~ msgid "User Location"
+#~ msgstr "Ubicación del usuario"
+
+#~ msgid "Country"
+#~ msgstr "País"
+
+#~ msgid "District"
+#~ msgstr "Estado"
+
+#~ msgid "Town"
+#~ msgstr "Ciudad"
+
+#~ msgid "Social Information"
+#~ msgstr "Información Social"
+
+#~ msgid "Sign"
+#~ msgstr "Regístrate"
+
+#~ msgid "The profile that you are looking for doesn't exists"
+#~ msgstr "El perfil que estas buscando no existe"
+
+#~ msgid "Lost your password?"
+#~ msgstr "¿Olvidó su contraseña?"
+
+#~ msgid "Register"
+#~ msgstr "Registrar"
+
+#~ msgid "You have been authentified correctly!"
+#~ msgstr "Usted ha sido autenticado correctamente!"
+
+#~ msgid ""
+#~ "Click on the close button below, or out of the box, to enjoy the forums!"
+#~ msgstr ""
+#~ "Da clic en el botón de cerrar, o sal de la caja, disfruta de los foros!"
+
+#~ msgid "Recover"
+#~ msgstr "Recuperar"
+
+#~ msgid "Change your Password"
+#~ msgstr "Cambiar contraseña"
+
+#~ msgid "New Password"
+#~ msgstr "Nueva Contraseña"
+
+#~ msgid "Confirm Password"
+#~ msgstr "Confirmar Contraseña"
+
+#~ msgid "Change Password"
+#~ msgstr "Cambiar Contraseña"
+
+#~ msgid "To recover your password, please enter your username or your e-mail"
+#~ msgstr ""
+#~ "Para recuperar tu contraseña, por favor escribe tu nombre de usuario o tu "
+#~ "e-mail"
+
+#~ msgid ""
+#~ "Click on the close button below, or out of the box, to return to the "
+#~ "forums"
+#~ msgstr "Da click en cerrar, o sal de la caja, para regresar a los foros"
+
+#~ msgid "Add Video"
+#~ msgstr "Agregar Video"
+
+#~ msgid "YouTube"
+#~ msgstr "YouTube"
+
+#~ msgid "There were no results for this search"
+#~ msgstr "No hay resultados para esta búsqueda"
+
+#~ msgid "Next results"
+#~ msgstr "Siguientes resultados"
+
+#~ msgid "State"
+#~ msgstr "Estado"
+
+#~ msgid "Add Work"
+#~ msgstr "Agregar Portafolio"
+
+#, fuzzy
+#~ msgid "The file size exceed the permited limit"
+#~ msgstr "El tamaño del archivo sobrepasa el límite permitido"
+
+#, fuzzy
+#~ msgid "An error has ocurred"
+#~ msgstr "Un error desconocido ha ocurrido"
+
+#, fuzzy
+#~ msgid "A problem occurred when trying to upload file"
+#~ msgstr "Error al intentar subir el archivo"
+
+#, fuzzy
+#~ msgid "The file already exists"
+#~ msgstr "La imagen ya existe"
+
+#~ msgid "Successfully uploaded file"
+#~ msgstr "Archivo subido con éxito"
+
+#~ msgid "Disable Javascript"
+#~ msgstr "Javascript Deshabilitado"
+
+#~ msgid "Ads"
+#~ msgstr "Anuncios"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuración"
+
+#~ msgid "Links"
+#~ msgstr "Enlaces"
+
+#~ msgid "Pages"
+#~ msgstr "Páginas"
+
+#~ msgid "Polls"
+#~ msgstr "Encuestas"
+
+#~ msgid "Users"
+#~ msgstr "Usuarios"
+
+#~ msgid "Works"
+#~ msgstr "Portafolio"
+
+#~ msgid "Results"
+#~ msgstr "Resultados"
+
+#~ msgid "record"
+#~ msgstr "registro"
+
+#~ msgid "Manage Users"
+#~ msgstr "Administrar Usuarios"
+
+#~ msgid "Action"
+#~ msgstr "Acción"
+
+#~ msgid "Manage Ads"
+#~ msgstr "Administrar Anuncios"
+
+#~ msgid "records"
+#~ msgstr "registros"
+
+#~ msgid "Save"
+#~ msgstr "Guardar"
+
+#~ msgid "Manage Feedback"
+#~ msgstr "Administrar Mensajes de Contacto"
+
+#~ msgid "Manage Polls"
+#~ msgstr "Administrar Encuestas"
+
+#~ msgid "Manage Blog"
+#~ msgstr "Administrar Blog"
+
+#~ msgid "Manage Categories"
+#~ msgstr "Administrar Categorías"
+
+#~ msgid "posts"
+#~ msgstr "publicaciones"
+
+#~ msgid "Application"
+#~ msgstr "Aplicación"
+
+#~ msgid "Language"
+#~ msgstr "Idioma"
+
+#~ msgid "feedback"
+#~ msgstr "contacto"
+
+#~ msgid "Manage Forums"
+#~ msgstr "Administrar Foros"
+
+#~ msgid "Support"
+#~ msgstr "Soporte Técnico"
+
+#~ msgid "Title is required"
+#~ msgstr "El título es requerido"
+
+#~ msgid "Invalid URL"
+#~ msgstr "URL Inválida"
+
+#~ msgid "You need to upload an image or write the ad code"
+#~ msgstr "Necesitas subir una imagen o escribir el código del anuncio"
+
+#~ msgid "The ad has been saved correctly"
+#~ msgstr "El anuncio se ha guardado correctamente"
+
+#~ msgid "Deleted"
+#~ msgstr "Eliminado"
+
+#~ msgid "Spanish"
+#~ msgstr "Español"
+
+#~ msgid "English"
+#~ msgstr "Inglés"
+
+#, fuzzy
+#~ msgid "Arabic"
+#~ msgstr "Area"
+
+#, fuzzy
+#~ msgid "Chinese"
+#~ msgstr "Chile"
+
+#~ msgid "French"
+#~ msgstr "Francés"
+
+#~ msgid "Blog"
+#~ msgstr "Blog"
+
+#~ msgid "All rights reserved"
+#~ msgstr "Todos los derechos reservados"
+
+#~ msgid "Powered by"
+#~ msgstr "Desarrollado por"
+
+#~ msgid "Go back"
+#~ msgstr "Regresar"
+
+#~ msgid "Welcome"
+#~ msgstr "Bienvenido"
+
+#~ msgid "Online users"
+#~ msgstr "Usuarios conectados"
+
+#~ msgid "Registered users"
+#~ msgstr "Usuarios registrados"
+
+#~ msgid "Last user"
+#~ msgstr "Último usuario"
+
+#~ msgid "Gallery Comments"
+#~ msgstr "Comentarios de la Galería"
+
+#~ msgid "You are in"
+#~ msgstr "Usted está en"
+
+#~ msgid "Applications"
+#~ msgstr "Aplicaciones"
+
+#~ msgid "View Banner"
+#~ msgstr "Ver Banner"
 
 #~ msgid "There are no new pages"
 #~ msgstr "No hay nuevas páginas"
@@ -1335,9 +1099,6 @@ msgstr "Aplicaciones"
 #~ msgid "CPanel"
 #~ msgstr "CPanel"
 
-#~ msgid "Permissions"
-#~ msgstr "Permisos"
-
 #~ msgid "Super Admin"
 #~ msgstr "Super Administrador"
 
@@ -1374,9 +1135,6 @@ msgstr "Aplicaciones"
 #~ msgstr ""
 #~ "y cuando agreges una nueva entrada este post desaparecerá "
 #~ "automaticamente, disfrutalo!"
-
-#~ msgid "Hello World"
-#~ msgstr "Hola Mundo"
 
 #~ msgid "No Comments"
 #~ msgstr "Sin Comentarios"
@@ -1540,9 +1298,6 @@ msgstr "Aplicaciones"
 
 #~ msgid "Send Message"
 #~ msgstr "Enviar Mensaje"
-
-#~ msgid "Blog"
-#~ msgstr "Blog"
 
 #~ msgid "From"
 #~ msgstr "De"
@@ -1732,17 +1487,11 @@ msgstr "Aplicaciones"
 #~ msgid "Hide"
 #~ msgstr "Esconder"
 
-#~ msgid "Area"
-#~ msgstr "Area"
-
 #~ msgid "Select a option"
 #~ msgstr "Selecciona una opción"
 
 #~ msgid "Picture"
 #~ msgstr "Imagen"
-
-#~ msgid "Upload Document"
-#~ msgstr "Subir Documento"
 
 #~ msgid "Image 1"
 #~ msgstr "Imagen 1"
@@ -1801,38 +1550,8 @@ msgstr "Aplicaciones"
 #~ msgid "Counting"
 #~ msgstr "Total"
 
-#~ msgid "Text File"
-#~ msgstr "Archivo de Texto"
-
-#~ msgid "Document File"
-#~ msgstr "Documento"
-
-#~ msgid "PDF File"
-#~ msgstr "Archivo PDF"
-
-#~ msgid "Power Point File"
-#~ msgstr "Archivo Power Point"
-
-#~ msgid "Winrar File"
-#~ msgstr "Archivo Winrar"
-
-#~ msgid "Excel File"
-#~ msgstr "Archivo Excel"
-
 #~ msgid "Winzip File"
 #~ msgstr "Archivo Winzip"
-
-#~ msgid "7z File"
-#~ msgstr "Archivo 7z"
-
-#~ msgid "Adobe Illustrator File"
-#~ msgstr "Archivo de Adobe Illustrator"
-
-#~ msgid "Corel Draw File"
-#~ msgstr "Archivo de Corel Draw"
-
-#~ msgid "Executable File"
-#~ msgstr "Archivo Ejecutable"
 
 #~ msgid "Do you really want to cancel?"
 #~ msgstr "¿Realmente deseas cancelar?"
@@ -1843,26 +1562,14 @@ msgstr "Aplicaciones"
 #~ msgid "Error 404: Theme Not Found: "
 #~ msgstr "Error 404: No se encontró la Plantilla: "
 
-#~ msgid "Disable Javascript"
-#~ msgstr "Javascript Deshabilitado"
-
-#~ msgid "Error when trying to upload file"
-#~ msgstr "Error al intentar subir el archivo"
-
 #~ msgid "InvalID file"
 #~ msgstr "Archivo Inválido"
 
 #~ msgid "The file has errors"
 #~ msgstr "El archivo contiene errores"
 
-#~ msgid "The file exceeds the allowed size"
-#~ msgstr "El tamaño del archivo sobrepasa el límite permitido"
-
 #~ msgid "The file already exists in the files library"
 #~ msgstr "El archivo ya existe en la librería de archivos"
-
-#~ msgid "Successfully uploaded file"
-#~ msgstr "Archivo subido con éxito"
 
 #~ msgid "Download File"
 #~ msgstr "Descargar archivo"
@@ -2034,15 +1741,6 @@ msgstr "Aplicaciones"
 #, fuzzy
 #~ msgid "The Work has been saved"
 #~ msgstr "El foro ha sido guardado correctamente"
-
-#~ msgid "Spanish"
-#~ msgstr "Español"
-
-#~ msgid "English"
-#~ msgstr "Inglés"
-
-#~ msgid "French"
-#~ msgstr "Francés"
 
 #~ msgid "Portuguese"
 #~ msgstr "Portugués"
@@ -2476,9 +2174,6 @@ msgstr "Aplicaciones"
 
 #~ msgid "This page already exists in the database"
 #~ msgstr "Este página ya existe en la base de datos"
-
-#~ msgid "The image already exists."
-#~ msgstr "La imagen ya existe"
 
 #~ msgid "The help has been saved correctly"
 #~ msgstr "La ayuda ha sido guardada correctamente"
@@ -3118,9 +2813,6 @@ msgstr "Aplicaciones"
 
 #~ msgid "Brazil"
 #~ msgstr "Brasil"
-
-#~ msgid "Chile"
-#~ msgstr "Chile"
 
 #~ msgid "Colombia"
 #~ msgstr "Colombia"

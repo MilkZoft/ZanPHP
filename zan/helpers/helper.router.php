@@ -90,8 +90,8 @@ function execute() {
 					$Controller     	   = getController($applicationController, $application);
 					$controllerFile        = getController($applicationController, $application, TRUE);
 				
-					if(segment(2, isLang()) and !isNumber(segment(2, isLang()))) {
-						$method = segment(2, isLang());	
+					if(segment(1, isLang()) and !isNumber(segment(1, isLang()))) {
+						$method = segment(1, isLang());	
 					} else {
 						$method = "index";	
 					}
@@ -149,7 +149,7 @@ function execute() {
 
 	$Controller     = isset($Controller) ? $Controller : getController(NULL, $application);
 	$controllerFile = ($applicationController) ? getController($applicationController, $application, TRUE) : getController(NULL, $application, TRUE);
-
+	
 	if(file_exists($controllerFile)) {
 		if(isset($method) and count($params) > 0) {
 			if(method_exists($Controller, $method)) {

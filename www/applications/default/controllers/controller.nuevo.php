@@ -22,7 +22,7 @@ class Nuevo_Controller extends ZP_Controller {
 	}
 	
 	public function imprime($texto) {
-		$vars["message"] = "Hola";
+		$vars["message"] = $texto;
 		$vars["view"]	 = $this->view("welcome", TRUE);
 
 		$this->template("content", $vars);

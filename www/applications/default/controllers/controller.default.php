@@ -17,12 +17,10 @@ class Default_Controller extends ZP_Controller {
 	}
 	
 	public function index() {		
-		print __(_("Hello World!"));
-		/*
-		$vars["message"] = "Welcome to ZanPHP";
+		$vars["message"] = __(_("Welcome to ZanPHP"));
 		$vars["view"]	 = $this->view("welcome", TRUE);
 		
-		$this->template("content", $vars);*/
+		$this->template("content", $vars);
 	}
 
 	public function test($param1, $param2) {
