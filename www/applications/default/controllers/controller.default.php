@@ -16,8 +16,11 @@ class Default_Controller extends ZP_Controller {
 		$this->Templates->theme(_webTheme);
 	}
 	
-	public function index($a) {		
-		print "Parametro: $a";
+	public function index() {		
+		$vars["message"] = __(_("Welcome to ZanPHP"));
+		$vars["view"]	 = $this->view("show", TRUE);
+		
+		$this->template("content", $vars);
 	}
 
 	public function test($param1, $param2) {
