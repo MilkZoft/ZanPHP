@@ -17,8 +17,8 @@ class Nuevo_Controller extends ZP_Controller {
 		$this->Templates->theme(_webTheme);
 	}
 	
-	public function index() {		
-		print "Hola soy el controlador Nuevo de la aplicacion default";
+	public function index2($param = NULL) {		
+		print "Hola soy el controlador Nuevo de la aplicacion default $param";
 	}
 	
 	public function imprime($texto) {

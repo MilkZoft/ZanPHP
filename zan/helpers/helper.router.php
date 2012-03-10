@@ -76,41 +76,42 @@ function execute() {
 		if(!segment(0)) {
 			$application = _defaultApplication;	
 		} elseif(segment(0) and !segment(1)) {
-			if(isLang()) {
-				$application = _defaultApplication;
-			} else {
-				$application = segment(0);	
-			}
+			$application = isLang() ? _defaultApplication : segment(0);
 		} else { 
-			$application = segment(0, isLang());
+			$application 		   = segment(0, isLang());
+			$applicationController = segment(1, isLang());
 
-			if(segment(1, isLang())) { 
-				if(isController(segment(1, isLang()), segment(0, isLang()))) { 
-					$applicationController = segment(1, isLang());
-					$Controller     	   = getController($applicationController, $application);
-					$controllerFile        = getController($applicationController, $application, TRUE);
-				
-					if(segment(1, isLang()) and !isNumber(segment(1, isLang()))) {
-						$method = segment(1, isLang());	
+			if(isController($applicationController, $application)) { 
+				$Controller     = getController($applicationController, $application);
+				$controllerFile = getController($applicationController, $application, TRUE);
+				$method 		= segment(2, isLang());
+
+				if(!isMethod($method, $Controller)) {
+					if(isMethod("index", $Controller)) {
+						$method  = "index";
+						$special = TRUE;
 					} else {
-						$method = "index";	
+						getException("Method \"$method\" doesn't exists");
 					}
-				} else {
-					$Controller     = getController(NULL, $application);
-					$controllerFile = getController(NULL, $application, TRUE);
+				}
+			} else { 
+				$applicationController = FALSE;
+				$Controller     	   = getController(NULL, $application);
+				$controllerFile 	   = getController(NULL, $application, TRUE);
+				$method 			   = segment(1, isLang());
 
-					if(!isNumber(segment(1, isLang()))) { 
-						if(method_exists($Controller, segment(1, isLang()))) {
-							$method = segment(1, isLang());
-						} else {
-							$special = TRUE;
-						}
+				if(!isMethod($method, $Controller)) {
+					if(isMethod("index", $Controller)) {
+						$method  = "index";
+						$special = TRUE;
+					} else {
+						getException("Method \"$method\" doesn't exists");
 					}
 				}
 			}
-			
+		
 			if($applicationController) {
-				if(segments() > 3) {
+				if(segments() >= 3) {
 					$j = isLang() ? 4 : 3;
 					$j = ($special) ? $j - 1 : $j; 
 
@@ -147,65 +148,136 @@ function execute() {
 	
 	$Load->app($application);
 
-	$Controller     = isset($Controller) ? $Controller : getController(NULL, $application);
 	$controllerFile = ($applicationController) ? getController($applicationController, $application, TRUE) : getController(NULL, $application, TRUE);
+
+	if(!$controllerFile) {
+		getException("The application \"$application\" doesn't exists");
+	}
+
+	$Controller = isset($Controller) ? $Controller : getController(NULL, $application);
 	
-	if(file_exists($controllerFile)) {
-		if(isset($method) and count($params) > 0) {
-			if(method_exists($Controller, $method)) {
-				try {
-					$reflection = new ReflectionMethod($Controller, $method);
+	if(isset($method) and count($params) > 0) {
+		if(isMethod($method, $Controller)) {
+			try {
+				$Reflection = new ReflectionMethod($Controller, $method);
 				
-					if(!$reflection->isPublic()) {
-						throw new RuntimeException("The called method is not public.", 100);
-					}
-					
-					call_user_func_array(array($Controller, $method), $params);
-				} catch(RuntimeException $e) {
-					getException($e);
+				if(!$Reflection->isPublic()) {
+					throw new RuntimeException("The called method is not public.", 100);
 				}
-			} else {
-				call_user_func_array(array($Controller, "index"), $params);
-			}
-		} elseif(isset($method)) { 
-			if(method_exists($Controller, $method)) {
-				try {
-					$Reflection = new ReflectionMethod($Controller, $method);
 					
-					if(!$Reflection->isPublic()) {
-						throw new RuntimeException("The called method is not public.", 100);
-					} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {
-						$params 	= $Reflection->getParameters();
-						$parameters = NULL;
-						
-						if(count($params) > 0) {
-							$i = 0;
-							
-							foreach($params as $param) {
-								if($i === count($params) - 1) {
-									$parameters .= $param->name;
-								} else {
-									$parameters .= $param->name .", ";	
-								}
-								
-								$i++;
-							}
-						}
-						
-						throw new RuntimeException("The called method need required parameters ($parameters).", 200);
-					}
-	
-					$Controller->$method();
-				} catch(RuntimeException $e) {
-					getException($e);
-				}
-			} else {
-				call_user_func_array(array($Controller, "index"), $params);
+				call_user_func_array(array($Controller, $method), $params);
+			} catch(RuntimeException $e) {
+				getException($e);
 			}
 		} else {
-			call_user_func_array(array($Controller, "index"), $params);
+			if(isController($controllerFile, TRUE)) {
+				if(isset($method) and count($params) > 0) {
+					if(isMethod($method, $Controller)) {
+						try {
+							$Reflection = new ReflectionMethod($Controller, $method);
+							
+							if(!$Reflection->isPublic()) {
+								throw new RuntimeException("The called method is not public.", 100);
+							}
+								
+							call_user_func_array(array($Controller, $method), $params);
+						} catch(RuntimeException $e) {
+							getException($e);
+						}
+					}
+				}
+			} else {
+				if(method_exists($Controller, "index")) {
+					try {
+						$reflection = new ReflectionMethod($Controller, "index");
+						
+						if(!$reflection->isPublic()) {
+							throw new RuntimeException("The called method is not public.", 100);
+						} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {							
+							throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
+						}
+							
+						call_user_func_array(array($Controller, "index"), $params);
+					} catch(RuntimeException $e) {
+						getException($e);
+					}
+				} else {
+					getException("Method index doesn't exists");
+				}
+			}
+		}
+	} elseif(isset($method)) { 
+		if(isMethod($method, $Controller)) {
+			try {
+				$Reflection = new ReflectionMethod($Controller, $method);
+					
+				if(!$Reflection->isPublic()) {
+					throw new RuntimeException("The called method is not public.", 100);
+				} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {						
+					throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
+				}
+	
+				$Controller->$method();
+			} catch(RuntimeException $e) {
+				getException($e);
+			}
+		} else {
+			if(isMethod("index", $Controller)) {
+				call_user_func_array(array($Controller, "index"), $params);
+			} else {
+				getException("Method \"index\" doesn't exists");
+			}
+		}
+	} else { 
+		if(isMethod("index", $Controller)) { 
+			try {
+				$Reflection = new ReflectionMethod($Controller, "index");
+					
+				if(!$Reflection->isPublic()) {
+					throw new RuntimeException("The called method is not public.", 100);
+				} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {
+					throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
+				}
+	
+				call_user_func_array(array($Controller, "index"), $params);
+			} catch(RuntimeException $e) {
+				getException($e);
+			}
+		} else {
+			getException("Method \"index\" doesn't exists");
+		}
+	}	
+}
+
+
+function isMethod($method, $Controller) {
+	try {
+	    $Reflection = new ReflectionMethod($Controller, $method);
+	    
+	    return TRUE;
+	} catch (Exception $e) {
+	    return FALSE;
+	}
+}
+
+function getParameters($params) {
+	$parameters = NULL;
+			
+	if(count($params) > 0) {
+		$i = 0;
+							
+		foreach($params as $param) {
+			if($i === count($params) - 1) {
+				$parameters .= '$'. $param->name;
+			} else {
+				$parameters .= '$'. $param->name .", ";	
+			}
+				
+			$i++;
 		}
 	}
+
+	return $parameters;
 }
 
 function currentPath($path = NULL) {
@@ -245,13 +317,31 @@ function getURL() {
 	return $URL;
 }
 
-function isController($controller, $application) {
-	$file = "www/applications/$application/controllers/controller.$controller.php";
+function isController($controller, $application = NULL, $principal = FALSE) {
+	if($application === TRUE) {
+		if(file_exists($controller)) {
+			return TRUE;
+		}
+	} else { 
+		if($principal) {
+			if($controller === $application) {
+				$file = "www/applications/$application/controllers/controller.$controller.php";
 
-	if(file_exists($file)) {
-		return TRUE;	
+				if(file_exists($file)) {
+					return TRUE;	
+				}				
+			} else {
+				return FALSE;
+			}
+		}
+
+		$file = "www/applications/$application/controllers/controller.$controller.php";
+
+		if(file_exists($file)) {
+			return TRUE;	
+		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -270,7 +360,11 @@ function getController($applicationController = NULL, $application, $file = FALS
 		$$controller = (!$file) ? $Load->controller($controller) : FALSE;
 	}
 
-	return (!$file) ? $$controller : $controllerFile;
+	if($file) {
+		return file_exists($controllerFile) ? $controllerFile : FALSE;
+	}
+
+	return $$controller;
 }
 
 function whichApplication() {
