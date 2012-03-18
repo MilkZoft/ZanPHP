@@ -93,17 +93,17 @@ class ZP_Files extends ZP_Load {
 			$programs = array("7z", "ai", "cdr", "fla", "exe", "dmg", "pkg", "iso", "msi", "psd", "rar", "svg", "swf", "zip");
 			$video 	  = array("mpg", "mpeg", "avi", "wmv", "asf", "mp4", "flv", "mov");
 
-			if(in_array($file["extension"], $audio)) {
+			if(in_array(strtolower($file["extension"]), $audio)) {
 				$file["type"] = "audio";
-			} elseif(in_array($file["extension"], $codes)) {
+			} elseif(in_array(strtolower($file["extension"]), $codes)) {
 			 	$file["type"] = "codes";
-			} elseif(in_array($file["extension"], $document)) {
+			} elseif(in_array(strtolower($file["extension"]), $document)) {
 				$file["type"] = "documents";
-			} elseif(in_array($file["extension"], $image)) {
+			} elseif(in_array(strtolower($file["extension"]), $image)) {
 				$file["type"] = "images";
-			} elseif(in_array($file["extension"], $video)) {
+			} elseif(in_array(strtolower($file["extension"]), $video)) {
 				$file["type"] = "programs";
-			} elseif(in_array($file["extension"], $video)) {
+			} elseif(in_array(strtolower($file["extension"]), $video)) {
 				$file["type"] = "videos";
 			} else {
 				$file["type"] = "unknown";
@@ -273,6 +273,9 @@ class ZP_Files extends ZP_Load {
 		
 		if($filename) {
 			if(file_put_contents("www/lib/multimedia/". $file["type"] ."/". $filename, file_get_contents("php://input"))) {
+				____(_webURL . "www/lib/multimedia/". $file["type"] ."/". $filename);
+				$a = $this->resize("www/lib/multimedia/". $file["type"] ."/", $filename);
+	
 				return __(_("Upload success!"));
 			} else {
 				return __(_("Permission problems!"));
@@ -280,6 +283,17 @@ class ZP_Files extends ZP_Load {
 		}
 
 		return __(_("Upload failed!"));
+	}
+
+	public function resize($dir, $filename) {
+		$this->Images = $this->core("Images");
+				
+		$size["miniature"] = $this->Images->getResize("miniature", $dir, $filename);	
+		$size["medium"]    = $this->Images->getResize("medium", $dir, $filename);
+		$size["large"]     = $this->Images->getResize("large", $dir, $filename);
+		$size["original"]  = $this->Images->getResize("original", $dir, $filename);
+		
+		return $size;	
 	}
 	
 }

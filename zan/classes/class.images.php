@@ -66,79 +66,66 @@ class ZP_Images extends ZP_Load {
      * @param integer $min
      * @return string value
      */
-	public function getResize($size, $dir, $filename, $max = 0, $min = 0) {		
+	public function getResize($size, $dir, $filename) {	
+		$parts = explode(".", $filename);
+		if(count($parts > 1)) {
+			$filename  = $parts[0];
+			$extension = $parts[1]; 
+		}	
+
 		if($size === "original") {
-			$size = $dir . strtolower($size) . "_" . $filename;
+			$size = $dir . $filename .".". $extension;
 			
-			$this->load($dir . $filename);
-			
+			$this->load($dir . $filename .".". $extension);
+
 			if($this->getWidth() < $this->getHeight()) {
-				if($min === 0) {
-					$this->resizeToWidth(_minOriginal);
-				} else {
-					$this->resizeToWidth($min);
-				}
-				
-				$this->save($size);				
-			} elseif($this->getWidth() > _maxOriginal) {
-				
-				if($max === 0) {
-					$this->resizeToWidth(_maxOriginal);
-				} else {
-					$this->resizeToWidth($max);
-				}
-				
-				$this->save($size);
+				$this->resizeToHeight(_minOriginal);
 			} else {
-				$this->resizeToWidth($this->getWidth());
-				$this->save($size);				
-			}			
-		} elseif($size === "medium") {
-			$width1 = _minMedium; 
-			$width2 = _maxMedium; 
+				$this->resizeToWidth(_maxOriginal);
+			}
+		} elseif($size === "large") {
+			$size = $dir . $filename ."_l.". $extension;
 			
-			$size = $dir . strtolower($size) . "_" . $filename;
-			
-			$this->load($dir . $filename);
-			
+			$this->load($dir . $filename .".". $extension);
+
 			if($this->getWidth() < $this->getHeight()) {
-				$this->resizeToWidth($width1);
-				$this->save($size);
+				$this->resizeToHeight(_minLarge);
 			} else {
-				$this->resizeToWidth($width2);
-				$this->save($size);				
-			}		
+				$this->resizeToWidth(_maxLarge);
+			}
+		} elseif($size === "medium") {			
+			$size = $dir . $filename ."_m.". $extension;
+			
+			$this->load($dir . $filename .".". $extension);
+
+			if($this->getWidth() < $this->getHeight()) {
+				$this->resizeToHeight(_minMedium);
+			} else {
+				$this->resizeToWidth(_maxMedium);
+			}
 		} elseif($size === "small") {
-			$width1 = _minSmall; 
-			$width2 = _maxSmall; 	
+			$size = $dir . $filename ."_s.". $extension;
+			
+			$this->load($dir . $filename .".". $extension);
 
-			$size = $dir . strtolower($size) . "_" . $filename;
-			
-			$this->load($dir . $filename);
-			
 			if($this->getWidth() < $this->getHeight()) {
-				$this->resizeToWidth($width1);
-				$this->save($size);
+				$this->resizeToHeight(_minSmall);
 			} else {
-				$this->resizeToWidth($width2);
-				$this->save($size);				
-			}			
-		} elseif($size === "mini") {
-			$width1 = _minMini; 
-			$width2 = _maxMini; 	
+				$this->resizeToWidth(_maxSmall);
+			}
+		} elseif($size === "miniature") {
+			$size = $dir . $filename . "_min.". $extension;
+			
+			$this->load($dir . $filename .".". $extension);
 
-			$size = $dir . strtolower($size) . "_" . $filename;
-			
-			$this->load($dir . $filename);
-			
 			if($this->getWidth() < $this->getHeight()) {
-				$this->resizeToWidth($width1);
-				$this->save($size);
+				$this->resizeToHeight(_minMini);
 			} else {
-				$this->resizeToWidth($width2);
-				$this->save($size);				
-			}			
+				$this->resizeToWidth(_maxMini);
+			}
 		}
+
+		$this->save($size);
 		
 		return $size;
    	}
