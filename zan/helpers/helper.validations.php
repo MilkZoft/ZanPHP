@@ -31,32 +31,11 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/validations_helper
  */
 function isEmail($email) {
-	if((strlen($email) >= 6) and (substr_count($email, "@") === 1) and (substr($email, 0, 1) !== "@") and (substr($email, strlen($email) - 1, 1) !== "@")) { 
-		if((!strstr($email, "'")) and (!strstr($email, "\"")) and (!strstr($email, "\\")) and (!strstr($email, "\$")) and (!strstr($email, " "))) {
-			if(substr_count($email, ".") >= 1) {
-				$domain = substr(strrchr($email, "."), 1);
-				
-				if(strlen($domain) > 1 and strlen($domain) < 5 and (!strstr($domain, "@"))) {
-					$prev = substr($email, 0, strlen($email) - strlen($domain) - 1);
-					$last = substr($prev, strlen($prev) - 1, 1);
-					
-					if($last !== "@" and $last !== ".") {
-						return TRUE;					
-					}
-				}
-			}
-		}
-	}
-	
-	return FALSE;	
+	return (filter_var($email, FILTER_VALIDATE_EMAIL)) ? TRUE : FALSE;
 }
 
 function isImage($image) {
-    if(!getimagesize($image)) {
-        return FALSE;
-    } else {
-        return TRUE;
-    }
+    return (getimagesize($image)) ? TRUE : FALSE;
 }
 
 function isInjection($text, $count = 1) {
@@ -73,6 +52,10 @@ function isInjection($text, $count = 1) {
 	}
 	
 	return FALSE;
+}
+
+function isIP($IP) {
+	return filter_var($IP, FILTER_VALIDATE_IP) ? TRUE : FALSE;
 }
 
 function isSPAM($string, $max = 2) {
