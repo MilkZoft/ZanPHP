@@ -1,3 +1,51 @@
+Next release - Version 2.5.7.2
+March 19, 2012
+
+    Improvement: use of filter_var() function on isEmail() and isIP() https://github.com/MilkZoft/ZanPHP/commit/0144f3bcb36552d5bc6af8a97c4acf8ae9a5337a
+
+Version 2.5.7.1
+March 17, 2012
+    
+    Fixed: files and images classes https://github.com/MilkZoft/ZanPHP/commit/eec5bb1eeb25f85f250995a970d6ee9c9bb76c3b
+
+    Add: new helper.pagination.php https://github.com/MilkZoft/ZanPHP/commit/c2e4acc61dd985fc7d73cf37f701594429c90a8e
+
+March 09, 2012
+
+    Fixed: Exceptions and router helper fixed https://github.com/MilkZoft/ZanPHP/commit/42bc7022e73e358050d8a17d82acef5ced05fbc8    
+
+March 06, 2012
+
+    Fixed: undefined params helper router https://github.com/MilkZoft/ZanPHP/commit/22ff456cea60fef3a076be3e499791218dfe7a3e
+
+Version 2.5.7
+March 05, 2012
+
+    Fixed: Class load and helper router fixed https://github.com/MilkZoft/ZanPHP/commit/ab9f1e23447f640b5e17f06a65374dde06316a51
+
+March 04, 2012
+    
+    Fixed: Router and alerts helpers fixed https://github.com/MilkZoft/ZanPHP/commit/c0ff43a8b55fb53e459f523fff34aaba8fe512ea
+
+    Improvement: Router helper improved index() can receive parameters https://github.com/MilkZoft/ZanPHP/commit/9959bb09ac3b4b065005a46fd2596e75df31161f
+
+March 03, 2012
+
+    New feature: New function currentPath() https://github.com/MilkZoft/ZanPHP/commit/4ba014f98f4c54fe4139778e032f7c31cf626087
+
+March 01, 2012
+
+    Fixed: Email and load classes fixed https://github.com/MilkZoft/ZanPHP/commit/f28fff2c7d3c233292f8bdf0c5eb9807e005ffc7
+
+February 29, 2012
+
+    Fixed: Fixed languages on load.php https://github.com/MilkZoft/ZanPHP/commit/f66f110f18e3b2b75bde9d68eb23fa11b5cdb43c
+
+Version 2.5.6
+February 28, 2012
+    
+    Fixed: files, load, singleton, templates classes and forms, html, i18n, sessions, string helpers https://github.com/MilkZoft/ZanPHP/commit/b52f49c06eb6ded185f6b2032bc898d907a92905
+
 Version 2.5.5
 February 21, 2012
 
