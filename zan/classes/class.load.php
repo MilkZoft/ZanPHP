@@ -60,6 +60,8 @@ class ZP_Load {
 	 * @var private $views = array()
 	 */
 	private $views = array();
+
+	public $ZP;
 	
     /**
      * Loads helper autoload, database config and class templates
@@ -67,7 +69,7 @@ class ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$helpers = array("autoload", "router", "validations");
+		$helpers = array("config", "autoload", "router", "validations");
 		
 		$this->helper($helpers);
 		
@@ -430,22 +432,6 @@ class ZP_Load {
 	}
 	
     /**
-     * Load languages files
-     * 
-     * @param string $language
-     * @return void
-     */
-	public function language($language) {
-		$language = strtolower($language);
-
-		if(file_exists("www/lib/languages/language.$language.php")) {
-			include_once "www/lib/languages/language.$language.php";
-		} else {
-			return FALSE;
-		}
-	}
-	
-    /**
      * Loads a left template
      *
      * @return void
@@ -550,7 +536,7 @@ class ZP_Load {
      *
      * @return void
      */
-	public function render() {
+	public function rendering() {
 		$numArgs = func_num_args();
 		$args    = func_get_args();
 		
@@ -637,7 +623,7 @@ class ZP_Load {
      * @param string $vars
      * @return string value / void
      */	
-	public function template($name, $vars = NULL) {			
+	public function render($name, $vars = NULL) {	
 		if(is_array($vars)) {
 			if(count($this->views) === 0) {
 				$this->views[0]["name"] = $name;
@@ -654,9 +640,9 @@ class ZP_Load {
 			$this->views[$i]["name"] = $name;
 			$this->views[$i]["vars"] = FALSE;		
 		}
-
-		if($name !== "include" and _autoRender) {
-			$this->render();
+		
+		if($name !== "include" and get("autoRender")) {
+			$this->rendering();
 		}
 	}
 	
@@ -681,6 +667,10 @@ class ZP_Load {
 		$this->Templates = $this->core("Templates");
 		
 		$this->Templates->title(__($title));
+	}
+
+	public function vars($vars) {
+		$this->Templates->vars($vars);
 	}
 	
     /**
@@ -712,28 +702,15 @@ class ZP_Load {
 			}
 				
 			if(file_exists($view)) {
-				if($return) {
-					return file_get_contents($view);
-				}
-
-				$this->Cache = $this->core("Cache");	
-
-				if($this->Cache->get($cacheID, "views")) {
-					print $this->Cache->get($cacheID, "views");	
-				} else {
-					include $view;
-				}
+				include $view;
 				
-				if(_cacheStatus) {
+				if($return) {
 					$output = ob_get_contents();
 
 					ob_end_clean();
-					
-					$this->Cache->save($output, $cacheID, "views");
-					
-					print $output;	
-				} 
-				
+
+					return $output;
+				}
 			} else {
 				die("Error 404: $view view not found");	
 			}

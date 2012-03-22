@@ -30,7 +30,6 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/classes/templates_class
  */
 class ZP_Templates extends ZP_Load {
-
 	/**
 	 * Contains the CSS style from an specific application
 	 * 
@@ -62,7 +61,7 @@ class ZP_Templates extends ZP_Load {
 	/**
 	 * Contains the title for the header template
 	 * 
-	 * @var private $title = _webName
+	 * @var private $title = get("webNam"]e
 	 */
 	private $title;
 	
@@ -79,7 +78,7 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$helpers = array("array", "browser", "debugging", "forms", "html", "scripts", "validations");
+		$helpers = array("config", "array", "browser", "debugging", "forms", "html", "scripts", "validations");
 		
 		$this->helper($helpers);
 		
@@ -95,24 +94,24 @@ class ZP_Templates extends ZP_Load {
 	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
 		if(file_exists($CSS)) { 
 			if($print) {
-				print '<link rel="stylesheet" href="'. _webURL . _sh . $CSS .'" type="text/css" />' . "\n";
+				print '<link rel="stylesheet" href="'. get("webURL") . _sh . $CSS .'" type="text/css" />' . "\n";
 			} else { 
-				$this->CSS .= '<link rel="stylesheet" href="'. _webURL . _sh . $CSS .'" type="text/css" />' . "\n";
+				$this->CSS .= '<link rel="stylesheet" href="'. get("webURL") . _sh . $CSS .'" type="text/css" />' . "\n";
 			}
 		} 
 
 		if($CSS === "bootstrap") {
 			if(is_null($this->CSS)) {
 				if($print) {
-					print '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					print '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				} else {
-					$this->CSS  = '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					$this->CSS  = '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				}
 			} else {
 				if($print) {
-					print '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					print '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				} else {
-					$this->CSS .= '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					$this->CSS .= '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				}	
 			}
 		}
@@ -125,17 +124,17 @@ class ZP_Templates extends ZP_Load {
 		
 		if(is_null($this->CSS)) {
 			if($print) {
-				print '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/default.css" type="text/css" />' . "\n";
+				print '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/default.css" type="text/css" />' . "\n";
 			} else {
-				$this->CSS = '<link rel="stylesheet" href="'. _webURL .'/www/lib/css/default.css" type="text/css" />' . "\n";
+				$this->CSS = '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/default.css" type="text/css" />' . "\n";
 			}			
 		}
 		
 		if(file_exists($file)) {
 			if($print) {
-				print '<link rel="stylesheet" href="'. _webURL .'/'. $file .'" type="text/css" />' . "\n";
+				print '<link rel="stylesheet" href="'. get("webURL") .'/'. $file .'" type="text/css" />' . "\n";
 			} else {
-				$this->CSS .= '<link rel="stylesheet" href="'. _webURL .'/'. $file .'" type="text/css" />' . "\n";
+				$this->CSS .= '<link rel="stylesheet" href="'. get("webURL") .'/'. $file .'" type="text/css" />' . "\n";
 			}
 		}
 	}
@@ -216,7 +215,7 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function getTitle() {
-		return (is_null($this->title)) ? _webName : __(_($this->title));
+		return (is_null($this->title)) ? get("webName") : __(_($this->title));
 	}
 	
     /**
@@ -262,9 +261,7 @@ class ZP_Templates extends ZP_Load {
      *
      * @return void
      */
-	public function load($template, $direct = FALSE) {	
-		$this->Cache = (_cacheStatus) ? $this->core("Cache") : FALSE;
-		
+	public function load($template, $direct = FALSE) {			
 		if(is_array($this->vars)) {
 			$key  = array_keys($this->vars);
 			$size = sizeof($key);			
@@ -276,221 +273,15 @@ class ZP_Templates extends ZP_Load {
 		
 		if($direct) { 
 			if(is_array($template)) {
-				if(count($template) === 1) {
-					$buffer1 = ob_get_clean();
-					
-					if(_cacheStatus) { 								 
-						$cache = $this->Cache->get(cacheSession($template[0]), "templates");
-						
-						if($cache) {
-							print $buffer1;
-							print $cache;
-
-							return TRUE;
-						} else {
-							ob_start();
-							
-							include $template[0];
-							
-							$buffer2 = ob_get_contents();
-							
-							@ob_end_clean();
-						
-							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");	
-							
-							print $buffer1;
-							print $buffer2;
-						}
-					} else {
-						print $buffer1;
-						
-						include $template[0];
-					}
-				} elseif(count($template) === 2) {
-					$buffer1 = ob_get_clean();
-					
-					if(_cacheStatus) { 								 
-						$cache1 = $this->Cache->get(cacheSession($template[0]), "templates");
-						$cache2 = $this->Cache->get(cacheSession($template[1]), "templates");
-						
-						if($cache1 and $cache2) {
-							print $buffer1;
-							print $cache1;
-							print $cache2;
-						} else {
-							ob_start();
-							
-							include $template[0];
-							
-							$buffer2 = ob_get_clean();
-
-							ob_start();
-
-							include $template[1];
-
-							$buffer3 = ob_get_contents();
-							
-							@ob_end_clean();
-						
-							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");
-							$this->Cache->save($buffer3, cacheSession($template[1]), "templates");	
-							
-							print $buffer1;
-							print $buffer2;
-							print $buffer3;
-						}
-					} else {
-						print $buffer1;
-						
-						include $template[0];
-						include $template[1];
-					}
-				} elseif(count($template) === 3) {
-					$buffer1 = ob_get_clean();
-					
-					if(_cacheStatus) { 								 
-						$cache1 = $this->Cache->get(cacheSession($template[0]), "templates");
-						$cache2 = $this->Cache->get(cacheSession($template[1]), "templates");
-						$cache3 = $this->Cache->get(cacheSession($template[2]), "templates");
-						
-						if($cache1 and $cache2 and $cache3) {
-							print $buffer1;
-							print $cache1;
-							print $cache2;
-							print $cache3;
-						} else {
-							ob_start();
-							
-							include $template[0];
-							
-							$buffer2 = ob_get_clean();
-
-							ob_start();
-
-							include $template[1];
-
-							$buffer3 = ob_get_clean();
-
-							ob_start();
-
-							include $template[2];
-
-							$buffer4 = ob_get_contents();
-							
-							@ob_end_clean();
-						
-							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");
-							$this->Cache->save($buffer3, cacheSession($template[1]), "templates");
-							$this->Cache->save($buffer4, cacheSession($template[2]), "templates");	
-							
-							print $buffer1;
-							print $buffer2;
-							print $buffer3;
-							print $buffer4;
-						}
-					} else {
-						print $buffer1;
-						
-						include $template[0];
-						include $template[1];
-						include $template[2];
-					}
-				} elseif(count($template) === 4) {
-					$buffer1 = ob_get_clean();
-					
-					if(_cacheStatus) { 								 
-						$cache1 = $this->Cache->get(cacheSession($template[0]), "templates");
-						$cache2 = $this->Cache->get(cacheSession($template[1]), "templates");
-						$cache3 = $this->Cache->get(cacheSession($template[2]), "templates");
-						$cache4 = $this->Cache->get(cacheSession($template[3]), "templates");
-						
-						if($cache1 and $cache2 and $cache3 and $cache4) {
-							print $buffer1;
-
-							print $cache1;
-							print $cache2;
-							print $cache3;
-							print $cache4;
-						} else {
-							ob_start();
-							
-							include $template[0];
-							
-							$buffer2 = ob_get_clean();
-
-							ob_start();
-
-							include $template[1];
-
-							$buffer3 = ob_get_clean();
-
-							ob_start();
-
-							include $template[2];
-
-							$buffer4 = ob_get_clean();
-
-							ob_start();
-
-							include $template[3];
-
-							$buffer5 = ob_get_contents();
-							
-							@ob_end_clean();
-						
-							$this->Cache->save($buffer2, cacheSession($template[0]), "templates");
-							$this->Cache->save($buffer3, cacheSession($template[1]), "templates");
-							$this->Cache->save($buffer4, cacheSession($template[2]), "templates");
-							$this->Cache->save($buffer5, cacheSession($template[3]), "templates");
-							
-							print $buffer1;
-							print $buffer2;
-							print $buffer3;
-							print $buffer4;
-						}
-					} else {
-						print $buffer1;
-						
-						include $template[0];
-						include $template[1];
-						include $template[2];
-						include $template[3];
-					}
+				for($i = 0; $i <= count($template) - 1; $i++) {
+					include $template[$i];
 				}
 			} else {
 				if(!file_exists($template)) {
 					die("Error 404: Theme Not Found: " . $template);
 				}		
 				
-				$buffer1 = ob_get_clean();
-									
-				if(_cacheStatus) { 								 
-					$cache = $this->Cache->get(cacheSession($template), "templates");
-					
-					if($cache) {
-						print $buffer1;
-						print $cache;
-
-						return TRUE;
-					} else {
-						ob_start();
-						
-						include $template;
-						
-						$buffer2 = ob_get_contents();
-						
-						@ob_end_clean();
-					
-						$this->Cache->save($buffer2, cacheSession($template), "templates");	
-						
-						print $buffer1;
-						print $buffer2;
-					}
-				} else {
-					print $buffer1;
-					
-					include $template;
-				}
+				include $template;
 			}
 		} else { 
 			$template = "www/lib/themes/$this->theme/$template.php";
@@ -499,21 +290,7 @@ class ZP_Templates extends ZP_Load {
 				die("Error 404: Theme Not Found: " . $template);									
 			}
 			
-			#@ob_clean();
-			
-			include $template; 
-			
-			if(_cacheStatus) {
-				$output = @ob_get_contents();
-
-				@ob_end_clean();
-				
-				$this->Cache->save($output, cacheSession($template), "templates");
-				
-				print $output;
-			} else {
-				return TRUE;
-			}	
+			include $template;	
 		}						
 	}
 	
@@ -522,9 +299,10 @@ class ZP_Templates extends ZP_Load {
      *
      * @return void
      */
-	public function theme($theme) {
-		$this->theme     = $theme;
-		$this->themePath = _webURL . "/www/lib/themes/$this->theme";
+	public function theme($theme = NULL) {
+		$this->theme = (is_null($theme)) ? get("webTheme") : $theme;
+		
+		$this->themePath = get("webURL") ."/www/lib/themes/$this->theme";
 		
 		if(!$this->isTheme()) {
 			die("You need to create a valid theme");
@@ -536,8 +314,9 @@ class ZP_Templates extends ZP_Load {
      *
      * 
      */
-	public function themeCSS($theme = _webTheme) {
-		$file    = "www/lib/themes/". $theme . "/css/style.css";
+	public function themeCSS($theme = NULL) {
+		$theme 	 = is_null($theme) ? get("webTheme") : $theme; 
+		$file    = "www/lib/themes/". $theme ."/css/style.css";
 		$browser = browser();
 		
 		if($browser === "Internet Explorer") {
@@ -559,11 +338,7 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function title($title = NULL) {
-		if(is_null($title)) {
-			$this->title = _webName;
-		} 
-		
-		$this->title = _webName ." - ". $title;
+		$this->title = is_null($title) ? get("webName") : get("webName") ." - ". $title;
 	}
 	
     /**

@@ -10,7 +10,7 @@ function getException($e = NULL) {
 	if(is_object($e)) {
 		?>
         	<p style="text-align:center;">
-            	<img src="<?php print _webURL; ?>/www/lib/images/zanphp.png" />
+            	<img src="<?php print get("webURL"); ?>/www/lib/images/zanphp.png" />
             </p>
             
         	<div style="width: 500px; border: 1px solid #000; background-color: #e3f5f9; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 0.8em; padding: 10px;">
@@ -25,7 +25,7 @@ function getException($e = NULL) {
 	} else {
         ?>
             <p style="text-align:center;">
-                <img src="<?php print _webURL; ?>/www/lib/images/zanphp.png" />
+                <img src="<?php print get("webURL"); ?>/www/lib/images/zanphp.png" />
             </p>
             
             <div style="width: 500px; border: 1px solid #000; background-color: #e3f5f9; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 0.8em; padding: 10px;">

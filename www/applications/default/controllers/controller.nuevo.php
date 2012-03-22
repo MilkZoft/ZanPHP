@@ -14,7 +14,7 @@ class Nuevo_Controller extends ZP_Controller {
 		#$this->Default_Model = $this->model("Default_Model");
 		
 		$this->Templates = $this->core("Templates");
-		$this->Templates->theme(_webTheme);
+		$this->Templates->theme();
 	}
 	
 	public function index2($param = NULL) {		

@@ -13,14 +13,14 @@ class Default_Controller extends ZP_Controller {
 				
 		$this->Templates = $this->core("Templates");
 
-		$this->Templates->theme(_webTheme);
+		$this->Templates->theme();
 	}
 	
 	public function index() {		
-		$vars["message"] = __(_("Welcome to ZanPHP"));
+		$vars["message"] = __("Hello World");
 		$vars["view"]	 = $this->view("show", TRUE);
 		
-		$this->template("content", $vars);
+		$this->render("content", $vars);
 	}
 
 	public function test($param1, $param2) {
@@ -31,7 +31,7 @@ class Default_Controller extends ZP_Controller {
 		$vars["message"] = $message;
 		$vars["view"]	 = $this->view("show", TRUE);
 		
-		$this->template("content", $vars);
+		$this->render("content", $vars);
 		#$this->view("show", $vars);
 	}
 

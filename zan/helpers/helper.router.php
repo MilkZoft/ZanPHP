@@ -41,7 +41,7 @@ if(!defined("_access")) {
  * @link		
  */
 function execute() {		
-	global $Load;
+	global $Load, $ZP;
 	
 	$applicationController = FALSE;
 
@@ -74,9 +74,9 @@ function execute() {
 	
 	if(!$match) {
 		if(!segment(0)) {
-			$application = _defaultApplication;	
+			$application = get("defaultApplication");	
 		} elseif(segment(0) and !segment(1)) {
-			$application = isLang() ? _defaultApplication : segment(0);
+			$application = isLang() ? get("defaultApplication") : segment(0);
 		} else { 
 			$application 		   = segment(0, isLang());
 			$applicationController = segment(1, isLang());
@@ -142,8 +142,8 @@ function execute() {
 		} 
 	}
 
-	if(_webSituation !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
-		die(_webMessage);
+	if(get("webSituation") !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
+		die(get("webMessage"));
 	}
 	
 	$Load->app($application);
@@ -302,6 +302,8 @@ function currentPath($path = NULL) {
  * @return array		
  */
 function getURL() {		
+	global $ZP;
+
 	$URL = NULL;
 
 	for($i = 0; $i <= segments() - 1; $i++) {
@@ -312,7 +314,7 @@ function getURL() {
 		}
 	}
 	
-	$URL = _webBase . "/$URL";
+	$URL = get("webBase") . "/$URL";
 	
 	return $URL;
 }
@@ -368,6 +370,8 @@ function getController($applicationController = NULL, $application, $file = FALS
 }
 
 function whichApplication() {
+	global $ZP;
+
 	if(file_exists("www/applications/" . segment(0) . "/controllers/controller." . segment(0) . ".php")) {
 		return segment(0); 
 	} elseif(file_exists("www/applications/". segment(1) ."/controllers/controller.". segment(1) .".php")) {
@@ -376,8 +380,8 @@ function whichApplication() {
 		return segment(0);
 	} elseif(file_exists("www/applications/". segment(1) ."/models/model.". segment(1) .".php")) {
 		return segment(1);
-	} elseif(file_exists("www/applications/". _defaultApplication ."/controllers/controller.". _defaultApplication .".php")) {
-		return _defaultApplication;	
+	} elseif(file_exists("www/applications/". get("defaultApplication") ."/controllers/controller.". get("defaultApplication") .".php")) {
+		return get("defaultApplication");	
 	}
 	
 	return FALSE;
@@ -396,16 +400,16 @@ function isNumber($number) {
 function path($path = FALSE, $URL = FALSE) {
 	if(!$path) {
 		if(isLang()) {
-			return _webBase . _sh . _webLang;
+			return get("webBase") . _sh . get("webLang");
 		} else {
-			return _webBase . _sh;
+			return get("webBase") . _sh;
 		}	
 	} 
 
 	if($URL) {
-		return _webURL  . _sh . $path;
+		return get("webURL")  . _sh . $path;
 	} else {
-		return _webBase . _sh . _webLang . _sh . $path;
+		return get("webBase") . _sh . get("webLang") . _sh . $path;
 	}
 }
 
@@ -437,9 +441,11 @@ function ping($domain) {
  * @return void
  */
 function redirect($URL = FALSE, $time = FALSE) {
+	global $ZP;
+
 	if(!$time) {		
 		if(!$URL) {
-			header("location: ". _webBase);
+			header("location: ". get("webBase"));
 		} elseif(substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
 			header("location: ". path($URL));
 			
@@ -466,11 +472,11 @@ function redirect($URL = FALSE, $time = FALSE) {
 /**
  * route
  *
- * Returns an Array from $_SERVER["REQUEST_URI"] exploding each position with slashes
+ * Returns an Array from $_SERVER["REQUEST_URI") exploding each position with slashes
  * 
  * @return array		
  */
-function route() {
+function route() {	
 	$URL   = explode("/", substr($_SERVER["REQUEST_URI"], 1));
 	$paths = explode("/", dirname($_SERVER["SCRIPT_FILENAME"]));
 	$path  = $paths[count($paths) - 1];
@@ -478,7 +484,7 @@ function route() {
 	if(is_array($URL)) {		 
 		$URL = array_diff($URL, array(""));
 		
-		if(!_domain) {
+		if(!get("domain")) {
 			$vars[] = array_shift($URL);
 		}
 		
@@ -486,7 +492,7 @@ function route() {
 			$vars[] = array_shift($URL);
 		}
 
-		if(!_modRewrite and isset($URL[0])) { 
+		if(!get("modRewrite") and isset($URL[0])) { 
 			if($URL[0] === basename($_SERVER["SCRIPT_FILENAME"])) { 
 				$vars[] = array_shift($URL);
 			}

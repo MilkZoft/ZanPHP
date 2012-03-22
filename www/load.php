@@ -18,19 +18,26 @@ if(file_exists(_dir . "/config/config.basics.php") and file_exists(_dir . "/conf
 	die("Error: config.basics.php or config.core.php doesn't exists");
 }
 
+if($ZP["production"]) { 
+	error_reporting(FALSE);
+	ini_set("display_errors", FALSE); 
+} else {
+	error_reporting(E_ALL);
+}
+
 include _corePath . "/classes/class.load.php";
 include _corePath . "/classes/class.controller.php";
 include _corePath . "/classes/class.model.php";
 
 $Load = new ZP_Load(); 
 
-$helpers = array("i18n", "router", "benchmark", "exceptions", "string", "sessions", "security");
+$helpers = array("config", "i18n", "router", "benchmark", "exceptions", "string", "sessions", "security");
 
 $Load->helper($helpers);
 
-define("_webLang", whichLanguage(FALSE));
+set("webLang", whichLanguage(FALSE));
 
-if(_translation === "gettext") {
+if(get("translation") === "gettext") {
 	$languageFile = _dir ."/lib/languages/gettext/language.". whichLanguage(TRUE, TRUE) .".mo";
 		
 	if(file_exists($languageFile)) { 			

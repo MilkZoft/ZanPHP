@@ -39,8 +39,8 @@ if(!defined("_access")) {
  * @param string $text
  * @return string value
  */
-function __($text, $normal = FALSE) {
-	if(_translation === "gettext" and !$normal) {
+function __($text) {
+	if(get("translation") === "gettext") {
 		global $Gettext_Reader;
 		
 		if(is_null($Gettext_Reader)) {
@@ -49,20 +49,17 @@ function __($text, $normal = FALSE) {
 		
 		return $Gettext_Reader->translate($text);
 	} else {
-		global $Load;
+		global $Load, $phrase;
 		
-		$lang      = whichLanguage();
-		$languages = getLanguagesFromDir();
+		$language = whichLanguage();
 		
-		foreach($languages as $language) {
-			if($language["language"] === $lang) {
-				$Load->language($lang);
+		if(file_exists("www/lib/languages/language.". strtolower($language) .".php")) {
+			include_once "www/lib/languages/language.". strtolower($language) .".php";
+		} 
 
-				break;
-			}	
-		}
+		$position = strtolower(str_replace(" ", "_", $text));
 
-		return encode(translation($text)); 	
+		return isset($phrase[$position]) ? $phrase[$position] : $text; 	
 	}
 }
 
@@ -80,7 +77,7 @@ function getLanguage($lang, $flags = FALSE) {
 	foreach($languages as $language) {
 		if($flags) {
 			if($language["language"] === $lang) {
-				return '<img class="no-border" src="'. _webURL .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __(_($lang)) .'" />';	
+				return '<img class="no-border" src="'. get("webURL") .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __(_($lang)) .'" />';	
 			}
 		} else {
 			if($language["language"] === $lang) {
@@ -101,9 +98,7 @@ function getLanguage($lang, $flags = FALSE) {
  * @return string value
  */
 function isLang($lang = FALSE) {
-	if(!$lang) {
-		$lang = strtolower(segment(0));	
-	}
+	$lang = (!$lang) ? strtolower(segment(0)) : $lang;	
 	
 	$langs = array("ar", "bs", "be", "bu", "ca", "ch", "cr", "cz", "da", "du", "en", "et", "fi", "fr", "ga", "ge", "gr", "he", "hu", "in", "it", "jp", "ku", "li", "ma", "pe", "po", "pt", "ro", "ru", "se", "sk", "sn", "es", "sw", "th", "tk", "uk", "ur", "vi");
 	
@@ -130,15 +125,15 @@ function whichLanguage($invert = TRUE, $lower = FALSE) {
 		} elseif(segment(0) and getLang(segment(0), TRUE)) { 
 			return ($lower) ? strtolower(getLang(segment(0), TRUE)) : getLang(segment(0), TRUE);
 		} elseif(!$invert) {
-			return getLang(_webLanguage);
+			return getLang(get("webLanguage"));
 		} else {
-			return ($lower) ? strtolower(_webLanguage) : _webLanguage;
+			return ($lower) ? strtolower(get("webLanguage")) : get("webLanguage");
 		}	
 	} else {
 		if(!$invert) {
-			return getLang(_webLanguage);
+			return getLang(get("webLanguage"));
 		} else {
-			return ($lower) ? strtolower(_webLanguage) : _webLanguage;
+			return ($lower) ? strtolower(get("webLanguage")) : get("webLanguage");
 		}	
 	}
 }
@@ -149,7 +144,7 @@ function getLanguages($flags = FALSE) {
 	$languages = getLanguagesFromDir();
 
 	foreach($languages as $language) {
-		$default = ($language["language"] === _webLanguage) ? TRUE : FALSE;
+		$default = ($language["language"] === get("webLanguage")) ? TRUE : FALSE;
 
 		$data[] = array("default" => $default, "name" => $language["language"], "value" => getLanguage($language["language"], $flags));
 	}
