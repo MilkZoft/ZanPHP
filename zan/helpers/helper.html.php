@@ -121,6 +121,10 @@ function getHTMLDecode($HTML) {
 	return html_entity_decode($HTML);
 }
 
+function getFavicon() {
+	return '<link rel="shortcut icon" href="'. path("www/lib/images/favicon.ico", TRUE) .'" />';
+}
+
 function h1($text) {
 	return char("\t") . "<h1>$text</h1>" . char("\n");
 }
@@ -143,7 +147,7 @@ function head($open = TRUE) {
 
 function HTML($open = TRUE) {
 	if($open) {
-		return '<html xmlns="http://www.w3.org/1999/xhtml" lang="'._webLang.'" xml:lang="'._webLang.'">' . char("\n");
+		return '<html xmlns="http://www.w3.org/1999/xhtml" lang="'. get("webLang") .'" xml:lang="'. get("webLang") .'">' . char("\n");
 	} else {
 		return "</html>";
 	}
@@ -188,12 +192,12 @@ function li($list, $open = NULL) {
 }
 
 function loadCSS($CSS) {
-	return '<link rel="stylesheet" href="'. _webURL . "/" . $CSS .'" type="text/css" media="all" />';
+	return '<link rel="stylesheet" href="'. get("webURL") ."/". $CSS .'" type="text/css" media="all" />';
 }
 
 function loadScript($js, $application = NULL, $external = FALSE) {
 	if(file_exists($js)) {		
-		return '<script type="text/javascript" src="'. _webURL . "/" . $js .'"></script>';
+		return '<script type="text/javascript" src="'. get("webURL") ."/". $js .'"></script>';
 	} if($external) {
 		return '<script type="text/javascript" src="'. $js .'"></script>';
 	} else {
@@ -201,7 +205,7 @@ function loadScript($js, $application = NULL, $external = FALSE) {
 			$file = "www/applications/$application/views/js/$js.js";
 			
 			if(file_exists($file)) {
-				return '<script type="text/javascript" src="'. _webURL . "/" . $file .'"></script>';
+				return '<script type="text/javascript" src="'. get("webURL") ."/". $file .'"></script>';
 			}
 		}
 	}
