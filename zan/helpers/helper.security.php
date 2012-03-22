@@ -59,7 +59,7 @@ function encrypt($password = NULL, $strong = 3, $key = TRUE, $uppercase = FALSE)
 	if(!$key) {
 		$password = $password . substr(md5(date("Y-m-d H:i:s", time())), 0, 10);
 	} else {
-		$password = _ZanPHP . _secretKey . $password;
+		$password = "ZanPHP" . _secretKey . $password;
 	}
 		
 	if($strong === 1) {
