@@ -33,10 +33,10 @@ if(!defined("_access")) {
 
 function cacheSession($cacheID) {
 	if(SESSION("ZanUser")) {
-		return $cacheID . _dot . SESSION("ZanUser");
+		return $cacheID .".". SESSION("ZanUser");
 	}
 
-	return $cacheID . ".guest";
+	return $cacheID .".guest";
 }
 
 function COOKIE($cookie) {
@@ -98,11 +98,13 @@ function SESSION($session, $value = FALSE) {
  * @param $URL    = _webBase
  * @return void
  */ 
-function unsetCookie($cookie, $URL = _webBase) {
+function unsetCookie($cookie, $URL = FALSE) {
 	setcookie($cookie);	
 	
 	if($URL) {
 		redirect($URL);
+	} else {
+		redirect();
 	}
 }
 
@@ -114,11 +116,13 @@ function unsetCookie($cookie, $URL = _webBase) {
  * @param $URL    = _webBase
  * @return void
  */ 
-function unsetSessions($URL = _webBase) {
+function unsetSessions($URL = FALSE) {
 	session_unset(); 
 	session_destroy();	
 	
 	if($URL) {
 		redirect($URL);
+	} else {
+		redirect();
 	}
 }
