@@ -14,6 +14,8 @@ class Default_Controller extends ZP_Controller {
 		$this->Templates = $this->core("Templates");
 
 		$this->Templates->theme();
+
+		$this->Default_Model = $this->model("Default_Model");
 	}
 	
 	public function index() {		
@@ -21,6 +23,16 @@ class Default_Controller extends ZP_Controller {
 		$vars["view"]	 = $this->view("show", TRUE);
 		
 		$this->render("content", $vars);
+	}
+
+	public function contact($contactID) {
+		$data = $this->Default_Model->contact($contactID);
+		____($data);
+	}
+
+	public function page($page) {
+		$data = $this->Default_Model->page($page);
+		____($data);
 	}
 
 	public function test($param1, $param2) {

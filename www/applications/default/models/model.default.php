@@ -10,17 +10,12 @@ class Default_Model extends ZP_Model {
 	
 	public function __construct() {
 		$this->Db = $this->db();
-		
+
 		$this->helpers();
-		
-		$this->table = "contacts";
 	}
 	
 	public function contact($ID) {
-		$this->Db->table("contacts");
-		$this->Db->cache(TRUE);
-		$this->Db->encode(TRUE);
-		$data = $this->Db->find($ID);
+		$data = $this->Db->find($ID, "contacts");
 		
 		return $data;
 	}

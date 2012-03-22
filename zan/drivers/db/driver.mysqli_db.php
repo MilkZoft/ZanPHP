@@ -51,9 +51,9 @@ class ZP_MySQLi_Db extends ZP_Load {
      *
      * @return object value
      */
-	public function connect() {
+	public function connect($db) {
 		if(!self::$connection) {
-			self::$connection = mysqli_connect(_dbHost, _dbUser, _dbPwd, _dbName);
+			self::$connection = mysqli_connect($db["dbHost"], $db["dbUser"], $db["dbPwd"], $db["dbName"]);
 		}
 	
 		return self::$connection;

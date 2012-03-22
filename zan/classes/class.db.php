@@ -221,32 +221,34 @@ class ZP_Db extends ZP_Load {
      *
      * @return void
      */
-	public function connect() {		
+	public function connect() {
+		$this->db = get("db");
+
 		if(!self::$connection) {
-			if(_dbController === "mssql") {
+			if($this->db["dbController"] === "mssql") {
 				$this->Database   = $this->driver("MsSQL_Db");
 				
-				self::$connection = $this->Database->connect();
-			} elseif(_dbController === "mysql") {
+				self::$connection = $this->Database->connect($this->db);
+			} elseif($this->db["dbController"] === "mysql") {
 				$this->Database   = $this->driver("MySQL_Db");
 				
-				self::$connection = $this->Database->connect();			
-			} elseif(_dbController === "mysqli") {
+				self::$connection = $this->Database->connect($this->db);			
+			} elseif($this->db["dbController"] === "mysqli") {
 				$this->Database   = $this->driver("MySQLi_Db");
 				
-				self::$connection = $this->Database->connect();
-			} elseif(_dbController === "pgsql") {
+				self::$connection = $this->Database->connect($this->db);
+			} elseif($this->db["dbController"] === "pgsql") {
 				$this->Database   = $this->driver("PgSQL_Db");
 				
-				self::$connection = $this->Database->connect();
-			} elseif(_dbController === "sqlite") {
+				self::$connection = $this->Database->connect($this->db);
+			} elseif($this->db["dbController"] === "sqlite") {
 				$this->Database   = $this->driver("SQLite_Db");
 				
-				self::$connection = $this->Database->connect();
-			} elseif(_dbController === "oracle") {
+				self::$connection = $this->Database->connect($this->db);
+			} elseif($this->db["dbController"] === "oracle") {
 				$this->Database   = $this->driver("Oracle_Db");
 				
-				self::$connection = $this->Database->connect();
+				self::$connection = $this->Database->connect($this->db);
 			}
 		}			
 	}
@@ -1221,9 +1223,9 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function table($table, $fields = "*") {
-		$table = str_replace(_dbPfx, "", $table);
+		$table = str_replace($this->db["dbPfx"], "", $table);
 		
-		$this->table  = _dbPfx . $table;  
+		$this->table  = $this->db["dbPfx"] . $table;  
 		$this->fields = $fields;
 		
 		$data = $this->data("SHOW COLUMNS FROM $this->table");

@@ -54,7 +54,7 @@ class ZP_Model extends ZP_Load {
 		} elseif(strtolower($type) === "cassandra") {
 			$this->Db = $this->core("Cassandra");
 		}
-		
+
 		return $this->Db;
 	}
 	

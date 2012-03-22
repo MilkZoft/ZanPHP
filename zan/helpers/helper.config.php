@@ -23,6 +23,12 @@ if(!defined("_access")) {
 function get($var) {
 	global $ZP;
 
+	if($var === "db") {
+		include "www/config/config.database.php";
+
+		return isset($ZP["db"]) ? $ZP["db"] : FALSE;
+	}
+
 	return isset($ZP[$var]) ? $ZP[$var] : FALSE;
 }
 
