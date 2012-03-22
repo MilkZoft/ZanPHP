@@ -399,18 +399,10 @@ function isNumber($number) {
 
 function path($path = FALSE, $URL = FALSE) {
 	if(!$path) {
-		if(isLang()) {
-			return get("webBase") . _sh . get("webLang");
-		} else {
-			return get("webBase") . _sh;
-		}	
+		return isLang() ? get("webBase") . _sh . get("webLang") : get("webBase");
 	} 
 
-	if($URL) {
-		return get("webURL")  . _sh . $path;
-	} else {
-		return get("webBase") . _sh . get("webLang") . _sh . $path;
-	}
+	return ($URL) ? get("webURL") . _sh . $path : get("webBase") . _sh . get("webLang") . _sh . $path;
 }
 
 /**
