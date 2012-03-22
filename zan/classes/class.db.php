@@ -715,11 +715,11 @@ class ZP_Db extends ZP_Load {
 	}
 	
 	private function getTable($table) {
-		$table = str_replace(_dbPfx, "", $table);
+		$table = str_replace($this->db["dbPfx"], "", $table);
 
 		$this->table($table);
 		
-		return _dbPfx . $table; 	
+		return $this->db["dbPfx"] . $table; 	
 	}
 	
     /**
