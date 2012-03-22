@@ -40,7 +40,7 @@ if(!defined("_access")) {
 function __autoload($class) {	
 	$class = strtolower(str_replace("ZP_", "", $class));
 
-	if(file_exists(_corePath ."/classes/class.". strtolower($class) .".php")) {
-		include _corePath ."/classes/class.". strtolower($class) .".php";	
+	if(file_exists(_corePath ."/classes/". strtolower($class) .".php")) {
+		include _corePath ."/classes/". strtolower($class) .".php";	
 	}
 }

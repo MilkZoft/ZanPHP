@@ -49,8 +49,8 @@ function execute() {
 	$special = FALSE;
 	$params  = array();
 
-	if(file_exists("www/config/config.routes.php")) {
-		include "www/config/config.routes.php";
+	if(file_exists("www/config/routes.php")) {
+		include "www/config/routes.php";
 		
 		if(is_array($routes)) {
 			$application = segment(0, isLang());
@@ -310,11 +310,11 @@ function getURL() {
 		if($i === (segments() - 1)) {
 			$URL .= segment($i); 	
 		} else {
-			$URL .= segment($i) . "/";
+			$URL .= segment($i) ."/";
 		}
 	}
 	
-	$URL = get("webBase") . "/$URL";
+	$URL = get("webBase") ."/$URL";
 	
 	return $URL;
 }
@@ -327,7 +327,7 @@ function isController($controller, $application = NULL, $principal = FALSE) {
 	} else { 
 		if($principal) {
 			if($controller === $application) {
-				$file = "www/applications/$application/controllers/controller.$controller.php";
+				$file = "www/applications/$application/controllers/$controller.php";
 
 				if(file_exists($file)) {
 					return TRUE;	
@@ -337,7 +337,7 @@ function isController($controller, $application = NULL, $principal = FALSE) {
 			}
 		}
 
-		$file = "www/applications/$application/controllers/controller.$controller.php";
+		$file = "www/applications/$application/controllers/$controller.php";
 
 		if(file_exists($file)) {
 			return TRUE;	
@@ -352,12 +352,12 @@ function getController($applicationController = NULL, $application, $file = FALS
 
 	if(isController($applicationController, $application)) {
 		$controller 	= ucfirst($applicationController) ."_Controller";
-		$controllerFile = "www/applications/". strtolower($application) ."/controllers/controller.". strtolower($applicationController). ".php";
+		$controllerFile = "www/applications/". strtolower($application) ."/controllers/". strtolower($applicationController). ".php";
 		
 		$$controller = (!$file) ? $Load->controller($controller, $application) : FALSE;
 	} else { 
 		$controller 	= ucfirst($application) ."_Controller";
-		$controllerFile = "www/applications/". strtolower($application) ."/controllers/controller.". strtolower($application) .".php";
+		$controllerFile = "www/applications/". strtolower($application) ."/controllers/". strtolower($application) .".php";
 		
 		$$controller = (!$file) ? $Load->controller($controller) : FALSE;
 	}
@@ -370,17 +370,15 @@ function getController($applicationController = NULL, $application, $file = FALS
 }
 
 function whichApplication() {
-	global $ZP;
-
-	if(file_exists("www/applications/" . segment(0) . "/controllers/controller." . segment(0) . ".php")) {
+	if(file_exists("www/applications/" . segment(0) . "/controllers/" . segment(0) . ".php")) {
 		return segment(0); 
-	} elseif(file_exists("www/applications/". segment(1) ."/controllers/controller.". segment(1) .".php")) {
+	} elseif(file_exists("www/applications/". segment(1) ."/controllers/". segment(1) .".php")) {
 		return segment(1);
-	} elseif(file_exists("www/applications/". segment(0) ."/models/model.". segment(0) .".php")) {
+	} elseif(file_exists("www/applications/". segment(0) ."/models/". segment(0) .".php")) {
 		return segment(0);
-	} elseif(file_exists("www/applications/". segment(1) ."/models/model.". segment(1) .".php")) {
+	} elseif(file_exists("www/applications/". segment(1) ."/models/". segment(1) .".php")) {
 		return segment(1);
-	} elseif(file_exists("www/applications/". get("defaultApplication") ."/controllers/controller.". get("defaultApplication") .".php")) {
+	} elseif(file_exists("www/applications/". get("defaultApplication") ."/controllers/". get("defaultApplication") .".php")) {
 		return get("defaultApplication");	
 	}
 	

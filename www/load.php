@@ -11,11 +11,11 @@ session_start();
 
 define("_dir", dirname(__FILE__));
 
-if(file_exists(_dir . "/config/config.basics.php") and file_exists(_dir . "/config/config.core.php")) { 
-	include "config/config.basics.php";
-	include "config/config.core.php";
+if(file_exists(_dir . "/config/basics.php") and file_exists(_dir . "/config/core.php")) { 
+	include "config/basics.php";
+	include "config/core.php";
 } else { 
-	die("Error: config.basics.php or config.core.php doesn't exists");
+	die("Error: basics.php or config.core.php doesn't exists");
 }
 
 if($ZP["production"]) { 
@@ -25,9 +25,9 @@ if($ZP["production"]) {
 	error_reporting(E_ALL);
 }
 
-include _corePath . "/classes/class.load.php";
-include _corePath . "/classes/class.controller.php";
-include _corePath . "/classes/class.model.php";
+include _corePath . "/classes/load.php";
+include _corePath . "/classes/controller.php";
+include _corePath . "/classes/model.php";
 
 $Load = new ZP_Load(); 
 
@@ -41,8 +41,8 @@ if(get("translation") === "gettext") {
 	$languageFile = _dir ."/lib/languages/gettext/language.". whichLanguage(TRUE, TRUE) .".mo";
 		
 	if(file_exists($languageFile)) { 			
-		$Load->library("class.streams", NULL, NULL, "gettext");
-		$Gettext_Reader = $Load->library("class.gettext", "Gettext_Reader", array($languageFile), "gettext");
+		$Load->library("streams", NULL, NULL, "gettext");
+		$Gettext_Reader = $Load->library("gettext", "Gettext_Reader", array($languageFile), "gettext");
 		$Load->config("languages");
 	
 		$Gettext_Reader->load_tables();

@@ -22,7 +22,7 @@ if(!defined("_access")) {
 /**
  * Includes RESTServer
  */
-include "class.restserver.php";
+include "restserver.php";
 
 /**
  * ZanPHP Load Class
