@@ -675,9 +675,9 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function from($table) {
-		$table = str_replace(_dbPfx, "", $table); 
+		$table = str_replace($this->db["dbPfx"], "", $table); 
 		
-		$this->from = _dbPfx . $table;
+		$this->from = $this->db["dbPfx"] . $table;
 
 		return $this;
 	}
@@ -689,10 +689,10 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function get($table = NULL, $limit = 0, $offset = 0) {
-		$table = str_replace(_dbPfx, "", $table);
+		$table = str_replace($this->db["dbPfx"], "", $table);
 		
 		if($table !== "") {
-			$table = _dbPfx . $table;  
+			$table = $this->db["dbPfx"] . $table;  
 		} else {
 			$table = FALSE;	
 		}
@@ -710,7 +710,7 @@ class ZP_Db extends ZP_Load {
 				$query = "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";	
 			}
 		}
-
+		____($query);
 		return $this->data($query);
 	}
 	
@@ -889,9 +889,9 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		if(!$position) {
-			$this->join = "JOIN $table ON $condition";
+			$this->join .= "JOIN $table ON $condition ";
 		} else {
-			$this->join = "$position JOIN $table ON $condition";	
+			$this->join .= "$position JOIN $table ON $condition ";	
 		}
 
 		return $this;
