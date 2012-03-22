@@ -8,50 +8,28 @@ if(!defined("_access")) {
 }
 
 /**
- * Database configuration:
+ *	SQL Databases
  */
-$production = FALSE;
+$ZP["db"]["dbController"] = "mysqli";
+$ZP["db"]["dbHost"] 	  = "localhost";
+$ZP["db"]["dbUser"] 	  = "root";
+$ZP["db"]["dbPwd"] 	      = "";
+$ZP["db"]["dbName"] 	  = "";
+$ZP["db"]["dbPort"] 	  = 3306;
+$ZP["db"]["dbPfx"] 	      = "zan_";
+$ZP["db"]["dbSocket"]     = NULL;
 
-if($production) {
-	//Database Settings
-	define("_dbController", "mysqli");
-	define("_dbHost", "localhost");
-	define("_dbUser", "root"); 
-	define("_dbPwd", "");
-	define("_dbName", "YOUR DATABASE");
-	define("_dbPort", "3306");
-	define("_dbPfx", "zan_");
-	define("_dbSocket", NULL);
+/**
+ *	SQLite Databases
+ */
+$ZP["db"]["dbFilename"] = "mydatabase.db";
+$ZP["db"]["dbMode"]	    = 0666;
 	
-	//SQLite Settings
-	define("_dbFilename", "mydatabase.db");
-	define("_dbMode", 0666);
-	
-	//NoSQL Settings
-	define("_dbNoSQLHost", "localhost");
-	define("_dbNoSQLPort", 27017);
-	define("_dbNoSQLUser", ""); 
-	define("_dbNoSQLPwd", "");
-	define("_dbNoSQLDatabase", "zanphp");
-} else {
-	//Database Settings
-	define("_dbController", "mysqli");
-	define("_dbHost", "localhost");
-	define("_dbUser", "root"); 
-	define("_dbPwd", "");
-	define("_dbName", "zanphp");
-	define("_dbPort", "3306");
-	define("_dbPfx", "zan_");
-	define("_dbSocket", NULL);
-	
-	//SQLite Settings
-	define("_dbFilename", "mydatabase.db");
-	define("_dbMode", 0666);
-	
-	//NoSQL Settings
-	define("_dbNoSQLHost", "localhost");
-	define("_dbNoSQLPort", 27017);
-	define("_dbNoSQLUser", ""); 
-	define("_dbNoSQLPwd", "");
-	define("_dbNoSQLDatabase", "zanphp");
-}
+/**
+ *	NoSQL Databases
+ */
+$ZP["db"]["dbNoSQLHost"]  	 = "localhost";
+$ZP["db"]["dbNoSQLPort"] 	 = 27017;
+$ZP["db"]["dbNoSQLUser"] 	 = ""; 
+$ZP["db"]["dbNoSQLPwd"]  	 = "";
+$ZP["db"]["dbNoSQLDatabase"] = "";
