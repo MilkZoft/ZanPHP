@@ -24,7 +24,7 @@ function get($var) {
 	global $ZP;
 
 	if($var === "db") {
-		include "www/config/config.database.php";
+		include "www/config/database.php";
 
 		return isset($ZP["db"]) ? $ZP["db"] : FALSE;
 	}
