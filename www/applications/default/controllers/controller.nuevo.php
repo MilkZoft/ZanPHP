@@ -25,7 +25,7 @@ class Nuevo_Controller extends ZP_Controller {
 		$vars["message"] = $texto;
 		$vars["view"]	 = $this->view("welcome", TRUE);
 
-		$this->template("content", $vars);
+		$this->render("content", $vars);
 	}
 
 }
