@@ -44,5 +44,5 @@ define("_secretKey", "_eh{Ll&}`<6Y\mg1Qw(;;|C3N9/7*HTpd7SK8t/[}R[vW2)vsPgBLRP2u(
 if(!$ZP["modRewrite"]) {
 	$ZP["webBase"] = $ZP["webURL"] . _sh . _index;
 } else {
-	$ZP["webBase"] = $ZP["webUrl"];
+	$ZP["webBase"] = $ZP["webURL"];
 }
