@@ -50,7 +50,7 @@ class ZP_Email extends ZP_Load {
 	 */
 	public $fromEmail;
 	
-    /*
+    	/*
 	 * Contains the name string of the Sender
 	 * 
 	 * @var public $fromName
@@ -74,6 +74,8 @@ class ZP_Email extends ZP_Load {
 	 * @var public $fromName
 	 */
 	public $subject;
+	
+	public $library = "PHPMailer";
 	
 	/*
 	 * send
