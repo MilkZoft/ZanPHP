@@ -20,7 +20,7 @@ if(!defined("_access")) {
 	die("Error: You don't have permission to access here...");
 }
 
-function get($var) {
+function get($var = NULL) {
 	global $ZP;
 
 	if($var === "db") {
@@ -32,12 +32,12 @@ function get($var) {
 	return isset($ZP[$var]) ? $ZP[$var] : FALSE;
 }
 
-function set($var, $value) {
+function set($var = NULL, $value = NULL) {
 	global $ZP;
 
-	if(!isset($ZP[$var])) {
-		$ZP[$var] = $value;
-	} else {
+	if(is_null($var) or is_null($value)) {
 		return FALSE;
 	}
+
+	$ZP[$var] = $value;
 }

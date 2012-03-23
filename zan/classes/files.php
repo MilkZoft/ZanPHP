@@ -110,26 +110,26 @@ class ZP_Files extends ZP_Load {
 			}
 
 			$icons = array(
-					"txt"  => array(_webURL ."www/lib/images/icons/files/text.png", __(_("Text File"))),
-					"doc"  => array(_webURL ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
-					"docx" => array(_webURL ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
-				 	"pdf"  => array(_webURL ."/www/lib/images/icons/files/pdf.png", __(_("PDF File"))),
-				 	"ppt"  => array(_webURL ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
-				 	"pptx" => array(_webURL ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
-				 	"rar"  => array(_webURL ."/www/lib/images/icons/files/rar.png", __(_("WinRAR File"))),
-				 	"iso"  => array(_webURL ."/www/lib/images/icons/files/rar.png", __(_("ISO File"))),
-				 	"xls"  => array(_webURL ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"xlsx" => array(_webURL ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"csv"  => array(_webURL ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"zip"  => array(_webURL ."/www/lib/images/icons/files/zip.png", __(_("WinZIP File"))),
-				 	"7z"   => array(_webURL ."/www/lib/images/icons/files/7z.png",  __(_("7z File"))),
-				 	"ai"   => array(_webURL ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
-				 	"svg"  => array(_webURL ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
-				 	"cdr"  => array(_webURL ."/www/lib/images/icons/files/cdr.png", __(_("Corel Draw File"))),
-				 	"msi"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
-				 	"exe"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
-				 	"dmg"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
-				 	"pkg"  => array(_webURL ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+					"txt"  => array(get("webURL") ."www/lib/images/icons/files/text.png", __(_("Text File"))),
+					"doc"  => array(get("webURL") ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
+					"docx" => array(get("webURL") ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
+				 	"pdf"  => array(get("webURL") ."/www/lib/images/icons/files/pdf.png", __(_("PDF File"))),
+				 	"ppt"  => array(get("webURL") ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
+				 	"pptx" => array(get("webURL") ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
+				 	"rar"  => array(get("webURL") ."/www/lib/images/icons/files/rar.png", __(_("WinRAR File"))),
+				 	"iso"  => array(get("webURL") ."/www/lib/images/icons/files/rar.png", __(_("ISO File"))),
+				 	"xls"  => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+				 	"xlsx" => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+				 	"csv"  => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+				 	"zip"  => array(get("webURL") ."/www/lib/images/icons/files/zip.png", __(_("WinZIP File"))),
+				 	"7z"   => array(get("webURL") ."/www/lib/images/icons/files/7z.png",  __(_("7z File"))),
+				 	"ai"   => array(get("webURL") ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
+				 	"svg"  => array(get("webURL") ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
+				 	"cdr"  => array(get("webURL") ."/www/lib/images/icons/files/cdr.png", __(_("Corel Draw File"))),
+				 	"msi"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+				 	"exe"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+				 	"dmg"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+				 	"pkg"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
 				 );
 						
 			foreach($icons as $extension => $icon) { 
@@ -273,7 +273,7 @@ class ZP_Files extends ZP_Load {
 		
 		if($filename) {
 			if(file_put_contents("www/lib/multimedia/". $file["type"] ."/". $filename, file_get_contents("php://input"))) {
-				____(_webURL . "www/lib/multimedia/". $file["type"] ."/". $filename);
+				____(get("webURL") . "www/lib/multimedia/". $file["type"] ."/". $filename);
 				$a = $this->resize("www/lib/multimedia/". $file["type"] ."/", $filename);
 	
 				return __(_("Upload success!"));

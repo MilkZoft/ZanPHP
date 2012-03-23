@@ -573,7 +573,7 @@ class ZP_Load {
 					$this->footer();
 				}
 			}
-		} else {
+		} else { 
 			for($i = 0; $i <= count($this->views) - 1; $i++) {
 				if($this->views[$i]["vars"] !== FALSE) {
 					$this->Templates->vars($this->views[$i]["vars"]);
@@ -621,7 +621,7 @@ class ZP_Load {
      * @return string value / void
      */	
 	public function render($name, $vars = NULL) {	
-		if(is_array($vars)) {
+		if(is_array($vars)) { 
 			if(count($this->views) === 0) {
 				$this->views[0]["name"] = $name;
 				$this->views[0]["vars"] = $vars;
@@ -685,7 +685,6 @@ class ZP_Load {
 
 		if(!is_null($application)) {
 			$view 	 = "www/applications/$application/views/$name.php";
-			$cacheID = cacheSession($name);
 			
 			if(is_array($vars)) {
 				$key  = array_keys($vars);

@@ -223,7 +223,7 @@ class ZP_Db extends ZP_Load {
      */
 	public function connect() {
 		$this->db = get("db");
-
+		
 		if(!self::$connection) {
 			if($this->db["dbController"] === "mssql") {
 				$this->Database   = $this->driver("MsSQL_Db");
@@ -236,7 +236,7 @@ class ZP_Db extends ZP_Load {
 			} elseif($this->db["dbController"] === "mysqli") {
 				$this->Database   = $this->driver("MySQLi_Db");
 				
-				self::$connection = $this->Database->connect($this->db);
+				self::$connection = $this->Database->connect($this->db); 
 			} elseif($this->db["dbController"] === "pgsql") {
 				$this->Database   = $this->driver("PgSQL_Db");
 				
@@ -497,7 +497,7 @@ class ZP_Db extends ZP_Load {
 		}
 
 		$query = "SELECT $this->fields FROM $this->table WHERE $this->primaryKey = $ID";
-	
+		
 		return $this->data($query);
 	}
 	
