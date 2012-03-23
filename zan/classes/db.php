@@ -710,7 +710,7 @@ class ZP_Db extends ZP_Load {
 				$query = "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";	
 			}
 		}
-		____($query);
+	
 		return $this->data($query);
 	}
 	
