@@ -81,9 +81,6 @@ class ZP_Templates extends ZP_Load {
 		$helpers = array("config", "array", "browser", "debugging", "forms", "html", "scripts", "validations");
 		
 		$this->helper($helpers);
-		
-		$this->config("cache");
-		$this->config("templates");
 	}
 	
     /**

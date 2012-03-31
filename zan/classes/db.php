@@ -214,30 +214,34 @@ class ZP_Db extends ZP_Load {
 	public function connect() {
 		$this->db = get("db");
 		
+		if($this->db["dbName"] === "" or $this->db["dbHost"] === "" or $this->db["dbUser"] === "" or !file_exists("www/config/database.php")) {
+			getException("You must rename and configure your 'config/database.php'");
+		}
+
 		if(!self::$connection) {
-			if($this->db["dbController"] === "mysql") {
+			if($this->db["dbController"] === "mysql" or $this->db["dbController"] === "mysqli") {
 				try {
 				    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
 				} catch (PDOException $e) {
-				    die("Error!: ". $e->getMessage() ."<br/>");
+				    getException("Database Error: ". $e->getMessage());
 				}
 			} elseif($this->db["dbController"] === "pgsql") {
 				try {
 				    $this->Database = new PDO("pgsql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
 				} catch (PDOException $e) {
-				    die("Error!: ". $e->getMessage() ."<br/>");
+				    getException("Database Error: ". $e->getMessage());
 				}
 			} elseif($this->db["dbController"] === "sqlite") {
 				try {
 				    $this->Database = new PDO("sqlite:". $this->db["dbFilename"]);
 				} catch (PDOException $e) {
-				    die("Error!: ". $e->getMessage() ."<br/>");
+				    getException("Database Error: ". $e->getMessage());
 				}
 			} elseif($this->db["dbController"] === "oracle") {
 				try {
 				    $this->Database = new PDO("OCI:dbname=". $this->db["dbName"] .";charset=UTF-8", $this->db["dbUser"], $this->db["dbPwd"]);
 				} catch (PDOException $e) {
-				    die("Error!: ". $e->getMessage() ."<br/>");
+				    getException("Database Error: ". $e->getMessage());
 				}
 			}
 		}			

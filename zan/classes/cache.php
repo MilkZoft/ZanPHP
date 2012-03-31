@@ -2,19 +2,17 @@
 
 class ZP_Cache extends ZP_Load {
 	
-	private $status    = _cacheStatus;
+	private $status = _cacheStatus;
 
-	public function __construct() {
-
-		$this->config("cache");
-		
+	public function __construct() {		
 		$this->setCache();	
 	}
 	
 	private function setCache(){
 		$driverName = _cacheDriver ."_Cache";
-		/*TODO: crear sistema para que $driverName siempre tenga las capitalisaciones correctas*/
+		
 		$this->driver = $this->driver($driverName, "cache");
+		
 		$this->driver->setUP(_cacheHost, _cachePort, _cacheTime);
 	}
 	

@@ -72,10 +72,6 @@ class ZP_Load {
 		$helpers = array("config", "autoload", "router", "validations");
 		
 		$this->helper($helpers);
-		
-		$this->config("cache");
-		$this->config("exceptions");
-		$this->config("languages");
 	}
 	
     /**
@@ -109,33 +105,17 @@ class ZP_Load {
 		} else {
 			$file = FALSE;	
 		}
-	
-		$this->Cache = $this->core("Cache");
-		
+			
 		if(file_exists($file)) {							
 			if(class_exists($class)) {
-				if($this->Cache->get($class, "classes")) {
-					return $this->Cache->get($class, "classes");	
-				} else {
-					return ZP_Singleton::instance($class);
-				}
+				return ZP_Singleton::instance($class);
 			}
 			
-			if($this->Cache->get($class, "classes")) {
-				return $this->Cache->get($class, "classes");	
-			} else {
-				include $file;
-			}
-			
-			if(_cacheStatus) {
-				$$class = ZP_Singleton::instance($class);
-				
-				$this->Cache->save($$class, $class, "classes");	
-			}
-
+			include $file;
+		
 			return ZP_Singleton::instance($class);
 		} else {
-			die("$class class does not exists");
+			getException("$class class does not exists");
 		}
 	}
 	
@@ -151,7 +131,7 @@ class ZP_Load {
 			if(file_exists("www/applications/$application/config/$name.php")) {
 				include_once "www/applications/$application/config/$name.php";
 			} else {
-				die("$name config doesn't exists");
+				getException("$name config doesn't exists");
 			}
 		} elseif(file_exists("www/config/$name.php")) {
 			include_once "www/config/$name.php";
@@ -159,7 +139,7 @@ class ZP_Load {
 			if(file_exists("www/applications/$name/config/$name.php")) {
 				include_once "www/applications/$name/config/$name.php";
 			} else {
-				die("$name config doesn't exists");
+				getException("$name config doesn't exists");
 			}
 		}
 	}
@@ -226,50 +206,20 @@ class ZP_Load {
 		$this->Templates->CSS($CSS, $application, $print);
 	}
 
-	public function driver($driver = NULL, $type = "db") {
-		if(file_exists(_corePath . "/drivers/$type/". strtolower($driver) .".php")) {
-			$file = _corePath . "/drivers/$type/". strtolower($driver) .".php";	
+	public function driver($driver = NULL, $type = "cache") {
+		if(file_exists(_corePath ."/drivers/$type/". strtolower($driver) .".php")) {
+			$file = _corePath ."/drivers/$type/". strtolower($driver) .".php";	
 		} else {
 			$file = FALSE;	
 		}
 		
-		if($type !== "cache") {
-			$this->Cache = $this->core("Cache");
-		
-			if(file_exists($file)) {							
-				if(class_exists($driver)) {
-					if($this->Cache->get($driver, "drivers")) {
-						return $this->Cache->get($driver, "drivers");	
-					} else {
-						return ZP_Singleton::instance("ZP_". $driver);
-					}
-				}
-			
-				if($this->Cache->get($driver, "drivers")) {
-					return $this->Cache->get($driver, "drivers");	
-				} else {
-					include $file;
-				}
-			
-				if(_cacheStatus) {
-					$$driver= ZP_Singleton::instance("ZP_". $driver);
-					
-					$this->Cache->save($$driver, $driver, "drivers");	
-				}
-
-				return ZP_Singleton::instance("ZP_". $driver);
-			} else {
-				die("$driver driver does not exists");
-			}
-		} else {
-			if(file_exists($file)) {	
-				include $file;
+		if(file_exists($file)) {	
+			include $file;
 				
-				return ZP_Singleton::instance("ZP_". $driver);
-			} else {
-				die("$driver driver does not exists");
-			}
-		}
+			return ZP_Singleton::instance("ZP_". $driver);
+		} else {
+			getException("$driver driver does not exists");
+		}	
 	}
 	
 	public function exception($exception) {
@@ -345,14 +295,14 @@ class ZP_Load {
 						include_once _corePath . "/helpers/". $helper[$i] .".php";
 					} elseif(file_exists("www/helpers/". $helper[$i] .".php")) {
 						include_once "www/helpers/". $helper[$i] .".php";
-					} else {		
-						die("$helper[$i] helper doesn't exists");
+					} else {
+						getException($helper[$i] ." helper doesn't exists");		
 					}			
 				} else {
 					if(file_exists("www/applications/$application/helpers/". $helper[$i] .".php")) {
 						include_once "www/applications/$application/helpers/". $helper[$i] .".php";
 					} else {			
-						die("$helper[$i] helper doesn't exists");
+						getException($helper[$i] ." helper doesn't exists");
 					}				
 				}
 			}
@@ -361,15 +311,15 @@ class ZP_Load {
 				if(file_exists(_corePath ."/helpers/$helper.php")) {
 					include_once _corePath ."/helpers/$helper.php";
 				} elseif(file_exists("www/helpers/$helper.php")) {
-						include_once "www/helpers/$helper.php";
+					include_once "www/helpers/$helper.php";
 				}  else {			
-					die("$name helper doesn't exists");
+					getException("$name helper doesn't exists");
 				}
 			} else {
 				if(file_exists("www/applications/$application/helpers/$helper.php")) {
 					include_once "www/applications/$application/helpers/$helper.php";
 				} else {			
-					die("$name helper doesn't exists");
+					getException("$name helper doesn't exists");
 				}			
 			}
 		}
@@ -389,13 +339,13 @@ class ZP_Load {
 					if(file_exists(_corePath ."/hooks/". $hook[$i] .".php")) {
 						include_once _corePath ."/hooks/". $hook[$i] .".php";
 					} else {			
-						die("$name hook doesn't exists");
+						getException("$name hook doesn't exists");
 					}			
 				} else {
 					if(file_exists("www/applications/$application/hooks/". $hook[$i] .".php")) {
 						include_once "www/applications/$application/hooks/". $hook[$i] .".php";
 					} else {			
-						die("$name hook doesn't exists");
+						getException("$name hook doesn't exists");
 					}				
 				}
 			}
@@ -404,13 +354,13 @@ class ZP_Load {
 				if(file_exists(_corePath ."hooks/$hook.php")) {
 					include_once _corePath ."hooks/$hook.php";
 				} else {			
-					die("$name hook doesn't exists");
+					getException("$name hook doesn't exists");
 				}
 			} else {
 				if(file_exists("www/applications/$application/hooks/$hook.php")) {
 					include_once "www/applications/$application/hooks/$hook.php";
 				} else {			
-					die("$name hook doesn't exists");
+					getException("$name hook doesn't exists");
 				}			
 			}
 		}
@@ -461,12 +411,12 @@ class ZP_Load {
      */
 	public function library($name, $className = NULL, $params = array(), $application = NULL) {	
 		if(isset($name) and $application) {
-			if(file_exists(_corePath . "/libraries/$application/$name.php")) {
-				include_once _corePath . "/libraries/$application/$name.php";	
+			if(file_exists(_corePath ."/libraries/$application/$name.php")) {
+				include_once _corePath ."/libraries/$application/$name.php";	
 
 				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;
-			} elseif(file_exists(_corePath . "/libraries/$lib/$name.php")) {
-				include_once _corePath . "/libraries/$lib/$name.php";	
+			} elseif(file_exists(_corePath ."/libraries/$lib/$name.php")) {
+				include_once _corePath ."/libraries/$lib/$name.php";	
 
 				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;
 			} elseif(file_exists("www/applications/$application/libraries/$name.php")) {
@@ -474,18 +424,18 @@ class ZP_Load {
 			
 				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;			
 			} else {
-				die("$name library doesn't exists");
+				getException("$name library doesn't exists");
 			}
 		} else {
 			$lib  = str_replace("class.", "", $name);
 			$name = strtolower($name);
 
-			if(file_exists(_corePath . "/libraries/$lib/$name.php")) {
-				include_once _corePath . "/libraries/$lib/$name.php";
+			if(file_exists(_corePath ."/libraries/$lib/$name.php")) {
+				include_once _corePath ."/libraries/$lib/$name.php";
 
 				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;										
 			} else {
-				die("$name library doesn't exists");
+				getException("$name library doesn't exists");
 			}			
 		}
 	}
@@ -708,7 +658,7 @@ class ZP_Load {
 					return $output;
 				}
 			} else {
-				die("Error 404: $view view not found");	
+				getException("Error 404: $view view not found");	
 			}
 		} else {
 			return FALSE;

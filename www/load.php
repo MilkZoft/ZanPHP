@@ -11,23 +11,23 @@ session_start();
 
 define("_dir", dirname(__FILE__));
 
-if(file_exists(_dir . "/config/basics.php") and file_exists(_dir . "/config/core.php")) { 
+if(file_exists(_dir . "/config/basics.php")) { 
 	include "config/basics.php";
-	include "config/core.php";
 } else { 
-	die("Error: basics.php or config.core.php doesn't exists");
+	die("Error: basics.php doesn't exists");
 }
 
 if($ZP["production"]) { 
 	error_reporting(FALSE);
+
 	ini_set("display_errors", FALSE); 
 } else {
 	error_reporting(E_ALL);
 }
 
-include _corePath . "/classes/load.php";
-include _corePath . "/classes/controller.php";
-include _corePath . "/classes/model.php";
+include _corePath ."/classes/load.php"; 
+include _corePath ."/classes/controller.php"; 
+include _corePath ."/classes/model.php";
 
 $Load = new ZP_Load(); 
 
