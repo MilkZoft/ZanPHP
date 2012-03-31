@@ -17,7 +17,7 @@ class Default_Model extends ZP_Model {
 	}
 
 	public function contact($id) {
-		$data = $this->Db->find($id, $this->table);
+		$data = $this->Db->findAll($this->table);
 
 		return $data;
 	}
