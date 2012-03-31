@@ -11,10 +11,10 @@ session_start();
 
 define("_dir", dirname(__FILE__));
 
-if(file_exists(_dir . "/config/basics.php")) { 
-	include "config/basics.php";
+if(file_exists(_dir . "/config/config.php")) { 
+	include "config/config.php";
 } else { 
-	die("Error: basics.php doesn't exists");
+	die("Error: config.php doesn't exists");
 }
 
 if($ZP["production"]) { 
