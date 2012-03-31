@@ -89,7 +89,7 @@ class ZP_MongoDB extends ZP_Load {
 	}
 
 	public function command($command) {
-		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->command($command);
+		$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->command($command);
 	}
 	
     /**
@@ -100,16 +100,18 @@ class ZP_MongoDB extends ZP_Load {
 	public function connect() {
 		if(!self::$connection) {
 			try {
-				$this->Mongo = new Mongo("mongodb://". _dbNoSQLHost .":". _dbNoSQLPort);
+				$this->db = get("db");
+
+				$this->Mongo = new Mongo("mongodb://". $this->db["dbNoSQLHost"] .":". $this->db["dbNoSQLPort"]);
 				
 				if(!$this->Mongo) {
 					throw new Exception(e("Connection Error"), 1);
 				}
 				
-				if(_dbNoSQLUser !== "" and _dbNoSQLPwd !== "") {
-					$this->Mongo->selectDb(_dbNoSQLDatabase)->authenticate(_dbNoSQLUser, _dbNoSQLPwd);
+				if($this->db["dbNoSQLUser"] !== "" and $this->db["dbNoSQLPwd"] !== "") {
+					$this->Mongo->selectDb($this->db["dbNoSQLDatabase"])->authenticate($this->db["dbNoSQLUser"], $this->db["dbNoSQLPwd"]);
 				} else {
-					$this->Mongo->selectDb(_dbNoSQLDatabase);
+					$this->Mongo->selectDb($this->db["dbNoSQLDatabase"]);
 				}
 			} catch(Exception $e) {
 				getException($e);	
@@ -186,7 +188,7 @@ class ZP_MongoDB extends ZP_Load {
 			$options = array("safe" => TRUE);
 		}
 	
-		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->remove($criteria, $options);
+		$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->remove($criteria, $options);
 		
 		return TRUE;
 	}
@@ -198,7 +200,7 @@ class ZP_MongoDB extends ZP_Load {
 	}
 
 	public function deleteFile($_id) {
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+		$GridFS = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->getGridFS();
 
 		$ID = new MongoId($_id);
 		
@@ -209,9 +211,9 @@ class ZP_MongoDB extends ZP_Load {
 	
 	public function drop($collection = NULL) {
 		if($collection) {
-			$this->Mongo->selectCollection(_dbNoSQLDatabase, $collection)->drop();
+			$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $collection)->drop();
 		} else {
-			$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->drop();	
+			$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->drop();	
 		}
 		
 		return TRUE;
@@ -235,21 +237,21 @@ class ZP_MongoDB extends ZP_Load {
 		$this->collection = isset($collection) ? $collection : $this->collection;
 
 		if(is_null($query)) {
-			$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+			$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find();
 		} else { 
 			if(!is_array($query) and is_string($query)) {
 				$query = json_decode($query, TRUE);
 			}
 			
 			if($this->condition) {
-				$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query, $this->condition);
+				$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find($query, $this->condition);
 				
 				unset($this->condition);
 				
 				$this->condition = FALSE;
 			}
 		
-			$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
+			$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find($query);
 		}
 		
 		return $this->data();
@@ -272,7 +274,7 @@ class ZP_MongoDB extends ZP_Load {
 			return FALSE;
 		}
 		
-		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+		$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find();
 	
 		return $this->data();		
 	}
@@ -298,7 +300,7 @@ class ZP_MongoDB extends ZP_Load {
 		
 		$query = array($field => $value);
 		
-		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
+		$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find($query);
 	
 		return $this->data();
 	}
@@ -324,7 +326,7 @@ class ZP_MongoDB extends ZP_Load {
 		
 		$query = array("_id" => $ID);
 		
-		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find($query);
+		$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find($query);
 	
 		return $this->data();
 	}
@@ -343,7 +345,7 @@ class ZP_MongoDB extends ZP_Load {
 			return FALSE;
 		}
 		
-		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->findOne();
+		$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->findOne();
 	
 		return $this->data();
 	}
@@ -362,7 +364,7 @@ class ZP_MongoDB extends ZP_Load {
 			return FALSE;
 		}
 				
-		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+		$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find();
 		
 		$this->sort("_id", "DESC");
 		
@@ -488,7 +490,7 @@ class ZP_MongoDB extends ZP_Load {
 			return FALSE;
 		}
 
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+		$GridFS = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->getGridFS();
 
 		$Cursor = $GridFS->find();
 		
@@ -513,7 +515,7 @@ class ZP_MongoDB extends ZP_Load {
 			return FALSE;
 		}
 
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+		$GridFS = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->getGridFS();
 
 		$ID = new MongoId($_id);
 		
@@ -539,7 +541,7 @@ class ZP_MongoDB extends ZP_Load {
 			return FALSE;
 		}
 
-		$this->Cursor = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->find();
+		$this->Cursor = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->find();
 		
 		$this->sort("_id", "DESC");
 		
@@ -564,11 +566,11 @@ class ZP_MongoDB extends ZP_Load {
 
  	public function insert($collection = NULL, $data = NULL, $_id = TRUE) {
  		if($collection and is_array($data)) {
- 			$this->Mongo->selectCollection(_dbNoSQLDatabase, $collection)->insert($data, $_id);
+ 			$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $collection)->insert($data, $_id);
 
  			return TRUE;
  		} elseif(is_array($this->data)) {
-			$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->insert($this->data, $_id);
+			$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->insert($this->data, $_id);
 				
 			unset($this->data);
 				
@@ -644,7 +646,7 @@ class ZP_MongoDB extends ZP_Load {
 		if(is_null($option)) {
 			$this->insert($_id);
 		} elseif(is_array($option)) {
-			$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->save($option);
+			$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->save($option);
 		}
 	}
 	
@@ -675,13 +677,13 @@ class ZP_MongoDB extends ZP_Load {
 			$update = $this->data;
 		}
 		
-		$this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->update($criteria, $update, $options);
+		$this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->update($criteria, $update, $options);
 		
 		return TRUE;
 	}
 
 	public function upload($fname = "file") {
-		$GridFS = $this->Mongo->selectCollection(_dbNoSQLDatabase, $this->collection)->getGridFS();
+		$GridFS = $this->Mongo->selectCollection($this->db["dbNoSQLDatabase"], $this->collection)->getGridFS();
 		
 		$name = FILES($fname, "name");
 		
