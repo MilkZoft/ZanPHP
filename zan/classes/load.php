@@ -500,10 +500,10 @@ class ZP_Load {
 		$parts = explode("_", $model);
 	
 		if(!$this->application) {
-			if(count($parts) === 2) {
+			if(count($parts) === 2) { 
 				$file = "www/applications/". strtolower($parts[0]) ."/models/". strtolower($parts[0]) .".php";	
 			}		
-		} else {
+		} else { 
 			if(count($parts) === 2) {
 				if(file_exists("www/applications/$this->application/models/". strtolower($parts[0]) .".php")) {
 					$file = "www/applications/$this->application/models/". strtolower($parts[0]) .".php";
@@ -515,13 +515,13 @@ class ZP_Load {
 			}
 		}
 
-		if(file_exists($file)) {							
+		if(file_exists($file)) { 					
 			if(class_exists($model)) { 
 				return ZP_Singleton::instance($model);
 			}
 	
-			include $file;
-
+			require $file;
+			
 			return ZP_Singleton::instance($model);
 		}	
 		

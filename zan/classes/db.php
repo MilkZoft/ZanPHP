@@ -156,35 +156,25 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function begin() {
-		return $this->Database->begin();
+		return $this->Database->beginTransaction();
 	}
 
-	public function cache($status = FALSE) {
-		$this->caching = $status;
-	}
-	
     /**
      * Call a stored procedure
      *
      * @return array value
      */	
-	public function call($procedure) {
-		if($this->Cache->get(sha1("CALL $procedure"), "db")) {
-			return $this->Cache->get(sha1("CALL $procedure"), "db");
-		}
+	public function call($procedure) {		
+		$this->Rs = $this->Database->prepare("CALL $procedure");	
 		
-		$this->Rs = $this->Database->query("CALL $procedure");	
-		
+		$this->Rs->bindParam(1, $data, PDO::PARAM_STR, 4000); 
+
+		$this->Rs->execute();
+
 		if($this->encode) {
 			$data = isset($data) ? $this->encoding($data) : FALSE;
 		} else { 
 			$data = isset($data) ? $data : FALSE;
-		}
-			
-		if($this->caching and $data) {
-			$this->Cache->save($data, sha1($query), "db");
-			
-			$this->caching = FALSE;
 		}
 		
 		return $data; 
@@ -225,30 +215,30 @@ class ZP_Db extends ZP_Load {
 		$this->db = get("db");
 		
 		if(!self::$connection) {
-			if($this->db["dbController"] === "mssql") {
-				$this->Database   = $this->driver("MsSQL_Db");
-				
-				self::$connection = $this->Database->connect($this->db);
-			} elseif($this->db["dbController"] === "mysql") {
-				$this->Database   = $this->driver("MySQL_Db");
-				
-				self::$connection = $this->Database->connect($this->db);			
-			} elseif($this->db["dbController"] === "mysqli") {
-				$this->Database   = $this->driver("MySQLi_Db");
-				
-				self::$connection = $this->Database->connect($this->db); 
+			if($this->db["dbController"] === "mysql") {
+				try {
+				    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
+				} catch (PDOException $e) {
+				    die("Error!: ". $e->getMessage() ."<br/>");
+				}
 			} elseif($this->db["dbController"] === "pgsql") {
-				$this->Database   = $this->driver("PgSQL_Db");
-				
-				self::$connection = $this->Database->connect($this->db);
+				try {
+				    $this->Database = new PDO("pgsql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
+				} catch (PDOException $e) {
+				    die("Error!: ". $e->getMessage() ."<br/>");
+				}
 			} elseif($this->db["dbController"] === "sqlite") {
-				$this->Database   = $this->driver("SQLite_Db");
-				
-				self::$connection = $this->Database->connect($this->db);
+				try {
+				    $this->Database = new PDO("sqlite:". $this->db["dbFilename"]);
+				} catch (PDOException $e) {
+				    die("Error!: ". $e->getMessage() ."<br/>");
+				}
 			} elseif($this->db["dbController"] === "oracle") {
-				$this->Database   = $this->driver("Oracle_Db");
-				
-				self::$connection = $this->Database->connect($this->db);
+				try {
+				    $this->Database = new PDO("OCI:dbname=". $this->db["dbName"] .";charset=UTF-8", $this->db["dbUser"], $this->db["dbPwd"]);
+				} catch (PDOException $e) {
+				    die("Error!: ". $e->getMessage() ."<br/>");
+				}
 			}
 		}			
 	}
@@ -288,39 +278,35 @@ class ZP_Db extends ZP_Load {
 	}
 
 	private function data($query) {
-		if(_cacheStatus and $this->Cache->get(sha1($query), "db")) {
-			return $this->Cache->get(sha1($query), "db");
-		} else {	
-			if($query === "") {
-				return FALSE;	
-			}
-			
-			$this->Rs = $this->Database->query($query);
-		
-			if($this->rows() === 0) {
-				return FALSE;			
-			} else {
-				while($row = $this->fetch($this->rows())) {
-					$rows[] = $row;	
-				}
-			}	
-
-			$this->free();
-				
-			if($this->encode) {
-				$data = isset($rows) ? $this->encoding($rows) : FALSE;
-			} else { 
-				$data = isset($rows) ? $rows : FALSE;
-			}		
-
-			if($this->caching and $data) {
-				$this->Cache->save($data, sha1($query), "db");
-				
-				$this->caching = FALSE;
-			}
-
-			return $data;
+		if($query === "") {
+			return FALSE;	
 		}
+		
+		$this->Rs = $this->Database->query($query);
+		
+		if($this->rows() === 0) {
+			return FALSE;			
+		} else {
+			while($row = $this->fetch($this->rows())) {
+				$rows[] = $row;	
+			}
+		}	
+
+		$this->free();
+			
+		if($this->encode) {
+			$data = isset($rows) ? $this->encoding($rows) : FALSE;
+		} else { 
+			$data = isset($rows) ? $rows : FALSE;
+		}		
+
+		if($this->caching and $data) {
+			$this->Cache->save($data, sha1($query), "db");
+			
+			$this->caching = FALSE;
+		}
+
+		return $data;
 	}
 	
     /**
@@ -369,7 +355,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		return ($this->Database->query($query)) ? TRUE : FALSE;
+		return ($this->Database->exec($query)) ? TRUE : FALSE;
 	}
 		
     /**
@@ -390,7 +376,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "DELETE FROM $this->table WHERE $SQL";
 		
-		return ($this->Database->query($query)) ? TRUE : FALSE;
+		return ($this->Database->exec($query)) ? TRUE : FALSE;
 	}
 	
     /**
@@ -472,7 +458,7 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / array value
      */
 	public function fetch($count = 0) {
-		return (!$this->Rs) ? FALSE : $this->Database->fetch($count);
+		return (!$this->Rs) ? FALSE : $this->Rs->fetch(PDO::FETCH_ASSOC);
 	}
 	
     /**
@@ -665,7 +651,7 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / void
      */
 	public function free() {
-	 	return ($this->Rs) ? $this->Rs->free() : FALSE;
+	 	return ($this->Rs) ? $this->Rs->closeCursor() : FALSE;
 	}
 	
     /**
@@ -1115,7 +1101,7 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / integer value
      */	
 	public function rows() {
-		return (!$this->Rs) ? FALSE : $this->Database->rows();	
+		return (!$this->Rs) ? FALSE : $this->Rs->rowCount();	
 	}
 	
     /**
@@ -1293,7 +1279,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}	
 		
-		$this->Rs = $this->Database->query($query);
+		$this->Rs = $this->Database->exec($query);
 		
 		if($this->Rs) {
 			return TRUE;
@@ -1323,7 +1309,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "UPDATE $table SET $SQL";
 		
-		return ($this->Database->query($query)) ? TRUE : FALSE;
+		return ($this->Database->exec($query)) ? TRUE : FALSE;
 	}
 
     /**

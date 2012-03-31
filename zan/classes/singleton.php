@@ -58,12 +58,12 @@ class ZP_Singleton {
      * @param string $class
      * @return object value
      */
-	public static function instance($class, $params = NULL) {
-		if(is_null($class)) {
+	public static function instance($Class, $params = NULL) {
+		if(is_null($Class)) {
 			die("Missing class information");
 		}
 
-		if(!array_key_exists($class, self::$instances)) {	
+		if(!array_key_exists($Class, self::$instances)) {	
 			$args = NULL;
 			
 			$i = 0;
@@ -80,13 +80,13 @@ class ZP_Singleton {
 			}
 	
 			if(is_null($args)) {
-				self::$instances[$class] = new $class;
+				self::$instances[$Class] = new $Class;
 			} else {
-				eval("self::\$instances[\$class] = new \$class(\"$args\");");
+				eval("self::\$instances[\$Class] = new \$Class(\"$args\");");
 			}
 		}
 		
-		return self::$instances[$class];
+		return self::$instances[$Class];
 	}
 
 }

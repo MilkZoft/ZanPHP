@@ -10,11 +10,11 @@ if(!defined("_access")) {
 /**
  *	SQL Databases
  */
-$ZP["db"]["dbController"] = "mysqli";
+$ZP["db"]["dbController"] = "mysql";
 $ZP["db"]["dbHost"] 	  = "localhost";
 $ZP["db"]["dbUser"] 	  = "root";
 $ZP["db"]["dbPwd"] 	      = "";
-$ZP["db"]["dbName"] 	  = "";
+$ZP["db"]["dbName"] 	  = "zanphp";
 $ZP["db"]["dbPort"] 	  = 3306;
 $ZP["db"]["dbPfx"] 	      = "zan_";
 $ZP["db"]["dbSocket"]     = NULL;
