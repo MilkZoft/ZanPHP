@@ -9,11 +9,11 @@ if(!defined("_access")) {
 /**
  * Website
  */
-$ZP["webURL"] 		= "http://localhost/ZanPHP";
-$ZP["webName"] 		= "ZanPHP";
-$ZP["webTheme"] 	= "default";
+$ZP["webURL"] 	    = "http://localhost/ZanPHP";
+$ZP["webName"] 	    = "ZanPHP";
+$ZP["webTheme"]     = "default";
 $ZP["webSituation"] = "Active";
-$ZP["webMessage"] 	= "";
+$ZP["webMessage"]   = "";
 
 /**
  * Server
@@ -46,15 +46,12 @@ define("_secretKey", "_eh{Ll&}`<6Y\mg1Qw(;;|C3N9/7*HTpd7SK8t/[}R[vW2)vsPgBLRP2u(
  * Cache
  */
 define("_cacheStatus", FALSE);
+define("_cacheDriver", "File");
+define("_cacheHost", "localhost"); 
+define("_cachePort", "11211");
 define("_cacheDir", "www/lib/cache");
 define("_cacheTime", 3600);
 define("_cacheExt", ".cache");
-define("_cacheDriver", "File");
-define("_cacheTime", 3600);
-define("_cacheHost", "www/lib/cache");
-define("_cachePort", ".cache");
-define("_cacheHost", "localhost"); 
-define("_cachePort", "11211");
 
 /**
  * E-Mail
