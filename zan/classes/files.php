@@ -66,10 +66,7 @@ class ZP_Files extends ZP_Load {
 	 */
 	public $fileType = NULL;
 	
-	public function __construct() {
-		$this->config("files");
-		$this->config("images");	
-	}
+	public function __construct() {}
 	
 	public function getFileInformation($filename = FALSE) {
 		if(!$this->filename and !$filename) {

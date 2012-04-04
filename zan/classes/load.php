@@ -415,7 +415,7 @@ class ZP_Load {
 				include_once _corePath ."/libraries/$application/$name.php";	
 
 				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;
-			} elseif(file_exists(_corePath ."/libraries/$lib/$name.php")) {
+			} elseif(file_exists(_corePath ."/libraries/$className/$name.php")) {
 				include_once _corePath ."/libraries/$lib/$name.php";	
 
 				return ($className) ? ZP_Singleton::instance($className, $params) : TRUE;
@@ -489,7 +489,7 @@ class ZP_Load {
 		
 		if($numArgs > 0) {
 			for($i = 0; $i <= $numArgs - 1; $i++) {
-				if($this->views[$i]["vars"] !== FALSE) {
+				if($this->views[$i]["vars"]) {
 					$this->Templates->vars($this->views[$i]["vars"]);
 				}
 				
@@ -525,7 +525,7 @@ class ZP_Load {
 			}
 		} else { 
 			for($i = 0; $i <= count($this->views) - 1; $i++) {
-				if($this->views[$i]["vars"] !== FALSE) {
+				if($this->views[$i]["vars"]) {
 					$this->Templates->vars($this->views[$i]["vars"]);
 				}
 			}

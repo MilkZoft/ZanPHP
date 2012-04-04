@@ -275,16 +275,16 @@ class ZP_Templates extends ZP_Load {
 				}
 			} else {
 				if(!file_exists($template)) {
-					die("Error 404: Theme Not Found: " . $template);
+					getException("Error 404: Theme Not Found: " . $template);
 				}		
 				
 				include $template;
 			}
 		} else { 
 			$template = "www/lib/themes/$this->theme/$template.php";
-			
+		
 			if(!file_exists($template)) {
-				die("Error 404: Theme Not Found: " . $template);									
+				getException("Error 404: Theme Not Found: " . $template);									
 			}
 			
 			include $template;	
