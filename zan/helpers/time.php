@@ -194,11 +194,11 @@ function howLong($value) {
 		$rTime = (int) round($time / 86400);
 		
 		if($rTime === 1) {
-			$date = __("yesterday");				
+			$date = __(_("yesterday"));				
 		}
 		
 		if($rTime === 2) {
-			$date = __("before yesterday");		
+			$date = __(_("before yesterday"));		
 		}
 		
 		if($rTime > 2) {
@@ -240,7 +240,7 @@ function howLong($value) {
 		}
 		
 		if($time > 4200 and $time < 5400) {
-			$date = __("more than an hour ago");
+			$date = __(_("more than an hour ago"));
 		}
 	}
 
@@ -282,7 +282,7 @@ function howLong($value) {
 		}
 		
 		if($time <= 3) {
-			$date = __("now");
+			$date = __(_("now"));
 		}
 	}
 	
@@ -327,29 +327,29 @@ function month($month) {
 	$month = (int) $month;
 	
 	if($month === 1) {
-		return __("January");
+		return __(_("January"));
 	} elseif($month === 2) {
-		return __("February");
+		return __(_("February"));
 	} elseif($month === 3) {
-		return __("March");
+		return __(_("March"));
 	} elseif($month === 4) {
-		return __("April");
+		return __(_("April"));
 	} elseif($month === 5) {
-		return __("May");
+		return __(_("May"));
 	} elseif($month === 6) {
-		return __("June");
+		return __(_("June"));
 	} elseif($month === 7) {
-		return __("July");
+		return __(_("July"));
 	} elseif($month === 8) {
-		return __("August");
+		return __(_("August"));
 	} elseif($month === 9) {
-		return __("September");
+		return __(_("September"));
 	} elseif($month === 10) {
-		return __("October");
+		return __(_("October"));
 	} elseif($month === 11) {
-		return __("November");
+		return __(_("November"));
 	} elseif($month === 12) {
-		return __("December");
+		return __(_("December"));
 	}
 }
 
@@ -359,38 +359,25 @@ function now($format, $hour = FALSE, $language = NULL) {
 	}
 	
 	if($hour) {	
-		$time	   = time() + 7200;
-		$hours 	   = (int) date("H", $time);
-		$minutes   = date("i", $time);
-		$seconds   = date("s", $time);
+		$time	 = time() + 7200;
+		$hours 	 = (int) date("H", $time);
+		$minutes = date("i", $time);
+		$seconds = date("s", $time);
 		
-		if($hours > 12) {						
-			if($hours === 13) {
-				$hour = "01";
-			} elseif($hours === 14) {
-				$hour = "02";
-			} elseif($hours === 15) {
-				$hour = "03";
-			} elseif($hours === 16) {
-				$hour = "04";
-			} elseif($hours === 17) {
-				$hour = "05";
-			} elseif($hours === 18) {
-				$hour = "06";
-			} elseif($hours === 19) {
-				$hour = "07";
-			} elseif($hours === 20) {
-				$hour = "08";
-			} elseif($hours === 21) {
-				$hour = "09";
-			} elseif($hours === 22) {
-				$hour = "10";
-			} elseif($hours === 23) {
-				$hour = "11";
-			} elseif($hours === 00) {
-				$hour = "12";
-			}
-			
+		if($hours > 12) {
+			$hour = ($hours === 13) ? "01" : $hours;						
+			$hour = ($hours === 14) ? "02" : $hours;
+			$hour = ($hours === 15) ? "03" : $hours;
+			$hour = ($hours === 16) ? "04" : $hours;
+			$hour = ($hours === 17) ? "05" : $hours;
+			$hour = ($hours === 18) ? "06" : $hours;
+			$hour = ($hours === 19) ? "07" : $hours;
+			$hour = ($hours === 20) ? "08" : $hours;
+			$hour = ($hours === 21) ? "09" : $hours;
+			$hour = ($hours === 22) ? "10" : $hours;
+			$hour = ($hours === 23) ? "11" : $hours;
+			$hour = ($hours === 00) ? "12" : $hours;
+
 			return "$hour:$minutes P.M.";				
 		} 
 		
@@ -400,140 +387,9 @@ function now($format, $hour = FALSE, $language = NULL) {
 	if($format === 1) {					
 		return date("d") . _sh . date("m") . _sh . date("y");
 	} elseif($format === 2) {					
-		$day = date("l"); 
-		
-		if($language === "Spanish") {
-			if($day === "Monday") {
-				$day = "Lunes";
-			} elseif($day === "Tuesday") {
-				$day = "Martes"; 
-			} elseif($day === "Wednesday") {
-				$day = "Miércoles";
-			} elseif($day === "Thursday") {
-				$day = "Jueves";
-			} elseif($day === "Friday") {
-				$day = "Viernes";
-			} elseif($day === "Saturday") {
-				$day = "Sábado";
-			} elseif($day === "Sunday") {
-				$day = "Domingo";
-			}
-		} elseif($language === "French") {
-			if($day === "Monday") {
-				$day = "Lundi";
-			} elseif($day === "Tuesday") {
-				$day = "Mardi"; 
-			} elseif($day === "Wednesday") {
-				$day = "Mercredi";
-			} elseif($day === "Thursday") {
-				$day = "Jeudi";
-			} elseif($day === "Friday") {
-				$day = "Vendredi";
-			} elseif($day === "Saturday") {
-				$day = "Samedi";
-			} elseif($day === "Sunday") {
-				$day = "Dimanche";
-			}
-		} elseif($language === "Portuguese") {
-			if($day === "Monday") {
-				$day = "Segunda-feira";
-			} elseif($day === "Tuesday") {
-				$day = "Ter&ccedil;a-feira"; 
-			} elseif($day === "Wednesday") {
-				$day = "Quarta-feira";
-			} elseif($day === "Thursday") {
-				$day = "Quinta-feira";
-			} elseif($day === "Friday") {
-				$day = "Sexta-feira";
-			} elseif($day === "Saturday") {
-				$day = "Sábado";
-			} elseif($day === "Sunday") {
-				$day = "Domingo";			
-			}
-		}
-		
-		$month = date("F");			
-		
-		if($language === "Spanish") {
-			if($month === "January") {
-				$month = "Enero";
-			} elseif($month === "February") {
-				$month = "Febrero";
-			} elseif($month === "March") {
-				$month = "Marzo";
-			} elseif($month === "April") {
-				$month = "Abril";
-			} elseif($month === "May") {
-				$month = "Mayo";
-			} elseif($month === "June") {
-				$month = "Junio";
-			} elseif($month === "July") {
-				$month = "Julio";
-			} elseif($month === "August") {
-				$month = "Agosto";
-			} elseif($month === "September") {
-				$month = "Septiembre";
-			} elseif($month === "October") {
-				$month = "Octubre"; 
-			} elseif($month === "November") {
-				$month = "Noviembre";
-			} elseif($month === "December") {
-				$month = "Diciembre";
-			}
-		} elseif($language === "French") {
-			if($month === "January") {
-				$month = "Janvier";
-			} elseif($month === "February") {
-				$month = "Février";
-			} elseif($month === "March") {
-				$month = "Mars";
-			} elseif($month === "April") {
-				$month = "Avril";
-			} elseif($month === "May") {
-				$month = "Mai";
-			} elseif($month === "June") {
-				$month = "Juin";
-			} elseif($month === "July") {
-				$month = "Juillet";
-			} elseif($month === "August") {
-				$month = "Ao&ucirc;t";
-			} elseif($month === "September") {
-				$month = "Septembre";
-			} elseif($month === "October") {
-				$month = "Octobre"; 
-			} elseif($month === "November") {
-				$month = "Novembre";
-			} elseif($month === "December") {
-				$month = "Décembre";
-			}
-		} elseif($language === "Portuguese") {
-			if($month === "January") {
-				$month = "Janeiro";
-			} elseif($month === "February") {
-				$month = "Fevereiro";
-			} elseif($month === "March") {
-				$month = "Março";
-			} elseif($month === "April") {
-				$month = "Abril";
-			} elseif($month === "May") {
-				$month = "Maio";
-			} elseif($month === "June") {
-				$month = "Junho";
-			} elseif($month === "July") {
-				$month = "Julho";
-			} elseif($month === "August") {
-				$month = "Agosto";
-			} elseif($month === "September") {
-				$month = "Setembro";
-			} elseif($month === "October") {
-				$month = "Outubro"; 
-			} elseif($month === "November") {
-				$month = "Novembro";
-			} elseif($month === "December") {
-				$month = "Dezembro";
-			}
-		}
-		
+		$day   = __(_(date("l"))); 
+		$month = __(_(date("F")));			
+				
 		if($language === "English") {
 			return "$day, $month ". date("d") .", ". date("Y");
 		} elseif($language === "Spanish") {

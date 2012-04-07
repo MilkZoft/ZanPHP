@@ -781,7 +781,7 @@ class ZP_Db extends ZP_Load {
 		$this->Rs = $this->Database->query($query);
 
 		if($this->Rs) {
-			$insertID = $this->Database->insertID();
+			$insertID = $this->Database->lastInsertId();
 						
 			return $insertID;
 		}

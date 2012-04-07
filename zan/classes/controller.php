@@ -45,7 +45,7 @@ class ZP_Controller extends ZP_Load {
      * @return void
      */
 	public function helpers() {
-		$helpers = array("alerts", "debugging", "time", "string", "forms", "security");
+		$helpers = array("pagination", "alerts", "debugging", "time", "string", "forms", "security");
 		
 		$this->helper($helpers);	
 	}
