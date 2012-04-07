@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZanPHP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-06 19:22-0600\n"
-"PO-Revision-Date: 2012-03-06 19:22-0600\n"
+"POT-Creation-Date: 2012-04-07 12:04-0600\n"
+"PO-Revision-Date: 2012-04-07 12:04-0600\n"
 "Last-Translator: Carlos Santana <carlos@milkzoft.com>\n"
 "Language-Team: Carlos Santana <carlos@milkzoft.com>\n"
 "MIME-Version: 1.0\n"
@@ -16,99 +16,165 @@ msgstr ""
 "X-Poedit-Basepath: /Applications/XAMPP/htdocs/ZanPHP\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: www/applications/default/controllers/controller.default.php:20
-msgid "Hello World!"
-msgstr "Hola Mundo!"
+#: www/applications/default/controllers/default.php:22
+msgid "Hello World"
+msgstr "Hola Mundo desde Gettext"
 
-#: www/applications/default/controllers/controller.default.php:21
-msgid "Bye World"
-msgstr "Adios Mundo Cruel! :("
+#: www/applications/default/views/welcome.php:4
+msgid "Execute"
+msgstr ""
 
-#: www/lib/exceptions/exception.database.php:11
+#: www/lib/exceptions/database.php:11
 msgid "An unknown error has occurred"
 msgstr ""
 
-#: www/lib/exceptions/exception.database.php:15
+#: www/lib/exceptions/database.php:15
 msgid "Connection error"
 msgstr ""
 
-#: zan/classes/class.files.php:113
+#: zan/classes/files.php:110
 msgid "Text File"
 msgstr ""
 
-#: zan/classes/class.files.php:114
-#: zan/classes/class.files.php:115
+#: zan/classes/files.php:111
+#: zan/classes/files.php:112
 msgid "Document File"
 msgstr ""
 
-#: zan/classes/class.files.php:116
+#: zan/classes/files.php:113
 msgid "PDF File"
 msgstr ""
 
-#: zan/classes/class.files.php:117
-#: zan/classes/class.files.php:118
+#: zan/classes/files.php:114
+#: zan/classes/files.php:115
 msgid "Power Point File"
 msgstr ""
 
-#: zan/classes/class.files.php:119
+#: zan/classes/files.php:116
 msgid "WinRAR File"
 msgstr ""
 
-#: zan/classes/class.files.php:120
+#: zan/classes/files.php:117
 msgid "ISO File"
 msgstr ""
 
-#: zan/classes/class.files.php:121
-#: zan/classes/class.files.php:122
-#: zan/classes/class.files.php:123
+#: zan/classes/files.php:118
+#: zan/classes/files.php:119
+#: zan/classes/files.php:120
 msgid "Excel File"
 msgstr ""
 
-#: zan/classes/class.files.php:124
+#: zan/classes/files.php:121
 msgid "WinZIP File"
 msgstr ""
 
-#: zan/classes/class.files.php:125
+#: zan/classes/files.php:122
 msgid "7z File"
 msgstr ""
 
-#: zan/classes/class.files.php:126
-#: zan/classes/class.files.php:127
+#: zan/classes/files.php:123
+#: zan/classes/files.php:124
 msgid "Adobe Illustrator File"
 msgstr ""
 
-#: zan/classes/class.files.php:128
+#: zan/classes/files.php:125
 msgid "Corel Draw File"
 msgstr ""
 
-#: zan/classes/class.files.php:129
-#: zan/classes/class.files.php:130
-#: zan/classes/class.files.php:131
-#: zan/classes/class.files.php:132
+#: zan/classes/files.php:126
+#: zan/classes/files.php:127
+#: zan/classes/files.php:128
+#: zan/classes/files.php:129
 msgid "Executable File"
 msgstr ""
 
-#: zan/classes/class.files.php:276
+#: zan/classes/files.php:276
 msgid "Upload success!"
 msgstr ""
 
-#: zan/classes/class.files.php:278
+#: zan/classes/files.php:278
 msgid "Permission problems!"
 msgstr ""
 
-#: zan/classes/class.files.php:282
+#: zan/classes/files.php:282
 msgid "Upload failed!"
 msgstr ""
 
-#: zan/helpers/helper.forms.php:437
+#: zan/helpers/forms.php:437
 msgid "Cancel"
 msgstr ""
 
-#: zan/helpers/helper.html.php:286
+#: zan/helpers/pagination.php:89
 msgid "Next"
 msgstr ""
 
-#: zan/helpers/helper.html.php:290
+#: zan/helpers/pagination.php:93
 msgid "Previous"
 msgstr ""
 
+#: zan/helpers/time.php:197
+msgid "yesterday"
+msgstr ""
+
+#: zan/helpers/time.php:201
+msgid "before yesterday"
+msgstr ""
+
+#: zan/helpers/time.php:243
+msgid "more than an hour ago"
+msgstr ""
+
+#: zan/helpers/time.php:285
+msgid "now"
+msgstr ""
+
+#: zan/helpers/time.php:330
+msgid "January"
+msgstr ""
+
+#: zan/helpers/time.php:332
+msgid "February"
+msgstr ""
+
+#: zan/helpers/time.php:334
+msgid "March"
+msgstr ""
+
+#: zan/helpers/time.php:336
+msgid "April"
+msgstr ""
+
+#: zan/helpers/time.php:338
+msgid "May"
+msgstr ""
+
+#: zan/helpers/time.php:340
+msgid "June"
+msgstr ""
+
+#: zan/helpers/time.php:342
+msgid "July"
+msgstr ""
+
+#: zan/helpers/time.php:344
+msgid "August"
+msgstr ""
+
+#: zan/helpers/time.php:346
+msgid "September"
+msgstr ""
+
+#: zan/helpers/time.php:348
+msgid "October"
+msgstr ""
+
+#: zan/helpers/time.php:350
+msgid "November"
+msgstr ""
+
+#: zan/helpers/time.php:352
+msgid "December"
+msgstr ""
+
+#~ msgid "Bye World"
+#~ msgstr "Adios Mundo Cruel! :("

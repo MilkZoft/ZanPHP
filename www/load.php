@@ -38,7 +38,7 @@ $Load->helper($helpers);
 set("webLang", whichLanguage(FALSE));
 
 if(get("translation") === "gettext") {
-	$languageFile = _dir ."/lib/languages/gettext/language.". whichLanguage(TRUE, TRUE) .".mo";
+	$languageFile = _dir ."/lib/languages/gettext/". whichLanguage(TRUE, TRUE) .".mo";
 		
 	if(file_exists($languageFile)) { 			
 		$Load->library("streams", NULL, NULL, "gettext");

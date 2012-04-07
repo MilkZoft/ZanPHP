@@ -130,16 +130,12 @@ class ZP_Load {
 		if($application) {
 			if(file_exists("www/applications/$application/config/$name.php")) {
 				include_once "www/applications/$application/config/$name.php";
-			} else {
-				getException("$name config doesn't exists");
 			}
 		} elseif(file_exists("www/config/$name.php")) {
 			include_once "www/config/$name.php";
 		} else {
 			if(file_exists("www/applications/$name/config/$name.php")) {
 				include_once "www/applications/$name/config/$name.php";
-			} else {
-				getException("$name config doesn't exists");
 			}
 		}
 	}
