@@ -214,7 +214,7 @@ class ZP_Db extends ZP_Load {
 	public function connect() {
 		$this->db = get("db");
 		
-		if($this->db["dbName"] === "" or $this->db["dbHost"] === "" or $this->db["dbUser"] === "" or !file_exists("www/config/database.php")) {
+		if(!file_exists("www/config/database.php")) {
 			getException("You must rename and configure your 'config/database.php'");
 		}
 
