@@ -53,8 +53,8 @@ function __($text) {
 		
 		$language = whichLanguage();
 		
-		if(file_exists("www/lib/languages/language.". strtolower($language) .".php")) {
-			include_once "www/lib/languages/language.". strtolower($language) .".php";
+		if(file_exists("www/lib/languages/". strtolower($language) .".php")) {
+			include_once "www/lib/languages/". strtolower($language) .".php";
 		} 
 
 		$position = strtolower(str_replace(" ", "_", $text));
