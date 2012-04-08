@@ -22,8 +22,7 @@ if($ZP["production"]) {
 
 	ini_set("display_errors", FALSE); 
 } else {
-	if ( ! headers_sent() )
-	{
+	if(!headers_sent()) {
 		header("Cache-Control: no-cache, must-revalidate");
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
 		header("Content-type: text/html; charset=utf-8");
