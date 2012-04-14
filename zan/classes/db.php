@@ -1267,7 +1267,7 @@ class ZP_Db extends ZP_Load {
 			$_values = rtrim($_values, ", ");
 			
 			if($ID > 0) {
-				$query = "UPDATE $table SET $_values WHERE $primaryKey = $ID";	
+				$query = "UPDATE $table SET $_values WHERE $primaryKey = '$ID'";	
 			} elseif(is_string($ID)) {
 				$query = "UPDATE $table SET $_values WHERE $ID";
 			} else {
@@ -1275,7 +1275,7 @@ class ZP_Db extends ZP_Load {
 			}
 		} else {		
 			if($ID > 0) {
-				$query = "UPDATE $table SET $fields WHERE $primaryKey = $ID";	
+				$query = "UPDATE $table SET $fields WHERE $primaryKey = '$ID'";	
 			} elseif(is_string($ID)) {
 				$query = "UPDATE $table SET $fields WHERE $ID";	
 			} else {
