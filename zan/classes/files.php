@@ -93,15 +93,15 @@ class ZP_Files extends ZP_Load {
 			if(in_array(strtolower($file["extension"]), $audio)) {
 				$file["type"] = "audio";
 			} elseif(in_array(strtolower($file["extension"]), $codes)) {
-			 	$file["type"] = "codes";
+			 	$file["type"] = "code";
 			} elseif(in_array(strtolower($file["extension"]), $document)) {
-				$file["type"] = "documents";
+				$file["type"] = "document";
 			} elseif(in_array(strtolower($file["extension"]), $image)) {
-				$file["type"] = "images";
+				$file["type"] = "image";
 			} elseif(in_array(strtolower($file["extension"]), $video)) {
-				$file["type"] = "programs";
+				$file["type"] = "program";
 			} elseif(in_array(strtolower($file["extension"]), $video)) {
-				$file["type"] = "videos";
+				$file["type"] = "video";
 			} else {
 				$file["type"] = "unknown";
 			}
@@ -218,7 +218,7 @@ class ZP_Files extends ZP_Load {
 		}
 		
 		$upload = $this->upload($dir);
-		
+	
 		if(!$upload["upload"]) {			
 			return FALSE;
 		}

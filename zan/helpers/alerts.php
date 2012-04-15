@@ -41,7 +41,7 @@ if(!defined("_access")) {
  */
 function getAlert($message, $type = "error", $URL = NULL) {
 	if(!is_null($URL)) {
-		$message = a(__($message), encode($URL), TRUE);
+		$message = a(__(_($message)), encode($URL), TRUE);
 	}
 	
 	if($type === "error") {
