@@ -221,7 +221,7 @@ class ZP_Db extends ZP_Load {
 		if(!self::$connection) {
 			if($this->db["dbController"] === "mysql" or $this->db["dbController"] === "mysqli") {
 				try {
-				    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
+				    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] .":". $this->db["dbPort"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);				    
 				} catch (PDOException $e) {
 				    getException("Database Error: ". $e->getMessage());
 				}
