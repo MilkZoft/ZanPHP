@@ -9,11 +9,12 @@ if(!defined("_access")) {
 /**
  * Website
  */
-$ZP["webURL"] 	    = "http://localhost/ZanPHP";
+$ZP["webURL"] 	    = "http://127.0.0.1/ZanPHP";
 $ZP["webName"] 	    = "ZanPHP";
 $ZP["webTheme"]     = "default";
 $ZP["webSituation"] = "Active";
 $ZP["webMessage"]   = "";
+$ZP["benchMark"]    = TRUE;
 
 /**
  * Server

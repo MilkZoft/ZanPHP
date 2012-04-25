@@ -12,12 +12,9 @@ $Load = new ZP_Load();
 
 $helpers = array("config", "debugging", "i18n", "router", "benchmark", "string", "sessions", "security");
 
-$Load->helper($helpers);
-$Load->helper("users", "users");
+$Load->helper($helpers); 
 
 include "configuration.php";
-
-getOnlineUsers();
 
 if($ZP["benchMark"]) {
 	benchMarkStart();

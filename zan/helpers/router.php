@@ -400,8 +400,30 @@ function path($path = FALSE, $URL = FALSE) {
 		return isLang() ? get("webBase") . _sh . get("webLang") : get("webBase");
 	} 
 
+	if($URL === "zan") {
+		return getDomain(_corePath) . _sh . "zan" . _sh . $path;
+	}
+
 	return ($URL) ? get("webURL") . _sh . $path : get("webBase") . _sh . get("webLang") . _sh . $path;
 }
+
+function getDomain($path = FALSE) {
+	if($path) {
+		$URL   = str_replace("http://", "", get("webURL"));
+		$parts = explode("/", $URL);
+		
+		if($path === "../../zan" and isset($parts[0]) and isset($parts[2])) {
+			return "http://". $parts[0] . "/". $parts[1];
+		} elseif($path === "../zan" and isset($parts[2])) {
+			return "http://". $parts[0] . "/". $parts[1];
+		}
+
+		return ($path === "zan") ? get("webURL") : "http://". $parts[0];
+	}
+
+	return get("webURL");
+}
+
 
 /**
  * ping
