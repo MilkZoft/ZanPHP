@@ -202,13 +202,13 @@ class ZP_Load {
 		$this->Templates->CSS($CSS, $application, $print);
 	}
 
-	public function driver($driver = NULL, $type = "cache") {
+	public function driver($driver = NULL, $type = "db") {
 		if(file_exists(_corePath ."/drivers/$type/". strtolower($driver) .".php")) {
 			$file = _corePath ."/drivers/$type/". strtolower($driver) .".php";	
 		} else {
 			$file = FALSE;	
 		}
-		
+
 		if(file_exists($file)) {	
 			include $file;
 				

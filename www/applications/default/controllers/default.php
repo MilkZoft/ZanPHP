@@ -15,7 +15,7 @@ class Default_Controller extends ZP_Controller {
 
 		$this->Templates->theme();
 
-		#$this->Default_Model = $this->model("Default_Model");
+		$this->Default_Model = $this->model("Default_Model");
 	}
 	
 	public function index() {	

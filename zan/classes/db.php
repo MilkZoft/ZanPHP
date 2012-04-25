@@ -131,6 +131,8 @@ class ZP_Db extends ZP_Load {
 	 * @var private
 	 */
 	private $where = NULL;
+
+	private $PDO = FALSE;
 	
 		
     /**
@@ -156,7 +158,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function begin() {
-		return $this->Database->beginTransaction();
+		return ($this->PDO) ? $this->Database->beginTransaction() : $this->Database->begin();;
 	}
 
     /**
@@ -164,12 +166,16 @@ class ZP_Db extends ZP_Load {
      *
      * @return array value
      */	
-	public function call($procedure) {		
-		$this->Rs = $this->Database->prepare("CALL $procedure");	
-		
-		$this->Rs->bindParam(1, $data, PDO::PARAM_STR, 4000); 
-
-		$this->Rs->execute();
+	public function call($procedure) {	
+		if($this->PDO) {	
+			$this->Rs = $this->Database->prepare("CALL $procedure");	
+			
+			$this->Rs->bindParam(1, $data, PDO::PARAM_STR, 4000);
+			
+			$data = $this->Rs->execute();
+		} else {
+			$data = $this->Database->query("CALL $procedure");
+		}
 
 		if($this->encode) {
 			$data = isset($data) ? $this->encoding($data) : FALSE;
@@ -186,15 +192,17 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / void
      */
 	public function close() {
+		if($this->PDO) {
+			return empty($this->Database);
+		} 
+
 		return (!self::$connection) ? FALSE : $this->Database->close(self::$connection);
 	}
 	
 	public function columns($table) {
 		$table = $this->getTable($table);
-		
-		$data = $this->data("SHOW COLUMNS FROM $table");
-		
-		return $data;
+	
+		return $this->data("SHOW COLUMNS FROM $table");
 	}
 	
 	/**
@@ -219,32 +227,64 @@ class ZP_Db extends ZP_Load {
 		}
 
 		if(!self::$connection) {
-			if($this->db["dbController"] === "mysql" or $this->db["dbController"] === "mysqli") {
-				try {
-				    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
-				} catch (PDOException $e) {
-				    getException("Database Error: ". $e->getMessage());
+			if($this->db["dbPDO"]) {
+				self::$connection = TRUE;
+				
+				$this->PDO = $this->db["dbPDO"];
+
+				if($this->db["dbDriver"] === "mysql" or $this->db["dbDriver"] === "mysqli") {
+					try {
+					    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
+					} catch (PDOException $e) {
+					    getException("Database Error: ". $e->getMessage());
+					}
+				} elseif($this->db["dbDriver"] === "pgsql") {
+					try {
+					    $this->Database = new PDO("pgsql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
+					} catch (PDOException $e) {
+					    getException("Database Error: ". $e->getMessage());
+					}
+				} elseif($this->db["dbDriver"] === "sqlite") {
+					try {
+					    $this->Database = new PDO("sqlite:". $this->db["dbFilename"]);
+					} catch (PDOException $e) {
+					    getException("Database Error: ". $e->getMessage());
+					}
+				} elseif($this->db["dbDriver"] === "oracle") {
+					try {
+					    $this->Database = new PDO("OCI:dbname=". $this->db["dbName"] .";charset=UTF-8", $this->db["dbUser"], $this->db["dbPwd"]);
+					} catch (PDOException $e) {
+					    getException("Database Error: ". $e->getMessage());
+					}
 				}
-			} elseif($this->db["dbController"] === "pgsql") {
-				try {
-				    $this->Database = new PDO("pgsql:host=". $this->db["dbHost"] .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
-				} catch (PDOException $e) {
-				    getException("Database Error: ". $e->getMessage());
-				}
-			} elseif($this->db["dbController"] === "sqlite") {
-				try {
-				    $this->Database = new PDO("sqlite:". $this->db["dbFilename"]);
-				} catch (PDOException $e) {
-				    getException("Database Error: ". $e->getMessage());
-				}
-			} elseif($this->db["dbController"] === "oracle") {
-				try {
-				    $this->Database = new PDO("OCI:dbname=". $this->db["dbName"] .";charset=UTF-8", $this->db["dbUser"], $this->db["dbPwd"]);
-				} catch (PDOException $e) {
-				    getException("Database Error: ". $e->getMessage());
+			} else {
+				if($this->db["dbDriver"] === "mssql") {
+					$this->Database   = $this->driver("MsSQL_Db");
+					
+					self::$connection = $this->Database->connect($this->db);
+				} elseif($this->db["dbDriver"] === "mysql") {
+					$this->Database   = $this->driver("MySQL_Db");
+					
+					self::$connection = $this->Database->connect($this->db);			
+				} elseif($this->db["dbDriver"] === "mysqli") {
+					$this->Database   = $this->driver("MySQLi_Db");
+					
+					self::$connection = $this->Database->connect($this->db);
+				} elseif($this->db["dbDriver"] === "pgsql") {
+					$this->Database   = $this->driver("PgSQL_Db");
+					
+					self::$connection = $this->Database->connect($this->db);
+				} elseif($this->db["dbDriver"] === "sqlite") {
+					$this->Database   = $this->driver("SQLite_Db");
+					
+					self::$connection = $this->Database->connect($this->db);
+				} elseif($this->db["dbDriver"] === "oracle") {
+					$this->Database   = $this->driver("Oracle_Db");
+					
+					self::$connection = $this->Database->connect($this->db);
 				}
 			}
-		}			
+		}		
 	}
 	
     /**
@@ -349,7 +389,7 @@ class ZP_Db extends ZP_Load {
 			return FALSE;
 		}
 		
-		if(_dbController === "odbc_mssql") {
+		if($ZP["db"]["dbDriver"] === "odbc_mssql") {
 			$query = "DELETE TOP ($limit) FROM $this->table WHERE $field = $value";
 		} else {
 			$query = "DELETE FROM $this->table WHERE $field = $value";
@@ -359,7 +399,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}
 		
-		return ($this->Database->exec($query)) ? TRUE : FALSE;
+		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 		
     /**
@@ -380,7 +420,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "DELETE FROM $this->table WHERE $SQL";
 		
-		return ($this->Database->exec($query)) ? TRUE : FALSE;
+		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 	
     /**
@@ -462,7 +502,11 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / array value
      */
 	public function fetch($count = 0) {
-		return (!$this->Rs) ? FALSE : $this->Rs->fetch(PDO::FETCH_ASSOC);
+		if($this->PDO) {
+			return (!$this->Rs) ? FALSE : $this->Rs->fetch(PDO::FETCH_ASSOC);
+		} else {
+			return (!$this->Rs) ? FALSE : $this->Database->fetch($count);
+		}
 	}
 	
     /**
@@ -655,7 +699,11 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / void
      */
 	public function free() {
-	 	return ($this->Rs) ? $this->Rs->closeCursor() : FALSE;
+		if($this->PDO) {
+	 		return ($this->Rs) ? $this->Rs->closeCursor() : FALSE;
+	 	} 
+
+	 	return ($this->Rs) ? $this->Rs->free() : FALSE;
 	}
 	
     /**
@@ -687,18 +735,10 @@ class ZP_Db extends ZP_Load {
 			$table = FALSE;	
 		}
 		
-		if($limit === 0 and $offset === 0) {
-			if($table) {
-				$query = "$this->select FROM $table $this->join $this->where"; 
-			} else {
-				$query = "$this->select FROM $this->from $this->join $this->where"; 
-			}
+		if($limit === 0 and $offset === 0) {	
+			$query = ($table) ? "$this->select FROM $table $this->join $this->where" : "$this->select FROM $this->from $this->join $this->where"; 
 		} else {
-			if($table) {
-				$query = "$this->select FROM $table $this->join $this->where LIMIT $limit, $offset";
-			} else {
-				$query = "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";	
-			}
+			$query = ($table) ? "$this->select FROM $table $this->join $this->where LIMIT $limit, $offset" : "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";
 		}
 	
 		return $this->data($query);
@@ -724,12 +764,8 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$_where = rtrim($_where, "AND ");
-		
-		if($limit === 0 and $offset === 0) {
-			$query = "$this->select FROM $table WHERE $_where"; 
-		} else {
-			$query = "SELECT $this->fields FROM $table WHERE $_where LIMIT $limit, $offset";	
-		}
+				
+		$query = ($limit === 0 and $offset === 0) ? "$this->select FROM $table WHERE $_where" : "SELECT $this->fields FROM $table WHERE $_where LIMIT $limit, $offset"; 
 		
 		return $this->data($query);
 	}
@@ -781,7 +817,7 @@ class ZP_Db extends ZP_Load {
 		$this->Rs = $this->Database->query($query);
 
 		if($this->Rs) {
-			$insertID = $this->Database->lastInsertId();
+			$insertID = ($this->PDO) ? $this->Database->lastInsertId() : $this->Database->insertID();
 						
 			return $insertID;
 		}
@@ -826,11 +862,7 @@ class ZP_Db extends ZP_Load {
 					$j++;	
 				}
 				
-				if($i === $count) {
-					$values .= "($_values)";
-				} else {
-					$values .= "($_values), ";	
-				}
+				$values .= ($i === $count) ? "($_values)" : "($_values), ";
 			 	
 			 	$fields  = $_fields;
 				$_fields = NULL;
@@ -878,11 +910,7 @@ class ZP_Db extends ZP_Load {
 			return FALSE;	
 		}
 		
-		if(!$position) {
-			$this->join .= "JOIN $table ON $condition ";
-		} else {
-			$this->join .= "$position JOIN $table ON $condition ";	
-		}
+		$this->join .= (!$position) ? "JOIN $table ON $condition " : "$position JOIN $table ON $condition ";
 
 		return $this;
 	}
@@ -1035,11 +1063,7 @@ class ZP_Db extends ZP_Load {
 	public function orWhereIn($field, $data) {
 		if(is_array($data)) {
 			for($i = 0; $i <= count($data) - 1; $i++) {
-				if($i === count($data) - 1) {
-					$values .= "'$data[$i]'";	
-				} else {
-					$values .= "'$data[$i]', ";
-				}
+				$values .= ($i === count($data) - 1) ? "'$data[$i]'" : "'$data[$i]', ";	
 			}
 			
 			if(!is_null($this->where)) {
@@ -1062,11 +1086,7 @@ class ZP_Db extends ZP_Load {
 	public function orWhereNotIn($field, $data) {
 		if(is_array($data)) {
 			for($i = 0; $i <= count($data) - 1; $i++) {
-				if($i === count($data) - 1) {
-					$values .= "'$data[$i]'";	
-				} else {
-					$values .= "'$data[$i]', ";
-				}
+				$values .= ($i === count($data) - 1) ? "'$data[$i]'" : "'$data[$i]', ";
 			}
 			
 			if(!is_null($this->where)) {
@@ -1105,7 +1125,11 @@ class ZP_Db extends ZP_Load {
      * @return boolean value / integer value
      */	
 	public function rows() {
-		return (!$this->Rs) ? FALSE : $this->Rs->rowCount();	
+		if($this->PDO) {
+			return (!$this->Rs) ? FALSE : $this->Rs->rowCount();
+		} 
+
+		return (!$this->Rs) ? FALSE : $this->Database->rows();
 	}
 	
     /**
@@ -1132,11 +1156,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */	
 	public function select($fields = "*", $normal = TRUE) {
-		if(!$normal) {
-			$this->select = $fields;	
-		} else {
-			$this->select = "SELECT $fields";	
-		}
+		$this->select = (!$normal) ? $fields : "SELECT $fields";
 
 		return $this;
 	}
@@ -1148,11 +1168,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function selectAvg($field, $as = NULL) {
-		if(isset($field) and $as) {
-			$this->select = "SELECT AVG($field) as $as";	
-		} else {
-			$this->select = "SELECT AVG($field) as $field";
-		}	
+		$this->select = (isset($field) and $as) ? "SELECT AVG($field) as $as" : "SELECT AVG($field) as $field";	
 
 		return $this;
 	}
@@ -1164,11 +1180,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function selectMax($field, $as = NULL) {
-		if(isset($field) and $as) {
-			$this->select = "SELECT MAX($field) as $as";	
-		} else {
-			$this->select = "SELECT MAX($field) as $field";
-		}
+		$this->select = (isset($field) and $as) ? "SELECT MAX($field) as $as" : "SELECT MAX($field) as $field";
 
 		return $this;
 	}
@@ -1180,12 +1192,8 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function selectMin($field, $as = NULL) {
-		if(isset($min) and $as) {
-			$this->select = "SELECT MIN($field) as $as";	
-		} else {
-			$this->select = "SELECT MIN($field) as $field";
-		}	
-
+		$this->select = (isset($min) and $as) ? "SELECT MIN($field) as $as" : "SELECT MIN($field) as $field";	
+	
 		return $this;
 	}
 	
@@ -1196,11 +1204,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function selectSum($field, $as = NULL) {
-		if(isset($field) and $as) {
-			$this->select = "SELECT SUM($field) as $as";	
-		} else {
-			$this->select = "SELECT SUM($field) as $field";
-		}	
+		$this->select = (isset($field) and $as) ? "SELECT SUM($field) as $as" : "SELECT SUM($field) as $field";	
 
 		return $this;
 	}
@@ -1283,7 +1287,7 @@ class ZP_Db extends ZP_Load {
 			}
 		}	
 		
-		$this->Rs = $this->Database->exec($query);
+		$this->Rs = $this->Database->query($query);
 		
 		if($this->Rs) {
 			return TRUE;
@@ -1313,7 +1317,7 @@ class ZP_Db extends ZP_Load {
 		
 		$query = "UPDATE $table SET $SQL";
 		
-		return ($this->Database->exec($query)) ? TRUE : FALSE;
+		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 
     /**
@@ -1345,17 +1349,9 @@ class ZP_Db extends ZP_Load {
 				$parts = explode(" ", $field);
 				
 				if($i === $count) {
-					if(count($parts) === 2) {
-						$_where .= "$parts[0] $parts[1] '$value'";
-					} else {
-						$_where .= "$field = '$value'";
-					}
+					$_where .= (count($parts) === 2) ? "$parts[0] $parts[1] '$value'" : "$field = '$value'";
 				} else {
-					if(count($parts) === 2) {
-						$_where .= "$parts[0] $parts[1] '$value' AND ";
-					} else {
-						$_where .= "$field = '$value' AND ";
-					}
+					$_where .= (count($parts) === 2) ? "$parts[0] $parts[1] '$value' AND " : "$field = '$value' AND ";
 				}
 			
 				unset($parts);
@@ -1363,35 +1359,19 @@ class ZP_Db extends ZP_Load {
 				$i++;
 			}
 			
-			if(is_null($this->where)) {
-				$this->where = "WHERE $_where";
-			} else {
-				$this->where .= " AND $_where";
-			}
+			$this->where = (is_null($this->where)) ? "WHERE $_where" : " AND $_where";
 		} else {
 			if(isset($data) and !$value) {
-				if(is_null($this->where)) {
-					$this->where  = "WHERE $data";
-				} else {
-					$this->where .= " $data";	
-				}
+				$this->where = (is_null($this->where)) ? "WHERE $data" : " $data";
 			} else {
 				if(is_null($this->where)) {
 					$parts = explode(" ", $data);
 					
-					if(count($parts) === 2) {
-						$this->where = "WHERE parts[0] $parts[1] '$value'";	
-					} else {
-						$this->where = "WHERE $data = '$value'";
-					}
+					$this->where = (count($parts) === 2) ? "WHERE parts[0] $parts[1] '$value'" : "WHERE $data = '$value'";	
 				} else {
 					$parts = explode(" ", $data);
 					
-					if(count($parts) === 2) {
-						$this->where .= " AND $parts[0] $parts[1] '$value'";
-					} else {
-						$this->where .= " AND $data = '$value'";	
-					}	
+					$this->where .= (count($parts) === 2) ? " AND $parts[0] $parts[1] '$value'" : " AND $data = '$value'";
 				}	
 			}
 		}
@@ -1410,11 +1390,7 @@ class ZP_Db extends ZP_Load {
 			$values = NULL;
 			
 			for($i = 0; $i <= count($data) - 1; $i++) {
-				if($i === count($data) - 1) {
-					$values .= "'$data[$i]'";	
-				} else {
-					$values .= "'$data[$i]', ";
-				}
+				$values .= ($i === count($data) - 1) ? "'$data[$i]'" : "'$data[$i]', ";
 			}
 			
 			if(is_null($this->where)) {
@@ -1442,11 +1418,7 @@ class ZP_Db extends ZP_Load {
 	public function whereNotIn($field, $data) {
 		if(is_array($data)) {
 			for($i = 0; $i <= count($data) - 1; $i++) {
-				if($i === count($data) - 1) {
-					$values .= "'$data[$i]'";	
-				} else {
-					$values .= "'$data[$i]', ";
-				}
+				$values .= ($i === count($data) - 1) ? "'$data[$i]'" : "'$data[$i]', ";	
 			}
 			
 			if(is_null($this->where)) {
@@ -1482,17 +1454,9 @@ class ZP_Db extends ZP_Load {
 				$parts = explode(" ", $field);
 				
 				if($i === $count) {
-					if(count($parts) === 2) {
-						$_where .= "$parts[0] $parts[1] '$value'";
-					} else {
-						$_where .= "$field = '$value'";
-					}
+					$_where .= (count($parts) === 2) ? "$parts[0] $parts[1] '$value'" : "$field = '$value'";
 				} else {
-					if(count($parts) === 2) {
-						$_where .= "$parts[0] $parts[1] '$value' OR ";
-					} else {
-						$_where .= "$field = '$value' OR ";
-					}
+					$_where .= (count($parts) === 2) ? "$parts[0] $parts[1] '$value' OR " : "$field = '$value' OR ";
 				}
 				
 				unset($parts);
@@ -1516,19 +1480,11 @@ class ZP_Db extends ZP_Load {
 				if(is_null($this->where)) {
 					$parts = explode(" ", $data);
 					
-					if(count($parts) === 2) {
-						$this->where = "WHERE parts[0] $parts[1] '$value'";	
-					} else {
-						$this->where = "WHERE $data = '$value'";
-					}
+					$this->where = (count($parts) === 2) ? "WHERE parts[0] $parts[1] '$value'" : "WHERE $data = '$value'";
 				} else {
 					$parts = explode(" ", $data);
 					
-					if(count($parts) === 2) {
-						$this->where .= " OR $parts[0] $parts[1] '$value'";
-					} else {
-						$this->where .= " OR $data = '$value'";	
-					}	
+					$this->where .= (count($parts) === 2) ? " OR $parts[0] $parts[1] '$value'" : " OR $data = '$value'";
 				}	
 			}
 		}
