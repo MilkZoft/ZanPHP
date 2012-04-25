@@ -168,9 +168,9 @@ function getLanguagesInput($lang = NULL, $name = "language", $input = "radio") {
 		}	
 
 		if($input === "radio") {
-			$HTML .= '<input id="language" name="'. $name .'" type="radio" value="'. $language["name"] .'" '. $check .' /> '. $language["value"];
+			$HTML .= ' <input id="language" name="'. $name .'" type="radio" value="'. $language["name"] .'" '. $check .' /> '. $language["value"] .' ';
 		} elseif($input === "select") {
-			$HTML .= '<option value="'. $language["name"] .'"'. $check .'>'. __(_($language["name"])) .'</option>';
+			$HTML .= ' <option value="'. $language["name"] .'"'. $check .'>'. __(_($language["name"])) .'</option>';
 		}
 	}
 
