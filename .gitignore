@@ -1,5 +1,6 @@
 .DS_Store
 *.swp
 *~
-www/config/database.php
 www/config/config.php
+www/config/database.php
+www/config/routes.php
