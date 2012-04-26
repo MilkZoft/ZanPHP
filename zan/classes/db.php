@@ -227,7 +227,7 @@ class ZP_Db extends ZP_Load {
 		}
 
 		if(!self::$connection) {
-			$port = ($this->db["dbPort"] === "") ? ":3306" : ":". $this->db["dbPort"];
+			$port = ($this->db["dbPort"] === 3306) ? "" : ":". $this->db["dbPort"];
 			
 			if($this->db["dbPDO"]) {
 				self::$connection = TRUE;
@@ -236,13 +236,13 @@ class ZP_Db extends ZP_Load {
 
 				if($this->db["dbDriver"] === "mysql" or $this->db["dbDriver"] === "mysqli") {
 					try {
-					    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] . $port";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
+					    $this->Database = new PDO("mysql:host=". $this->db["dbHost"] . $port .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
 					} catch (PDOException $e) {
 					    getException("Database Error: ". $e->getMessage());
 					}
 				} elseif($this->db["dbDriver"] === "pgsql") {
 					try {
-					    $this->Database = new PDO("pgsql:host=". $this->db["dbHost"] . $port";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
+					    $this->Database = new PDO("pgsql:host=". $this->db["dbHost"] . $port .";dbname=". $this->db["dbName"], $this->db["dbUser"], $this->db["dbPwd"]);
 					} catch (PDOException $e) {
 					    getException("Database Error: ". $e->getMessage());
 					}
