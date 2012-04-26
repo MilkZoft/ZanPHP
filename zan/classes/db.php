@@ -227,11 +227,7 @@ class ZP_Db extends ZP_Load {
 		}
 
 		if(!self::$connection) {
-			$port = NULL;
-
-			if($this->db["dbPort"] != 3306){
-				$port = ":". $this->db["dbPort"];
-			}
+			$port = ($this->db["dbPort"] === "") ? ":3306" : ":". $this->db["dbPort"];
 			
 			if($this->db["dbPDO"]) {
 				self::$connection = TRUE;
