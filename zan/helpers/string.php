@@ -258,6 +258,40 @@ function parseCSV($file) {
 	}
 }
 
+/**
+ * pathToImages
+ *
+ * Add path to db images
+ * 
+ * @author Daniel Chaur (@hasdman)
+ * @param string $HTML
+ * @param string $imagePath
+ * @return string $HTML
+ */ 
+function pathToImages($HTML = NULL, $imagePath = NULL) {
+	if($HTML) {
+		$newPath = ($imagePath === "lib") ? path("www/lib/images/", TRUE) : path("www/lib/themes/$imagePath/", TRUE);
+
+		$patterns = array(
+			'<img.*src="([^http].*?)".*?>',
+			'/<a(.*)href="([^http].*\.(jpg|gif|png))"(.*)>(.*?)<\/a>/',
+			'/url\(\'?([^\'\)]+)\'?\)/m'
+		);
+
+		$replacements = array(
+			'img src="'. $newPath .'\1" ', 
+			'<a$1href="'. $newPath .'$2"$4>$5</a> ',
+			'url('. $newPath .'\1) '
+		);
+		
+		$HTML = preg_replace($patterns, $replacements, $HTML);	
+		
+		return $HTML;
+	}
+
+	return FALSE;
+}
+
 function randomString($length = 6) {  
     $consonant = array("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "y", "z");  
     $vocal	   = array("a", "e", "i", "o", "u");  
