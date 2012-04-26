@@ -269,7 +269,7 @@ function parseCSV($file) {
  * @return string $HTML
  */ 
 function pathToImages($HTML = NULL, $imagePath = NULL) {
-	if($HTML) {
+	if($HTML and $imagePath) {
 		$newPath = ($imagePath === "lib") ? path("www/lib/images/", TRUE) : path("www/lib/themes/$imagePath/", TRUE);
 
 		$patterns = array(
