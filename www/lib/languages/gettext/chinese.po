@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZanPHP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-06 20:23-0600\n"
-"PO-Revision-Date: 2012-03-06 20:24-0600\n"
+"POT-Creation-Date: 2012-04-26 18:14-0600\n"
+"PO-Revision-Date: 2012-04-26 18:15-0600\n"
 "Last-Translator: Carlos Santana <carlos@milkzoft.com>\n"
 "Language-Team: Carlos Santana <carlos@santana.ws>\n"
 "MIME-Version: 1.0\n"
@@ -16,126 +16,190 @@ msgstr ""
 "X-Poedit-Basepath: /Applications/XAMPP/htdocs/ZanPHP\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: www/applications/contacts/views/view.contact.php:2
-#: www/applications/contacts/views/view.contacts.php:2
-msgid "Name"
-msgstr "名称"
+#: www/applications/default/controllers/default.php:20
+msgid "Hello World"
+msgstr "你好世界"
 
-#: www/applications/contacts/views/view.contact.php:3
-#: www/applications/contacts/views/view.contacts.php:3
-msgid "Email"
-msgstr "电子邮件"
-
-#: www/applications/contacts/views/view.contact.php:4
-#: www/applications/contacts/views/view.contacts.php:4
-msgid "Phone"
-msgstr "电话"
-
-#: www/applications/default/controllers/controller.default.php:20
-msgid "Welcome to ZanPHP"
-msgstr ""
-
-#: www/applications/default/views/view.welcome.php:4
+#: www/applications/default/views/welcome.php:4
 #, fuzzy
 msgid "Execute"
 msgstr "Archivo Ejecutable"
 
-#: www/lib/exceptions/exception.database.php:11
+#: www/lib/exceptions/database.php:11
 msgid "An unknown error has occurred"
 msgstr "Un error desconocido ha ocurrido"
 
-#: www/lib/exceptions/exception.database.php:15
+#: www/lib/exceptions/database.php:15
 msgid "Connection error"
 msgstr "Error de conexión"
 
-#: zan/classes/class.files.php:113
+#: zan/classes/files.php:110
 msgid "Text File"
 msgstr "Archivo de Texto"
 
-#: zan/classes/class.files.php:114
-#: zan/classes/class.files.php:115
+#: zan/classes/files.php:111
+#: zan/classes/files.php:112
 msgid "Document File"
 msgstr "Documento"
 
-#: zan/classes/class.files.php:116
+#: zan/classes/files.php:113
 msgid "PDF File"
 msgstr "Archivo PDF"
 
-#: zan/classes/class.files.php:117
-#: zan/classes/class.files.php:118
+#: zan/classes/files.php:114
+#: zan/classes/files.php:115
 msgid "Power Point File"
 msgstr "Archivo Power Point"
 
-#: zan/classes/class.files.php:119
+#: zan/classes/files.php:116
 #, fuzzy
 msgid "WinRAR File"
 msgstr "Archivo Winrar"
 
-#: zan/classes/class.files.php:120
+#: zan/classes/files.php:117
 #, fuzzy
 msgid "ISO File"
 msgstr "Archivo 7z"
 
-#: zan/classes/class.files.php:121
-#: zan/classes/class.files.php:122
-#: zan/classes/class.files.php:123
+#: zan/classes/files.php:118
+#: zan/classes/files.php:119
+#: zan/classes/files.php:120
 msgid "Excel File"
 msgstr "Archivo Excel"
 
-#: zan/classes/class.files.php:124
+#: zan/classes/files.php:121
 #, fuzzy
 msgid "WinZIP File"
 msgstr "Archivo Winrar"
 
-#: zan/classes/class.files.php:125
+#: zan/classes/files.php:122
 msgid "7z File"
 msgstr "Archivo 7z"
 
-#: zan/classes/class.files.php:126
-#: zan/classes/class.files.php:127
+#: zan/classes/files.php:123
+#: zan/classes/files.php:124
 msgid "Adobe Illustrator File"
 msgstr "Archivo de Adobe Illustrator"
 
-#: zan/classes/class.files.php:128
+#: zan/classes/files.php:125
 msgid "Corel Draw File"
 msgstr "Archivo de Corel Draw"
 
-#: zan/classes/class.files.php:129
-#: zan/classes/class.files.php:130
-#: zan/classes/class.files.php:131
-#: zan/classes/class.files.php:132
+#: zan/classes/files.php:126
+#: zan/classes/files.php:127
+#: zan/classes/files.php:128
+#: zan/classes/files.php:129
 msgid "Executable File"
 msgstr "Archivo Ejecutable"
 
-#: zan/classes/class.files.php:276
+#: zan/classes/files.php:276
 #, fuzzy
 msgid "Upload success!"
 msgstr "Subir Documento"
 
-#: zan/classes/class.files.php:278
+#: zan/classes/files.php:278
 #, fuzzy
 msgid "Permission problems!"
 msgstr "Permisos"
 
-#: zan/classes/class.files.php:282
+#: zan/classes/files.php:282
 #, fuzzy
 msgid "Upload failed!"
 msgstr "Descargar archivo"
 
-#: zan/helpers/helper.forms.php:437
+#: zan/helpers/benchmark.php:43
+msgid "Load time:"
+msgstr ""
+
+#: zan/helpers/benchmark.php:43
+#, fuzzy
+msgid "seconds"
+msgstr "Segundos"
+
+#: zan/helpers/forms.php:437
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: zan/helpers/helper.html.php:286
+#: zan/helpers/pagination.php:89
 msgid "Next"
 msgstr "Siguiente"
 
-#: zan/helpers/helper.html.php:290
+#: zan/helpers/pagination.php:93
 msgid "Previous"
 msgstr "Anterior"
 
-#~ msgid "Hello World!"
-#~ msgstr "你好世界"
+#: zan/helpers/time.php:197
+msgid "yesterday"
+msgstr "ayer"
+
+#: zan/helpers/time.php:201
+msgid "before yesterday"
+msgstr "antier"
+
+#: zan/helpers/time.php:243
+msgid "more than an hour ago"
+msgstr "hace más de una hora"
+
+#: zan/helpers/time.php:285
+msgid "now"
+msgstr "ahora"
+
+#: zan/helpers/time.php:330
+msgid "January"
+msgstr "Enero"
+
+#: zan/helpers/time.php:332
+msgid "February"
+msgstr "Febrero"
+
+#: zan/helpers/time.php:334
+msgid "March"
+msgstr "Marzo"
+
+#: zan/helpers/time.php:336
+msgid "April"
+msgstr "Abril"
+
+#: zan/helpers/time.php:338
+msgid "May"
+msgstr "Mayo"
+
+#: zan/helpers/time.php:340
+msgid "June"
+msgstr "Junio"
+
+#: zan/helpers/time.php:342
+msgid "July"
+msgstr "Julio"
+
+#: zan/helpers/time.php:344
+msgid "August"
+msgstr "Agosto"
+
+#: zan/helpers/time.php:346
+msgid "September"
+msgstr "Septiembre"
+
+#: zan/helpers/time.php:348
+msgid "October"
+msgstr ""
+
+#: zan/helpers/time.php:350
+msgid "November"
+msgstr "Noviembre"
+
+#: zan/helpers/time.php:352
+msgid "December"
+msgstr "Diciembre"
+
+#~ msgid "Name"
+#~ msgstr "名称"
+
+#~ msgid "Email"
+#~ msgstr "电子邮件"
+
+#~ msgid "Phone"
+#~ msgstr "电话"
 
 #~ msgid "Bye World"
 #~ msgstr "再见世界"
@@ -1760,18 +1824,6 @@ msgstr "Anterior"
 #~ msgid "on"
 #~ msgstr "el"
 
-#~ msgid "yesterday"
-#~ msgstr "ayer"
-
-#~ msgid "before yesterday"
-#~ msgstr "antier"
-
-#~ msgid "more than an hour ago"
-#~ msgstr "hace más de una hora"
-
-#~ msgid "now"
-#~ msgstr "ahora"
-
 #~ msgid "Manage Links"
 #~ msgstr "Administrar Enlaces"
 
@@ -1934,39 +1986,6 @@ msgstr "Anterior"
 #~ msgid "Sunday"
 #~ msgstr "Domingo"
 
-#~ msgid "January"
-#~ msgstr "Enero"
-
-#~ msgid "February"
-#~ msgstr "Febrero"
-
-#~ msgid "March"
-#~ msgstr "Marzo"
-
-#~ msgid "April"
-#~ msgstr "Abril"
-
-#~ msgid "May"
-#~ msgstr "Mayo"
-
-#~ msgid "June"
-#~ msgstr "Junio"
-
-#~ msgid "July"
-#~ msgstr "Julio"
-
-#~ msgid "August"
-#~ msgstr "Agosto"
-
-#~ msgid "September"
-#~ msgstr "Septiembre"
-
-#~ msgid "November"
-#~ msgstr "Noviembre"
-
-#~ msgid "December"
-#~ msgstr "Diciembre"
-
 #~ msgid "Answer 1"
 #~ msgstr "Respuesta 1"
 
@@ -2039,10 +2058,6 @@ msgstr "Anterior"
 #, fuzzy
 #~ msgid "week ago"
 #~ msgstr "Ver también"
-
-#, fuzzy
-#~ msgid "seconds ago"
-#~ msgstr "Segundos"
 
 #, fuzzy
 #~ msgid "//Caption"

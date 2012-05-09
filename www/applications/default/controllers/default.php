@@ -2,9 +2,7 @@
 /**
  * Access from index.php:
  */
-if(!defined("_access")) {
-	die("Error: You don't have permission to access here...");
-}
+
 
 class Default_Controller extends ZP_Controller {
 	
@@ -25,17 +23,7 @@ class Default_Controller extends ZP_Controller {
 		$this->render("content", $vars);
 	}
 
-	public function contact($contactID) {
-		$data = $this->Default_Model->contact($contactID);
-		____($data);
-	}
-
-	public function page($page) {
-		$data = $this->Default_Model->page($page);
-		____($data);
-	}
-
-	public function test($param1, $param2) {
+	public function test($param1 = "Hola", $param2 = "Adios") {
 		print "New dispatcher it's works fine: $param1, $param2";
 	}
 

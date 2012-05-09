@@ -12,6 +12,13 @@ $routes = array(
 			"application" => "default",
 			"controller"  => "default",
 			"method"	  => "test",
-			"params"	  => array("Hi", "Goodbye")
+			"params"	  => array()
+		),
+	1 => array(
+			"pattern"	  => "/^test/",
+			"application" => "default",
+			"controller"  => "default",
+			"method"	  => "test",
+			"params"	  => array()
 		),
 );

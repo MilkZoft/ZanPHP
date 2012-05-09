@@ -99,7 +99,7 @@ function execute() {
 				$Controller     	   = getController(NULL, $application);
 				$controllerFile 	   = getController(NULL, $application, TRUE);
 				$method 			   = segment(1, isLang());
-
+				
 				if(!isMethod($method, $Controller)) {
 					if(isMethod("index", $Controller)) {
 						$method  = "index";
@@ -492,10 +492,15 @@ function route() {
 	$URL   = explode("/", substr($_SERVER["REQUEST_URI"], 1));
 	$paths = explode("/", dirname($_SERVER["SCRIPT_FILENAME"]));
 	$path  = $paths[count($paths) - 1];
+	$base  = str_replace("http://", "", get("webURL"));
+	$base  = explode("/", $base);
 
+	array_shift($base);
+	
 	if(is_array($URL)) {		 
 		$URL = array_diff($URL, array(""));
-		
+		$URL = array_diff($URL, $base);
+				
 		if(!get("domain")) {
 			$vars[] = array_shift($URL);
 		}

@@ -1,1 +1,1 @@
-<p>Mensaje: <?php print $message; ?></p>
+<p>Mensaje 2: <?php print $message; ?></p>
