@@ -76,11 +76,11 @@ class ZP_Data extends ZP_Load {
 					if(!POST($field)) {
 						$field = $this->rename($field);
 
-						return array("error" => getAlert("$field is required"));
+						return array("error" => getAlert(ucfirst($field) ." is required"));
 					}
 				} elseif($validation === "email?") {
 					if(!isEmail(POST($field))) {
-						return array("error" => getAlert("$field is not a valid email"));
+						return array("error" => getAlert(ucfirst($field) ." is not a valid email"));
 					}
 				} elseif($validation === "injection?") {
 					if(isInjection(POST($field))) {
@@ -92,7 +92,7 @@ class ZP_Data extends ZP_Load {
 					}
 				} elseif($validation === "vulgar?") {
 					if(isVulgar(POST($field))) {
-						return array("error" => getAlert("Your $field is very vulgar"));
+						return array("error" => getAlert("Your ". ucfirst($field) ." is very vulgar"));
 					}
 				} elseif($validation === "ping") {
 					if(!ping(POST($field))) {
@@ -104,14 +104,14 @@ class ZP_Data extends ZP_Load {
 					$count = ($count > 0) ? $count : 6;
 
 					if(strlen(POST($field)) < $count) {
-						return array("error" => getAlert("$field must have at least $count characters"));
+						return array("error" => getAlert(ucfirst($field) ." must have at least $count characters"));
 					}
 				} elseif(isset($field["exists"]) and isset($this->table) and POST("save")) {
 					if(is_array($validation)) {
 						$exists = $this->Db->findBy($validation);
 						
 						if($exists) {
-							return array("error" => getAlert("The record already exists"));
+							return array("field" => $field["exists"], "error" => getAlert("The ". $field["exists"] ." already exists"));
 						}
 					}
 				}
