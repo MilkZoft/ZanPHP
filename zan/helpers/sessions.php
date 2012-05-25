@@ -31,19 +31,19 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/helpers/security_helper
  */
 
-function cacheSession($cacheID) {
-	if(SESSION("ZanUser")) {
-		return $cacheID .".". SESSION("ZanUser");
-	}
-
-	return $cacheID .".guest";
-}
-
-function COOKIE($cookie) {
-	if(isset($_COOKIE[$cookie])) {
-		return filter($_COOKIE[$cookie]);
+function COOKIE($cookie, $value = FALSE, $time = 300000, $redirect = FALSE, $URL = FALSE) {
+	if($value) {
+		setcookie($cookie, filter($value), time() + $time, "/");
+	
+		if($redirect) {
+			redirect(isset($URL) ? $URL : get("webBase"));		
+		}
 	} else {
-		return FALSE;
+		if(isset($_COOKIE[$cookie])) {
+			return filter($_COOKIE[$cookie]);
+		} else {
+			return FALSE;
+		}
 	}
 }
 
@@ -59,7 +59,7 @@ function COOKIE($cookie) {
  * @param int    $time     = 604800
  * @return void
  */ 
-function createCookie($cookie = NULL, $value, $time = 604800, $redirect = FALSE, $URL = _webBase) {		
+function createCookie($cookie = NULL, $value, $time = 604800, $redirect = FALSE, $URL = FALSE) {		
 	setcookie($cookie, $value, time() + $time, "/");
 	
 	if($redirect) {

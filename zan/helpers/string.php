@@ -42,6 +42,17 @@ function bbCode($HTML) {
 
    	$HTML = preg_replace($a, $b, $HTML);
 	$HTML = str_replace("http://www.youtube.com/watch?v=", "http://www.youtube.com/embed/", $HTML);
+	$HTML = str_replace("&amp;list=UUWDzmLpJP-z4qopWVA4qfTQ", "", $HTML);
+	$HTML = str_replace("&amp;index=1", "", $HTML);
+	$HTML = str_replace("&amp;index=2", "", $HTML);
+	$HTML = str_replace("&amp;index=3", "", $HTML);
+	$HTML = str_replace("&amp;index=4", "", $HTML);
+	$HTML = str_replace("&amp;index=5", "", $HTML);
+	$HTML = str_replace("&amp;index=6", "", $HTML);
+	$HTML = str_replace("&amp;index=7", "", $HTML);
+	$HTML = str_replace("&amp;index=8", "", $HTML);
+	$HTML = str_replace("&amp;index=9", "", $HTML);
+	$HTML = str_replace("&amp;feature=plcp", "", $HTML);
 	$HTML = str_replace("&amp;feature=related", "", $HTML);
 	$HTML = str_replace("&amp;feature=player_embedded", "", $HTML);
 	$HTML = str_replace("&amp;feature=fvwrel", "", $HTML);
@@ -58,37 +69,39 @@ function bbCode($HTML) {
  * @return string $text
  */ 
 function cleanHTML($HTML) {
-	$search = array ('@<script[^>]*?>.*?</script>@si',
-					 '@<[\/\!]*?[^<>]*?>@si',
-					 '@([\r\n])[\s]+@',
-					 '@&(quot|#34);@i',
-					 '@&(amp|#38);@i',
-					 '@&(lt|#60);@i',
-					 '@&(gt|#62);@i',
-					 '@&(nbsp|#160);@i',
-					 '@&(iexcl|#161);@i',
-					 '@&(cent|#162);@i',
-					 '@&(pound|#163);@i',
-					 '@&(copy|#169);@i',
-					 '@&#(\d+);@e');
+	$search = array(
+		'@<script[^>]*?>.*?</script>@si',
+		'@<[\/\!]*?[^<>]*?>@si',
+		'@([\r\n])[\s]+@',
+		'@&(quot|#34);@i',
+		'@&(amp|#38);@i',
+		'@&(lt|#60);@i',
+		'@&(gt|#62);@i',
+		'@&(nbsp|#160);@i',
+		'@&(iexcl|#161);@i',
+		'@&(cent|#162);@i',
+		'@&(pound|#163);@i',
+		'@&(copy|#169);@i',
+		'@&#(\d+);@e'
+	);
 	
-	$replace = array('',
-					 '',
-					 '\1',
-					 '"',
-					 '&',
-					 '<',
-					 '>',
-					 ' ',
-					 chr(161),
-					 chr(162),
-					 chr(163),
-					 chr(169),
-					 'chr(\1)');
+	$replace = array(
+		'',
+		'',
+		'\1',
+		'"',
+		'&',
+		'<',
+		'>',
+		' ',
+		chr(161),
+		chr(162),
+		chr(163),
+		chr(169),
+		'chr(\1)'
+	);
 	
-	$text = preg_replace($search, $replace, $HTML);	
-	
-	return $text;
+	return preg_replace($search, $replace, $HTML);
 }
 
 /**
@@ -192,11 +205,13 @@ function encode($text, $URL = FALSE) {
  * @return string $text
  */
 function filter($text, $filter = FALSE) {
-	if(is_null($text) or !is_string($text)) {
+	if(is_null($text)) {
 		return FALSE;
 	}
 	
-	if($filter === TRUE) {
+	if($text === TRUE) {
+		return TRUE;
+	} elseif($filter === TRUE) {
 		$text = cleanHTML($text);
 	} elseif($filter === "escape") {		
 		$text = addslashes($text);
@@ -229,13 +244,7 @@ function getBetween($content, $start, $end) {
 }
 
 function getTotal($count, $singular, $plural) {
-	if((int) $count === 0) {
-		return (int) $count ." ". __($plural);
-	} elseif((int) $count === 1) {
-		return (int) $count ." ". __($singular);
-	} else {
-		return (int) $count ." ". __($plural);
-	}
+	return ((int) $count === 0 or (int) $count > 1) ? (int) $count ." ". __(_($plural)) : (int) $count ." ". __(_($singular));
 }
 
 function gravatar($email) {  
@@ -243,11 +252,7 @@ function gravatar($email) {
 }
 
 function json($json, $encode = TRUE) {
-	if($encode) {
-		return json_encode($json);
-	}
-
-	return json_decode($json);
+	return ($encode) ? json_encode($json) : json_decode($json);
 }
 
 function parseCSV($file) {
@@ -328,9 +333,10 @@ function repeat($string, $times = 2) {
  * @return string $title
  */
 function slug($string) {		
-	$characters = array("Á" => "A", "Ç" => "c", "É" => "e", "Í" => "i", "Ñ" => "n", "Ó" => "o", "Ú" => "u", 
-						"á" => "a", "ç" => "c", "é" => "e", "í" => "i", "ñ" => "n", "ó" => "o", "ú" => "u",
-						"à" => "a", "è" => "e", "ì" => "i", "ò" => "o", "ù" => "u"
+	$characters = array(
+		"Á" => "A", "Ç" => "c", "É" => "e", "Í" => "i", "Ñ" => "n", "Ó" => "o", "Ú" => "u", 
+		"á" => "a", "ç" => "c", "é" => "e", "í" => "i", "ñ" => "n", "ó" => "o", "ú" => "u",
+		"à" => "a", "è" => "e", "ì" => "i", "ò" => "o", "ù" => "u"
 	);
 	
 	$string = strtr($string, $characters); 
@@ -363,7 +369,7 @@ function pageBreak($content, $URL = NULL) {
 	$parts = explode("<!---->", $content);
 
 	if(count($parts) > 1) {
-		return $parts[0] .'<p><a href="'. $URL .'" title="'. __("Read more") .'">&raquo;'. __("Read more") .'...</a></p>';
+		return $parts[0] .'<p><a href="'. $URL .'" title="'. __(_("Read more")) .'">&raquo; '. __(_("Read more")) .'...</a></p>';
 	}
 	
 	return $content;		
@@ -458,11 +464,9 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
  */
 function recoverPOST($position, $value = NULL) { 
 	if(!$value) {
-		if(is_array(POST($position))) {
-			return POST($position);
-		} else {
-			return (POST($position)) ? htmlentities(POST($position, "decode", FALSE)) : NULL;
-		}
+		$data = (POST($position)) ? htmlentities(POST($position, "decode", FALSE)) : NULL;
+		
+		return (is_array(POST($position))) ? POST($position) : $data;
 	} else {
 		if(is_array($value)) {
 			foreach($value as $val) {

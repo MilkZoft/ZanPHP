@@ -53,7 +53,7 @@ class ZP_MySQLi_Db extends ZP_Load {
      */
 	public function connect($db) {
 		if(!self::$connection) {
-			self::$connection = @mysqli_connect($db["dbHost"], $db["dbUser"], $db["dbPwd"], $db["dbName"]) or getException("Database Connection Error");
+			self::$connection = mysqli_connect($db["dbHost"], $db["dbUser"], $db["dbPwd"], $db["dbName"]);
 		}
 	
 		return self::$connection;
@@ -221,7 +221,9 @@ class ZP_MySQLi_Db extends ZP_Load {
      * @return integer value
      */
 	public function rows() {
-		return (!$this->query) ? FALSE : (int) mysqli_num_rows($this->query);	
+		$rows = ($this->query) ? (int) @mysqli_num_rows($this->query) : FALSE;
+	
+		return (!$this->query) ? FALSE : $rows;	
 	}
 
 	/**

@@ -40,12 +40,8 @@ if(!defined("_access")) {
 function getHour($date) {
 	$date = explode(" ", $date);
 
-	if(count($date) > 1) {
-		$time = explode(":", $date[1]);
-	} else {
-		$time = explode(":", $date[0]);
-	}
-	
+	$time = (count($date) > 1) ? explode(":", $date[1]) : explode(":", $date[0]);
+		
 	$hours   = (int) $time[0];
 	$minutes = $time[1];
 	
@@ -86,7 +82,7 @@ function getHour($date) {
 }
 
 function getSeconds($time) {
-	return intval($time	/ 1000) ." ". __("seconds");
+	return intval($time	/ 1000) ." ". __(_("seconds"));
 }
 
 function getTime($date) {
@@ -135,7 +131,7 @@ function howLong($value) {
 	$time = time() - $value;
 	
 	if($time >= 2116800) {
-		$date = __("on") ." ". now(2);
+		$date = __(_("on")) ." ". now(2);
 	}
 
 	if($time < 30242054.045) {
@@ -293,34 +289,16 @@ function isLeapYear($year) {
 	return ((((int) $year % 4 === 0) and ((int) $year % 100 !== 0 ) or ((int) $year % 400 === 0)));
 }
 
-function isDay($day) {
-	if(strlen($day) === 2) {
-		if($day > 0 and $day <= 31) {
-			return TRUE;
-		}
-	}
-	
-	return FALSE;
+function isDay($day) {	
+	return (strlen($day) === 2 and $day > 0 and $day <= 31) ? TRUE : FALSE;	
 }
 
 function isMonth($month) {
-	if(strlen($month) === 2) {
-		if($month > 0 and $month <= 12) {
-			return TRUE;
-		}
-	}
-	
-	return FALSE;
+	return (strlen($month) === 2 and $month > 0 and $month <= 12) ? TRUE : FALSE;
 }
 
 function isYear($year) {
-	if(strlen($year) === 4) {
-		if($year >= 1950 and $year <= date("Y")) {
-			return TRUE;
-		} 
-	}
-	
-	return FALSE;
+	return (strlen($year) === 4 and $year >= 1950 and $year <= date("Y")) ? TRUE : FALSE;
 }
 
 function month($month) {

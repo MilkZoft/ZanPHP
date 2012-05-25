@@ -66,12 +66,39 @@ function encrypt($password = NULL, $strong = 3, $key = TRUE, $uppercase = FALSE)
 		$hash = md5(md5(md5($password)));
 	} elseif($strong === 2) {
 		$hash = sha1(sha1(sha1($password)));
-	} elseif($strong === 3) {
+	} else {
 		$hash = sha1(md5(sha1(md5(sha1(md5($password))))));		
 	}
 	
 	return ($uppercase) ? strtoupper($hash) : $hash;
 }
+
+function fog($content, $encode = TRUE, $strong = 3) {
+	if($encode) {
+		if($strong === 1) {
+			return base64_encode(_secretKey . $content . _secretKey);
+		} elseif($strong === 2) {
+			return base64_encode(base64_encode(_secretKey . $content . _secretKey));
+		} else {
+			return base64_encode(base64_encode(base64_encode(_secretKey . $content . _secretKey)));
+		}
+	} else {
+		if($strong === 1) {
+			$content = base64_decode($content);
+			$content = str_replace(_secretKey, "", $content);
+		} elseif($strong === 2) {
+			$content = base64_decode(base64_decode($content));
+			$content = str_replace(_secretKey, "", $content);
+		} else {
+			$content = base64_encode(base64_encode(base64_encode($content)));
+			$content = str_replace(_secretKey, "", $content);
+		}
+
+		return $content;
+	}
+}
+
+
 
 
 /**

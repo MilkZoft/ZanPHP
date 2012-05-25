@@ -99,7 +99,7 @@ function execute() {
 				$Controller     	   = getController(NULL, $application);
 				$controllerFile 	   = getController(NULL, $application, TRUE);
 				$method 			   = segment(1, isLang());
-				
+
 				if(!isMethod($method, $Controller)) {
 					if(isMethod("index", $Controller)) {
 						$method  = "index";
@@ -395,16 +395,22 @@ function isNumber($number) {
 	return FALSE;
 }
 
-function path($path = FALSE, $URL = FALSE) {
+function path($path = FALSE, $URL = FALSE, $lang = TRUE) {
 	if(!$path) {
 		return isLang() ? get("webBase") . _sh . get("webLang") : get("webBase");
 	} 
 
 	if($URL === "zan") {
 		return getDomain(_corePath) . _sh . "zan" . _sh . $path;
+	} elseif(isLang($path)) {
+		return get("webBase") . _sh . $path;
 	}
 
-	return ($URL) ? get("webURL") . _sh . $path : get("webBase") . _sh . get("webLang") . _sh . $path;
+	if($lang) {
+		return ($URL) ? get("webURL") . _sh . $path : get("webBase") . _sh . get("webLang") . _sh . $path;
+	} else {
+		return ($URL) ? get("webURL") . _sh . $path : get("webBase") . _sh . $path;
+	}
 }
 
 function getDomain($path = FALSE) {
@@ -457,7 +463,7 @@ function redirect($URL = FALSE, $time = FALSE) {
 
 	if(!$time) {		
 		if(!$URL) {
-			header("location: ". get("webBase"));
+			header("location: ". path());
 		} elseif(substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
 			header("location: ". path($URL));
 			
@@ -492,15 +498,10 @@ function route() {
 	$URL   = explode("/", substr($_SERVER["REQUEST_URI"], 1));
 	$paths = explode("/", dirname($_SERVER["SCRIPT_FILENAME"]));
 	$path  = $paths[count($paths) - 1];
-	$base  = str_replace("http://", "", get("webURL"));
-	$base  = explode("/", $base);
 
-	array_shift($base);
-	
 	if(is_array($URL)) {		 
 		$URL = array_diff($URL, array(""));
-		$URL = array_diff($URL, $base);
-				
+		
 		if(!get("domain")) {
 			$vars[] = array_shift($URL);
 		}

@@ -117,7 +117,9 @@ function formInput($attributes = FALSE) {
 		$attrs = NULL;
 		
 		foreach($attributes as $attribute => $value) {
-			if($attribute === "events") {
+			if($attribute === "required") {
+				$attrs .= ' required ';
+			} elseif($attribute === "events") {
 				$attrs .= ' '. $value .' ';
 			} elseif($attribute !== "type" and $attribute !== "p" and $attribute !== "field") {
 				$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';

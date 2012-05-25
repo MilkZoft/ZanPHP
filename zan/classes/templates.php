@@ -102,7 +102,7 @@ class ZP_Templates extends ZP_Load {
 				if($print) {
 					print '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				} else {
-					$this->CSS  = '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					$this->CSS = '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				}
 			} else {
 				if($print) {
@@ -113,12 +113,8 @@ class ZP_Templates extends ZP_Load {
 			}
 		}
 
-		if(is_null($application)) {
-			$file = "www/lib/css/$CSS.css";
-		} else {
-			$file = "www/applications/$application/views/css/$CSS.css";
-		}
-		
+		$file = is_null($application) ? "www/lib/css/$CSS.css" : "www/applications/$application/views/css/$CSS.css";
+				
 		if(is_null($this->CSS)) {
 			if($print) {
 				print '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/default.css" type="text/css" />' . "\n";
@@ -146,7 +142,7 @@ class ZP_Templates extends ZP_Load {
 			if(file_exists("www/lib/themes/$this->theme/$template.php")) {
 				return TRUE; 
 			} 
-		} elseif(file_exists("www/applications/$view/views/view.$template.php")) {
+		} elseif(file_exists("www/applications/$view/views/$template.php")) {
 			return TRUE; 
 		} 
 		
@@ -221,19 +217,11 @@ class ZP_Templates extends ZP_Load {
      * @return boolean value
      */
 	public function isTheme() {
-		if(!is_null($this->theme)) {
-			$this->path = "www/lib/themes/$this->theme";
-		} else {
-			$this->path = FALSE;
-		}
+		$this->path = (!is_null($this->theme)) ? "www/lib/themes/$this->theme" : FALSE;
 		
 		$this->directory = @dir($this->path);
 		
-		if($this->directory) {
-			return TRUE;
-		}
-		
-		return FALSE;
+		return ($this->directory) ? TRUE : FALSE;
 	}
 	
     /**
@@ -246,11 +234,7 @@ class ZP_Templates extends ZP_Load {
 			return getScript($js, $application, $extra, $getJs);	
 		} 
 		
-		if(substr_count($js, "http") >= 1 or substr_count($js, "https") >= 1) {
-			$this->js .= getScript($js, $application, $extra, $getJs, TRUE);
-		} else {
-			$this->js .= getScript($js, $application, $extra, $getJs);
-		}
+		$this->js .= (substr_count($js, "http") >= 1 or substr_count($js, "https") >= 1) ? getScript($js, $application, $extra, $getJs, TRUE) : getScript($js, $application, $extra, $getJs);
 	}
 	
     /**
@@ -270,8 +254,22 @@ class ZP_Templates extends ZP_Load {
 		
 		if($direct) { 
 			if(is_array($template)) {
-				for($i = 0; $i <= count($template) - 1; $i++) {
-					include $template[$i];
+				$count = count($template);
+
+				if($count === 1) {
+					include $template[0];
+				} elseif($count === 2) {
+					include $template[0];
+					include $template[1];
+				} elseif($count === 3) {
+					include $template[0];
+					include $template[1];
+					include $template[2];
+				} else {
+					include $template[0];
+					include $template[1];
+					include $template[2];
+					include $template[3];
 				}
 			} else {
 				if(!file_exists($template)) {

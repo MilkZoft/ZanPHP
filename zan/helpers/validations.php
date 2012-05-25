@@ -30,6 +30,32 @@ if(!defined("_access")) {
  * @author		MilkZoft Developer Team
  * @link		http://www.zanphp.com/documentation/en/helpers/validations_helper
  */
+
+function is($var = NULL, $value = NULL) {
+	return (isset($var) and $var === $value) ? TRUE : FALSE;
+}
+
+function isName($name) {
+	if(strlen($name) < 7) {
+		return FALSE;
+	}
+
+	$parts = explode(" ", $name);
+	$count = count($parts);
+
+	if($count > 1) {
+		for($i = 0; $i <= $count; $i++) {
+			if(strlen($parts[$i]) > 25) {
+				return FALSE;
+			}
+		}
+	} else {
+		return FALSE;
+	} 
+
+	return TRUE;
+}
+
 function isEmail($email) {
 	return (filter_var($email, FILTER_VALIDATE_EMAIL)) ? TRUE : FALSE;
 }
