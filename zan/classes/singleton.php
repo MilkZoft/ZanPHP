@@ -70,9 +70,9 @@ class ZP_Singleton {
 			if(is_array($params)) {
 				foreach($params as $param) {
 					if($i === count($params) - 1) {
-						$args .= "$param";
+						$args .= '"'. $param .'"';
 					} else {
-						$args .= "$param, ";
+						$args .= '"'. $param .'", ';
 					}
 					
 					$i++;
