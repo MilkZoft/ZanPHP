@@ -82,7 +82,7 @@ class ZP_Singleton {
 			if(is_null($args)) {
 				self::$instances[$Class] = new $Class;
 			} else {
-				eval("self::\$instances[\$Class] = new \$Class(\"$args\");");
+				eval("self::\$instances[\$Class] = new \$Class($args);");
 			}
 		}
 		
