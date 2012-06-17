@@ -57,7 +57,7 @@ class ZP_Db extends ZP_Load {
 	 * 
 	 * @var private $fields
 	 */
-	private $fields;
+	private $fields = "*";
 	
 	/**
 	 * Insert count for transactions
@@ -147,7 +147,7 @@ class ZP_Db extends ZP_Load {
 		
 		$this->exception("database");
 		
-		$this->helper("exceptions");
+		$this->helper(array("exceptions", "string"));
 		
 		$this->connect();	
 	}
@@ -341,18 +341,10 @@ class ZP_Db extends ZP_Load {
 		$this->free();
 			
 		if($this->encode) {
-			$data = isset($rows) ? $this->encoding($rows) : FALSE;
+			return isset($rows) ? $this->encoding($rows) : FALSE;
 		} else { 
-			$data = isset($rows) ? $rows : FALSE;
+			return isset($rows) ? $rows : FALSE;
 		}		
-
-		if($this->caching and $data) {
-			$this->Cache->save($data, sha1($query), "db");
-			
-			$this->caching = FALSE;
-		}
-
-		return $data;
 	}
 	
     /**
@@ -386,9 +378,13 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = "LIMIT 1"
      * @return boolean value
      */
-	public function deleteBy($field = NULL, $value = NULL, $limit = 1) {
-		if(!$this->table or !$field or !$value) {
+	public function deleteBy($field = NULL, $value = NULL, $table = NULL, $limit = 1) {
+		if(!$field or !$value) {
 			return FALSE;
+		}
+
+		if($table) {
+			$this->table($table);
 		}
 		
 		if($ZP["db"]["dbDriver"] === "odbc_mssql") {
@@ -455,13 +451,9 @@ class ZP_Db extends ZP_Load {
 				
 				for($j = 0; $j < $size2; $j++) {	
 					if($array[$i][$key2[$j]] === "1") {
-						if(stristr($key2[$j], "ID")) {
-							$data[$i][$key2[$j]] = 1;
-						} else {
-							$data[$i][$key2[$j]] = TRUE;
-						}
+						$data[$i][$key2[$j]] = 1;
 					} elseif($array[$i][$key2[$j]] === "0") {
-						$data[$i][$key2[$j]] = FALSE;
+						$data[$i][$key2[$j]] = 0;
 					} else {
 						$data[$i][$key2[$j]] = encode($array[$i][$key2[$j]]);								
 					}
@@ -485,7 +477,7 @@ class ZP_Db extends ZP_Load {
 							$data[$i][$key2[$j]] = TRUE;
 						}
 					} elseif($rows[$i][$key2[$j]] === "0") {
-						$data[$i][$key2[$j]] = FALSE;
+						$data[$i][$key2[$j]] = 0;
 					} else {
 						$data[$i][$key2[$j]] = encode($rows[$i][$key2[$j]]);								
 					}								
@@ -527,13 +519,13 @@ class ZP_Db extends ZP_Load {
      * @param integer $ID
      * @return boolean value / array value
      */
-	public function find($ID, $table = NULL) {
+	public function find($ID, $table = NULL, $fields = "*") {
 		if($table) {
-			$this->table($table);
+			$this->table($table, $fields);
 		}
 
 		$query = "SELECT $this->fields FROM $this->table WHERE $this->primaryKey = $ID";
-		
+
 		return $this->data($query);
 	}
 	
@@ -545,15 +537,15 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findAll($table = NULL, $group = NULL, $order = NULL, $limit = NULL) {
+	public function findAll($table = NULL, $fields = "*", $group = NULL, $order = NULL, $limit = NULL) {
 		$SQL = NULL;
 		
 		if($table) {
-			$this->table($table);	
+			$this->table($table, $fields);	
 		} 
 
 		if(!is_null($group)) {
-			$SQL .= " GROUP BY ".$group;
+			$SQL .= " GROUP BY ". $group;
 		}
 		
 		if(!$order) {
@@ -585,15 +577,15 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findBy($field = NULL, $value = NULL, $table = NULL, $group = NULL, $order = NULL, $limit = NULL) {
+	public function findBy($field = NULL, $value = NULL, $table = NULL, $fields = "*", $group = NULL, $order = NULL, $limit = NULL) {
 		$SQL = NULL;
 
 		if($table) {
-			$this->table($table);
+			$this->table($table, $fields);
 		}
 		
 		if(!is_null($group)) {
-			$SQL .= " GROUP BY " . $group;
+			$SQL .= " GROUP BY ". $group;
 		}
 		
 		if(!$order) {
@@ -601,7 +593,7 @@ class ZP_Db extends ZP_Load {
 		} elseif($order === "DESC") {
 			$SQL .= " ORDER BY $this->primaryKey";
 		} elseif(!is_null($order)) {
-			$SQL .= " ORDER BY " . $order;
+			$SQL .= " ORDER BY ". $order;
 		} elseif($order === "") {
 			$SQL .= " ORDER BY $this->primaryKey";
 		}
@@ -637,13 +629,13 @@ class ZP_Db extends ZP_Load {
      * @param string $limit = NULL
      * @return array value
      */
-	public function findBySQL($SQL, $table = NULL, $group = NULL, $order = NULL, $limit = NULL) {		
+	public function findBySQL($SQL, $table = NULL, $fields = "*", $group = NULL, $order = NULL, $limit = NULL) {		
 		if(!is_null($group)) {
 			$SQL .= " GROUP BY ". $group;
 		}
 		
 		if($table) {
-			$this->table($table);
+			$this->table($table, $fields);
 		}
 		
 		if(is_null($order)) { 
@@ -656,12 +648,12 @@ class ZP_Db extends ZP_Load {
 			$SQL .= " ORDER BY $this->primaryKey";
 		}
 
-		if(!is_null($limit)) {
+		if($limit) {
 			$SQL .= " LIMIT ". $limit;
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
-
+		
 		return $this->data($query);
 	}
 	
@@ -670,9 +662,9 @@ class ZP_Db extends ZP_Load {
      *
      * @return array value
      */
-	public function findFirst($table = NULL) {
+	public function findFirst($table = NULL, $fields = "*") {
 		if($table) {
-			$this->table($table);	
+			$this->table($table, $fields);	
 		}
 
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey ASC LIMIT 1";
@@ -685,9 +677,9 @@ class ZP_Db extends ZP_Load {
      *
      * @return array value
      */
-	public function findLast($table = NULL) {
+	public function findLast($table = NULL, $fields = "*") {
 		if($table) {
-			$this->table($table);	
+			$this->table($table, $fields);	
 		}
 	
 		$query = "SELECT $this->fields FROM $this->table ORDER BY $this->primaryKey DESC LIMIT 1";
@@ -746,7 +738,7 @@ class ZP_Db extends ZP_Load {
 		return $this->data($query);
 	}
 	
-	private function getTable($table) {
+	public function getTable($table) {
 		$table = str_replace($this->db["dbPfx"], "", $table);
 
 		$this->table($table);
@@ -1159,6 +1151,7 @@ class ZP_Db extends ZP_Load {
      */	
 	public function select($fields = "*", $normal = TRUE) {
 		$this->select = (!$normal) ? $fields : "SELECT $fields";
+		$this->_fields = $fields;
 
 		return $this;
 	}
@@ -1219,11 +1212,13 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function table($table, $fields = "*") {
+		$fields = is_null($fields) ? "*" : $fields;
+
 		$table = str_replace($this->db["dbPfx"], "", $table);
 		
-		$this->table  = $this->db["dbPfx"] . $table;  
+		$this->table  = $this->db["dbPfx"] . $table; 
 		$this->fields = $fields;
-		
+
 		$data = $this->data("SHOW COLUMNS FROM $this->table");
 		
 		if(is_array($data)) {

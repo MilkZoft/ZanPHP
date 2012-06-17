@@ -38,21 +38,21 @@ if(!defined("_access")) {
  */
 function browser() {
 	$browsers = array(
-		  "Opera" 				=> "(Opera)",
-		  "Mozilla Firefox"		=> "((Firebird)|(Firefox))",
-		  "Galeon" 				=> "(Galeon)",
-		  "Mozilla"				=> "(Gecko)",
-		  "MyIE"				=> "(MyIE)",
-		  "Lynx" 				=> "(Lynx)",
-		  "Netscape" 			=> "((Mozilla/4\.75)|(Netscape6)|(Mozilla/4\.08)|(Mozilla/4\.5)|(Mozilla/4\.6)|(Mozilla/4\.79))",
-		  "Konqueror"			=> "(Konqueror)",
-		  "Internet Explorer 9" => "((MSIE 9\.[0-9]+))",		  
-		  "Internet Explorer 8" => "((MSIE 8\.[0-9]+))",
-		  "Internet Explorer 7" => "((MSIE 7\.[0-9]+))",
-		  "Internet Explorer 6" => "((MSIE 6\.[0-9]+))",
-		  "Internet Explorer 5" => "((MSIE 5\.[0-9]+))",
-		  "Internet Explorer 4" => "((MSIE 4\.[0-9]+))",
-		  "Chrome"              => "((Chrome))"
+		"Opera" 			  => "(Opera)",
+		"Mozilla Firefox"	  => "((Firebird)|(Firefox))",
+		"Galeon" 			  => "(Galeon)",
+	 	"Mozilla"			  => "(Gecko)",
+		"MyIE"				  => "(MyIE)",
+		"Lynx" 				  => "(Lynx)",
+		"Netscape" 			  => "((Mozilla/4\.75)|(Netscape6)|(Mozilla/4\.08)|(Mozilla/4\.5)|(Mozilla/4\.6)|(Mozilla/4\.79))",
+		"Konqueror"			  => "(Konqueror)",
+		"Internet Explorer 9" => "((MSIE 9\.[0-9]+))",		  
+		"Internet Explorer 8" => "((MSIE 8\.[0-9]+))",
+		"Internet Explorer 7" => "((MSIE 7\.[0-9]+))",
+		"Internet Explorer 6" => "((MSIE 6\.[0-9]+))",
+		"Internet Explorer 5" => "((MSIE 5\.[0-9]+))",
+	 	"Internet Explorer 4" => "((MSIE 4\.[0-9]+))",
+		"Chrome"              => "((Chrome))"
 	);
 
 	foreach($browsers as $browser => $pattern) {
@@ -166,7 +166,7 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
   	switch(TRUE) {
     	case (preg_match('/ipad/i', $userAgent)):
       		$mobile = $ipad; 
-      		$mark = 'Apple iPad';
+      		$mark   = 'Apple iPad';
       
 			if(substr($ipad, 0, 4) === "http") { 
         		$redirect = $ipad; 
@@ -175,7 +175,7 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
 
     	case (preg_match('/ipod/i', $userAgent) or preg_match('/iphone/i', $userAgent)):
       		$mobile = $iphone; 
-      		$mark = 'Apple';
+      		$mark   = 'Apple';
       
 			if(substr($iphone, 0, 4) === "http") { 
         		$redirect = $iphone; 
@@ -184,7 +184,7 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
     
 		case (preg_match('/android/i', $userAgent)):
       		$mobile = $android; 
-      		$mark = 'Android';
+      		$mark   = 'Android';
 
       		if(substr($android, 0, 4) === "http") { 
         		$redirect = $android; 
@@ -193,7 +193,7 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
     	
 		case (preg_match('/opera mini/i', $userAgent)):
       		$mobile = $opera; 
-      		$mark = 'Opera';
+      		$mark   = 'Opera';
       
 			if(substr($opera, 0, 4) === "http") { 
         		$redirect = $opera; 
@@ -202,7 +202,7 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
 
     	case (preg_match('/blackberry/i', $userAgent)):
       		$mobile = $blackberry; 
-      		$mark = 'Blackberry';
+      		$mark   = 'Blackberry';
       
 			if(substr($blackberry, 0, 4) === "http") {
         		$redirect = $blackberry; 
@@ -211,7 +211,7 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
     	
 		case (preg_match('/(pre\/|palm os|palm|hiptop|avantgo|plucker|xiino|blazer|elaine)/i', $userAgent)):
       		$mobile = $palm;
-      		$mark = 'Palm';
+      		$mark   = 'Palm';
       
 			if(substr($palm, 0, 4) === "http") {
         		$redirect = $palm;
@@ -220,7 +220,7 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
 
     	case (preg_match('/(iris|3g_t|windows ce|opera mobi|windows ce; smartphone;|windows ce; iemobile)/i', $userAgent)):
       		$mobile = $windows; 
-      		$mark = 'Windows Smartphone';
+      		$mark   = 'Windows Smartphone';
 
       		if(substr($windows, 0, 4) === "http") { 
       			$redirect = $windows; 
@@ -229,32 +229,33 @@ function isMobile($iphone = TRUE, $ipad = TRUE, $android = TRUE , $opera = TRUE,
 
     	case (preg_match('/(mini 9.5|vx1000|lge |m800|e860|u940|ux840|compal|wireless| mobi|ahong|lg380|lgku|lgu900|lg210|lg47|lg920|lg840|lg370|sam-r|mg50|s55|g83|t66|vx400|mk99|d615|d763|el370|sl900|mp500|samu3|samu4|vx10|xda_|samu5|samu6|samu7|samu9|a615|b832|m881|s920|n210|s700|c-810|_h797|mob-x|sk16d|848b|mowser|s580|r800|471x|v120|rim8|c500foma:|160x|x160|480x|x640|t503|w839|i250|sprint|w398samr810|m5252|c7100|mt126|x225|s5330|s820|htil-g1|fly v71|s302|-x113|novarra|k610i|-three|8325rc|8352rc|sanyo|vx54|c888|nx250|n120|mtk |c5588|s710|t880|c5005|i;458x|p404i|s210|c5100|teleca|s940|c500|s590|foma|samsu|vx8|vx9|a1000|_mms|myx|a700|gu1100|bc831|e300|ems100|me701|me702m-three|sd588|s800|8325rc|ac831|mw200|brew |d88|htc\/|htc_touch|355x|m50|km100|d736|p-9521|telco|sl74|ktouch|m4u\/|me702|8325rc|kddi|phone|lg |sonyericsson|samsung|240x|x320|vx10|nokia|sony cmd|motorola|up.browser|up.link|mmp|symbian|smartphone|midp|wap|vodafone|o2|pocket|kindle|mobile|psp|treo)/i', $userAgent)):
       		$mobile = TRUE;
-      		$mark = 'Other';
+      		$mark   = 'Other';
     	break;
 
     	case ((strpos($accept, "text/vnd.wap.wml") > 0) or (strpos($accept, "application/vnd.wap.xhtml+xml") > 0)): 
       		$mobile = TRUE;
-      		$mark = 'Wap';
+      		$mark   = 'Wap';
     	break;
 
     	case (isset($_SERVER["HTTP_X_WAP_PROFILE"]) or isset($_SERVER["HTTP_PROFILE"])):
       		$mobile = TRUE; 
-      		$mark = 'Unknwon';
+      		$mark   = 'Unknwon';
     	break; 
 
     	case (in_array(strtolower(substr($userAgent, 0, 4)), $array)):
 			$mobile = TRUE;
-      		$mark = 'List';
+      		$mark   = 'List';
     	break;
 
     	default:
       		$mobile = FALSE;
-      		$mark = 'Desktop';
+      		$mark   = 'Desktop';
     	break; 
 	}
 
   	if($redirect = ($mobile === TRUE) ? $redirect : $desktopRedirect) {
     	header('Location: '. $redirect);
+		
 		exit;
   	} else { 
 		if(!$mobile) {

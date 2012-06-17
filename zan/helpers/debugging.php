@@ -37,13 +37,13 @@ if(!defined("_access")) {
  * @return void
  */
 function ____($var, $dump = TRUE, $exit = TRUE) {
-	print '<pre style="font-size: 1.3em; color: #FF0000; line-height: 18px;">';
+	echo '<pre style="font-size: 1.3em; color: #FF0000; line-height: 18px;">';
 		if(!$dump) {
-			print_r($var);
+			echo_r($var);
 		} else {
 			var_dump($var);
 		}
-	print '</pre>';	
+	echo '</pre>';	
 	
 	if($exit) {
 		exit();

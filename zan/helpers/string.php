@@ -174,6 +174,71 @@ function cut($text, $length = 12, $type = "text", $slug = FALSE, $file = FALSE, 
 	}
 }
 
+function exploding($string, $URL = NULL, $separator = ",") {
+	if(strlen($string) > 0) {
+		$string = str_replace(", ", ",", $string);
+		$parts  = explode($separator, $string);
+		$count  = count($parts) - 1;
+		$return = NULL;
+
+		if($count > 0) {
+			for($i = 0; $i <= $count; $i++) {
+				if(!is_null($URL)) {
+					if($i === $count) {
+						$return .= '<a href="'. path($URL . $parts[$i]) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a>';
+					} elseif($i === $count - 1) {
+						$return .= '<a href="'. path($URL . $parts[$i]) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a> '. __(_("and")) .' ';
+					} else {
+						$return .= '<a href="'. path($URL . $parts[$i]) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a>, ';
+					}
+				} else {
+					if($i === $count) {
+						$return .= $parts[$i];
+					} elseif($i === $count - 1) {
+						$return .= $parts[$i] .' '. __(_("and")) .' ';
+					} else {
+						$return .= $parts[$i] .', ';
+					}
+				}
+			}
+
+			return $return;
+		} else {
+			return '<a href="'. path($URL . $string) .'" title="'. $string .'">'. $string .'</a>';
+		}
+	}
+
+	return FALSE;
+}
+
+function like($ID = 0, $application = NULL, $likes = FALSE) {
+	$likes = ($likes) ? " ($likes)" : NULL;
+
+	if($ID > 0 and !is_null($application)) {
+		return  '<a title="'. __(_("I Like")) .'" href="'. path("$application/like/$ID") .'"><img src="'. path("www/lib/images/like.png", TRUE) .'" /> '. __(_("I Like")) . $likes .'</a>';
+	}
+
+	return FALSE;
+}
+
+function dislike($ID = 0, $application = NULL, $dislikes = FALSE) {
+	$dislikes = ($dislikes) ? " ($dislikes)" : NULL;
+
+	if($ID > 0 and !is_null($application)) {
+		return '<a title="'. __(_("I Dislike")) .'" href="'. path("$application/dislike/$ID") .'"><img src="'. path("www/lib/images/dislike.png", TRUE) .'" /> '. __(_("I Dislike")) . $dislikes .'</a>';
+	}
+
+	return FALSE;
+}
+
+function report($ID = 0, $application = NULL) {
+	if($ID > 0 and !is_null($application)) {
+		return '<a title="'. __(_("Report Link")) .'" href="'. path("$application/report/$ID") .'"><img src="'. path("www/lib/images/report.png", TRUE) .'" /> '. __(_("Report link")) .'</a>';
+	}
+
+	return FALSE;
+}
+
 function decode($text, $URL = FALSE) {
 	if(is_string($text)) {
 		return (!$URL) ? utf8_decode($text) : urldecode($text);	

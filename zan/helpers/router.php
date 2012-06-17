@@ -169,7 +169,7 @@ function execute() {
 			} catch(RuntimeException $e) {
 				getException($e);
 			}
-		} else {
+		} else { 
 			if(isController($controllerFile, TRUE)) {
 				if(isset($method) and count($params) > 0) {
 					if(isMethod($method, $Controller)) {
@@ -249,17 +249,6 @@ function execute() {
 	}	
 }
 
-
-function isMethod($method, $Controller) {
-	try {
-	    $Reflection = new ReflectionMethod($Controller, $method);
-	    
-	    return TRUE;
-	} catch (Exception $e) {
-	    return FALSE;
-	}
-}
-
 function getParameters($params) {
 	$parameters = NULL;
 			
@@ -319,34 +308,6 @@ function getURL() {
 	return $URL;
 }
 
-function isController($controller, $application = NULL, $principal = FALSE) {
-	if($application === TRUE) {
-		if(file_exists($controller)) {
-			return TRUE;
-		}
-	} else { 
-		if($principal) {
-			if($controller === $application) {
-				$file = "www/applications/$application/controllers/$controller.php";
-
-				if(file_exists($file)) {
-					return TRUE;	
-				}				
-			} else {
-				return FALSE;
-			}
-		}
-
-		$file = "www/applications/$application/controllers/$controller.php";
-
-		if(file_exists($file)) {
-			return TRUE;	
-		}
-	}
-
-	return FALSE;
-}
-
 function getController($applicationController = NULL, $application, $file = FALSE) {
 	global $Load;
 
@@ -380,16 +341,6 @@ function whichApplication() {
 		return segment(1);
 	} elseif(file_exists("www/applications/". get("defaultApplication") ."/controllers/". get("defaultApplication") .".php")) {
 		return get("defaultApplication");	
-	}
-	
-	return FALSE;
-}
-
-function isNumber($number) {
-	$number = (int) $number;
-	
-	if($number > 0) {
-		return TRUE;	
 	}
 	
 	return FALSE;
@@ -429,7 +380,6 @@ function getDomain($path = FALSE) {
 
 	return get("webURL");
 }
-
 
 /**
  * ping
@@ -476,7 +426,7 @@ function redirect($URL = FALSE, $time = FALSE) {
 	} elseif(!is_bool($time) and $time > 0) {
 		$time = $time * 1000;
 		
-		print '
+		echo '
 			<script type="text/javascript">
 				function delayedRedirect() { 
 					window.location.replace("' . $URL . '"); 

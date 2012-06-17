@@ -111,9 +111,9 @@ function div($ID, $type = "id", $style = NULL, $content = NULL) {
 
 function docType($type = "XHTML 1.0 Strict") {
 	if($type === "HTML 5") {
-		return '<!DOCTYPE HTML>' . char("\n");
+		return '<!DOCTYPE html>' . char("\n");
 	} elseif($type === "XHTML 1.0 Strict") {
-		return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xHTML1/DTD/xHTML1-strict.dtd">' . char("\n");
+		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xHTML1/DTD/xHTML1-strict.dtd">' . char("\n");
 	}
 }
 

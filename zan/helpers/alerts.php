@@ -71,14 +71,14 @@ function getAlert($message, $type = "error", $URL = NULL) {
  *
  */
 function showAlert($message, $URL = FALSE) {
-	print '	<script>
+	echo '	<script>
 				alert("'. __($message) .'");';
 	
 	if($URL) {
-		print '	window.location.href="'. $URL .'";';			
+		echo '	window.location.href="'. $URL .'";';			
 	}
 	
-	print '</script>';
+	echo '</script>';
 
 	exit();
 }

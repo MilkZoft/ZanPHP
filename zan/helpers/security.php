@@ -56,12 +56,8 @@ function code($max = 10, $uppercase = TRUE) {
  * @return string value
  */
 function encrypt($password = NULL, $strong = 3, $key = TRUE, $uppercase = FALSE) {		
-	if(!$key) {
-		$password = $password . substr(md5(date("Y-m-d H:i:s", time())), 0, 10);
-	} else {
-		$password = "ZanPHP" . _secretKey . $password;
-	}
-		
+	$password = (!$key) ? $password . substr(md5(date("Y-m-d H:i:s", time())), 0, 10) : "ZanPHP" . _secretKey . $password;
+	
 	if($strong === 1) {
 		$hash = md5(md5(md5($password)));
 	} elseif($strong === 2) {
@@ -73,34 +69,6 @@ function encrypt($password = NULL, $strong = 3, $key = TRUE, $uppercase = FALSE)
 	return ($uppercase) ? strtoupper($hash) : $hash;
 }
 
-function fog($content, $encode = TRUE, $strong = 3) {
-	if($encode) {
-		if($strong === 1) {
-			return base64_encode(_secretKey . $content . _secretKey);
-		} elseif($strong === 2) {
-			return base64_encode(base64_encode(_secretKey . $content . _secretKey));
-		} else {
-			return base64_encode(base64_encode(base64_encode(_secretKey . $content . _secretKey)));
-		}
-	} else {
-		if($strong === 1) {
-			$content = base64_decode($content);
-			$content = str_replace(_secretKey, "", $content);
-		} elseif($strong === 2) {
-			$content = base64_decode(base64_decode($content));
-			$content = str_replace(_secretKey, "", $content);
-		} else {
-			$content = base64_encode(base64_encode(base64_encode($content)));
-			$content = str_replace(_secretKey, "", $content);
-		}
-
-		return $content;
-	}
-}
-
-
-
-
 /**
  * getIP
  *
@@ -110,19 +78,9 @@ function fog($content, $encode = TRUE, $strong = 3) {
  */
 function getIP() {
 	if(isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-		if(isset($_SERVER["HTTP_CLIENT_IP"])) {
-			return $_SERVER["HTTP_CLIENT_IP"];
-		} else {
-			return $_SERVER["REMOTE_ADDR"];
-		}
-		
-		return $_SERVER["HTTP_X_FORWARDED_FOR"];
+		return isset($_SERVER["HTTP_CLIENT_IP"]) ? $_SERVER["HTTP_CLIENT_IP"] : $_SERVER["REMOTE_ADDR"];
 	} else {
-		if(isset($_SERVER["HTTP_CLIENT_IP"])) {
-			return $_SERVER["HTTP_CLIENT_IP"];
-		} else {
-			return $_SERVER["REMOTE_ADDR"];			
-		}
+		return isset($_SERVER["HTTP_CLIENT_IP"]) ? $_SERVER["HTTP_CLIENT_IP"] : $_SERVER["REMOTE_ADDR"];
 	}
 }
 

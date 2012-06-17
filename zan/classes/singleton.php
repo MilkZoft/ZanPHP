@@ -78,7 +78,7 @@ class ZP_Singleton {
 					$i++;
 				}
 			}
-	
+			
 			if(is_null($args)) {
 				self::$instances[$Class] = new $Class;
 			} else {

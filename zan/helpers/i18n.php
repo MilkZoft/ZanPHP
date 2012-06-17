@@ -57,9 +57,15 @@ function __($text) {
 			include_once "www/lib/languages/". strtolower($language) .".php";
 		} 
 
-		$position = strtolower(str_replace(" ", "_", $text));
+		$position = strtolower(str_replace(" ", "_", $text)); 
+		$position = strtolower(str_replace("?,", "", $position));
+		$position = strtolower(str_replace("!", "", $position));
+		$position = strtolower(str_replace("?", "", $position));
+		$position = strtolower(str_replace(",", "", $position));
+		$position = strtolower(str_replace(":", "", $position));
+		$position = strtolower(str_replace("'", "", $position));
 
-		return isset($phrase[$position]) ? $phrase[$position] : $text; 	
+		return isset($phrase[$position]) ? encode($phrase[$position]) : $text; 	
 	}
 }
 
@@ -183,47 +189,47 @@ function getLanguagesInput($lang = NULL, $name = "language", $input = "radio") {
 
 function getLang($lg, $invert = FALSE) {
 	$languages = array(
-					"Arabic"	 => "ar",
-					"Basque"	 => "bs",
-					"Belarusian" => "be",
-					"Bulgarian"  => "bu",
-					"Catalan"	 => "ca",
-					"Chinese"	 => "ch",
-					"Croatian"   => "cr",
-					"Czech"		 => "cz",
-					"Danish"	 => "da",
-					"Dutch"		 => "du",
-					"English" 	 => "en",
-					"Estonian"   => "et",
-					"Finnish"	 => "fi",
-					"French"  	 => "fr",
-					"Galician"   => "ga",
-					"German"	 => "ge",
-					"Greek"		 => "gr",
-					"Hebrew"	 => "he",
-					"Hungarian"  => "hu",
-					"Indonesian" => "in",
-					"Italian"	 => "it",
-					"Japanese"	 => "jp",
-					"Kurdish"	 => "ku",
-					"Lithuanian" => "li",
-					"Macedonian" => "ma",
-					"Persian"	 => "pe",
-					"Polish"	 => "po",
-					"Portuguese" => "pt",
-					"Romanian"   => "ro",
-					"Russian"	 => "ru",
-					"Serbian"	 => "se",
-					"Slovak"	 => "sk",
-					"Slovenian"	 => "sn",
-					"Spanish" 	 => "es",
-					"Swedish"	 => "sw",
-					"Thai"		 => "th",
-					"Turkish"	 => "tk",
-					"Ukrainian"  => "uk",
-					"Urdu"		 => "ur",
-					"Vietnamese" => "vi"
-				);	
+		"Arabic"	 => "ar",
+		"Basque"	 => "bs",
+		"Belarusian" => "be",
+		"Bulgarian"  => "bu",
+		"Catalan"	 => "ca",
+		"Chinese"	 => "ch",
+		"Croatian"   => "cr",
+		"Czech"		 => "cz",
+		"Danish"	 => "da",
+		"Dutch"		 => "du",
+		"English" 	 => "en",
+		"Estonian"   => "et",
+		"Finnish"	 => "fi",
+		"French"  	 => "fr",
+		"Galician"   => "ga",
+		"German"	 => "ge",
+		"Greek"		 => "gr",
+		"Hebrew"	 => "he",
+		"Hungarian"  => "hu",
+		"Indonesian" => "in",
+		"Italian"	 => "it",
+		"Japanese"	 => "jp",
+		"Kurdish"	 => "ku",
+		"Lithuanian" => "li",
+		"Macedonian" => "ma",
+		"Persian"	 => "pe",
+		"Polish"	 => "po",
+		"Portuguese" => "pt",
+		"Romanian"   => "ro",
+		"Russian"	 => "ru",
+		"Serbian"	 => "se",
+		"Slovak"	 => "sk",
+		"Slovenian"	 => "sn",
+		"Spanish" 	 => "es",
+		"Swedish"	 => "sw",
+		"Thai"		 => "th",
+		"Turkish"	 => "tk",
+		"Ukrainian"  => "uk",
+		"Urdu"		 => "ur",
+		"Vietnamese" => "vi"
+	);	
 	
 	foreach($languages as $language => $lang) {
 		if($invert) {

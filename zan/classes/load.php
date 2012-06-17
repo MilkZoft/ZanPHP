@@ -1,7 +1,4 @@
 <?php
-
-/* ex: set tabstop=2 noexpandtab: */
-
 /**
  * ZanPHP
  *
@@ -69,9 +66,7 @@ class ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$helpers = array("config", "autoload", "router", "validations");
-		
-		$this->helper($helpers);
+		$this->helper(array("autoload", "config", "validations"));
 	}
 	
     /**
@@ -599,7 +594,7 @@ class ZP_Load {
 		} 
 
 		if(!is_null($application)) {
-			$view 	 = "www/applications/$application/views/$name.php";
+			$view = "www/applications/$application/views/$name.php";
 			
 			if(is_array($vars)) {
 				$key  = array_keys($vars);
@@ -611,8 +606,10 @@ class ZP_Load {
 			} elseif($vars) {
 				return $view;
 			}
-				
+
 			if(file_exists($view)) {
+				ob_start();
+
 				include $view;
 				
 				if($return) {

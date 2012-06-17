@@ -285,22 +285,6 @@ function howLong($value) {
 	return $date;
 }
 
-function isLeapYear($year) {
-	return ((((int) $year % 4 === 0) and ((int) $year % 100 !== 0 ) or ((int) $year % 400 === 0)));
-}
-
-function isDay($day) {	
-	return (strlen($day) === 2 and $day > 0 and $day <= 31) ? TRUE : FALSE;	
-}
-
-function isMonth($month) {
-	return (strlen($month) === 2 and $month > 0 and $month <= 12) ? TRUE : FALSE;
-}
-
-function isYear($year) {
-	return (strlen($year) === 4 and $year >= 1950 and $year <= date("Y")) ? TRUE : FALSE;
-}
-
 function month($month) {
 	$month = (int) $month;
 	

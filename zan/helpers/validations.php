@@ -45,7 +45,7 @@ function isName($name) {
 
 	if($count > 1) {
 		for($i = 0; $i <= $count; $i++) {
-			if(strlen($parts[$i]) > 25) {
+			if(isset($parts[$i]) and strlen($parts[$i]) > 25) {
 				return FALSE;
 			}
 		}
@@ -67,8 +67,12 @@ function isImage($image) {
 function isInjection($text, $count = 1) {
 	if(is_string($text)) {
 		$text = html_entity_decode($text);
-
-		if(substr_count($text, "<script") >= $count) {
+		
+		if(substr_count($text, "scriptalert") >= $count) {
+			return TRUE;
+		} elseif(substr_count($text, ";/alert") >= $count) {
+			return TRUE;
+		} elseif(substr_count($text, "<script") >= $count) {
 			return TRUE;
 		} elseif(substr_count($text, "<iframe") >= $count) {
 			return TRUE;
@@ -84,7 +88,7 @@ function isIP($IP) {
 	return filter_var($IP, FILTER_VALIDATE_IP) ? TRUE : FALSE;
 }
 
-function isSPAM($string, $max = 2) {
+function isSPAM($string, $max = 1) {
 	$words = array(	
 		"http", "www", ".com", ".mx", ".org", ".net", ".co.uk", ".jp", ".ch", ".info", ".me", ".mobi", ".us", ".biz", ".ca", ".ws", ".ag", 
 		".com.co", ".net.co", ".com.ag", ".net.ag", ".it", ".fr", ".tv", ".am", ".asia", ".at", ".be", ".cc", ".de", ".es", ".com.es", ".eu", 
@@ -102,7 +106,7 @@ function isSPAM($string, $max = 2) {
 		}
 	}
 	
-	return ($count > $max) ? TRUE : FALSE;
+	return ($count >= $max) ? TRUE : FALSE;
 }
 
 function isVulgar($string, $max = 1) {	
@@ -111,7 +115,7 @@ function isVulgar($string, $max = 1) {
 		"estupido", "idiota", "joto", "gay", "maricon", "marica", "chingar", "jodete", "pinche", "panocha", "vagina", "zorra", "fuck",
 		"chingada", "cojer", "imbecil", "pendeja", "piruja", "puerca", "polla", "capullo", "gilipollas", "cabron", "cagada", "cago", "cagar",
 		"mierda", "marrano", "porno", "conche", "tu puta madre", "putas", "putos", "pendejas", "pendejos", "pendejadas", "mamadas", "lesbianas",
-		"coño", "huevon", "sudaca", "fucker", "ramera"
+		"coño", "huevon", "sudaca", "fucker", "ramera", "fuck", "bitch"
 	);
 					
     $count = 0;
@@ -123,7 +127,70 @@ function isVulgar($string, $max = 1) {
 			$count += substr_count($string, $word);
 		}
 	}
-	
-	return ($count > $max) ? TRUE : FALSE;
+
+	return ($count >= $max) ? TRUE : FALSE;
 }
 
+function isNumber($number) {
+	$number = (int) $number;
+	
+	if($number > 0) {
+		return TRUE;	
+	}
+	
+	return FALSE;
+}
+
+function isMethod($method, $Controller) {
+	try {
+	    $Reflection = new ReflectionMethod($Controller, $method);
+	    
+	    return TRUE;
+	} catch (Exception $e) {
+	    return FALSE;
+	}
+}
+
+function isController($controller, $application = NULL, $principal = FALSE) {
+	if($application === TRUE) {
+		if(file_exists($controller)) {
+			return TRUE;
+		}
+	} else { 
+		if($principal) {
+			if($controller === $application) {
+				$file = "www/applications/$application/controllers/$controller.php";
+
+				if(file_exists($file)) {
+					return TRUE;	
+				}				
+			} else {
+				return FALSE;
+			}
+		}
+
+		$file = "www/applications/$application/controllers/$controller.php";
+
+		if(file_exists($file)) {
+			return TRUE;	
+		}
+	}
+
+	return FALSE;
+}
+
+function isLeapYear($year) {
+	return ((((int) $year % 4 === 0) and ((int) $year % 100 !== 0 ) or ((int) $year % 400 === 0)));
+}
+
+function isDay($day) {	
+	return (strlen($day) === 2 and $day > 0 and $day <= 31) ? TRUE : FALSE;	
+}
+
+function isMonth($month) {
+	return (strlen($month) === 2 and $month > 0 and $month <= 12) ? TRUE : FALSE;
+}
+
+function isYear($year) {
+	return (strlen($year) === 4 and $year >= 1950 and $year <= date("Y")) ? TRUE : FALSE;
+}

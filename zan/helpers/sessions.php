@@ -48,26 +48,6 @@ function COOKIE($cookie, $value = FALSE, $time = 300000, $redirect = FALSE, $URL
 }
 
 /**
- * createCookie
- *
- * Sets a cookie
- * 
- * @param string $cookie
- * @param string $value
- * @param string $redirect
- * @param string $URL      = _webBase
- * @param int    $time     = 604800
- * @return void
- */ 
-function createCookie($cookie = NULL, $value, $time = 604800, $redirect = FALSE, $URL = FALSE) {		
-	setcookie($cookie, $value, time() + $time, "/");
-	
-	if($redirect) {
-		redirect($URL);		
-	}
-}
-
-/**
  * SESSION
  *
  * Returns a $_SESSION index variable value
