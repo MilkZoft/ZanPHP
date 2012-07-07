@@ -78,9 +78,7 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function __construct() {
-		$helpers = array("config", "array", "browser", "debugging", "forms", "html", "scripts", "validations");
-		
-		$this->helper($helpers);
+
 	}
 	
     /**
@@ -229,12 +227,30 @@ class ZP_Templates extends ZP_Load {
      *
      * 
      */
-	public function js($js, $application = NULL, $extra = NULL, $getJs = FALSE) {
+	public function js($js, $application = NULL, $getJs = FALSE) {
+		if($js === "jquery") {
+			$js = '<script type="text/javascript" src="'. path("vendors/js/jquery/jquery.js", "zan") .'"></script>';
+		} elseif($js === "tinymce") {
+			$js = '<script type="text/javascript" src="'. path("vendors/js/editors/tiny_mce/tiny_mce.js", "zan") .'"></script>';
+		} elseif($js === "lesscss") {
+			$js = '<script type="text/javascript" src="'. path("vendors/js/less/less.js", "zan") .'"></script>';
+		} elseif(file_exists($js)) {
+			$js = '<script type="text/javascript" src="'. $js .'"></script>';
+		} elseif(file_exists(path($js, "zan"))) {
+			$js = '<script type="text/javascript" src="'. path($js, "zan") .'"></script>';
+		} elseif(file_exists("www/$application/views/js/$js")) {
+			$js = '<script type="text/javascript" src="www/'. $application .'/views/js/'. $js .'"></script>';
+		} elseif(file_exists("www/$application/views/js/$js.js")) {
+			$js = '<script type="text/javascript" src="www/'. $application .'/views/js/'. $js .'.js"></script>';
+		} else {
+			return FALSE;
+		}
+
 		if($getJs) {
-			return getScript($js, $application, $extra, $getJs);	
-		} 
-		
-		$this->js .= (substr_count($js, "http") >= 1 or substr_count($js, "https") >= 1) ? getScript($js, $application, $extra, $getJs, TRUE) : getScript($js, $application, $extra, $getJs);
+			return $js;
+		} else {
+			$this->js .= $js;
+		}
 	}
 	
     /**
@@ -310,6 +326,8 @@ class ZP_Templates extends ZP_Load {
      * 
      */
 	public function themeCSS($theme = NULL) {
+		$this->helper("browser");
+
 		$theme 	 = is_null($theme) ? get("webTheme") : $theme; 
 		$file    = "www/lib/themes/". $theme ."/css/style.css";
 		$browser = browser();

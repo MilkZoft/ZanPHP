@@ -107,27 +107,27 @@ class ZP_Files extends ZP_Load {
 			}
 
 			$icons = array(
-					"txt"  => array(get("webURL") ."www/lib/images/icons/files/text.png", __(_("Text File"))),
-					"doc"  => array(get("webURL") ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
-					"docx" => array(get("webURL") ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
-				 	"pdf"  => array(get("webURL") ."/www/lib/images/icons/files/pdf.png", __(_("PDF File"))),
-				 	"ppt"  => array(get("webURL") ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
-				 	"pptx" => array(get("webURL") ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
-				 	"rar"  => array(get("webURL") ."/www/lib/images/icons/files/rar.png", __(_("WinRAR File"))),
-				 	"iso"  => array(get("webURL") ."/www/lib/images/icons/files/rar.png", __(_("ISO File"))),
-				 	"xls"  => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"xlsx" => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"csv"  => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
-				 	"zip"  => array(get("webURL") ."/www/lib/images/icons/files/zip.png", __(_("WinZIP File"))),
-				 	"7z"   => array(get("webURL") ."/www/lib/images/icons/files/7z.png",  __(_("7z File"))),
-				 	"ai"   => array(get("webURL") ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
-				 	"svg"  => array(get("webURL") ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
-				 	"cdr"  => array(get("webURL") ."/www/lib/images/icons/files/cdr.png", __(_("Corel Draw File"))),
-				 	"msi"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
-				 	"exe"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
-				 	"dmg"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
-				 	"pkg"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
-				 );
+				"txt"  => array(get("webURL") ."www/lib/images/icons/files/text.png", __(_("Text File"))),
+				"doc"  => array(get("webURL") ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
+				"docx" => array(get("webURL") ."/www/lib/images/icons/files/doc.png", __(_("Document File"))),
+			 	"pdf"  => array(get("webURL") ."/www/lib/images/icons/files/pdf.png", __(_("PDF File"))),
+			 	"ppt"  => array(get("webURL") ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
+			 	"pptx" => array(get("webURL") ."/www/lib/images/icons/files/ppt.png", __(_("Power Point File"))),
+			 	"rar"  => array(get("webURL") ."/www/lib/images/icons/files/rar.png", __(_("WinRAR File"))),
+			 	"iso"  => array(get("webURL") ."/www/lib/images/icons/files/rar.png", __(_("ISO File"))),
+			 	"xls"  => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+			 	"xlsx" => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+			 	"csv"  => array(get("webURL") ."/www/lib/images/icons/files/xls.png", __(_("Excel File"))),
+			 	"zip"  => array(get("webURL") ."/www/lib/images/icons/files/zip.png", __(_("WinZIP File"))),
+			 	"7z"   => array(get("webURL") ."/www/lib/images/icons/files/7z.png",  __(_("7z File"))),
+			 	"ai"   => array(get("webURL") ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
+			 	"svg"  => array(get("webURL") ."/www/lib/images/icons/files/ai.png",  __(_("Adobe Illustrator File"))),
+			 	"cdr"  => array(get("webURL") ."/www/lib/images/icons/files/cdr.png", __(_("Corel Draw File"))),
+			 	"msi"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+			 	"exe"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+			 	"dmg"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+			 	"pkg"  => array(get("webURL") ."/www/lib/images/icons/files/exe.png", __(_("Executable File"))),
+			);
 						
 			foreach($icons as $extension => $icon) { 
 				if($file["extension"] === $extension) {

@@ -69,6 +69,14 @@ function SESSION($session, $value = FALSE) {
 	return TRUE;
 }
 
+function isConnected($URL = FALSE) {
+	if(!SESSION("ZanUser")) {
+		redirect($URL);
+	} 
+
+	return TRUE;
+}
+
 /**
  * unsetCookie
  *
