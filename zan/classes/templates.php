@@ -259,6 +259,8 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function load($template, $direct = FALSE) {			
+		$this->helper("browser");
+		
 		if(is_array($this->vars)) {
 			$key  = array_keys($this->vars);
 			$size = sizeof($key);			
@@ -269,7 +271,7 @@ class ZP_Templates extends ZP_Load {
 		}
 		
 		if($direct) { 
-			if(is_array($template)) {
+			if(is_array($template)) {die("AAAAAwww");
 				$count = count($template);
 
 				if($count === 1) {
@@ -296,7 +298,7 @@ class ZP_Templates extends ZP_Load {
 			}
 		} else { 
 			$template = "www/lib/themes/$this->theme/$template.php";
-		
+			
 			if(!file_exists($template)) {
 				getException("Error 404: Theme Not Found: " . $template);									
 			}
