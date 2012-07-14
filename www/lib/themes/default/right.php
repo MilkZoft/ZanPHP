@@ -1,10 +1,3 @@
-<?php 
-	if(!defined("_access")) {
-		die("Error: You don't have permission to access here..."); 
-	}
-	
-	if(!isMobile()) {
-?>
 <div class="span4">
 	<h3>Sidebar</h3>
 	
@@ -14,8 +7,3 @@
 		<li><a href="#" title="Option 3">Option 3</a></li>
 	</ul>
 </div>
-
-<?php 
-	} 
-?>
-

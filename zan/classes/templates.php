@@ -77,9 +77,7 @@ class ZP_Templates extends ZP_Load {
      *
      * @return void
      */
-	public function __construct() {
-
-	}
+	public function __construct() {}
 	
     /**
      * Set the CSS style
