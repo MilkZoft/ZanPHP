@@ -243,11 +243,11 @@ class ZP_Load {
      *
      * @return void
      */
-	private function header() { 
+	private function header() {
 		if($this->Templates->exists("header")) {
 			if(count($this->views) > 0) {
 				for($i = 0; $i <= count($this->views) - 1; $i++) {
-					if($this->views[$i]["vars"]) {
+					if($this->views[$i]["vars"] !== FALSE) {
 						$this->Templates->vars($this->views[$i]["vars"]);
 					}
 				}
