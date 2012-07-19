@@ -77,7 +77,9 @@ class ZP_Templates extends ZP_Load {
      *
      * @return void
      */
-	public function __construct() {}
+	public function __construct() {
+
+	}
 	
     /**
      * Set the CSS style
@@ -96,15 +98,15 @@ class ZP_Templates extends ZP_Load {
 		if($CSS === "bootstrap") {
 			if(is_null($this->CSS)) {
 				if($print) {
-					print '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					print '<link rel="stylesheet" href="'. get("webURL") .'/zan/vendors/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				} else {
-					$this->CSS = '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					$this->CSS = '<link rel="stylesheet" href="'. get("webURL") .'/zan/vendors/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				}
 			} else {
 				if($print) {
-					print '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					print '<link rel="stylesheet" href="'. get("webURL") .'/zan/vendors/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				} else {
-					$this->CSS .= '<link rel="stylesheet" href="'. get("webURL") .'/www/lib/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
+					$this->CSS .= '<link rel="stylesheet" href="'. get("webURL") .'/zan/vendors/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				}	
 			}
 		}
@@ -233,13 +235,13 @@ class ZP_Templates extends ZP_Load {
 		} elseif($js === "lesscss") {
 			$js = '<script type="text/javascript" src="'. path("vendors/js/less/less.js", "zan") .'"></script>';
 		} elseif(file_exists($js)) {
-			$js = '<script type="text/javascript" src="'. $js .'"></script>';
+			$js = '<script type="text/javascript" src="'. path($js, TRUE) .'"></script>';
 		} elseif(file_exists(path($js, "zan"))) {
 			$js = '<script type="text/javascript" src="'. path($js, "zan") .'"></script>';
-		} elseif(file_exists("www/$application/views/js/$js")) {
-			$js = '<script type="text/javascript" src="www/'. $application .'/views/js/'. $js .'"></script>';
-		} elseif(file_exists("www/$application/views/js/$js.js")) {
-			$js = '<script type="text/javascript" src="www/'. $application .'/views/js/'. $js .'.js"></script>';
+		} elseif(file_exists("www/applications/$application/views/js/$js")) {
+			$js = '<script type="text/javascript" src="'. get("webURL") .'/www/applications/' . $application . '/views/js/' . $js . '"></script>';
+		} elseif(file_exists("www/applications/$application/views/js/$js.js")) {
+			$js = '<script type="text/javascript" src="'. get("webURL") .'/www/applications/' . $application . '/views/js/' . $js . '.js"></script>';
 		} else {
 			return FALSE;
 		}
