@@ -6,6 +6,7 @@
 		
 		<link href="<?php print path("vendors/css/frameworks/bootstrap/bootstrap.min.css", "zan"); ?>" rel="stylesheet">
 		<link href="<?php print $this->themePath; ?>/css/style.css" rel="stylesheet">
+		
 		<?php print $this->getCSS(); ?>
 		
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -16,25 +17,34 @@
 	</head>
 
 	<body>
-		<div class="topbar">
-			<div class="fill">
-				<div class="container">
-					<a class="brand" href="#">ZanPHP.com</a>
-					
-					<ul class="nav">
-						<li class="active"><a href="#">Home</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#contact">Contact</a></li>
-					</ul>
+		<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button"class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           
-					<form action="#" class="pull-right">
-						<input class="input-small" type="text" placeholder="Username">
-						<input class="input-small" type="password" placeholder="Password">
-						<button class="btn" type="submit">Sign in</button>
-					</form>
-				</div>
-			</div>
-		</div>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="http://zanphp.com">ZanPHP.com</a>
+              </li>
+              <li class="">
+                <a href="#Home">Home</a>
+              </li>
+              <li class="">
+                <a href="#About">About</a>
+              </li>
+              <li class="">
+                <a href="#Contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
 		<div class="container">
 			<div class="content">
