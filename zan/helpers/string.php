@@ -37,7 +37,7 @@ function bbCode($HTML) {
    	); 
 
    	$b = array(
-   		"<iframe width=\"560\" height=\"315\" src=\"$1\" frameborder=\"0\" allowfullscreen></iframe>"  
+   		"<iframe width=\"560\" height=\"315\" src=\"$1\" allowfullscreen></iframe>"  
    	);
 
    	$HTML = preg_replace($a, $b, $HTML);
@@ -185,17 +185,17 @@ function exploding($string, $URL = NULL, $separator = ",") {
 			for($i = 0; $i <= $count; $i++) {
 				if(!is_null($URL)) {
 					if($i === $count) {
-						$return .= '<a href="'. path($URL . $parts[$i]) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a>';
+						$return .= '<a href="'. path($URL . slug($parts[$i])) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a>';
 					} elseif($i === $count - 1) {
-						$return .= '<a href="'. path($URL . $parts[$i]) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a> '. __(_("and")) .' ';
+						$return .= '<a href="'. path($URL . slug($parts[$i])) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a> '. __("and") .' ';
 					} else {
-						$return .= '<a href="'. path($URL . $parts[$i]) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a>, ';
+						$return .= '<a href="'. path($URL . slug($parts[$i])) .'" title="'. $parts[$i] .'">'. $parts[$i] .'</a>, ';
 					}
 				} else {
 					if($i === $count) {
 						$return .= $parts[$i];
 					} elseif($i === $count - 1) {
-						$return .= $parts[$i] .' '. __(_("and")) .' ';
+						$return .= $parts[$i] .' '. __("and") .' ';
 					} else {
 						$return .= $parts[$i] .', ';
 					}
@@ -204,7 +204,7 @@ function exploding($string, $URL = NULL, $separator = ",") {
 
 			return $return;
 		} else {
-			return '<a href="'. path($URL . $string) .'" title="'. $string .'">'. $string .'</a>';
+			return '<a href="'. path($URL . slug($string)) .'" title="'. $string .'">'. $string .'</a>';
 		}
 	}
 
@@ -215,7 +215,7 @@ function like($ID = 0, $application = NULL, $likes = FALSE) {
 	$likes = ($likes) ? " ($likes)" : NULL;
 
 	if($ID > 0 and !is_null($application)) {
-		return  '<a title="'. __(_("I Like")) .'" href="'. path("$application/like/$ID") .'"><img src="'. path("www/lib/images/like.png", TRUE) .'" /> '. __(_("I Like")) . $likes .'</a>';
+		return  '<a title="'. __("I Like") .'" href="'. path("$application/like/$ID") .'"><img src="'. path("www/lib/images/like.png", TRUE) .'" /> '. __("I Like") . $likes .'</a>';
 	}
 
 	return FALSE;
@@ -225,7 +225,7 @@ function dislike($ID = 0, $application = NULL, $dislikes = FALSE) {
 	$dislikes = ($dislikes) ? " ($dislikes)" : NULL;
 
 	if($ID > 0 and !is_null($application)) {
-		return '<a title="'. __(_("I Dislike")) .'" href="'. path("$application/dislike/$ID") .'"><img src="'. path("www/lib/images/dislike.png", TRUE) .'" /> '. __(_("I Dislike")) . $dislikes .'</a>';
+		return '<a title="'. __("I Dislike") .'" href="'. path("$application/dislike/$ID") .'"><img src="'. path("www/lib/images/dislike.png", TRUE) .'" /> '. __("I Dislike") . $dislikes .'</a>';
 	}
 
 	return FALSE;
@@ -233,7 +233,7 @@ function dislike($ID = 0, $application = NULL, $dislikes = FALSE) {
 
 function report($ID = 0, $application = NULL) {
 	if($ID > 0 and !is_null($application)) {
-		return '<a title="'. __(_("Report Link")) .'" href="'. path("$application/report/$ID") .'"><img src="'. path("www/lib/images/report.png", TRUE) .'" /> '. __(_("Report link")) .'</a>';
+		return '<a title="'. __("Report Link") .'" href="'. path("$application/report/$ID") .'"><img src="'. path("www/lib/images/report.png", TRUE) .'" /> '. __("Report link") .'</a>';
 	}
 
 	return FALSE;
@@ -277,13 +277,9 @@ function filter($text, $filter = FALSE) {
 	if($text === TRUE) {
 		return TRUE;
 	} elseif($filter === TRUE) {
-		$text = cleanHTML($text);
-	} elseif($filter === "escape") {		
-		$text = addslashes($text);
+		$text = cleanHTML($text);		
 	} else {	
-		$text = str_replace("'", "", $text);
-		$text = str_replace('"', "", $text);
-		$text = str_replace("\\", "", $text);
+		$text = addslashes($text);
 	}
 	
 	$text = str_replace("<", "", $text);
@@ -362,6 +358,59 @@ function pathToImages($HTML = NULL, $imagePath = NULL) {
 	return FALSE;
 }
 
+function getCode($code) {
+    if(!is_array($code)) {
+    	$code = explode("\n", $code);
+    }
+
+    $result = NULL;
+
+    foreach($code as $line => $codeLine) {
+        if(preg_match("/<\?(php)?[^[:graph:]]/", $codeLine)) {
+            $result .= highlight_string($codeLine, TRUE) ."<br />";
+        } else {
+            $result .= preg_replace("/(&lt;\?php&nbsp;)+/", "", highlight_string("<?php ". $codeLine, TRUE)) ."<br />";
+        }
+    }
+
+    return '<div class="code">'. $result .'</div>';
+}
+
+function showContent($content) {
+	$content = str_replace("------", "", $content);
+	$content = str_replace("\\", "", $content);
+	
+	return setCode($content, TRUE);
+}
+
+function setCode($HTML, $return = FALSE) {
+   	$codes = explode("[Code]", $HTML);
+
+   	if(count($codes) > 1) {
+   		for($i = 1; $i <= count($codes) - 1; $i++) {
+   			if(isset($codes[$i])) {
+				$code = explode("[/Code]", $codes[$i]);
+
+		   		if(isset($code[0])) {
+		   	 		if($return) {
+		   				$code[0] = getCode($code[0]);
+		   			} else {
+			   			$code[0] = addslashes($code[0]);
+			   		}
+		   		}
+
+		   		if($return) {
+		   			$codes[$i] = implode("", $code);
+		   		} else {
+		   			$codes[$i] = implode("[/Code]", $code);
+		   		}
+		   	}	
+	   	}
+   	} 	
+
+   	return ($return) ? implode("", $codes) : implode("[Code]", $codes);
+}
+
 function randomString($length = 6) {  
     $consonant = array("b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "y", "z");  
     $vocal	   = array("a", "e", "i", "o", "u");  
@@ -401,13 +450,15 @@ function slug($string) {
 	$characters = array(
 		"Á" => "A", "Ç" => "c", "É" => "e", "Í" => "i", "Ñ" => "n", "Ó" => "o", "Ú" => "u", 
 		"á" => "a", "ç" => "c", "é" => "e", "í" => "i", "ñ" => "n", "ó" => "o", "ú" => "u",
-		"à" => "a", "è" => "e", "ì" => "i", "ò" => "o", "ù" => "u"
+		"à" => "a", "è" => "e", "ì" => "i", "ò" => "o", "ù" => "u", "ã" => "a", "¿" => "", 
+		"?" =>  "", "¡" =>  "", "!" =>  "", ": " => "-"
 	);
 	
 	$string = strtr($string, $characters); 
 	$string = strtolower(trim($string));
 	$string = preg_replace("/[^a-z0-9-]/", "-", $string);
 	$string = preg_replace("/-+/", "-", $string);
+
 	
 	if(substr($string, strlen($string) - 1, strlen($string)) === "-") {
 		$string = substr($string, 0, strlen($string) - 1);
@@ -429,12 +480,15 @@ function pageBreak($content, $URL = NULL) {
 	$content = str_replace('<p style="text-align: justify;"><!-- pagebreak --></p>', "<!---->", $content);
 	$content = str_replace('<p><!-- pagebreak -->', "<p><!-- pagebreak --></p>\n<p>", $content);
 	$content = str_replace("<p><!-- pagebreak --></p>", "<!---->", $content);
-	$content = str_replace('<!-- pagebreak -->', "<!---->", $content);		
+	$content = str_replace('<!-- pagebreak -->', "<!---->", $content);	
+	$content = str_replace('<!-- Pagebreak -->', "<!---->", $content);
+	$content = str_replace('<!--Pagebreak-->', "<!---->", $content);
+	$content = str_replace('------', "<!---->", $content);
 			
 	$parts = explode("<!---->", $content);
 
 	if(count($parts) > 1) {
-		return $parts[0] .'<p><a href="'. $URL .'" title="'. __(_("Read more")) .'">&raquo; '. __(_("Read more")) .'...</a></p>';
+		return $parts[0] .'<p><a href="'. $URL .'" title="'. __("Read more") .'">&raquo; '. __("Read more") .'...</a></p>';
 	}
 	
 	return $content;		
@@ -529,9 +583,7 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
  */
 function recoverPOST($position, $value = NULL) { 
 	if(!$value) {
-		$data = (POST($position)) ? htmlentities(POST($position, "decode", FALSE)) : NULL;
-		
-		return (is_array(POST($position))) ? POST($position) : $data;
+		return (is_array(POST($position))) ? POST($position) : (POST($position) ? htmlentities(POST($position, "decode", FALSE)) : NULL);
 	} else {
 		if(is_array($value)) {
 			foreach($value as $val) {

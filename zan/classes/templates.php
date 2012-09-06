@@ -64,6 +64,13 @@ class ZP_Templates extends ZP_Load {
 	 * @var private $title = get("webNam"]e
 	 */
 	private $title;
+        
+        /**
+	 * Contains the meta tags for the header template
+	 * 
+	 * @var private $meta = get("tagsMeta"]
+	 */
+	private $meta;
 	
 	/**
 	 * Contains the array of vars
@@ -109,6 +116,40 @@ class ZP_Templates extends ZP_Load {
 					$this->CSS .= '<link rel="stylesheet" href="'. get("webURL") .'/zan/vendors/css/frameworks/bootstrap/bootstrap.min.css" type="text/css" />' . "\n";
 				}	
 			}
+		} elseif($CSS === "prettyphoto") {
+			if(is_null($this->CSS)) {
+				if($print) {
+					print '<link rel="stylesheet" href="'. path("vendors/js/lightbox/prettyphoto/css/prettyPhoto.css", "zan") .'" type="text/css" />' . "\n";
+				} else {
+					$this->CSS = '<link rel="stylesheet" href="'. path("vendors/js/lightbox/prettyphoto/css/prettyPhoto.css", "zan") .'" type="text/css" />' . "\n";
+				}
+			} else {
+				if($print) {
+					print '<link rel="stylesheet" href="'. path("vendors/js/lightbox/prettyphoto/css/prettyPhoto.css", "zan") .'" type="text/css" />' . "\n";
+				} else {
+					$this->CSS .= '<link rel="stylesheet" href="'. path("vendors/js/lightbox/prettyphoto/css/prettyPhoto.css", "zan") .'" type="text/css" />' . "\n";
+				}	
+			}
+		} elseif($CSS === "codemirror") {
+            if ($print) {
+                print '<link rel="stylesheet" href="'. path("vendors/js/codemirror/codemirror.css", "zan") .'" type="text/css" />' . "\n";
+            } else {
+                if (is_null($this->CSS)) {
+                    $this->CSS = '<link rel="stylesheet" href="'. path("vendors/js/codemirror/codemirror.css", "zan") .'" type="text/css" />' . "\n";
+                } else {
+                    $this->CSS .= '<link rel="stylesheet" href="'. path("vendors/js/codemirror/codemirror.css", "zan") .'" type="text/css" />' . "\n";
+                }
+            }
+		} elseif($CSS === "redactorjs") {
+            if ($print) {
+                print '<link rel="stylesheet" href="'. path("vendors/js/editors/redactorjs/css/redactor.css", "zan") .'" type="text/css" />' . "\n";
+            } else {
+                if (is_null($this->CSS)) {
+                    $this->CSS = '<link rel="stylesheet" href="'. path("vendors/js/editors/redactorjs/css/redactor.css", "zan") .'" type="text/css" />' . "\n";
+                } else {
+                    $this->CSS .= '<link rel="stylesheet" href="'. path("vendors/js/editors/redactorjs/css/redactor.css", "zan") .'" type="text/css" />' . "\n";
+                }
+            }			
 		}
 
 		$file = is_null($application) ? "www/lib/css/$CSS.css" : "www/applications/$application/views/css/$CSS.css";
@@ -206,9 +247,18 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function getTitle() {
-		return (is_null($this->title)) ? get("webName") ." - ". get("webSlogan") : $this->title;
+		return (is_null($this->title)) ? get("webName") ." - ". get("webSlogan") : encode($this->title);
 	}
-	
+        
+     /**
+     * Get the meta tags
+     *
+     * @return void
+     */
+	public function getMeta() {
+		return (is_null($this->meta) ? "" : ltrim($this->meta));
+	}
+        
     /**
      * Verify if a theme exists
      *
@@ -228,12 +278,26 @@ class ZP_Templates extends ZP_Load {
      * 
      */
 	public function js($js, $application = NULL, $getJs = FALSE) {
-		if($js === "jquery") {
+		if($js == "prettyphoto") {
+			$js = '<script type="text/javascript" src="'. path("vendors/js/lightbox/prettyphoto/js/jquery.prettyphoto.js", "zan") .'"></script>';
+
+			$this->CSS("prettyphoto");
+		} elseif($js === "jquery") {
 			$js = '<script type="text/javascript" src="'. path("vendors/js/jquery/jquery.js", "zan") .'"></script>';
-		} elseif($js === "tinymce") {
-			$js = '<script type="text/javascript" src="'. path("vendors/js/editors/tiny_mce/tiny_mce.js", "zan") .'"></script>';
+		} elseif (preg_match("/^jquery\\..+\\.js$/i", $js)){ # Plugin jQuery
+			$js = '<script type="text/javascript" src="'. path("vendors/js/jquery/$js", "zan") .'"></script>';
+                } elseif($js === "redactorjs") {
+			$js = '<script type="text/javascript" src="'. path("vendors/js/editors/redactorjs/redactor.min.js", "zan") .'"></script>';
+
+			$this->CSS("redactorjs");
 		} elseif($js === "lesscss") {
 			$js = '<script type="text/javascript" src="'. path("vendors/js/less/less.js", "zan") .'"></script>';
+		} elseif($js === "angular") {
+			$js = '<script type="text/javascript" src="'. path("vendors/js/angular/angular-1.0.1.min.js", "zan") .'"></script>';
+		} elseif($js === "codemirror") {
+			$js = '<script type="text/javascript" src="'. path("vendors/js/codemirror/codemirror.js", "zan") .'"></script>';
+			$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/util/loadmode.js", "zan") .'"></script>';
+                        $this->CSS("codemirror", NULL, TRUE);
 		} elseif(file_exists($js)) {
 			$js = '<script type="text/javascript" src="'. path($js, TRUE) .'"></script>';
 		} elseif(file_exists(path($js, "zan"))) {
@@ -351,8 +415,45 @@ class ZP_Templates extends ZP_Load {
      * @return void
      */
 	public function title($title = NULL) {
-		$this->title = is_null($title) ? get("webName") ." - ". get("webSlogan") : get("webName") ." - ". get("webSlogan") ." - ". $title;
+		$this->title = is_null($title) ? get("webName") ." - ". get("webSlogan") : stripslashes($title) ." - ". get("webName");
+        
+        $this->setMeta("title", $this->title);
 	}
+        
+    /**
+     * Set header meta tag
+     *
+     * @return void
+     */           
+    public function setMeta($tag, $value) {
+        switch ($tag) {
+            case "title":
+                $value = encode(stripslashes($value));
+
+                $this->meta .= "\t<meta name=\"$tag\" content=\"$value\" />\n";
+            break;
+            
+            case "language":
+                $this->meta .= "\t<meta http-equiv=\"content-language\" content=\"$value\" />\n";
+            break;
+            
+            case "description":
+                $value = preg_replace("/\r\n+/", " ", strip_tags($value));
+                
+                if(strlen($value) > 250) {
+                    $abstract = stripslashes(substr($value, 0, strrpos(substr($value, 0, 100), " ")));
+                    $value    = stripslashes(substr($value, 0, strrpos(substr($value, 0, 250), " ")));
+                } else {
+                	$abstract = $value;
+                }
+                
+                $this->meta .= "\t<meta name=\"abstract\" content=\"" . $abstract . "\" />\n";
+            
+            default:
+                $this->meta .= "\t<meta name=\"$tag\" content=\"$value\" />\n";
+            break;   
+        }
+    }
 	
     /**
      * Set vars

@@ -53,15 +53,15 @@ function paginate($count, $end, $start, $URL, $anchor = "#top") {
 			if($start === 0) {
 				$firstPage = 0;
 				$lastPage  = 10;
-			} elseif($currentPage >= 5 and $currentPage <= ($pages - 5)) {					
-				$firstPage = $currentPage - 5;
-				$lastPage  = $currentPage + 5;					
-			} elseif($currentPage < 5) {					
+			} elseif($currentPage >= 10 and $currentPage <= ($pages - 10)) {					
+				$firstPage = $currentPage - 10;
+				$lastPage  = $currentPage + 10;					
+			} elseif($currentPage < 10) {					
 				$firstPage = 0;
-				$lastPage  = $currentPage + 5 + (5 - $currentPage);					
+				$lastPage  = $currentPage + 10 + (10 - $currentPage);					
 			} else {					
-				$firstPage = $currentPage - 5 - (($currentPage + 5) - $pages);
-				$lastPage	= $pages;					
+				$firstPage = $currentPage - 10 - (($currentPage + 10) - $pages);
+				$lastPage  = $pages;					
 			}								
 		} else {			
 			$firstPage = 0;
@@ -75,7 +75,7 @@ function paginate($count, $end, $start, $URL, $anchor = "#top") {
 			if($start == $next) {				
 				$pageNav .= '<span class="current">'. $pge .'</span> ';					
 			} else {				
-				$pageNav .= '<span class="bold"><a href="'. $URL . $pge . "/" . $anchor .'" title="'. $pge .'">'. $pge .'</a></span> ';
+				$pageNav .= '<span class="bold"><a href="'. $URL . $pge ."/". $anchor .'" title="'. $pge .'">'. $pge .'</a></span> ';
 			}
 		}
 	
@@ -86,11 +86,11 @@ function paginate($count, $end, $start, $URL, $anchor = "#top") {
 		}
 	
 		if($currentPage < $pages) {			
-			$pageNext = '<a href="'. $URL . ($currentPage + 1) . "/" . $anchor .'" title="'. __(_("Next")) .'">'. __(_("Next")) .'</a> ';
+			$pageNext = '<a href="'. $URL . ($currentPage + 1) ."/". $anchor .'" title="'. __("Next") .'">'. __("Next") .'</a> ';
 		}
 	
 		if($start > 0) {
-			$pagePrevious = '<a href="'. $URL . ($currentPage - 1) . "/" . $anchor .'" title="'. __(_("Previous")) .'">'. __(_("Previous")) .'</a> ';
+			$pagePrevious = '<a href="'. $URL . ($currentPage - 1) ."/". $anchor .'" title="'. __("Previous") .'">'. __("Previous") .'</a> ';
 		}			
 	}		
 		

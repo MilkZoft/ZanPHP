@@ -290,13 +290,13 @@ class ZP_Load {
 				} elseif(file_exists("www/helpers/$helper.php")) {
 					include_once "www/helpers/$helper.php";
 				}  else {			
-					getException("$name helper doesn't exists");
+					getException("$helper helper doesn't exists");
 				}
 			} else {
 				if(file_exists("www/applications/$application/helpers/$helper.php")) {
 					include_once "www/applications/$application/helpers/$helper.php";
 				} else {			
-					getException("$name helper doesn't exists");
+					getException("$helper helper doesn't exists");
 				}			
 			}
 		}
@@ -575,10 +575,22 @@ class ZP_Load {
 		
 		$this->Templates->title($title);
 	}
-
+        
 	public function vars($vars) {
 		$this->Templates->vars($vars);
 	}
+        
+        public function meta($title = NULL, $description = NULL, $keywords = NULL, $language = NULL) {
+            $this->Templates = $this->core("Templates");
+            
+            $this->Templates->meta($title, $description, $keywords, $language);
+        }
+        
+        public function setMeta($tag, $value) {
+            $this->Templates = $this->core("Templates");
+            
+            $this->Templates->setMeta($tag, $value);
+        }
 	
     /**
      * Loads a view

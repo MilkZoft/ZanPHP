@@ -37,7 +37,7 @@ class ZP_Singleton {
      *
      * @var private static $instances = array()
      */	
-	private static $instances = array();
+	public static $instances = array();
 	
 	/**
      * Prevent object cloning

@@ -39,7 +39,7 @@ if(!defined("_access")) {
  * @param string $text
  * @return string value
  */
-function __($text) {
+function __($text, $encode = TRUE) {
 	if(get("translation") === "gettext") {
 		global $Gettext_Reader;
 		
@@ -60,12 +60,39 @@ function __($text) {
 		$position = strtolower(str_replace(" ", "_", $text)); 
 		$position = strtolower(str_replace("?,", "", $position));
 		$position = strtolower(str_replace("!", "", $position));
-		$position = strtolower(str_replace("?", "", $position));
+		$position = strtolower(str_replace("¡", "", $position));
+		$position = strtolower(str_replace("¿", "", $position));
 		$position = strtolower(str_replace(",", "", $position));
 		$position = strtolower(str_replace(":", "", $position));
 		$position = strtolower(str_replace("'", "", $position));
 
-		return isset($phrase[$position]) ? encode($phrase[$position]) : $text; 	
+		if(isset($phrase[$position])) {
+			return ($encode) ? encode($phrase[$position]) : $phrase[$position];
+		} else {
+			if($language !== "English") {
+				$content = "";
+				$logfile = "www/lib/languages/". strtolower($language) . ".txt"; 
+				$today	 = date("d/m/Y");
+
+				if(file_exists($logfile)) {
+					$content = file_get_contents($logfile);
+				}
+
+				$file = fopen($logfile, "a+");
+				$pos  = strrpos($content, "$today");
+
+				if($pos !== FALSE) {
+					if(!@preg_match("/\\b" . addslashes($position) . "\\b/i", substr($content, $pos + 14))) {
+						fwrite($file, "$position\r\n");
+					}
+				} else {
+					fwrite($file, "--- $today ---\r\n");
+					fwrite($file, "$position\r\n");
+				}
+			}
+
+			return $text;
+		}
 	}
 }
 
@@ -79,15 +106,15 @@ function __($text) {
  */
 function getLanguage($lang, $flags = FALSE) {
 	$languages = getLanguagesFromDir();
-
+	
 	foreach($languages as $language) {
 		if($flags) {
 			if($language["language"] === $lang) {
-				return '<img class="flag no-border" src="'. get("webURL") .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __(_($lang)) .'" />';	
+				return '<img class="flag no-border" src="'. get("webURL") .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __($lang) .'" />';	
 			}
 		} else {
 			if($language["language"] === $lang) {
-				return __(_($lang));
+				return __($lang);
 			}
 		}
 	}
@@ -167,17 +194,31 @@ function getLanguagesInput($lang = NULL, $name = "language", $input = "radio") {
 	}
 
 	foreach($languages as $language) {
-		if($language["default"] or $lang === $language["name"]) {
-			$check = ($input === "radio") ? ' checked="checked"' : ' selected="selected"';
-		} else {
-			$check = NULL;
-		}	
+		if(!isset($checked)) {
+			if(!is_null($lang)) {
+				if($lang === $language["name"]) {
+					$check = ($input === "radio") ? ' checked="checked"' : ' selected="selected"';
+					$checked = TRUE;								
+				} else {
+					$check = NULL;
+				}
+			} else {
+				if($language["default"] === TRUE) {				
+					$check = ($input === "radio") ? ' checked="checked"' : ' selected="selected"';
+					$checked = TRUE;
+				}
+			}
+		}
+
+		$show = isset($check) ? $check : NULL;
 
 		if($input === "radio") {
-			$HTML .= ' <input id="language" name="'. $name .'" type="radio" value="'. $language["name"] .'" '. $check .' /> '. $language["value"] .' ';
+			$HTML .= ' <input id="language" name="'. $name .'" type="radio" value="'. $language["name"] .'" '. $show .' /> '. $language["value"] .' ';			
 		} elseif($input === "select") {
-			$HTML .= ' <option value="'. $language["name"] .'"'. $check .'>'. __(_($language["name"])) .'</option>';
+			$HTML .= ' <option value="'. $language["name"] .'"'. $show .'>'. __($language["name"]) .'</option>';
 		}
+
+		unset($check);
 	}
 
 	if($input === "select") {
@@ -185,6 +226,60 @@ function getLanguagesInput($lang = NULL, $name = "language", $input = "radio") {
 	}
 	
 	return $HTML;
+}
+
+function getLocal($lang = FALSE) {	
+	if(!$lang) {
+		$lang = whichLanguage();
+	}
+
+	$languages = array(
+		"Arabic"	 => "ar_AR",
+		"Basque"	 => "eu_ES",
+		"Belarusian" => "be_BY",
+		"Bulgarian"  => "bg_BG",
+		"Catalan"	 => "ca_ES",
+		"Chinese"	 => "zh_CN",
+		"Croatian"   => "hr_HR",
+		"Czech"		 => "cs_CZ",
+		"Danish"	 => "da_DK",
+		"Dutch"		 => "nl_NL",
+		"English" 	 => "en_US",
+		"Estonian"   => "et_EE",
+		"Finnish"	 => "fi_FI",
+		"French"  	 => "fr_FR",
+		"Galician"   => "gl_ES",
+		"German"	 => "de_DE",
+		"Greek"		 => "el_GR",
+		"Hebrew"	 => "he_IL",
+		"Hungarian"  => "hu_HU",
+		"Indonesian" => "id_ID",
+		"Italian"	 => "it_IT",
+		"Japanese"	 => "ja_JP",
+		"Kurdish"	 => "ku_TR",
+		"Lithuanian" => "lt_LT",
+		"Macedonian" => "mk_MK",
+		"Persian"	 => "Persian",
+		"Polish"	 => "pl_PL",
+		"Portuguese" => "pt_BR",
+		"Romanian"   => "ro_RO",
+		"Russian"	 => "ru_RU",
+		"Serbian"	 => "sr_RS",
+		"Slovak"	 => "sk_SK",
+		"Slovenian"	 => "sl_SI",
+		"Spanish" 	 => "es_LA",
+		"Swedish"	 => "sv_SE",
+		"Thai"		 => "th_TH",
+		"Turkish"	 => "tr_TR",
+		"Ukrainian"  => "uk_UA",
+		"Vietnamese" => "vi_VN"
+	);	
+
+	foreach($languages as $language => $locale) {
+		if($language === $lang) {
+			return $locale;
+		}
+	}
 }
 
 function getLang($lg, $invert = FALSE) {
@@ -227,7 +322,6 @@ function getLang($lg, $invert = FALSE) {
 		"Thai"		 => "th",
 		"Turkish"	 => "tk",
 		"Ukrainian"  => "uk",
-		"Urdu"		 => "ur",
 		"Vietnamese" => "vi"
 	);	
 	
@@ -247,11 +341,8 @@ function getLang($lg, $invert = FALSE) {
 }
 
 function getLanguagesFromDir() {
-	$path = "www/lib/languages/gettext";
+	$path = "www/lib/languages";
 	$dir  = dir($path);
-	
-	$languages[0]["language"] = "English";
-	$languages[0]["lang"]	  = "en";
 
 	$i = 1;
 	
@@ -261,7 +352,7 @@ function getLanguagesFromDir() {
 			$parts = explode(".", $language);
 
 			if(count($parts) > 1) {
-				if($parts[1] === "mo") {
+				if($parts[1] === "php") {
 					$languages[$i]["language"] = ucfirst($parts[0]);			
 					$languages[$i]["lang"]	   = getLang(ucfirst($parts[0]));
 						
