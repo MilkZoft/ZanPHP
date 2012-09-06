@@ -9,7 +9,7 @@ if(!defined("_access")) {
 /**
  * Website
  */
-$ZP["webURL"] 	    = "http://localhost:8888/ZanPHP";
+$ZP["webURL"] 	    = "http://localhost/ZanPHP";
 $ZP["webName"] 	    = "ZanPHP";
 $ZP["webTheme"]     = "default";
 $ZP["webSituation"] = "Active";
@@ -32,7 +32,7 @@ $ZP["defaultApplication"] = "default";
 /**
  * Languages
  */
-$ZP["webLanguage"] = "Enlish";
+$ZP["webLanguage"] = "English";
 $ZP["translation"] = "gettext";
 
 /**
