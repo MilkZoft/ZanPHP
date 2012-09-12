@@ -358,22 +358,10 @@ class ZP_Templates extends ZP_Load {
 
 		if($direct) {
 			if(is_array($template)) {
-				$count = count($template);
 
-				if($count === 1) {
-					include $template[0];
-				} elseif($count === 2) {
-					include $template[0];
-					include $template[1];
-				} elseif($count === 3) {
-					include $template[0];
-					include $template[1];
-					include $template[2];
-				} else {
-					include $template[0];
-					include $template[1];
-					include $template[2];
-					include $template[3];
+				$count = count($template);
+				for ($i=0; $i<4 && $i<$count; $i++) {
+					include_once $template[$i];
 				}
 			} else {
 				if(!file_exists($template)) {
