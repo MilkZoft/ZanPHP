@@ -161,7 +161,7 @@ class ZP_Templates extends ZP_Load {
             }
 		}
 
-		$file = is_null($application) ? "www/lib/css/$CSS.css" : "www/applications/$application/views/css/$CSS.css";
+		$file = is_null($application) ? "www/lib/css/{$CSS}.css" : "www/applications/{$application}/views/css/{$CSS}.css";
 
 		if(is_null($this->CSS)) {
 			if($print) {
@@ -187,10 +187,10 @@ class ZP_Templates extends ZP_Load {
      */
 	public function exists($template, $view = FALSE) {
 		if(!$view) {
-			if(file_exists("www/lib/themes/$this->theme/$template.php")) {
+			if(file_exists("www/lib/themes/{$this->theme}/{$template}.php")) {
 				return TRUE;
 			}
-		} elseif(file_exists("www/applications/$view/views/$template.php")) {
+		} elseif(file_exists("www/applications/{$view}/views/{$template}.php")) {
 			return TRUE;
 		}
 
@@ -267,7 +267,7 @@ class ZP_Templates extends ZP_Load {
      * @return boolean value
      */
 	public function isTheme() {
-		$this->path = (!is_null($this->theme)) ? "www/lib/themes/$this->theme" : FALSE;
+		$this->path = (!is_null($this->theme)) ? "www/lib/themes/{$this->theme}" : FALSE;
 
 		$this->directory = @dir($this->path);
 
@@ -371,7 +371,7 @@ class ZP_Templates extends ZP_Load {
 				include $template;
 			}
 		} else {
-			$template = "www/lib/themes/$this->theme/$template.php";
+			$template = "www/lib/themes/{$this->theme}/{$template}.php";
 
 			if(!file_exists($template)) {
 				getException("Error 404: Theme Not Found: " . $template);
@@ -389,10 +389,10 @@ class ZP_Templates extends ZP_Load {
 	public function theme($theme = NULL) {
 		$this->theme = (is_null($theme)) ? get("webTheme") : $theme;
 
-		$this->themePath = get("webURL") ."/www/lib/themes/$this->theme";
+		$this->themePath = get('webURL') . "/www/lib/themes/{$this->theme}";
 
 		if(!$this->isTheme()) {
-			die("You need to create a valid theme");
+			die('You need to create a valid theme');
 		}
 	}
 
@@ -402,23 +402,18 @@ class ZP_Templates extends ZP_Load {
      *
      */
 	public function themeCSS($theme = NULL) {
-		$this->helper("browser");
+		$this->helper('browser');
 
-		$theme 	 = is_null($theme) ? get("webTheme") : $theme;
-		$file    = "www/lib/themes/". $theme ."/css/style.css";
-		$browser = browser();
+		$theme 	 = is_null($theme) ? get('webTheme') : $theme;
+		$file    = '';
+		$ie_style = "www/lib/themes/". $theme ."/css/ie.style.css";
 
-		if($browser === "Internet Explorer") {
-			$style = "www/lib/themes/". $theme ."/css/ie.style.css";
-
-			if(file_exists($style)) {
-				return '<link rel="stylesheet" href="'. $this->themePath .'/css/ie.style.css" type="text/css">';
-			}
-
-			return '<link rel="stylesheet" href="'. $this->themePath .'/css/style.css" type="text/css">';
+		if(browser() === "Internet Explorer" and file_exists($ie_style)) {
+			$file = $ie_style;
 		} else {
-			return '<link rel="stylesheet" href="'. $this->themePath .'/css/style.css" type="text/css">';
+			$file    = "www/lib/themes/". $theme ."/css/style.css";
 		}
+		return '<link rel="stylesheet" href="'. $file . '" type="text/css">';
 	}
 
     /**
@@ -462,7 +457,7 @@ class ZP_Templates extends ZP_Load {
                 $this->meta .= "\t<meta name=\"abstract\" content=\"" . $abstract . "\" />\n";
 
             default:
-                $this->meta .= "\t<meta name=\"$tag\" content=\"$value\" />\n";
+                $this->meta .= "\t<meta name=\"{$tag}\" content=\"{$value}\" />\n";
             break;
         }
     }
