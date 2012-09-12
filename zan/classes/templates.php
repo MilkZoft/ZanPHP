@@ -360,7 +360,7 @@ class ZP_Templates extends ZP_Load {
 			if(is_array($template)) {
 
 				$count = count($template);
-				for ($i=0; $i<4 && $i<$count; $i++) {
+				for ($i=0; ($i<4 and $i<$count); $i++) {
 					include_once $template[$i];
 				}
 			} else {
