@@ -231,16 +231,9 @@ class ZP_Templates extends ZP_Load {
 			$directory = $path . $element . _sh;
 
 			if($element !== ".." and $element !== "." and is_dir($directory) and $element !== "cpanel") {
-				if($element === $theme) {
-					$options[$i]["value"]    = $element;
-					$options[$i]["option"]   = $element;
-					$options[$i]["selected"] = TRUE;
-				} else {
-					$options[$i]["value"]    = $element;
-					$options[$i]["option"]   = $element;
-					$options[$i]["selected"] = FALSE;
-				}
-
+				$options[$i]["value"]    = $element;
+				$options[$i]["option"]   = $element;
+				$options[$i]["selected"] = (boolean)($element === $theme);
 				$i++;
 			}
 		}
