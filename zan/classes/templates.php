@@ -360,7 +360,7 @@ class ZP_Templates extends ZP_Load {
 			}
 		} else { 
 			$template = "www/lib/themes/$this->theme/$template.php";
-		
+			
 			if(!file_exists($template)) {
 				getException("Error 404: Theme Not Found: " . $template);									
 			}

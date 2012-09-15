@@ -12,12 +12,10 @@ class Default_Controller extends ZP_Controller {
 		$this->Templates = $this->core("Templates");
 
 		$this->Templates->theme();
-
-		#$this->Default_Model = $this->model("Default_Model");
 	}
 	
 	public function index() {	
-		$vars["message"] = __(_("Hello World"));
+		$vars["message"] = __("Hello World");
 		$vars["view"]	 = $this->view("show", TRUE);
 		
 		$this->render("content", $vars);
@@ -28,11 +26,10 @@ class Default_Controller extends ZP_Controller {
 	}
 
 	public function show($message) {
-		$vars["message"] = $message;
-		$vars["view"]	 = $this->view("show", TRUE);
-		
-		$this->render("content", $vars);
-		#$this->view("show", $vars);
+		$vars["message"] = __("Hello World");
+		$vars["view"] = $this->view("show", TRUE);
+
+		$this->render("content", $vars);		
 	}
 
 }

@@ -550,6 +550,8 @@ class ZP_Load {
 		
 		if($name !== "include" and get("autoRender")) {
 			$this->rendering();
+		} elseif($name === "include") {
+			$this->rendering();
 		}
 	}
 	
