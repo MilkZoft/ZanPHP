@@ -32,7 +32,7 @@ if($ZP["production"]) {
 		header("Content-type: text/html; charset=utf-8");
 	}
 
-	error_reporting(E_ALL);
+	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 }
 
 include _corePath ."/classes/load.php"; 
