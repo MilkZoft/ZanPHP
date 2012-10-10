@@ -387,16 +387,16 @@ class ZP_Db extends ZP_Load {
 			$this->table($table);
 		}
 		
-		if($ZP["db"]["dbDriver"] === "odbc_mssql") {
-			$query = "DELETE TOP ($limit) FROM $this->table WHERE $field = $value";
+		if($this->db["dbDriver"] === "odbc_mssql") {
+			$query = "DELETE TOP ($limit) FROM $this->table WHERE $field = '$value'";
 		} else {
-			$query = "DELETE FROM $this->table WHERE $field = $value";
+			$query = "DELETE FROM $this->table WHERE $field = '$value'";
 			
 			if($limit !== NULL) {
 				$query .= " LIMIT $limit";
 			}
 		}
-		
+
 		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 		

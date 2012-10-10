@@ -10,7 +10,7 @@ include "requirements.php";
 
 $Load = new ZP_Load(); 
 
-$helpers = array("config", "debugging", "exceptions", "i18n", "router", "benchmark", "string", "sessions", "security");
+$helpers = array("alerts", "config", "debugging", "exceptions", "i18n", "router", "benchmark", "string", "sessions", "security");
 
 $Load->helper($helpers); 
 
