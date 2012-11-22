@@ -74,9 +74,9 @@ function execute() {
 	
 	if(!$match) {
 		if(!segment(0)) {
-			$application = get("defaultApplication");	
+			$application = _get("defaultApplication");	
 		} elseif(segment(0) and !segment(1)) {
-			$application = isLang() ? get("defaultApplication") : segment(0);
+			$application = isLang() ? _get("defaultApplication") : segment(0);
 		} else { 
 			$application 		   = segment(0, isLang());
 			$applicationController = segment(1, isLang());
@@ -142,8 +142,8 @@ function execute() {
 		} 
 	}
 
-	if(get("webSituation") !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
-		die(get("webMessage"));
+	if(_get("webSituation") !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
+		die(_get("webMessage"));
 	}
 	
 	$Load->app($application);
@@ -187,7 +187,7 @@ function execute() {
 					}
 				}
 			} else {
-				if(method_exists($Controller, "index")) {
+				if(method_exists($Controller, "index")) { 
 					try {
 						$reflection = new ReflectionMethod($Controller, "index");
 						
@@ -290,20 +290,14 @@ function currentPath($path = NULL) {
  * 
  * @return array		
  */
-function getURL() {		
-	global $ZP;
-
+function getURL() {
 	$URL = NULL;
 
-	for($i = 0; $i <= segments() - 1; $i++) {
-		if($i === (segments() - 1)) {
-			$URL .= segment($i); 	
-		} else {
-			$URL .= segment($i) ."/";
-		}
+	for($i = 0; $i <= segments() - 1; $i++) {		
+		$URL .= ($i === (segments() - 1)) ? segment($i) : segment($i) ."/";
 	}
 	
-	$URL = get("webBase") ."/$URL";
+	$URL = _get("webBase") ."/$URL";
 	
 	return $URL;
 }
@@ -339,8 +333,8 @@ function whichApplication() {
 		return segment(0);
 	} elseif(file_exists("www/applications/". segment(1) ."/models/". segment(1) .".php")) {
 		return segment(1);
-	} elseif(file_exists("www/applications/". get("defaultApplication") ."/controllers/". get("defaultApplication") .".php")) {
-		return get("defaultApplication");	
+	} elseif(file_exists("www/applications/". _get("defaultApplication") ."/controllers/". _get("defaultApplication") .".php")) {
+		return _get("defaultApplication");	
 	}
 	
 	return FALSE;
@@ -348,25 +342,31 @@ function whichApplication() {
 
 function path($path = FALSE, $URL = FALSE, $lang = TRUE) {
 	if(!$path) {
-		return isLang() ? get("webBase") . _sh . get("webLang") : get("webBase");
+		return isLang() ? _get("webBase") ."/". _get("webLang") : _get("webBase");
 	} 
 
 	if($URL === "zan") {
-		return getDomain(_corePath) . _sh . "zan" . _sh . $path;
+		return getDomain(_corePath) ."/zan/". $path;
 	} elseif(isLang($path)) {
-		return get("webBase") . _sh . $path;
+		return _get("webBase") ."/". $path;
 	}
 
 	if($lang) {
-		return ($URL) ? get("webURL") . _sh . $path : get("webBase") . _sh . get("webLang") . _sh . $path;
+		if($lang !== TRUE) {
+			$lang = getLang($lang);
+
+			return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". $lang ."/". $path;
+		}
+
+		return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". _get("webLang") ."/". $path;
 	} else {
-		return ($URL) ? get("webURL") . _sh . $path : get("webBase") . _sh . $path;
+		return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". $path;
 	}
 }
 
 function getDomain($path = FALSE) {
 	if($path) {
-		$URL   = str_replace("http://", "", get("webURL"));
+		$URL   = str_replace("http://", "", _get("webURL"));
 		$parts = explode("/", $URL);
 		
 		if($path === "../../zan" and isset($parts[0]) and isset($parts[2])) {
@@ -375,10 +375,10 @@ function getDomain($path = FALSE) {
 			return "http://". $parts[0] . "/". $parts[1];
 		}
 
-		return ($path === "zan") ? get("webURL") : "http://". $parts[0];
+		return ($path === "zan") ? _get("webURL") : "http://". $parts[0];
 	}
 
-	return get("webURL");
+	return _get("webURL");
 }
 
 /**
@@ -452,7 +452,7 @@ function route() {
 	if(is_array($URL)) {		 
 		$URL = array_diff($URL, array(""));
 		
-		if(!get("domain")) {
+		if(!_get("domain")) {
 			$vars[] = array_shift($URL);
 		}
 		
@@ -460,7 +460,7 @@ function route() {
 			$vars[] = array_shift($URL);
 		}
 
-		if(!get("modRewrite") and isset($URL[0])) { 
+		if(!_get("modRewrite") and isset($URL[0])) { 
 			if($URL[0] === basename($_SERVER["SCRIPT_FILENAME"])) { 
 				$vars[] = array_shift($URL);
 			}

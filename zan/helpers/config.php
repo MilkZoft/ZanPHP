@@ -20,7 +20,7 @@ if(!defined("_access")) {
 	die("Error: You don't have permission to access here...");
 }
 
-function get($var = NULL) {
+function _get($var = NULL) {
 	global $ZP;
 
 	if($var === "db") {

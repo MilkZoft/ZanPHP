@@ -147,7 +147,7 @@ function head($open = TRUE) {
 
 function HTML($open = TRUE) {
 	if($open) {
-		return '<html xmlns="http://www.w3.org/1999/xhtml" lang="'. get("webLang") .'" xml:lang="'. get("webLang") .'">' . char("\n");
+		return '<html xmlns="http://www.w3.org/1999/xhtml" lang="'. _get("webLang") .'" xml:lang="'. _get("webLang") .'">' . char("\n");
 	} else {
 		return "</html>";
 	}
@@ -192,12 +192,12 @@ function li($list, $open = NULL) {
 }
 
 function loadCSS($CSS) {
-	return '<link rel="stylesheet" href="'. get("webURL") ."/". $CSS .'" type="text/css" media="all" />';
+	return '<link rel="stylesheet" href="'. _get("webURL") ."/". $CSS .'" type="text/css" media="all" />';
 }
 
 function loadScript($js, $application = NULL, $external = FALSE) {
 	if(file_exists($js)) {		
-		return '<script type="text/javascript" src="'. get("webURL") ."/". $js .'"></script>';
+		return '<script type="text/javascript" src="'. _get("webURL") ."/". $js .'"></script>';
 	} if($external) {
 		return '<script type="text/javascript" src="'. $js .'"></script>';
 	} else {
@@ -205,7 +205,7 @@ function loadScript($js, $application = NULL, $external = FALSE) {
 			$file = "www/applications/$application/views/js/$js.js";
 			
 			if(file_exists($file)) {
-				return '<script type="text/javascript" src="'. get("webURL") ."/". $file .'"></script>';
+				return '<script type="text/javascript" src="'. _get("webURL") ."/". $file .'"></script>';
 			}
 		}
 	}
@@ -265,4 +265,42 @@ function ul($list, $ID = NULL, $class = NULL) {
 	$HTML .= char("\t") . '</ul>' . char("\n");
 	
 	return $HTML;
+}
+
+/**
+ * htmlTag
+ *
+ * Creates a html tag to the document
+ * 
+ * @author 	Jhon Klever (@elfoxero)
+ * @param 	string $tag
+ * @param 	(boolean|array|string) $attributes
+ * @param 	string $content
+ * @return 	string $html
+ */ 
+
+function htmlTag($tag = NULL, $attributes = TRUE, $content = NULL) {
+    if(is_null($tag)) return "";
+    
+    if($attributes === TRUE) {
+        return "<$tag>";
+    } elseif($attributes === FALSE) {
+        return "</$tag>";
+    } elseif(is_array($attributes)) {
+        $html = "<$tag";
+        
+        foreach ($attributes as $attribute => $value) {
+            $html .= " $attribute = \"$value\"";
+        }
+        
+        $html .= ">";
+        
+        if (! is_null($content)) {
+            $html .= "\n\t$content\n</$tag>";
+        }
+        
+        return $html;
+    } else {
+        return "<$tag>\n\t$attributes\n</$tag>";
+    }
 }

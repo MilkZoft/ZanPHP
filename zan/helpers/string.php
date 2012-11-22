@@ -30,34 +30,97 @@ if(!defined("_access")) {
  * @author		MilkZoft Developer Team
  * @link		http://www.zanphp.com/documentation/en/helpers/string_helper
  */
+function BBCode($text) {
+	$text = trim($text);
 
-function bbCode($HTML) {
-   	$a = array( 
-		"/\[Video: (.*?)\]/is"
-   	); 
+	if(!function_exists("escape")) {
+		function escape($s) {
+			global $text;
 
-   	$b = array(
-   		"<iframe width=\"560\" height=\"315\" src=\"$1\" allowfullscreen></iframe>"  
-   	);
+			$code = $s[1];
+			$code = str_replace("[", "&#91;", $code);
+			$code = str_replace("]", "&#93;", $code);
+			
+			return getCode($code);
+		}	
+	}
 
-   	$HTML = preg_replace($a, $b, $HTML);
-	$HTML = str_replace("http://www.youtube.com/watch?v=", "http://www.youtube.com/embed/", $HTML);
-	$HTML = str_replace("&amp;list=UUWDzmLpJP-z4qopWVA4qfTQ", "", $HTML);
-	$HTML = str_replace("&amp;index=1", "", $HTML);
-	$HTML = str_replace("&amp;index=2", "", $HTML);
-	$HTML = str_replace("&amp;index=3", "", $HTML);
-	$HTML = str_replace("&amp;index=4", "", $HTML);
-	$HTML = str_replace("&amp;index=5", "", $HTML);
-	$HTML = str_replace("&amp;index=6", "", $HTML);
-	$HTML = str_replace("&amp;index=7", "", $HTML);
-	$HTML = str_replace("&amp;index=8", "", $HTML);
-	$HTML = str_replace("&amp;index=9", "", $HTML);
-	$HTML = str_replace("&amp;feature=plcp", "", $HTML);
-	$HTML = str_replace("&amp;feature=related", "", $HTML);
-	$HTML = str_replace("&amp;feature=player_embedded", "", $HTML);
-	$HTML = str_replace("&amp;feature=fvwrel", "", $HTML);
+	$text = preg_replace_callback('/\[code\](.*?)\[\/code\]/ms', "escape", $text);
+	
+	$in = array(
+		'/\[b\](.*?)\[\/b\]/ms',	
+		'/\[i\](.*?)\[\/i\]/ms',
+		'/\[u\](.*?)\[\/u\]/ms',
+		'/\[img\](.*?)\[\/img\]/ms',
+		'/\[video\](.*?)\[\/video\]/ms',
+		'/\[email\](.*?)\[\/email\]/ms',
+		'/\[url\="?(.*?)"?\](.*?)\[\/url\]/ms',
+		'/\[size\="?(.*?)"?\](.*?)\[\/size\]/ms',
+		'/\[color\="?(.*?)"?\](.*?)\[\/color\]/ms',
+		'/\[quote](.*?)\[\/quote\]/ms',
+		'/\[list\=(.*?)\](.*?)\[\/list\]/ms',
+		'/\[list\](.*?)\[\/list\]/ms',
+		'/\[\*\]\s?(.*?)\n/ms'
+	);
+	
+	$out = array(	 
+		'<strong>\1</strong>',
+		'<em>\1</em>',
+		'<u>\1</u>',
+		'<img src="\1" alt="\1" />',
+		'<iframe width="560" height="315" src="$1" allowfullscreen></iframe>',
+		'<a href="mailto:\1">\1</a>',
+		'<a href="\1">\2</a>',
+		'<span style="font-size:\1%">\2</span>',
+		'<span style="color:\1">\2</span>',
+		'<blockquote>\1</blockquote>',
+		'<ol start="\1">\2</ol>',
+		'<ul>\1</ul>',
+		'<li>\1</li>'
+	);
 
-	return $HTML;
+	$text = preg_replace($in, $out, $text);
+
+	$text = str_replace("http://www.youtube.com/watch?v=", "http://www.youtube.com/embed/", $text);
+	$text = str_replace("&amp;list=UUWDzmLpJP-z4qopWVA4qfTQ", "", $text);
+	$text = str_replace("&amp;index=1", "", $text);
+	$text = str_replace("&amp;index=2", "", $text);
+	$text = str_replace("&amp;index=3", "", $text);
+	$text = str_replace("&amp;index=4", "", $text);
+	$text = str_replace("&amp;index=5", "", $text);
+	$text = str_replace("&amp;index=6", "", $text);
+	$text = str_replace("&amp;index=7", "", $text);
+	$text = str_replace("&amp;index=8", "", $text);
+	$text = str_replace("&amp;index=9", "", $text);
+	$text = str_replace("&amp;feature=plcp", "", $text);
+	$text = str_replace("&amp;feature=related", "", $text);
+	$text = str_replace("&amp;feature=player_embedded", "", $text);
+	$text = str_replace("&amp;feature=fvwrel", "", $text);
+	$text = nl2br($text);
+	$text = str_replace("</span><br />", "</span>", $text);
+	$text = str_replace("</span>\r\n<br />", "</span>", $text);
+	$text = str_replace("</blockquote>\r\n<br />", "</blockquote>", $text);
+	$text = str_replace("<ul><br />", "<ul>", $text); 
+	$text = str_replace("</ul><br />", "</ul>", $text);
+	$text = str_replace("</ol><br />", "</ol>", $text);
+	$text = str_replace("<br />\n</li>", "</li>", $text);
+	$text = str_replace("</blockquote><br />", "</blockquote>", $text);
+	$text = str_replace("<span style=\"color: #000000\"><br />", "<span style=\"color: #000000\">", $text);
+	$text = str_replace("</code><br />", "</code>", $text);
+
+	if(!function_exists('removeBr')) {
+		function removeBr($s) {
+			return str_replace("<br />", "", $s[0]);
+		}
+	}
+
+	$text = preg_replace_callback('/<pre class="code">(.*?)<\/pre>/ms', "removeBr", $text);
+	$text = preg_replace('/<p><pre>(.*?)<\/pre><\/p>/ms', "<pre>\\1</pre>", $text);
+	
+	$text = preg_replace_callback('/<ul>(.*?)<\/ul>/ms', "removeBr", $text);
+	$text = preg_replace('/<p><ul>(.*?)<\/ul><\/p>/ms', "<ul>\\1</ul>", $text);
+	
+	return $text;
 }
 
 /**
@@ -112,10 +175,22 @@ function cleanHTML($HTML) {
  * @param string $text
  * @return string $text
  */ 
-function compress($string) {
-    $string = str_replace(array("\r\n", "\r", "\n", "\t", "  ", "    ", "    "), "", $string);
-        
-	return $string;	
+function compress($string, $filetype = NULL) {
+	if(is_null($filetype)) {
+	    return str_replace(array("\r\n", "\r", "\n", "\t", "  ", "    ", "    "), "", $string);      
+	} else {
+		global $Load;
+
+		if($filetype === 'css') {
+			$Load->library('cssmin', NULL, NULL, 'minify');
+			return CSSMin::minify($string);
+		} elseif($filetype === 'js') {
+			$Load->library('jsmin', NULL, NULL, 'minify');
+			return JSMin::minify($string);
+		}
+	}
+
+	return '';
 }
 
 /**
@@ -172,6 +247,25 @@ function cut($text, $length = 12, $type = "text", $slug = FALSE, $file = FALSE, 
 			}
 		}
 	}
+}
+
+function createURL($text)  {     
+    $result = ' '. $text; 
+    $result = preg_replace("#([\t\r\n ])([a-z0-9]+?){1}://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="\2://\3" target="_blank">\2://\3</a>', $result); 
+    $result = preg_replace("#([\t\r\n ])(www|ftp)\.(([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \"\n\r\t<]*)?)#i", '\1<a href="http://\2.\3" target="_blank">\2.\3</a>', $result); 
+    $result = preg_replace("#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $result); 
+
+    return substr($result, 1); 
+}
+
+function display($content = NULL, $environment = TRUE, $language = TRUE) {
+	if($content and ($environment === TRUE or _get("environment") === $environment) and $language === TRUE) {
+		return $content;
+	} elseif($content and ($environment === TRUE or _get("environment") === $environment) and $language === whichLanguage()) {
+		return $content;
+	}
+
+	return NULL;
 }
 
 function exploding($string, $URL = NULL, $separator = ",") {
@@ -292,6 +386,15 @@ function filter($text, $filter = FALSE) {
 	return $text;
 }
 
+function quotes($text) {
+	$text = str_replace("?s", "'s", $text);
+	$text = str_replace("?m", "'m", $text);
+	$text = str_replace("?t", "'t", $text);
+	$text = str_replace("s?", "s", $text); 
+
+	return $text;
+}
+
 function getBetween($content, $start, $end) {
     $array = explode($start, $content);
 
@@ -305,7 +408,7 @@ function getBetween($content, $start, $end) {
 }
 
 function getTotal($count, $singular, $plural) {
-	return ((int) $count === 0 or (int) $count > 1) ? (int) $count ." ". __(_($plural)) : (int) $count ." ". __(_($singular));
+	return ((int) $count === 0 or (int) $count > 1) ? (int) $count ." ". __($plural) : (int) $count ." ". __($singular);
 }
 
 function gravatar($email) {  
@@ -377,38 +480,37 @@ function getCode($code) {
 }
 
 function showContent($content) {
+	$content = str_replace('<hr />', "", $content);
+	$content = str_replace('<hr>', "", $content);
 	$content = str_replace("------", "", $content);
-	$content = str_replace("\\", "", $content);
+	$content = stripslashes($content);
 	
-	return setCode($content, TRUE);
+	return setCode($content, TRUE, TRUE);		
 }
 
 function setCode($HTML, $return = FALSE) {
-   	$codes = explode("[Code]", $HTML);
+	$HTML  = str_replace("[Code]", "[code]", $HTML);
+	$HTML  = str_replace("[/Code]", "[/code]", $HTML);
+	$HTML  = preg_replace('/<pre[^>]*>/ms', "[code]", $HTML);
+	$HTML  = preg_replace('/<\/pre>/ms', "[/code]", $HTML);
+
+   	$codes = explode("[code]", $HTML);
 
    	if(count($codes) > 1) {
    		for($i = 1; $i <= count($codes) - 1; $i++) {
    			if(isset($codes[$i])) {
-				$code = explode("[/Code]", $codes[$i]);
+				$code = explode("[/code]", $codes[$i]);
 
 		   		if(isset($code[0])) {
-		   	 		if($return) {
-		   				$code[0] = getCode($code[0]);
-		   			} else {
-			   			$code[0] = addslashes($code[0]);
-			   		}
+		   			$code[0] = ($return) ? stripslashes(getCode($code[0])) : $code[0];	
 		   		}
 
-		   		if($return) {
-		   			$codes[$i] = implode("", $code);
-		   		} else {
-		   			$codes[$i] = implode("[/Code]", $code);
-		   		}
+		   		$codes[$i] = ($return) ? implode("", $code) : implode("[/code]", $code);		   		
 		   	}	
 	   	}
    	} 	
-
-   	return ($return) ? implode("", $codes) : implode("[Code]", $codes);
+   	
+   	return ($return) ? implode("", $codes) : implode("[code]", $codes);
 }
 
 function randomString($length = 6) {  
@@ -484,6 +586,8 @@ function pageBreak($content, $URL = NULL) {
 	$content = str_replace('<!-- Pagebreak -->', "<!---->", $content);
 	$content = str_replace('<!--Pagebreak-->', "<!---->", $content);
 	$content = str_replace('------', "<!---->", $content);
+	$content = str_replace('<hr />', "<!---->", $content);
+	$content = str_replace('<hr>', "<!---->", $content);
 			
 	$parts = explode("<!---->", $content);
 
@@ -504,11 +608,15 @@ function pageBreak($content, $URL = NULL) {
  * @return mixed
  */ 
 function POST($position = FALSE, $coding = "decode", $filter = "escape") {
+	global $Load;
+
 	if($coding === "clean") {
 		return $_POST[$position];
 	} elseif($position === TRUE) {		
 		return $_POST;
 	} elseif(!$position) {
+		$Load->helper("debugging");
+
 		____($_POST);
 	} elseif(isset($_POST[$position]) and is_array($_POST[$position])) {
 		$POST = $_POST[$position];
@@ -553,6 +661,8 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
 			} else { 
 				$data = decode($_POST[$position]);
 				$data = str_replace("'", "\'", $data);
+				$data = str_replace("“", '"', $data);
+				$data = str_replace("”", '"', $data);
 				
 				$POST = $data;
 			}
@@ -565,11 +675,88 @@ function POST($position = FALSE, $coding = "decode", $filter = "escape") {
 				$POST = $_POST[$position];
 			}		
 		}	
+	} elseif(isset($_POST[$position]) and $_POST[$position] === 0) {
+		return 0;
 	} else {
 		return FALSE;
 	}
 
 	return $POST;
+}
+
+function GET($position = FALSE, $coding = "decode", $filter = "escape") {
+	global $Load;
+
+	if($coding === "clean") {
+		return $_GET[$position];
+	} elseif($position === TRUE) {		
+		return $_GET;
+	} elseif(!$position) {
+		$Load->helper("debugging");
+
+		____($_GET);
+	} elseif(isset($_GET[$position]) and is_array($_GET[$position])) {
+		$GET = $_GET[$position];
+	} elseif(isset($_GET[$position]) and $_GET[$position] === "") {
+		return NULL;
+	} elseif(isset($_GET[$position])) {
+		if($coding === "b64") {
+			$GET = base64_decode($_GET[$position]);
+		} elseif($coding === "unserialize") {
+			$GET = unserialize(base64_decode($_GET[$position]));
+		} elseif($coding === "encrypt") {
+			if($filter === TRUE) {
+				$GET = encrypt(encode($_GET[$position]));
+			} elseif($filter === "escape") {
+				$GET = encrypt(filter(encode($_GET[$position]), "escape"));
+			} else {
+				$GET = encrypt(filter(encode($_GET[$position]), TRUE));
+			}
+		} elseif($coding === "encode") {
+			if($filter === TRUE) {
+				$GET = encode($_GET[$position]);
+			} elseif($filter === "escape") {
+				$GET = filter(encode($_GET[$position]), "escape");
+			}  else {
+				$GET = filter(encode($_GET[$position]), TRUE);
+			}
+		} elseif($coding === "decode-encrypt") {
+			if($filter === TRUE) {
+				$GET = encrypt(filter($_GET[$position], TRUE));
+			} elseif($filter === "escape") {
+				$GET = encrypt(filter($_GET[$position], "escape"));
+			}  else {
+				$GET = encrypt($_GET[$position]);
+			}		
+		} elseif($coding === "decode") {	
+			if($filter === TRUE) {
+				$GET = filter(decode($_GET[$position]), TRUE);
+			} elseif($filter === "escape") {
+				$GET = filter(decode($_GET[$position]), "escape");
+			} elseif($filter === NULL) {
+				$GET = decode($_GET[$position]);
+			} else { 
+				$data = decode($_GET[$position]);
+				$data = str_replace("'", "\'", $data);
+				
+				$GET = $data;
+			}
+		} else {
+			if($filter === TRUE) {
+				$GET = filter($_GET[$position], TRUE);
+			} elseif($filter === "escape") {
+				$GET = filter($_GET[$position], "escape");
+			}  else {
+				$GET = $_GET[$position];
+			}		
+		}	
+	} elseif(isset($_GET[$position]) and $_GET[$position] === 0) {
+		return 0;
+	} else {
+		return FALSE;
+	}
+
+	return $GET;
 }
 
 /**
@@ -614,4 +801,8 @@ function removeSpaces($text, $trim = FALSE) {
 	}
 	
 	return $text;
+}
+
+function showLinks($content) {
+	return preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)@', '<a href="$1" target="_blank">$1</a>', $content);
 }

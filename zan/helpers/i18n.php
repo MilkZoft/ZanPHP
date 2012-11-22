@@ -40,7 +40,7 @@ if(!defined("_access")) {
  * @return string value
  */
 function __($text, $encode = TRUE) {
-	if(get("translation") === "gettext") {
+	if(_get("translation") === "gettext") {
 		global $Gettext_Reader;
 		
 		if(is_null($Gettext_Reader)) {
@@ -59,17 +59,20 @@ function __($text, $encode = TRUE) {
 
 		$position = strtolower(str_replace(" ", "_", $text)); 
 		$position = strtolower(str_replace("?,", "", $position));
+		$position = strtolower(str_replace("?", "", $position));
 		$position = strtolower(str_replace("!", "", $position));
 		$position = strtolower(str_replace("¡", "", $position));
 		$position = strtolower(str_replace("¿", "", $position));
 		$position = strtolower(str_replace(",", "", $position));
 		$position = strtolower(str_replace(":", "", $position));
 		$position = strtolower(str_replace("'", "", $position));
-
+		$position = strtolower(str_replace('"', "", $position));
+		$position = strtolower(str_replace('.', "", $position));
+		
 		if(isset($phrase[$position])) {
 			return ($encode) ? encode($phrase[$position]) : $phrase[$position];
 		} else {
-			if($language !== "English") {
+			if($language !== "English" and !_get("production")) {
 				$content = "";
 				$logfile = "www/lib/languages/". strtolower($language) . ".txt"; 
 				$today	 = date("d/m/Y");
@@ -110,7 +113,7 @@ function getLanguage($lang, $flags = FALSE) {
 	foreach($languages as $language) {
 		if($flags) {
 			if($language["language"] === $lang) {
-				return '<img class="flag no-border" src="'. get("webURL") .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __($lang) .'" />';	
+				return '<img class="flag no-border" src="'. _get("webURL") .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __($lang) .'" />';	
 			}
 		} else {
 			if($language["language"] === $lang) {
@@ -158,15 +161,15 @@ function whichLanguage($invert = TRUE, $lower = FALSE) {
 		} elseif(segment(0) and getLang(segment(0), TRUE)) { 
 			return ($lower) ? strtolower(getLang(segment(0), TRUE)) : getLang(segment(0), TRUE);
 		} elseif(!$invert) {
-			return getLang(get("webLanguage"));
+			return getLang(_get("webLanguage"));
 		} else {
-			return ($lower) ? strtolower(get("webLanguage")) : get("webLanguage");
+			return ($lower) ? strtolower(_get("webLanguage")) : _get("webLanguage");
 		}	
 	} else {
 		if(!$invert) {
-			return getLang(get("webLanguage"));
+			return getLang(_get("webLanguage"));
 		} else {
-			return ($lower) ? strtolower(get("webLanguage")) : get("webLanguage");
+			return ($lower) ? strtolower(_get("webLanguage")) : _get("webLanguage");
 		}	
 	}
 }
@@ -177,7 +180,7 @@ function getLanguages($flags = FALSE) {
 	$languages = getLanguagesFromDir();
 
 	foreach($languages as $language) {
-		$default = ($language["language"] === get("webLanguage")) ? TRUE : FALSE;
+		$default = ($language["language"] === _get("webLanguage")) ? TRUE : FALSE;
 
 		$data[] = array("default" => $default, "name" => $language["language"], "value" => getLanguage($language["language"], $flags));
 	}
@@ -190,7 +193,7 @@ function getLanguagesInput($lang = NULL, $name = "language", $input = "radio") {
 	$HTML = NULL;
 
 	if($input === "select") {
-		$HTML = '<select name="'. $name .'" size="1">';
+		$HTML = '<select id="language" name="'. $name .'" size="1">';
 	}
 
 	foreach($languages as $language) {

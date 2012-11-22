@@ -41,25 +41,25 @@ if(!defined("_access")) {
  */
 function getAlert($message, $type = "error", $URL = NULL) {
 	if(!is_null($URL)) {
-		$message = a(__(_($message)), encode($URL), TRUE);
+		$message = a(__($message), encode($URL), TRUE);
 	}
 	
 	if($type === "error") {
 		return '<div id="alert-message" class="alert alert-error">
-					'. __(_($message)) .'
+					'. __($message) .'
 				</div>';
 	} elseif($type === "success") {
 		unset($_POST);
 		return '<div id="alert-message" class="alert alert-success">
-					'. __(_($message)) .'
+					'. __($message) .'
 				</div>';
 	} elseif($type === "warning") {
 		return '<div id="alert-message" class="alert alert-warning">
-					'. __(_($message)) .'
+					'. __($message) .'
 				</div>';
 	} elseif($type === "notice") {
 		return '<div id="alert-message" class="alert alert-info">
-					'. __(_($message)) .'
+					'. __($message) .'
 				</div>';
 	}
 }

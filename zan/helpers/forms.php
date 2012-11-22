@@ -122,7 +122,11 @@ function formInput($attributes = FALSE) {
 			} elseif($attribute === "events") {
 				$attrs .= ' '. $value .' ';
 			} elseif($attribute !== "type" and $attribute !== "p" and $attribute !== "field") {
-				$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
+				if(!preg_match('/"/', $value)) {
+					$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
+				} else {
+					$attrs .= ' '. strtolower($attribute) ."='". $value ."'";
+				}
 			} else {
 				$$attribute = $value;
 			}
@@ -149,6 +153,8 @@ function formInput($attributes = FALSE) {
 				$HTML = '<input'. $attrs .' type="image" /> ' . "\n";
 			} elseif($type === "reset") {
 				$HTML = '<input'. $attrs .' type="reset" /> ' . "\n";
+			} elseif($type === "url") {
+				$HTML = '<input'. $attrs .' type="url" /> ' . "\n";
 			} else {
 				$HTML = '<input'. $attrs .' type="text" /> ' . "\n";
 			}
@@ -210,12 +216,13 @@ function formLabel($for, $text, $br = TRUE) {
  * @param string $enctype = "multipart/form-data"
  * @returns string $HTML
  */	
-function formOpen($action = NULL, $class = "forms", $ID = NULL, $legend = NULL, $method = "post", $enctype = "multipart/form-data") {	
-	$ID     = (isset($ID))     ? ' id="'. $ID .'"' 			  			 : NULL;
-	$legend = (isset($legend)) ? "<legend>$legend</legend>" . "\n" : NULL;
-	$action = (strstr($action, "http://")) ? $action : get("webBase") . "/" . $action;
+function formOpen($action = NULL, $class = "forms", $ID = NULL, $legend = NULL, $method = "post", $enctype = NULL) {	
+	$ID      = (isset($ID))     ? ' id="'. $ID .'"' 			  			 : NULL;
+	$legend  = (isset($legend)) ? "<legend>$legend</legend>" . "\n" : NULL;
+	$action  = (strstr($action, "http://")) ? $action : _get("webBase") . "/" . $action;
+	$enctype = (!is_null($enctype)) ? ' enctype="'. $enctype .'"' : NULL;
 	
-	$HTML  = '<form'. $ID .' action="'. $action .'" method="'. $method .'" class="'. $class .'" enctype="'. $enctype .'">' . "\n\t";
+	$HTML  = '<form'. $ID .' action="'. $action .'" method="'. $method .'" class="'. $class .'"'. $enctype .'>' . "\n\t";
 	$HTML .= '<fieldset>' . "\n\t\t";
 	$HTML .= $legend . "\n";			
 
@@ -413,17 +420,9 @@ function formTextarea($attributes = FALSE) {
 }
 
 function formSave($action = NULL) {
-	if($action === "save") {
-		$href = path(segment(0, isLang()) ."/cpanel/add/");
-	} else {
-		$href = path(segment(0, isLang()) ."/cpanel/edit/". segment(3, isLang()));
-	} 
-	
-	$onclick = 'onclick="document.getElementById(\'form-add\').target=\'\'; document.getElementById(\'form-add\').action=\''. $href .'\'"';
-	
 	$HTML = '	
 		<p class="save-cancel">
-			<input id="'. $action .'" name="'. $action .'" value="'. __(ucfirst($action)) .'" '. $onclick .' type="submit" class="btn btn-success">
+			<input id="'. $action .'" name="'. $action .'" value="'. __(ucfirst($action)) .'" type="submit" class="btn btn-success">
 			<input id="cancel" name="cancel" value="'. __("Cancel") .'" type="submit" class="btn btn-danger" />
 		</p>';
 	

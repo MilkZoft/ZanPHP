@@ -36,7 +36,7 @@ function COOKIE($cookie, $value = FALSE, $time = 300000, $redirect = FALSE, $URL
 		setcookie($cookie, filter($value), time() + $time, "/");
 	
 		if($redirect) {
-			redirect(isset($URL) ? $URL : get("webBase"));		
+			redirect(isset($URL) ? $URL : _get("webBase"));		
 		}
 	} else {
 		if(isset($_COOKIE[$cookie])) {

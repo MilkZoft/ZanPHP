@@ -90,7 +90,7 @@ function isIP($IP) {
 
 function isSPAM($string, $max = 1) {
 	$words = array(	
-		"http", "www", ".com", ".mx", ".org", ".net", ".co.uk", ".jp", ".ch", ".info", ".me", ".mobi", ".us", ".biz", ".ca", ".ws", ".ag", 
+		"www", ".co.uk", ".jp", ".ch", ".info", ".mobi", ".us", ".ca", ".ws", ".ag", 
 		".com.co", ".net.co", ".com.ag", ".net.ag", ".it", ".fr", ".tv", ".am", ".asia", ".at", ".be", ".cc", ".de", ".es", ".com.es", ".eu", 
 		".fm", ".in", ".tk", ".com.mx", ".nl", ".nu", ".tw", ".vg", "sex", "porn", "fuck", "buy", "free", "dating", "viagra", "money", "dollars", 
 		"payment", "website", "games", "toys", "poker", "cheap"
@@ -99,14 +99,14 @@ function isSPAM($string, $max = 1) {
     $count = 0;
     
     $string = strtolower($string);
-     
+    
     if(is_array($words)) {
 		foreach($words as $word) {
 			$count += substr_count($string, $word);
 		}
 	}
 	
-	return ($count >= $max) ? TRUE : FALSE;
+	return ($count > $max) ? TRUE : FALSE;
 }
 
 function isVulgar($string, $max = 1) {	
@@ -171,12 +171,8 @@ function isController($controller, $application = NULL, $principal = FALSE) {
 
 		$file = "www/applications/$application/controllers/$controller.php";
 
-		if(file_exists($file)) {
-			return TRUE;	
-		}
+		return file_exists($file) ? TRUE : FALSE;		
 	}
-
-	return FALSE;
 }
 
 function isLeapYear($year) {

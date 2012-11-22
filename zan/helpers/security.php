@@ -40,7 +40,7 @@ if(!defined("_access")) {
  * @param boolean $uppercase
  * @return string value
  */
-function code($max = 10, $uppercase = TRUE) {
+function code($max = 10, $uppercase = TRUE) {	
 	return ($uppercase) ? strtoupper(substr(md5(date("Y-m-d H:i:s", time())), 0, $max)) : substr(md5(date("Y-m-d H:i:s", time())), 0, $max);
 }
 

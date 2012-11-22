@@ -82,7 +82,7 @@ function getHour($date) {
 }
 
 function getSeconds($time) {
-	return intval($time	/ 1000) ." ". __(_("seconds"));
+	return intval($time	/ 1000) ." ". __("seconds");
 }
 
 function getTime($date) {
@@ -131,7 +131,7 @@ function howLong($value) {
 	$time = time() - $value;
 	
 	if($time >= 2116800) {
-		$date = __(_("on")) ." ". now(2);
+		$date = __("on") ." ". now(2);
 	}
 
 	if($time < 30242054.045) {
@@ -146,6 +146,8 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." mois";
 			} elseif($language === "Portuguese") {
 				$date = "há ". $rTime ." meses";
+			} elseif($language === "Italian") {
+				$date = $rTime ." mesi";
 			}
 		} else {	
 			if($language === "English") {
@@ -156,6 +158,8 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." mois";		
 			} elseif($language === "Portuguese") {
 				$date = $rTime ." m&ecirc;s atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." mese fa";
 			}
 		}
 	}
@@ -172,6 +176,8 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." semaines";		
 			} elseif($language === "Portuguese") {
 				$date = $rTime ." semanas atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." settimane fa";
 			}
 		} else {
 			if($language === "English") {
@@ -182,6 +188,8 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." semaine";
 			} elseif($language === "Portuguese") {
 				$date = $rTime ." semana atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." settimana fa";
 			}
 		}
 	}
@@ -190,11 +198,11 @@ function howLong($value) {
 		$rTime = (int) round($time / 86400);
 		
 		if($rTime === 1) {
-			$date = __(_("yesterday"));				
+			$date = __("yesterday");				
 		}
 		
 		if($rTime === 2) {
-			$date = __(_("before yesterday"));		
+			$date = __("before yesterday");		
 		}
 		
 		if($rTime > 2) {
@@ -206,6 +214,8 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." jours";
 			} elseif($language === "Portuguese") {
 				$date = $rTime ." dias atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." giorni fa";
 			}
 		}
 	}
@@ -221,7 +231,9 @@ function howLong($value) {
 			} elseif($language === "French") {
 				$date = "il ya ". $rTime ." heures";
 			} elseif($language === "Portuguese") {
-				$date =  $rTime ." horas atr&aacute;s";
+				$date = $rTime ." horas atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." ore fa";
 			}
 		} else {
 			if($language === "English") {
@@ -232,11 +244,13 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." heures";
 			} elseif($language === "Portuguese") {
 				$date = $rTime ." hora atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." ora fa";
 			}
 		}
 		
 		if($time > 4200 and $time < 5400) {
-			$date = __(_("more than an hour ago"));
+			$date = __("more than an hour ago");
 		}
 	}
 
@@ -252,6 +266,8 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." minutes";
 			} elseif($language === "Portuguese") {
 				$date = $rTime ." minutos atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." minuti fa";
 			}
 		} else {
 			if($language === "English") {
@@ -262,6 +278,8 @@ function howLong($value) {
 				$date = "il ya ". $rTime ." minute";
 			} elseif($language === "Portuguese") {
 				$date = $rTime ." minuto atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $rTime ." minuto fa";
 			}
 		}
 		
@@ -274,11 +292,13 @@ function howLong($value) {
 				$date = "il ya ". $time ." secondes";
 			} elseif($language === "Portuguese") {
 				$date = $time ." segundos atr&aacute;s";
+			} elseif($language === "Italian") {
+				$date = $time ." secondi fa";
 			}
 		}
 		
 		if($time <= 3) {
-			$date = __(_("now"));
+			$date = __("now");
 		}
 	}
 	
@@ -289,29 +309,29 @@ function month($month) {
 	$month = (int) $month;
 	
 	if($month === 1) {
-		return __(_("January"));
+		return __("January");
 	} elseif($month === 2) {
-		return __(_("February"));
+		return __("February");
 	} elseif($month === 3) {
-		return __(_("March"));
+		return __("March");
 	} elseif($month === 4) {
-		return __(_("April"));
+		return __("April");
 	} elseif($month === 5) {
-		return __(_("May"));
+		return __("May");
 	} elseif($month === 6) {
-		return __(_("June"));
+		return __("June");
 	} elseif($month === 7) {
-		return __(_("July"));
+		return __("July");
 	} elseif($month === 8) {
-		return __(_("August"));
+		return __("August");
 	} elseif($month === 9) {
-		return __(_("September"));
+		return __("September");
 	} elseif($month === 10) {
-		return __(_("October"));
+		return __("October");
 	} elseif($month === 11) {
-		return __(_("November"));
+		return __("November");
 	} elseif($month === 12) {
-		return __(_("December"));
+		return __("December");
 	}
 }
 
@@ -320,7 +340,7 @@ function now($format, $hour = FALSE, $language = NULL) {
 		$language = whichLanguage();
 	}
 	
-	if($hour) {	
+	if($hour === TRUE) {	
 		$time	 = time() + 7200;
 		$hours 	 = (int) date("H", $time);
 		$minutes = date("i", $time);
@@ -349,8 +369,8 @@ function now($format, $hour = FALSE, $language = NULL) {
 	if($format === 1) {					
 		return date("d") . _sh . date("m") . _sh . date("y");
 	} elseif($format === 2) {					
-		$day   = __(_(date("l"))); 
-		$month = __(_(date("F")));			
+		$day   = __(date("l")); 
+		$month = __(date("F"));			
 				
 		if($language === "English") {
 			return "$day, $month ". date("d") .", ". date("Y");
@@ -368,10 +388,10 @@ function now($format, $hour = FALSE, $language = NULL) {
 	} elseif($format === 5) {
 		return strtotime($hour);
 	} elseif($format === 6) {
-		return date("d/m/Y H:i:s", $hour);
+		return date("m/d/Y H:i:s", time());
 	} elseif($format === 7) {
-		return date("Y-m-d H:i:s");
+		return date("Y-m-d H:i:s", time());
 	} else {
-		return date("d/m/Y", $format);				  
+		return date("d/m/Y", time());				  
 	}
 }
