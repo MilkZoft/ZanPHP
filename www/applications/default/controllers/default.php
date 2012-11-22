@@ -26,6 +26,8 @@ class Default_Controller extends ZP_Load {
 	}
 
 	public function show($message) {
+		$this->title("ZanPHP");
+		
 		$vars["message"] = $message;
 		$vars["view"] = $this->view("show", TRUE);
 
