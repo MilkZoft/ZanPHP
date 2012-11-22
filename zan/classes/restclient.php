@@ -82,11 +82,13 @@ class ZP_RESTClient extends ZP_Load {
 	}
 
 	public function GET($return = FALSE) {
-		if(is_null($this->URL)) {
+		if(is_null($this->URL)) { die("Si");
 			return FALSE;
 		}
+
+		$ch = curl_init($this->URL);
 		
-		if($ch = curl_init($this->URL)) {
+		if($ch) {
 			curl_setopt($ch, CURLOPT_URL, $this->URL);
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, TRUE);
 			
@@ -96,7 +98,7 @@ class ZP_RESTClient extends ZP_Load {
 			}
 			
 			$response = curl_exec($ch);
-
+			
 			$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			
 			curl_close($ch);
@@ -105,12 +107,8 @@ class ZP_RESTClient extends ZP_Load {
 				if($return) {
 					return $response;
 				}
-				____($response);
-				if(strstr($response, "xml")) {
-					return new SimpleXMLElement($response);
-				} else {
-					return json_decode($response);
-				}
+				
+				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, TRUE);				
 			}
 		} 
 		
@@ -143,11 +141,7 @@ class ZP_RESTClient extends ZP_Load {
 					return $response;
 				}
 				
-				if(strstr($response, "xml")) {
-					return new SimpleXMLElement($response);
-				} else { 
-					return json_decode($response);
-				}
+				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, TRUE);
 			}
 		} 
 		
@@ -183,11 +177,7 @@ class ZP_RESTClient extends ZP_Load {
 					return $response;
 				}
 				
-				if(strstr($response, "xml")) {
-					return new SimpleXMLElement($response);
-				} else {
-					return json_decode($response);
-				}
+				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, TRUE);
 			}
 		} 
 		
@@ -207,13 +197,7 @@ class ZP_RESTClient extends ZP_Load {
 	}
 	
 	public function setURL($URL) {
-		if(substr($URL, 0, 7) !== "http://") {
-			$this->URL = "http://" . $URL;
-		} elseif(substr($URL, 0, 8) === "https://") {
-			$this->URL = "https://" . $URL;
-		} else {
-			$this->URL = $URL;
-		}
+		$this->URL = $URL;
 	}
 		
 }

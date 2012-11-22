@@ -220,7 +220,7 @@ class ZP_Db extends ZP_Load {
      * @return void
      */
 	public function connect() {
-		$this->db = get("db");
+		$this->db = _get("db");
 		
 		if(!file_exists("www/config/database.php")) {
 			getException("You must rename and configure your 'config/database.php'");
@@ -297,7 +297,7 @@ class ZP_Db extends ZP_Load {
 	public function countAll($table = NULL) {
 		$this->table($table);
 		
-		$query = "SELECT COUNT(*) AS Total FROM $this->table";	
+		$query = "SELECT COUNT(1) AS Total FROM $this->table";	
 		
 		$data = $this->data($query);
 		
@@ -316,7 +316,7 @@ class ZP_Db extends ZP_Load {
 
 		$this->table($table);
 		
-		$query = "SELECT COUNT(*) AS Total FROM $this->table WHERE $SQL";
+		$query = "SELECT COUNT(1) AS Total FROM $this->table WHERE $SQL";
 			
 		$data = $this->data($query);
 		
@@ -387,7 +387,7 @@ class ZP_Db extends ZP_Load {
 			$this->table($table);
 		}
 		
-		if($this->db["dbDriver"] === "odbc_mssql") {
+		if($ZP["db"]["dbDriver"] === "odbc_mssql") {
 			$query = "DELETE TOP ($limit) FROM $this->table WHERE $field = '$value'";
 		} else {
 			$query = "DELETE FROM $this->table WHERE $field = '$value'";
@@ -396,7 +396,7 @@ class ZP_Db extends ZP_Load {
 				$query .= " LIMIT $limit";
 			}
 		}
-
+		
 		return ($this->Database->query($query)) ? TRUE : FALSE;
 	}
 		
@@ -653,7 +653,7 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$query = "SELECT $this->fields FROM $this->table WHERE $SQL";
-		
+	
 		return $this->data($query);
 	}
 	
@@ -758,7 +758,8 @@ class ZP_Db extends ZP_Load {
 		}
 		
 		$_where = rtrim($_where, "AND ");
-				
+		$table  = $this->getTable($table);
+
 		$query = ($limit === 0 and $offset === 0) ? "$this->select FROM $table WHERE $_where" : "SELECT $this->fields FROM $table WHERE $_where LIMIT $limit, $offset"; 
 		
 		return $this->data($query);
@@ -807,7 +808,7 @@ class ZP_Db extends ZP_Load {
 		} else {
 			return FALSE;
 		}	
-	
+		
 		$this->Rs = $this->Database->query($query);
 
 		if($this->Rs) {

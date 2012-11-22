@@ -198,6 +198,18 @@ class ZP_Load {
 			getException("$driver driver does not exists");
 		}	
 	}
+
+	public function db($type = "db") { 
+		if(strtolower($type) === "db") {
+			return $this->core("Db");			
+		} elseif(strtolower($type) === "mongodb" or strtolower($type) === "mongo") {
+			return $this->core("MongoDB");
+		} elseif(strtolower($type) === "couchdb" or strtolower($type) === "couch") {
+			return $this->core("CouchDB");
+		} elseif(strtolower($type) === "cassandra") {
+			return $this->core("Cassandra");
+		}
+	}
 	
 	public function exception($exception) {
 		$exception = strtolower($exception);
@@ -352,10 +364,10 @@ class ZP_Load {
      * @param bool   $getJs       = FALSE
      * @return void
      */
-	public function js($script, $application = NULL, $extra = NULL, $getJs = FALSE) {
+	public function js($script, $application = NULL, $getJs = FALSE) {
 		$this->Templates = $this->core("Templates");
 		
-		$this->Templates->js($script, $application, $extra, $getJs);
+		return $this->Templates->js($script, $application, $getJs);
 	}
 	
     /**
@@ -390,7 +402,7 @@ class ZP_Load {
 		if(file_exists(_corePath ."/libraries/$application/$name.php")) {
 			include_once _corePath ."/libraries/$application/$name.php";	
 		} elseif(file_exists(_corePath ."/libraries/$className/$name.php")) {
-			include_once _corePath ."/libraries/$lib/$name.php";	
+			include_once _corePath ."/libraries/$className/$name.php";	
 		} elseif(file_exists("www/applications/$application/libraries/$name.php")) {
 			include_once "www/applications/$application/libraries/$name.php";				
 		} else {
@@ -443,7 +455,7 @@ class ZP_Load {
      *
      * @return void
      */
-	public function rendering() {
+	public function rendering() { 
 		$numArgs = func_num_args();
 		$args    = func_get_args();
 		
@@ -548,11 +560,9 @@ class ZP_Load {
 			$this->views[$i]["vars"] = FALSE;		
 		}
 		
-		if($name !== "include" and get("autoRender")) {
+		if($name !== "include" and _get("autoRender")) {
 			$this->rendering();
-		} elseif($name === "include") {
-			$this->rendering();
-		}
+		} 
 	}
 	
     /**
@@ -581,18 +591,13 @@ class ZP_Load {
 	public function vars($vars) {
 		$this->Templates->vars($vars);
 	}
+
         
-        public function meta($title = NULL, $description = NULL, $keywords = NULL, $language = NULL) {
-            $this->Templates = $this->core("Templates");
+    public function meta($tag, $value) {
+        $this->Templates = $this->core("Templates");
             
-            $this->Templates->meta($title, $description, $keywords, $language);
-        }
-        
-        public function setMeta($tag, $value) {
-            $this->Templates = $this->core("Templates");
-            
-            $this->Templates->setMeta($tag, $value);
-        }
+        $this->Templates->meta($tag, $value);
+    }
 	
     /**
      * Loads a view
@@ -629,7 +634,7 @@ class ZP_Load {
 				if($return) {
 					$output = ob_get_contents();
 
-					ob_end_clean();
+					ob_clean();
 
 					return $output;
 				}
