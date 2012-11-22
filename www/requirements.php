@@ -21,7 +21,7 @@ if(file_exists(_dir ."/config/config.php")) {
 	die("Error: config.php doesn't exists");
 }
 
-if($ZP["production"]) { 
+if($ZP["environment"] > 2) { 
 	error_reporting(FALSE);
 
 	ini_set("display_errors", FALSE); 
@@ -35,6 +35,4 @@ if($ZP["production"]) {
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 }
 
-include _corePath ."/classes/load.php"; 
-include _corePath ."/classes/controller.php"; 
-include _corePath ."/classes/model.php";
+include _corePath ."/classes/load.php";

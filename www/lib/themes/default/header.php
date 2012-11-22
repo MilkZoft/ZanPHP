@@ -49,6 +49,7 @@
 		<div class="container">
 			<div class="content">
 				<div class="page-header">
+          <br /><br />
 					<h1>ZanPHP <small>PHP5 Framework</small></h1>
 				</div>
 				
