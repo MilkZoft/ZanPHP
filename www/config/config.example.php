@@ -26,6 +26,7 @@ $ZP["benchMark"]	= FALSE;
  *  4. Production
  */
 $ZP["environment"] = 1;
+$ZP["optimization"] = FALSE;
 $ZP["domain"] 	   = FALSE;
 $ZP["modRewrite"]  = FALSE;
 $ZP["autoRender"]  = TRUE;
