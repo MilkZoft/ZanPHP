@@ -72,28 +72,6 @@ function __($text, $encode = TRUE) {
 		if(isset($phrase[$position])) {
 			return ($encode) ? encode($phrase[$position]) : $phrase[$position];
 		} else {
-			if($language !== "English" and !_get("production")) {
-				$content = "";
-				$logfile = "www/lib/languages/". strtolower($language) . ".txt"; 
-				$today	 = date("d/m/Y");
-
-				if(file_exists($logfile)) {
-					$content = file_get_contents($logfile);
-				}
-
-				$file = fopen($logfile, "a+");
-				$pos  = strrpos($content, "$today");
-
-				if($pos !== FALSE) {
-					if(!@preg_match("/\\b" . addslashes($position) . "\\b/i", substr($content, $pos + 14))) {
-						fwrite($file, "$position\r\n");
-					}
-				} else {
-					fwrite($file, "--- $today ---\r\n");
-					fwrite($file, "$position\r\n");
-				}
-			}
-
 			return $text;
 		}
 	}
