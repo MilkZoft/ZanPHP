@@ -84,7 +84,7 @@ function formField($a = NULL, $text, $raquo = TRUE) {
 	
 	if(!is_null($a)) {
 		$HTML  = '<p class="field">' . "\n";
-		$HTML .= "\t" . '<a href="'. $a .'">'. $raquo . $text .'</a>' . "\n";
+		$HTML .= "\t" . '<a '. $a .'>'. $raquo . $text .'</a>' . "\n";
 		$HTML .= '</p>' . "\n";
 	} else {
 		$HTML  = '<p class="field">' . "\n";
@@ -259,20 +259,32 @@ function formRadio($attributes, $options = FALSE) {
 		if(is_array($options)) {
 			$HTML = NULL;
 
-			foreach($options as $attribute) {
-				$check = (isset($attribute["checked"]) and $attribute["checked"]) ? ' checked="checked"' : NULL;
-		
-				$HTML .= ' <input '. $attrs .' value="'. $attribute["value"] .'" type="radio"'. $check .' />'. $attribute["value"];
+			foreach($options as $option) {
+				if(is_array($option)) { 
+					foreach($option as $attribute) {
+						if($attribute["default"]) {
+							$check = ' checked="checked"';
+						} else {
+							$check = NULL;	
+						}
+
+						$HTML .= ' <input '. $attrs .' value="'. $attribute["name"] .'" type="radio"'. $check .' />'. $attribute["value"];
+					}					
+				}	
 			}
 		} else {
-			$check = (isset($checked) and $checked) ? ' checked="checked"' : NULL;
-		
+			if(isset($checked) and $checked) {
+				$check = ' checked="checked"';
+			} else {
+				$check = NULL;
+			}
+
 			if(isset($position) and $position === "left" and isset($text)) {
-				$HTML = $text .' <input'. $attrs .' type="radio"'. $check .' />';
+				$HTML = $text . ' <input'. $attrs .' type="radio"'. $check .' />';
 			} elseif(isset($position) and $position === "right" and isset($text)) {
 				$HTML = '<input'. $attrs .' type="radio"'. $check .' /> '. $text;
 			} elseif(isset($text)) {
-				$HTML = $text .' <input'. $attrs .' type="radio"'. $check .' />';
+				$HTML = $text . ' <input'. $attrs .' type="radio"'. $check .' />';
 			} else {
 				$HTML = '<input'. $attrs .' type="radio"'. $check .' />';
 			}	
@@ -415,4 +427,97 @@ function formSave($action = NULL) {
 		</p>';
 	
 	return $HTML;
+}
+
+/**
+ * formCaptcha
+ * 
+ * Generate a captcha to validate forms
+ * 
+ * @param array   $attributes   = [$p, $field, $name, $class, ...]
+ * @param boolean $alphanumeric = "No"
+ * @returns string $HTML
+ */		 
+function formCaptcha($attributes = FALSE, $alphanumeric = FALSE) {
+	$hash = md5(getURL());
+	$HTML = '<input type="hidden" name="captcha_token" value="'. $hash .'" />';
+	$HTML .= '<input type="hidden" name="captcha_type" value="'. ($alphanumeric ? 'alphanumeric' : 'aritmethic') .'" />';
+	
+	if(!$alphanumeric) {
+		$attributes["style"] = (isset($attributes["style"]) ? $attributes["style"] : '') . "max-width: 50px; text-align: center;";
+		$attributes["type"]  = "number";
+
+		$num1 = rand(1, 9);
+		$num2 = rand(1, 9);
+
+		switch(rand(1, 3)) {
+			case 1:
+				$operation = '-';
+				$answer    = $num1 - $num2;
+			break;
+
+			default:
+				$operation = '+';
+				$answer    = $num1 + $num2;
+		}
+
+		$HTML .= __("How much is ") . (rand(0, 1) === 0 ? $num1 : num2str($num1, TRUE)) .' '. $operation .' '. (rand(0, 1) === 0 ? $num2 : num2str($num2, TRUE)) .'? ';
+
+	} else {
+		$attributes["style"] = (isset($attributes["style"]) ? $attributes["style"] : '') . "max-width: 200px; text-align: center;";
+
+		$answer 	= "";
+		$characters = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+							"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+							"1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
+
+		for($i = 0; $i < 5; $i++) {
+			$answer .= $characters[rand(0, count($characters) - 1)];
+		}
+
+		$HTML .= '<img src="'. path("captcha/$hash") .'" /><br />';
+	}
+
+	SESSION("ZanCaptcha$hash", $answer);
+
+	if(isset($attributes) and is_array($attributes)) {
+		$attrs = NULL;
+		
+		foreach($attributes as $attribute => $value) {
+			if($attribute === "required") {
+				$attrs .= ' required ';
+			} elseif($attribute === "events") {
+				$attrs .= ' '. $value .' ';
+			} elseif($attribute !== "p" and $attribute !== "field") {
+				if(!preg_match('/"/', $value)) {
+					$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
+				} else {
+					$attrs .= ' '. strtolower($attribute) ."='". $value ."'";
+				}
+			} else {
+				$$attribute = $value;
+			}
+		}
+		
+		$HTML .= '<input'. $attrs .' type="text" /> ' . "\n";
+
+		if(isset($p) and $p and isset($field)) {
+			$HTML = '	<p>
+							<span class="field">&raquo; '. $field .'</span><br />
+							'. $HTML .'
+						</p>';
+		} elseif(isset($p) and $p) {
+			$HTML = '	<p>
+							'. $HTML .'
+						</p>';
+		} elseif(isset($field)) {
+			$HTML = '<span class="field">&raquo; '. $field .'</span><br />'. $HTML .'';
+		}
+
+		return $HTML;
+	} elseif($attributes) {
+		return $HTML .'<input name="'. $attributes .'" type="text" />' . "\n";
+	} else {
+		return NULL;	
+	}
 }

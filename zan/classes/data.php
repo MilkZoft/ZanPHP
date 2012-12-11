@@ -86,6 +86,18 @@ class ZP_Data extends ZP_Load {
 					if(!isEmail(POST($field))) {
 						return array("error" => getAlert("$field is not a valid email"));
 					}
+				} elseif($validation === "captcha?") {
+					if(!POST("captcha_token") or !POST("captcha_type")) {
+						return array("error" => getAlert(POST("captcha_type") === "aritmethic" ? "Please enter your answer again" : "Please type the characters you see in the picture"));
+					} elseif(POST("captcha_type") === "aritmethic") {
+						if(SESSION("ZanCaptcha". POST("captcha_token")) !== (int)POST($field)) {
+							return array("error" => getAlert("Your answer was incorrect"));
+						}
+					} else {
+						if(SESSION("ZanCaptcha". POST("captcha_token")) !== POST($field)) {
+							return array("error" => getAlert("The characters did not match the picture"));
+						}
+					}
 				} elseif($validation === "injection?") {
 					if(isInjection(POST($field))) {
 						return array("error" => getAlert("SQL/HTML injection attempt blocked"));

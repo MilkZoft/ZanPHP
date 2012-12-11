@@ -833,3 +833,56 @@ function social($URL, $content, $facebook = TRUE, $twitter = TRUE, $gPlus = TRUE
 function showLinks($content) {
 	return preg_replace('@(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)@', '<a href="$1" target="_blank">$1</a>', $content);
 }
+
+function num2str($number, $translate = FALSE, $function = FALSE) {
+	switch($number) {
+		case 1:
+			$string = "one";
+		break;
+		
+		case 2:
+			$string = "two";
+		break;
+		
+		case 3:
+			$string = "three";
+		break;
+		
+		case 4:
+			$string = "four";
+		break;
+		
+		case 5:
+			$string = "five";
+		break;
+		
+		case 6:
+			$string = "six";
+		break;
+		
+		case 7:
+			$string = "seven";
+		break;
+		
+		case 8:
+			$string = "eight";
+		break;
+		
+		case 9:
+			$string = "nine";
+		break;
+		
+		default:
+			$string = "zero";
+	}
+
+	if($translate) {
+		$string = __($string);
+	}
+
+	if($function) {
+		$string = $funciont($string);
+	}
+
+	return $string;
+}
