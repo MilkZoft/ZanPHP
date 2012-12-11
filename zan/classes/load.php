@@ -177,10 +177,10 @@ class ZP_Load {
      * @param bool $print = FALSE
      * @return void
      */
-	public function CSS($CSS = NULL, $application = NULL, $print = FALSE) {
+	public function CSS($CSS = NULL, $application = NULL, $print = FALSE, $top = FALSE) {
 		$this->Templates = $this->core("Templates");
 	
-		$this->Templates->CSS($CSS, $application, $print);
+		$this->Templates->CSS($CSS, $application, $print, $top);
 	}
 
 	public function driver($driver = NULL, $type = "db") {
@@ -364,10 +364,10 @@ class ZP_Load {
      * @param bool   $getJs       = FALSE
      * @return void
      */
-	public function js($script, $application = NULL, $getJs = FALSE) {
+	public function js($script, $application = NULL, $getJs = FALSE, $top = FALSE) {
 		$this->Templates = $this->core("Templates");
 		
-		return $this->Templates->js($script, $application, $getJs);
+		return $this->Templates->js($script, $application, $getJs, $top);
 	}
 	
     /**
@@ -613,7 +613,12 @@ class ZP_Load {
 		} 
 
 		if(!is_null($application)) {
-			$view = "www/applications/$application/views/$name.php";
+			$view    = "www/applications/$application/views/$name.php";
+			$minView = "www/applications/$application/views/min/$name.php";
+
+			if(_get("environment") > 2 and file_exists($minView)) {
+				$view = $minView;
+			}
 			
 			if(is_array($vars)) {
 				$key  = array_keys($vars);
@@ -645,5 +650,4 @@ class ZP_Load {
 			return FALSE;
 		}
 	}
-	
 }

@@ -72,6 +72,28 @@ function __($text, $encode = TRUE) {
 		if(isset($phrase[$position])) {
 			return ($encode) ? encode($phrase[$position]) : $phrase[$position];
 		} else {
+			if($language !== "English" and !_get("production")) {
+				$content = "";
+				$logfile = "www/lib/languages/". strtolower($language) . ".txt"; 
+				$today	 = date("d/m/Y");
+
+				if(file_exists($logfile)) {
+					$content = file_get_contents($logfile);
+				}
+
+				$file = fopen($logfile, "a+");
+				$pos  = strrpos($content, "$today");
+
+				if($pos !== FALSE) {
+					if(!@preg_match("/\\b" . addslashes($position) . "\\b/i", substr($content, $pos + 14))) {
+						fwrite($file, "$position\r\n");
+					}
+				} else {
+					fwrite($file, "--- $today ---\r\n");
+					fwrite($file, "$position\r\n");
+				}
+			}
+
 			return $text;
 		}
 	}
@@ -91,7 +113,7 @@ function getLanguage($lang, $flags = FALSE) {
 	foreach($languages as $language) {
 		if($flags) {
 			if($language["language"] === $lang) {
-				return '<img class="flag no-border" src="'. _get("webURL") .'/www/lib/images/icons/flags/'. strtolower($lang) .'.png" alt="'. __($lang) .'" />';	
+				return '<span class="flag '. strtolower($language["lang"]) .'-flag"></span>';	
 			}
 		} else {
 			if($language["language"] === $lang) {

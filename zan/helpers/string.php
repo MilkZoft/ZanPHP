@@ -175,17 +175,18 @@ function cleanHTML($HTML) {
  * @param string $text
  * @return string $text
  */ 
-function compress($string, $filetype = NULL) {
-	if(is_null($filetype)) {
+function compress($string, $filetype = "php") {
+	if($filetype === "php") {
+		$string = str_replace("<?php\r", "<?php ", $string);
 	    return str_replace(array("\r\n", "\r", "\n", "\t", "  ", "    ", "    "), "", $string);      
 	} else {
 		global $Load;
 
-		if($filetype === 'css') {
-			$Load->library('cssmin', NULL, NULL, 'minify');
+		if($filetype === "css") {
+			$Load->library("cssmin", NULL, NULL, "minify");
 			return CSSMin::minify($string);
 		} elseif($filetype === 'js') {
-			$Load->library('jsmin', NULL, NULL, 'minify');
+			$Load->library("jsmin", NULL, NULL, "minify");
 			return JSMin::minify($string);
 		}
 	}
@@ -354,6 +355,14 @@ function encode($text, $URL = FALSE) {
 	return (!$URL) ? utf8_encode($text) : urlencode($text);
 }
 
+function fbComments($URL, $count = FALSE, $posts = 50, $width = 750) {
+	if($count) {
+		return '<div class="fb-comments-count" data-href="'. $URL .'"></div> <span data-singular="'. __("comment") .'">'. __("comments") .'</span>';
+	} else {
+		return '<div class="fb-comments" data-href="'. $URL .'" data-num-posts="'. $posts .'" data-width="'. $width .'"></div>';
+	}
+}
+
 /**
  * filter
  * 
@@ -366,12 +375,17 @@ function encode($text, $URL = FALSE) {
 function filter($text, $filter = FALSE) {
 	if(is_null($text)) {
 		return FALSE;
-	}
+	} 
 	
 	if($text === TRUE) {
 		return TRUE;
 	} elseif($filter === TRUE) {
 		$text = cleanHTML($text);		
+	} elseif($filter === "remove") { 
+		$text = str_replace("\'", "", $text);
+		$text = str_replace('\"', "", $text);
+		$text = str_replace("'", "", $text);
+		$text = str_replace('"', "", $text);
 	} else {	
 		$text = addslashes($text);
 	}
@@ -392,7 +406,7 @@ function quotes($text) {
 	$text = str_replace("?t", "'t", $text);
 	$text = str_replace("s?", "s", $text); 
 
-	return $text;
+	return stripslashes($text);
 }
 
 function getBetween($content, $start, $end) {
@@ -801,6 +815,19 @@ function removeSpaces($text, $trim = FALSE) {
 	}
 	
 	return $text;
+}
+
+function social($URL, $content, $facebook = TRUE, $twitter = TRUE, $gPlus = TRUE, $linkedin = TRUE, $float = FALSE) {
+	$float = ($float) ? " float-right" : NULL;
+
+	$HTML  = '<div class="social'. $float .'">';
+	$HTML .= ($facebook) ? ' <div class="fb-like" data-href="'. $URL .'" data-send="true" data-layout="button_count" data-width="100" data-show-faces="true" data-font="lucida grande"></div>' : "";
+	$HTML .= ($twitter)  ? ' <a href="https://twitter.com/share" class="twitter-share-button" data-url="'. $URL .'" data-text="'. $content .'" data-via="'. _via .'" data-lang="'. _get("webLang") .'">Tweet</a>' : "";
+	$HTML .= ($gPlus)    ? ' <div class="g-plusone" data-size="medium" data-href="'. $URL .'"></div>' : "";
+	$HTML .= ($linkedin) ? ' <script type="IN/Share" data-url="'. $URL .'" data-counter="right"></script>' : "";
+	$HTML .= '</div>';
+
+	return $HTML;
 }
 
 function showLinks($content) {
