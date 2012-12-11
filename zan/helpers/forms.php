@@ -84,7 +84,7 @@ function formField($a = NULL, $text, $raquo = TRUE) {
 	
 	if(!is_null($a)) {
 		$HTML  = '<p class="field">' . "\n";
-		$HTML .= "\t" . '<a '. $a .'>'. $raquo . $text .'</a>' . "\n";
+		$HTML .= "\t" . '<a href="'. $a .'">'. $raquo . $text .'</a>' . "\n";
 		$HTML .= '</p>' . "\n";
 	} else {
 		$HTML  = '<p class="field">' . "\n";
@@ -259,32 +259,20 @@ function formRadio($attributes, $options = FALSE) {
 		if(is_array($options)) {
 			$HTML = NULL;
 
-			foreach($options as $option) {
-				if(is_array($option)) { 
-					foreach($option as $attribute) {
-						if($attribute["default"]) {
-							$check = ' checked="checked"';
-						} else {
-							$check = NULL;	
-						}
-
-						$HTML .= ' <input '. $attrs .' value="'. $attribute["name"] .'" type="radio"'. $check .' />'. $attribute["value"];
-					}					
-				}	
+			foreach($options as $attribute) {
+				$check = (isset($attribute["checked"]) and $attribute["checked"]) ? ' checked="checked"' : NULL;
+		
+				$HTML .= ' <input '. $attrs .' value="'. $attribute["value"] .'" type="radio"'. $check .' />'. $attribute["value"];
 			}
 		} else {
-			if(isset($checked) and $checked) {
-				$check = ' checked="checked"';
-			} else {
-				$check = NULL;
-			}
-
+			$check = (isset($checked) and $checked) ? ' checked="checked"' : NULL;
+		
 			if(isset($position) and $position === "left" and isset($text)) {
-				$HTML = $text . ' <input'. $attrs .' type="radio"'. $check .' />';
+				$HTML = $text .' <input'. $attrs .' type="radio"'. $check .' />';
 			} elseif(isset($position) and $position === "right" and isset($text)) {
 				$HTML = '<input'. $attrs .' type="radio"'. $check .' /> '. $text;
 			} elseif(isset($text)) {
-				$HTML = $text . ' <input'. $attrs .' type="radio"'. $check .' />';
+				$HTML = $text .' <input'. $attrs .' type="radio"'. $check .' />';
 			} else {
 				$HTML = '<input'. $attrs .' type="radio"'. $check .' />';
 			}	
