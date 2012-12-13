@@ -39,7 +39,7 @@ if(!defined("_access")) {
  * @param string $text
  * @return string value
  */
-function __($text, $encode = TRUE) {
+function __($text, $encode = FALSE) {
 	if(_get("translation") === "gettext") {
 		global $Gettext_Reader;
 		
@@ -49,7 +49,7 @@ function __($text, $encode = TRUE) {
 		
 		return $Gettext_Reader->translate($text);
 	} else {
-		global $Load, $phrase;
+		global $phrase;
 		
 		$language = whichLanguage();
 		
