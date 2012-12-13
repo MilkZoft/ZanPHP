@@ -9,7 +9,7 @@ if(!defined("_access")) {
 /**
  * Website
  */
-$ZP["webURL"] 	    = "http://localhost/codejobs";
+$ZP["webURL"] 	    = "http://localhost/ZanPHP";
 $ZP["webName"] 	    = "ZanPHP";
 $ZP["webTheme"]     = "default";
 $ZP["webSituation"] = "Active";
@@ -25,11 +25,11 @@ $ZP["benchMark"]	= FALSE;
  *  3. Stage  
  *  4. Production
  */
-$ZP["environment"] = 1;
+$ZP["environment"]  = 1;
 $ZP["optimization"] = FALSE;
-$ZP["domain"] 	   = FALSE;
-$ZP["modRewrite"]  = FALSE;
-$ZP["autoRender"]  = TRUE;
+$ZP["domain"] 	    = FALSE;
+$ZP["modRewrite"]   = FALSE;
+$ZP["autoRender"]   = TRUE;
 
 /**
  * Applications
@@ -40,7 +40,7 @@ $ZP["defaultApplication"] = "default";
  * Languages
  */
 $ZP["webLanguage"] = "Spanish";
-$ZP["translation"] = "normal";
+$ZP["translation"] = "gettext";
 
 /**
  * Constants
