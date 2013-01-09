@@ -47,21 +47,21 @@ class Gettext_Reader {
 	
 	public function readint() {
 		if($this->BYTEORDER == 0) {
-			$read = unpack('V', $this->STREAM->read(4));
+			$read = @unpack('V', $this->STREAM->read(4));
 			
-			return array_shift($read);
+			return @array_shift($read);
 		} else {
-			$read = unpack('N', $this->STREAM->read(4));
+			$read = @unpack('N', $this->STREAM->read(4));
 			
-			return array_shift($read);
+			return @array_shift($read);
 		}
     }
 
 	public function readintarray($count) {
 		if($this->BYTEORDER == 0) {
-			return unpack('V'.$count, $this->STREAM->read(4 * $count));
+			return @unpack('V'.$count, $this->STREAM->read(4 * $count));
 		} else {
-			return unpack('N'.$count, $this->STREAM->read(4 * $count));
+			return @unpack('N'.$count, $this->STREAM->read(4 * $count));
 		}
 	}
   
