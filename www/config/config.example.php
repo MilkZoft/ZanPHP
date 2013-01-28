@@ -19,10 +19,10 @@ $ZP["benchMark"]	= FALSE;
 /**
  * Server
  *
- * Environment: 
- *  1. Development 
- *  2. Demo 
- *  3. Stage  
+ * Environment:
+ *  1. Development
+ *  2. Demo
+ *  3. Stage
  *  4. Production
  */
 $ZP["environment"]  = 1;
@@ -56,7 +56,7 @@ define("_defaultTimezone", "America/Mexico_City");
  */
 define("_cacheStatus", TRUE);
 define("_cacheDriver", "File");
-define("_cacheHost", "localhost"); 
+define("_cacheHost", "localhost");
 define("_cachePort", "11211");
 define("_cacheDir", "www/lib/cache");
 define("_cacheTime", 3600);

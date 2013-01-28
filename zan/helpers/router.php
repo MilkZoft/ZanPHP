@@ -12,7 +12,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -23,7 +23,7 @@ if(!defined("_access")) {
 /**
  * Router Helper
  *
- * 
+ *
  *
  * @package		ZanPHP
  * @subpackage	core
@@ -35,14 +35,14 @@ if(!defined("_access")) {
 /**
  * execute
  *
- * Executes the run() method which is inside all application controllers 
- * 
+ * Executes the run() method which is inside all application controllers
+ *
  * @return void
- * @link		
+ * @link
  */
-function execute() {		
+function execute() {
 	global $Load, $ZP;
-	
+
 	$applicationController = FALSE;
 
 	$match   = FALSE;
@@ -50,220 +50,220 @@ function execute() {
 	$params  = array();
 
 	if(file_exists("www/config/routes.php")) {
-		include "www/config/routes.php";
-		
-		if(is_array($routes)) {
-			$application = segment(0, isLang());
+	include "www/config/routes.php";
 
-			foreach($routes as $route) {
-				$pattern = $route["pattern"]; 
-				$match   = preg_match($pattern, $application);
-				
-				if($match) {
-					$application 		   = $route["application"];
-					$applicationController = $route["controller"];
-					$method                = $route["method"];
-					$params      		   = $route["params"];
+	if(is_array($routes)) {
+		$application = segment(0, isLang());
 
-					break;
-				}	
+		foreach($routes as $route) {
+		$pattern = $route["pattern"];
+		$match   = preg_match($pattern, $application);
+
+		if($match) {
+			$application 	   = $route["application"];
+			$applicationController = $route["controller"];
+			$method                = $route["method"];
+			$params      	   = $route["params"];
+
+			break;
+		}
+		}
+
+	}
+	}
+
+	if(!$match) {
+	if(!segment(0)) {
+		$application = _get("defaultApplication");
+	} elseif(segment(0) and !segment(1)) {
+		$application = isLang() ? _get("defaultApplication") : segment(0);
+	} else {
+		$application 	   = segment(0, isLang());
+		$applicationController = segment(1, isLang());
+
+		if(isController($applicationController, $application)) {
+		$Controller     = getController($applicationController, $application);
+		$controllerFile = getController($applicationController, $application, TRUE);
+		$method 	= segment(2, isLang());
+
+		if(!isMethod($method, $Controller)) {
+			if(isMethod("index", $Controller)) {
+			$method  = "index";
+			$special = TRUE;
+			} else {
+			getException("Method \"$method\" doesn't exists");
 			}
-			
+		}
+		} else {
+		$applicationController = FALSE;
+		$Controller     	   = getController(NULL, $application);
+		$controllerFile 	   = getController(NULL, $application, TRUE);
+		$method 		   = segment(1, isLang());
+
+		if(!isMethod($method, $Controller)) {
+			if(isMethod("index", $Controller)) {
+			$method  = "index";
+			$special = TRUE;
+			} else {
+			getException("Method \"$method\" doesn't exists");
+			}
+		}
+		}
+
+		if($applicationController) {
+		if(segments() >= 3) {
+			$j = isLang() ? 4 : 3;
+			$j = ($special) ? $j - 1 : $j;
+
+			for($i = 0; $i < segments(); $i++) {
+			if(segment($j) or segment($j) === 0) {
+				$params[$i] = segment($j);
+
+				$j++;
+			}
+			}
+		}
+		} else {
+		$count = ($special) ? 1 : 2;
+
+		if(segments() > $count) {
+			$j = isLang() ? 3 : 2;
+			$j = ($special) ? $j - 1 : $j;
+
+			for($i = 0; $i < segments(); $i++) {
+			if(segment($j) or segment($j) === 0) {
+				$params[$i] = segment($j);
+
+				$j++;
+			}
+			}
+		}
 		}
 	}
-	
-	if(!$match) {
-		if(!segment(0)) {
-			$application = _get("defaultApplication");	
-		} elseif(segment(0) and !segment(1)) {
-			$application = isLang() ? _get("defaultApplication") : segment(0);
-		} else { 
-			$application 		   = segment(0, isLang());
-			$applicationController = segment(1, isLang());
-
-			if(isController($applicationController, $application)) { 
-				$Controller     = getController($applicationController, $application);
-				$controllerFile = getController($applicationController, $application, TRUE);
-				$method 		= segment(2, isLang());
-
-				if(!isMethod($method, $Controller)) {
-					if(isMethod("index", $Controller)) {
-						$method  = "index";
-						$special = TRUE;
-					} else {
-						getException("Method \"$method\" doesn't exists");
-					}
-				}
-			} else { 
-				$applicationController = FALSE;
-				$Controller     	   = getController(NULL, $application);
-				$controllerFile 	   = getController(NULL, $application, TRUE);
-				$method 			   = segment(1, isLang());
-
-				if(!isMethod($method, $Controller)) {
-					if(isMethod("index", $Controller)) {
-						$method  = "index";
-						$special = TRUE;
-					} else {
-						getException("Method \"$method\" doesn't exists");
-					}
-				}
-			}
-		
-			if($applicationController) {
-				if(segments() >= 3) {
-					$j = isLang() ? 4 : 3;
-					$j = ($special) ? $j - 1 : $j; 
-
-					for($i = 0; $i < segments(); $i++) {
-						if(segment($j) or segment($j) === 0) {
-							$params[$i] = segment($j);
-							
-							$j++;	
-						}
-					}
-				}			
-			} else {
-				$count = ($special) ? 1 : 2;
-
-				if(segments() > $count) {
-					$j = isLang() ? 3 : 2;
-					$j = ($special) ? $j - 1 : $j;
-
-					for($i = 0; $i < segments(); $i++) {
-						if(segment($j) or segment($j) === 0) {
-							$params[$i] = segment($j);
-							
-							$j++;	
-						}
-					}
-				}	
-			}
-		} 
 	}
 
 	if(_get("webSituation") !== "Active" and !SESSION("ZanUserID") and $application !== "cpanel") {
-		die(_get("webMessage"));
+	die(_get("webMessage"));
 	}
-	
+
 	$Load->app($application);
 
 	$controllerFile = ($applicationController) ? getController($applicationController, $application, TRUE) : getController(NULL, $application, TRUE);
 
 	if(!$controllerFile) {
-		getException("The application \"$application\" doesn't exists");
+	getException("The application \"$application\" doesn't exists");
 	}
 
 	$Controller = isset($Controller) ? $Controller : getController(NULL, $application);
-	
+
 	if(isset($method) and count($params) > 0) {
-		if(isMethod($method, $Controller)) {
+	if(isMethod($method, $Controller)) {
+		try {
+		$Reflection = new ReflectionMethod($Controller, $method);
+
+		if(!$Reflection->isPublic()) {
+			throw new RuntimeException("The called method is not public.", 100);
+		}
+
+		call_user_func_array(array($Controller, $method), $params);
+		} catch(RuntimeException $e) {
+		getException($e);
+		}
+	} else {
+		if(isController($controllerFile, TRUE)) {
+		if(isset($method) and count($params) > 0) {
+			if(isMethod($method, $Controller)) {
 			try {
 				$Reflection = new ReflectionMethod($Controller, $method);
-				
+
 				if(!$Reflection->isPublic()) {
-					throw new RuntimeException("The called method is not public.", 100);
+				throw new RuntimeException("The called method is not public.", 100);
 				}
-					
+
 				call_user_func_array(array($Controller, $method), $params);
 			} catch(RuntimeException $e) {
 				getException($e);
 			}
-		} else { 
-			if(isController($controllerFile, TRUE)) {
-				if(isset($method) and count($params) > 0) {
-					if(isMethod($method, $Controller)) {
-						try {
-							$Reflection = new ReflectionMethod($Controller, $method);
-							
-							if(!$Reflection->isPublic()) {
-								throw new RuntimeException("The called method is not public.", 100);
-							}
-								
-							call_user_func_array(array($Controller, $method), $params);
-						} catch(RuntimeException $e) {
-							getException($e);
-						}
-					}
-				}
-			} else {
-				if(method_exists($Controller, "index")) { 
-					try {
-						$reflection = new ReflectionMethod($Controller, "index");
-						
-						if(!$reflection->isPublic()) {
-							throw new RuntimeException("The called method is not public.", 100);
-						} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {							
-							throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
-						}
-							
-						call_user_func_array(array($Controller, "index"), $params);
-					} catch(RuntimeException $e) {
-						getException($e);
-					}
-				} else {
-					getException("Method index doesn't exists");
-				}
 			}
 		}
-	} elseif(isset($method)) { 
-		if(isMethod($method, $Controller)) {
+		} else {
+		if(method_exists($Controller, "index")) {
 			try {
-				$Reflection = new ReflectionMethod($Controller, $method);
-					
-				if(!$Reflection->isPublic()) {
-					throw new RuntimeException("The called method is not public.", 100);
-				} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {						
-					throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
-				}
-	
-				$Controller->$method();
+			$reflection = new ReflectionMethod($Controller, "index");
+
+			if(!$reflection->isPublic()) {
+				throw new RuntimeException("The called method is not public.", 100);
+			} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {
+				throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
+			}
+
+			call_user_func_array(array($Controller, "index"), $params);
 			} catch(RuntimeException $e) {
-				getException($e);
+			getException($e);
 			}
 		} else {
-			if(isMethod("index", $Controller)) {
-				call_user_func_array(array($Controller, "index"), $params);
-			} else {
-				getException("Method \"index\" doesn't exists");
-			}
+			getException("Method index doesn't exists");
 		}
-	} else { 
-		if(isMethod("index", $Controller)) { 
-			try {
-				$Reflection = new ReflectionMethod($Controller, "index");
-					
-				if(!$Reflection->isPublic()) {
-					throw new RuntimeException("The called method is not public.", 100);
-				} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {
-					throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
-				}
-	
-				call_user_func_array(array($Controller, "index"), $params);
-			} catch(RuntimeException $e) {
-				getException($e);
-			}
+		}
+	}
+	} elseif(isset($method)) {
+	if(isMethod($method, $Controller)) {
+		try {
+		$Reflection = new ReflectionMethod($Controller, $method);
+
+		if(!$Reflection->isPublic()) {
+			throw new RuntimeException("The called method is not public.", 100);
+		} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {
+			throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
+		}
+
+		$Controller->$method();
+		} catch(RuntimeException $e) {
+		getException($e);
+		}
+	} else {
+		if(isMethod("index", $Controller)) {
+		call_user_func_array(array($Controller, "index"), $params);
 		} else {
-			getException("Method \"index\" doesn't exists");
+		getException("Method \"index\" doesn't exists");
 		}
-	}	
+	}
+	} else {
+	if(isMethod("index", $Controller)) {
+		try {
+		$Reflection = new ReflectionMethod($Controller, "index");
+
+		if(!$Reflection->isPublic()) {
+			throw new RuntimeException("The called method is not public.", 100);
+		} elseif($Reflection->getNumberOfRequiredParameters() > 0 and count($params) === 0) {
+			throw new RuntimeException("The called method need required parameters (". getParameters($Reflection->getParameters()) .").", 200);
+		}
+
+		call_user_func_array(array($Controller, "index"), $params);
+		} catch(RuntimeException $e) {
+		getException($e);
+		}
+	} else {
+		getException("Method \"index\" doesn't exists");
+	}
+	}
 }
 
 function getParameters($params) {
 	$parameters = NULL;
-			
+
 	if(count($params) > 0) {
-		$i = 0;
-							
-		foreach($params as $param) {
-			if($i === count($params) - 1) {
-				$parameters .= '$'. $param->name;
-			} else {
-				$parameters .= '$'. $param->name .", ";	
-			}
-				
-			$i++;
+	$i = 0;
+
+	foreach($params as $param) {
+		if($i === count($params) - 1) {
+		$parameters .= '$'. $param->name;
+		} else {
+		$parameters .= '$'. $param->name .", ";
 		}
+
+		$i++;
+	}
 	}
 
 	return $parameters;
@@ -271,15 +271,15 @@ function getParameters($params) {
 
 function currentPath($path = NULL) {
 	$URL = getURL();
-	
+
 	if($path) {
-		if($URL === path($path)) {
-			return ' class="current"';
-		}
+	if($URL === path($path)) {
+		return ' class="current"';
+	}
 	} else {
-		if($URL === path()) {
-			return ' class="current"';
-		}
+	if($URL === path()) {
+		return ' class="current"';
+	}
 	}
 }
 
@@ -287,18 +287,18 @@ function currentPath($path = NULL) {
  * getURL
  *
  * Returns and URL built with _webBase and the Amount of segments contained on route()
- * 
- * @return array		
+ *
+ * @return array
  */
 function getURL() {
 	$URL = NULL;
 
-	for($i = 0; $i <= segments() - 1; $i++) {		
-		$URL .= ($i === (segments() - 1)) ? segment($i) : segment($i) ."/";
+	for($i = 0; $i <= segments() - 1; $i++) {
+	$URL .= ($i === (segments() - 1)) ? segment($i) : segment($i) ."/";
 	}
-	
+
 	$URL = _get("webBase") ."/$URL";
-	
+
 	return $URL;
 }
 
@@ -306,19 +306,19 @@ function getController($applicationController = NULL, $application, $file = FALS
 	global $Load;
 
 	if(isController($applicationController, $application)) {
-		$controller 	= ucfirst($applicationController) ."_Controller";
-		$controllerFile = "www/applications/". strtolower($application) ."/controllers/". strtolower($applicationController). ".php";
-		
-		$$controller = (!$file) ? $Load->controller($controller, $application) : FALSE;
-	} else { 
-		$controller 	= ucfirst($application) ."_Controller";
-		$controllerFile = "www/applications/". strtolower($application) ."/controllers/". strtolower($application) .".php";
-		
-		$$controller = (!$file) ? $Load->controller($controller) : FALSE;
+	$controller 	= ucfirst($applicationController) ."_Controller";
+	$controllerFile = "www/applications/". strtolower($application) ."/controllers/". strtolower($applicationController). ".php";
+
+	$$controller = (!$file) ? $Load->controller($controller, $application) : FALSE;
+	} else {
+	$controller 	= ucfirst($application) ."_Controller";
+	$controllerFile = "www/applications/". strtolower($application) ."/controllers/". strtolower($application) .".php";
+
+	$$controller = (!$file) ? $Load->controller($controller) : FALSE;
 	}
 
 	if($file) {
-		return file_exists($controllerFile) ? $controllerFile : FALSE;
+	return file_exists($controllerFile) ? $controllerFile : FALSE;
 	}
 
 	return $$controller;
@@ -326,58 +326,58 @@ function getController($applicationController = NULL, $application, $file = FALS
 
 function whichApplication() {
 	if(file_exists("www/applications/" . segment(0) . "/controllers/" . segment(0) . ".php")) {
-		return segment(0); 
+	return segment(0);
 	} elseif(file_exists("www/applications/". segment(1) ."/controllers/". segment(1) .".php")) {
-		return segment(1);
+	return segment(1);
 	} elseif(file_exists("www/applications/". segment(0) ."/models/". segment(0) .".php")) {
-		return segment(0);
+	return segment(0);
 	} elseif(file_exists("www/applications/". segment(1) ."/models/". segment(1) .".php")) {
-		return segment(1);
+	return segment(1);
 	} elseif(file_exists("www/applications/". _get("defaultApplication") ."/controllers/". _get("defaultApplication") .".php")) {
-		return _get("defaultApplication");	
+	return _get("defaultApplication");
 	}
-	
+
 	return FALSE;
 }
 
 function path($path = FALSE, $URL = FALSE, $lang = TRUE) {
 	if(!$path) {
-		return isLang() ? _get("webBase") ."/". _get("webLang") : _get("webBase");
+	return isLang() ? _get("webBase") ."/". _get("webLang") : _get("webBase");
 	} elseif($path === TRUE) {
-		return $lang ? _get("webBase") ."/". _get("webLang") : _get("webBase");
+	return $lang ? _get("webBase") ."/". _get("webLang") : _get("webBase");
 	}
 
 	if($URL === "zan") {
-		return getDomain(_corePath) ."/zan/". $path;
+	return getDomain(_corePath) ."/zan/". $path;
 	} elseif(isLang($path)) {
-		return _get("webBase") ."/". $path;
+	return _get("webBase") ."/". $path;
 	}
 
 	if($lang) {
-		if($lang !== TRUE) {
-			$lang = getLang($lang);
+	if($lang !== TRUE) {
+		$lang = getLang($lang);
 
-			return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". $lang ."/". $path;
-		}
+		return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". $lang ."/". $path;
+	}
 
-		return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". _get("webLang") ."/". $path;
+	return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". _get("webLang") ."/". $path;
 	} else {
-		return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". $path;
+	return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". $path;
 	}
 }
 
 function getDomain($path = FALSE) {
 	if($path) {
-		$URL   = str_replace("http://", "", _get("webURL"));
-		$parts = explode("/", $URL);
-		
-		if($path === "../../zan" and isset($parts[0]) and isset($parts[2])) {
-			return "http://". $parts[0] . "/". $parts[1];
-		} elseif($path === "../zan" and isset($parts[2])) {
-			return "http://". $parts[0] . "/". $parts[1];
-		}
+	$URL   = str_replace("http://", "", _get("webURL"));
+	$parts = explode("/", $URL);
 
-		return ($path === "zan") ? _get("webURL") : "http://". $parts[0];
+	if($path === "../../zan" and isset($parts[0]) and isset($parts[2])) {
+		return "http://". $parts[0] . "/". $parts[1];
+	} elseif($path === "../zan" and isset($parts[2])) {
+		return "http://". $parts[0] . "/". $parts[1];
+	}
+
+	return ($path === "zan") ? _get("webURL") : "http://". $parts[0];
 	}
 
 	return _get("webURL");
@@ -387,7 +387,7 @@ function getDomain($path = FALSE) {
  * ping
  *
  * Pings a URL
- * 
+ *
  * @param string $domain
  * @return void
  */
@@ -395,9 +395,9 @@ function ping($domain) {
 	$domain = str_replace("http://", "", $domain);
 
 	if(!@file_get_contents("http://" . $domain)) {
-		return FALSE; 
+	return FALSE;
 	} else {
-		return TRUE;
+	return TRUE;
 	}
 }
 
@@ -405,7 +405,7 @@ function ping($domain) {
  * redirect
  *
  * Redirects to a URL
- * 
+ *
  * @param string $domain
  * @param mixed  $time
  * @return void
@@ -413,29 +413,29 @@ function ping($domain) {
 function redirect($URL = FALSE, $time = FALSE) {
 	global $ZP;
 
-	if(!$time) {		
-		if(!$URL) {
-			header("location: ". path());
-		} elseif(substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
-			header("location: ". path($URL));
-			
-			exit;
-		} else {
-			header("location: $URL");
-			
-			exit;
-		}
+	if(!$time) {
+	if(!$URL) {
+		header("location: ". path());
+	} elseif(substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
+		header("location: ". path($URL));
+
+		exit;
+	} else {
+		header("location: $URL");
+
+		exit;
+	}
 	} elseif(!is_bool($time) and $time > 0) {
-		$time = $time * 1000;
-		
-		echo '
-			<script type="text/javascript">
-				function delayedRedirect() { 
-					window.location.replace("' . $URL . '"); 
-				}
-				
-				setTimeout("delayedRedirect()", ' . $time . ');
-			</script>';
+	$time = $time * 1000;
+
+	echo '
+		<script type="text/javascript">
+		function delayedRedirect() {
+			window.location.replace("' . $URL . '");
+		}
+
+		setTimeout("delayedRedirect()", ' . $time . ');
+		</script>';
 	}
 }
 
@@ -443,32 +443,32 @@ function redirect($URL = FALSE, $time = FALSE) {
  * route
  *
  * Returns an Array from $_SERVER["REQUEST_URI") exploding each position with slashes
- * 
- * @return array		
+ *
+ * @return array
  */
-function route() {	
+function route() {
 	$URL   = explode("/", substr($_SERVER["REQUEST_URI"], 1));
 	$paths = explode("/", dirname($_SERVER["SCRIPT_FILENAME"]));
 	$path  = $paths[count($paths) - 1];
 
-	if(is_array($URL)) {		 
-		$URL = array_diff($URL, array(""));
-		
-		if(!_get("domain")) {
-			$vars[] = array_shift($URL);
-		}
-		
-		if(isset($URL[0]) and $URL[0] === $path) {
-			$vars[] = array_shift($URL);
-		}
+	if(is_array($URL)) {
+	$URL = array_diff($URL, array(""));
 
-		if(!_get("modRewrite") and isset($URL[0])) { 
-			if($URL[0] === basename($_SERVER["SCRIPT_FILENAME"])) { 
-				$vars[] = array_shift($URL);
-			}
+	if(!_get("domain")) {
+		$vars[] = array_shift($URL);
+	}
+
+	if(isset($URL[0]) and $URL[0] === $path) {
+		$vars[] = array_shift($URL);
+	}
+
+	if(!_get("modRewrite") and isset($URL[0])) {
+		if($URL[0] === basename($_SERVER["SCRIPT_FILENAME"])) {
+		$vars[] = array_shift($URL);
 		}
 	}
-	
+	}
+
 	return $URL;
 }
 
@@ -476,26 +476,26 @@ function route() {
  * segment
  *
  * Returns an specific segment of a URL from route()
- * 
+ *
  * @param int $segment
- * @return mixed		
+ * @return mixed
  */
 function segment($segment = 0, $isLang = FALSE) {
 	$route   = route();
 	$segment = ($isLang) ? $segment + 1 : $segment;
 
-	if(count($route) > 0) {		
-		if(isset($route[$segment]) and strlen($route[$segment]) > 0) {
-			if($route[$segment] === "0") {
-				return (int) 0;
-			}
-				
-			return filter($route[$segment], "remove");
-		} else {
-			return FALSE;
+	if(count($route) > 0) {
+	if(isset($route[$segment]) and strlen($route[$segment]) > 0) {
+		if($route[$segment] === "0") {
+		return (int) 0;
 		}
+
+		return filter($route[$segment], "remove");
 	} else {
 		return FALSE;
+	}
+	} else {
+	return FALSE;
 	}
 }
 
@@ -503,12 +503,12 @@ function segment($segment = 0, $isLang = FALSE) {
  * segments
  *
  * Returns the Amount of segments contained on route()
- * 
+ *
  * @param int $segment
- * @return mixed		
+ * @return mixed
  */
 function segments() {
 	$route = route();
-	
+
 	return count($route);
 }

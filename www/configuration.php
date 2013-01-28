@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Access from index.php:
  */
@@ -10,12 +10,12 @@ set("webLang", whichLanguage(FALSE));
 
 if(_get("translation") === "gettext") {
 	$languageFile = _dir ."/lib/languages/gettext/". whichLanguage(TRUE, TRUE) .".mo";
-		
-	if(file_exists($languageFile)) { 			
-		$Load->library("streams", NULL, NULL, "gettext");
 
-		$Gettext_Reader = $Load->library("gettext", "Gettext_Reader", array($languageFile), "gettext");
-	
-		$Gettext_Reader->load_tables();
+	if(file_exists($languageFile)) {
+	$Load->library("streams", NULL, NULL, "gettext");
+
+	$Gettext_Reader = $Load->library("gettext", "Gettext_Reader", array($languageFile), "gettext");
+
+	$Gettext_Reader->load_tables();
 	}
 }

@@ -12,7 +12,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -24,9 +24,9 @@ function _get($var = NULL) {
 	global $ZP;
 
 	if($var === "db") {
-		include "www/config/database.php";
+	include "www/config/database.php";
 
-		return isset($ZP["db"]) ? $ZP["db"] : FALSE;
+	return isset($ZP["db"]) ? $ZP["db"] : FALSE;
 	}
 
 	return isset($ZP[$var]) ? $ZP[$var] : FALSE;
@@ -36,7 +36,7 @@ function set($var = NULL, $value = NULL) {
 	global $ZP;
 
 	if(is_null($var) or is_null($value)) {
-		return FALSE;
+	return FALSE;
 	}
 
 	$ZP[$var] = $value;

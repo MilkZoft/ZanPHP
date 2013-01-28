@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -38,14 +38,14 @@ if(!defined("_access")) {
  */
 function ____($var, $dump = TRUE, $exit = TRUE) {
 	echo '<pre style="font-size: 1.3em; color: #FF0000; line-height: 18px;">';
-		if(!$dump) {
-			echo_r($var);
-		} else {
-			var_dump($var);
-		}
-	echo '</pre>';	
-	
+	if(!$dump) {
+		echo_r($var);
+	} else {
+		var_dump($var);
+	}
+	echo '</pre>';
+
 	if($exit) {
-		exit();
+	exit();
 	}
 }

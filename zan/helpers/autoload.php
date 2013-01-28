@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -37,10 +37,10 @@ if(!defined("_access")) {
  * @param string $class
  * @return void
  */
-function __autoload($class) {	
+function __autoload($class) {
 	$class = strtolower(str_replace("ZP_", "", $class));
 
 	if(file_exists(_corePath ."/classes/". strtolower($class) .".php")) {
-		include _corePath ."/classes/". strtolower($class) .".php";	
+	include _corePath ."/classes/". strtolower($class) .".php";
 	}
 }

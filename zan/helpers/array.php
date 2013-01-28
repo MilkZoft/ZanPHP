@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -38,15 +38,15 @@ if(!defined("_access")) {
  * @return boolean
  */
 function isMultiArray($multiArray) {
-	if(is_array($multiArray)) {  
-		foreach($multiArray as $array) {  
-			if(is_array($array)) {
-				return TRUE;  
-			}  
-		}  
-	}  
-	
-	return FALSE; 
+	if(is_array($multiArray)) {
+	foreach($multiArray as $array) {
+		if(is_array($array)) {
+		return TRUE;
+		}
+	}
+	}
+
+	return FALSE;
 }
 
 function string2Array($string, $char = ",") {
@@ -55,7 +55,7 @@ function string2Array($string, $char = ",") {
 	$array = explode($char, $string);
 
 	if(count($array) > 0) {
-		return $array; 
+	return $array;
 	}
 
 	return FALSE;

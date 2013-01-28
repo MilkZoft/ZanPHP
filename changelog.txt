@@ -5,14 +5,14 @@ March 19, 2012
 
 Version 2.5.7.1
 March 17, 2012
-    
+
     Fixed: files and images classes https://github.com/MilkZoft/ZanPHP/commit/eec5bb1eeb25f85f250995a970d6ee9c9bb76c3b
 
     Add: new helper.pagination.php https://github.com/MilkZoft/ZanPHP/commit/c2e4acc61dd985fc7d73cf37f701594429c90a8e
 
 March 09, 2012
 
-    Fixed: Exceptions and router helper fixed https://github.com/MilkZoft/ZanPHP/commit/42bc7022e73e358050d8a17d82acef5ced05fbc8    
+    Fixed: Exceptions and router helper fixed https://github.com/MilkZoft/ZanPHP/commit/42bc7022e73e358050d8a17d82acef5ced05fbc8
 
 March 06, 2012
 
@@ -24,7 +24,7 @@ March 05, 2012
     Fixed: Class load and helper router fixed https://github.com/MilkZoft/ZanPHP/commit/ab9f1e23447f640b5e17f06a65374dde06316a51
 
 March 04, 2012
-    
+
     Fixed: Router and alerts helpers fixed https://github.com/MilkZoft/ZanPHP/commit/c0ff43a8b55fb53e459f523fff34aaba8fe512ea
 
     Improvement: Router helper improved index() can receive parameters https://github.com/MilkZoft/ZanPHP/commit/9959bb09ac3b4b065005a46fd2596e75df31161f
@@ -43,7 +43,7 @@ February 29, 2012
 
 Version 2.5.6
 February 28, 2012
-    
+
     Fixed: files, load, singleton, templates classes and forms, html, i18n, sessions, string helpers https://github.com/MilkZoft/ZanPHP/commit/b52f49c06eb6ded185f6b2032bc898d907a92905
 
 Version 2.5.5

@@ -25,12 +25,12 @@ $ZP["db"]["dbSocket"] = NULL;
  */
 $ZP["db"]["dbFilename"] = "mydatabase.db";
 $ZP["db"]["dbMode"]	    = 0666;
-	
+
 /**
  *	NoSQL Databases
  */
 $ZP["db"]["dbNoSQLHost"]  	 = "localhost";
 $ZP["db"]["dbNoSQLPort"] 	 = 27017;
-$ZP["db"]["dbNoSQLUser"] 	 = ""; 
+$ZP["db"]["dbNoSQLUser"] 	 = "";
 $ZP["db"]["dbNoSQLPwd"]  	 = "";
 $ZP["db"]["dbNoSQLDatabase"] = "";

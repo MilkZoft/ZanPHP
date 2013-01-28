@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -31,14 +31,14 @@ if(!defined("_access")) {
  * @link		http://www.zanphp.com/documentation/en/classes/singleton_class
  */
 class ZP_Singleton {
-	
+
     /**
      * Contains the instances of the objects
      *
      * @var private static $instances = array()
-     */	
+     */
 	public static $instances = array();
-	
+
 	/**
      * Prevent object cloning
      *
@@ -50,43 +50,43 @@ class ZP_Singleton {
      * Prevent direct object creation
      *
      * @return void
-     */	
+     */
 	private function __construct() {}
-	
+
 	/**
      * Returns new or existing Singleton instance
      * @param string $class
      * @return object value
      */
 	public static function instance($Class, $params = NULL) {
-		if(is_null($Class)) {
-			die("Missing class information");
+	if(is_null($Class)) {
+		die("Missing class information");
+	}
+
+	if(!array_key_exists($Class, self::$instances)) {
+		$args = NULL;
+
+		$i = 0;
+		if(is_array($params)) {
+		foreach($params as $param) {
+			if($i === count($params) - 1) {
+			$args .= '"'. $param .'"';
+			} else {
+			$args .= '"'. $param .'", ';
+			}
+
+			$i++;
+		}
 		}
 
-		if(!array_key_exists($Class, self::$instances)) {	
-			$args = NULL;
-			
-			$i = 0;
-			if(is_array($params)) {
-				foreach($params as $param) {
-					if($i === count($params) - 1) {
-						$args .= '"'. $param .'"';
-					} else {
-						$args .= '"'. $param .'", ';
-					}
-					
-					$i++;
-				}
-			}
-			
-			if(is_null($args)) {
-				self::$instances[$Class] = new $Class;
-			} else {
-				eval("self::\$instances[\$Class] = new \$Class($args);");
-			}
+		if(is_null($args)) {
+		self::$instances[$Class] = new $Class;
+		} else {
+		eval("self::\$instances[\$Class] = new \$Class($args);");
 		}
-		
-		return self::$instances[$Class];
+	}
+
+	return self::$instances[$Class];
 	}
 
 }
