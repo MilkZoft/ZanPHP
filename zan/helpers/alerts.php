@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -41,43 +41,43 @@ if(!defined("_access")) {
  */
 function getAlert($message, $type = "error", $URL = NULL) {
 	if(!is_null($URL)) {
-		$message = a(__($message), encode($URL), TRUE);
+	$message = a(__($message), encode($URL), TRUE);
 	}
-	
+
 	if($type === "error") {
-		return '<div id="alert-message" class="alert alert-error">
-					'. __($message) .'
-				</div>';
+	return '<div id="alert-message" class="alert alert-error">
+			'. __($message) .'
+		</div>';
 	} elseif($type === "success") {
-		unset($_POST);
-		return '<div id="alert-message" class="alert alert-success">
-					'. __($message) .'
-				</div>';
+	unset($_POST);
+	return '<div id="alert-message" class="alert alert-success">
+			'. __($message) .'
+		</div>';
 	} elseif($type === "warning") {
-		return '<div id="alert-message" class="alert alert-warning">
-					'. __($message) .'
-				</div>';
+	return '<div id="alert-message" class="alert alert-warning">
+			'. __($message) .'
+		</div>';
 	} elseif($type === "notice") {
-		return '<div id="alert-message" class="alert alert-info">
-					'. __($message) .'
-				</div>';
+	return '<div id="alert-message" class="alert alert-info">
+			'. __($message) .'
+		</div>';
 	}
 }
 
 /**
- * 
  *
- * 
+ *
+ *
  *
  */
 function showAlert($message, $URL = FALSE) {
 	echo '	<script>
-				alert("'. __($message) .'");';
-	
+		alert("'. __($message) .'");';
+
 	if($URL) {
-		echo '	window.location.href="'. $URL .'";';			
+	echo '	window.location.href="'. $URL .'";';
 	}
-	
+
 	echo '</script>';
 
 	exit();

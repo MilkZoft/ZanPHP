@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -22,7 +22,7 @@ if(!defined("_access")) {
 /**
  * HTML Helper
  *
- * 
+ *
  *
  * @package		ZanPHP
  * @subpackage	core
@@ -30,90 +30,90 @@ if(!defined("_access")) {
  * @author		MilkZoft Developer Team
  * @link		http://www.zanphp.com/documentation/en/helpers/html_helper
  */
- 	
+
 function a($text, $URL = NULL, $external = FALSE, $attributes = FALSE) {
 	$attrs = NULL;
-	
+
 	if(is_array($attributes)) {
-		foreach($attributes as $attribute => $value) {
-			$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
-		}
+	foreach($attributes as $attribute => $value) {
+		$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
 	}
-	
+	}
+
 	if(is_null($URL)) {
-		return '<a name="'. $text .'"></a>';	
+	return '<a name="'. $text .'"></a>';
 	} elseif(!$URL) {
-		return '<a'. $attrs .'>'. $text .'</a>';
+	return '<a'. $attrs .'>'. $text .'</a>';
 	} elseif($external) {
-		return '<a target="_blank" href="'. $URL .'"'. $attrs .'>'. $text .'</a>';
+	return '<a target="_blank" href="'. $URL .'"'. $attrs .'>'. $text .'</a>';
 	} else {
-		return '<a href="'. $URL .'"'. $attrs .'>'. $text .'</a>';
+	return '<a href="'. $URL .'"'. $attrs .'>'. $text .'</a>';
 	}
 }
 
 function body($open = TRUE) {
 	if($open) {
-		return "<body>" . char("\n");
+	return "<body>" . char("\n");
 	} else {
-		return "</body>";
+	return "</body>";
 	}
 }
-	
+
 function bold($text, $br = TRUE) {
-	$HTML = '<span class="Bold">' . $text . '</span>'; 
-	
+	$HTML = '<span class="Bold">' . $text . '</span>';
+
 	if($br === TRUE) {
-		$HTML .= '<br />';
+	$HTML .= '<br />';
 	}
-	
+
 	return $HTML;
 }
 
 function br($jumps = 1) {
 	$br = NULL;
-	
+
 	for($i = 0; $i < $jumps; $i++) {
-		$br .= "<br />" . char("\n");
+	$br .= "<br />" . char("\n");
 	}
-	
+
 	return $br;
 }
 
 function char($char, $repeat = 1) {
 	$HTML = NULL;
-	
+
 	for($i = 0; $i <= $repeat; $i++) {
-		$HTML .= $char;
+	$HTML .= $char;
 	}
-		
+
 	return $HTML;
 }
 
 function deleteImg($HTML) {
-	return preg_replace("/<img[^<>]*/>/", "", $HTML);	
+	return preg_replace("/<img[^<>]*/>/", "", $HTML);
 }
-	
-function div($ID, $type = "id", $style = NULL, $content = NULL) { 
+
+function div($ID, $type = "id", $style = NULL, $content = NULL) {
 	if(!$ID) {
-		return '</div>' 									 . char("\n");
+	return '</div>' 					 . char("\n");
 	} elseif(!$type) {
-		return '<div class="'. $ID .'">'. $content .'</div>' . char("\n");
+	return '<div class="'. $ID .'">'. $content .'</div>' . char("\n");
 	} elseif($type === "id") {
-		return '<div id="'. $ID .'">' 						 . char("\n\t");	
+	return '<div id="'. $ID .'">' 			 . char("\n\t");
 	} elseif($type === "id/class") {
-		return '<div id="'. $ID .'" class="'. $style .'">'	 . char("\n\t");		
+	return '<div id="'. $ID .'" class="'. $style .'">'	 . char("\n\t");
 	} elseif($type === "class") {
-		return '<div class="'. $ID .'">' 					 . char("\n\t");
+	return '<div class="'. $ID .'">' 			 . char("\n\t");
 	} elseif($type) {
-		return '<div id="'. $ID .'">'. $content .'</div>' 	 . char("\n");		
-	} 
+	return '<div id="'. $ID .'">'. $content .'</div>' 	 . char("\n");
+	}
 }
 
 function docType($type = "XHTML 1.0 Strict") {
 	if($type === "HTML 5") {
-		return '<!DOCTYPE html>' . char("\n");
+	return '<!DOCTYPE html>' . char("\n");
 	} elseif($type === "XHTML 1.0 Strict") {
-		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xHTML1/DTD/xHTML1-strict.dtd">' . char("\n");
+	return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xHTML1/DTD/xHTML1-strict.dtd">' . char("\n");
 	}
 }
 
@@ -139,17 +139,17 @@ function h3($text) {
 
 function head($open = TRUE) {
 	if($open) {
-		return "<head>"	 . char("\n\t");	
+	return "<head>"	 . char("\n\t");
 	} else {
-		return "</head>" . char("\n\t");
+	return "</head>" . char("\n\t");
 	}
 }
 
 function HTML($open = TRUE) {
 	if($open) {
-		return '<html xmlns="http://www.w3.org/1999/xhtml" lang="'. _get("webLang") .'" xml:lang="'. _get("webLang") .'">' . char("\n");
+	return '<html xmlns="http://www.w3.org/1999/xhtml" lang="'. _get("webLang") .'" xml:lang="'. _get("webLang") .'">' . char("\n");
 	} else {
-		return "</html>";
+	return "</html>";
 	}
 }
 
@@ -157,37 +157,37 @@ function img($src, $attributes = NULL) {
 	$attrs = NULL;
 
 	if(is_array($attributes)) {
-		foreach($attributes as $attribute => $value) {
-			$attrs .= ' '. $attribute .'="'. $value .'"';
-		}	
+	foreach($attributes as $attribute => $value) {
+		$attrs .= ' '. $attribute .'="'. $value .'"';
+	}
 	}
 
 	return '<img src="'. $src .'"'. $attrs .' />';
 }
-	
+
 function li($list, $open = NULL) {
 	$HTML = NULL;
-	
-	if(isMultiArray($list)) {		
-		foreach($list as $li) {
-			$class = (isset($li["class"])) ? ' class="'. $li["class"] .'"' : NULL;
-			
-			if(strlen($li["item"]) > 1) {
-				$HTML .= char("\t", 2) .'<li'. $class .'>'. $li["item"] .'</li>'. char("\n");			
-			}
+
+	if(isMultiArray($list)) {
+	foreach($list as $li) {
+		$class = (isset($li["class"])) ? ' class="'. $li["class"] .'"' : NULL;
+
+		if(strlen($li["item"]) > 1) {
+		$HTML .= char("\t", 2) .'<li'. $class .'>'. $li["item"] .'</li>'. char("\n");
 		}
-	} elseif(is_array($list)) {
-		for($i = 0; $i <= count($list) - 1; $i++) {
-			$HTML .= char("\t", 2) .'<li>'. $list[$i] .'</li>'. char("\n");
-		}
-	} elseif($list and $open) {
-		$HTML .= "\t\t <li>". $list;
-	} elseif($open === FALSE) {
-		$HTML .= "</li>". "\n";
-	} else {
-		$HTML .= "\t\t". '<li>'. $list .'</li>'. "\n";
 	}
-			
+	} elseif(is_array($list)) {
+	for($i = 0; $i <= count($list) - 1; $i++) {
+		$HTML .= char("\t", 2) .'<li>'. $list[$i] .'</li>'. char("\n");
+	}
+	} elseif($list and $open) {
+	$HTML .= "\t\t <li>". $list;
+	} elseif($open === FALSE) {
+	$HTML .= "</li>". "\n";
+	} else {
+	$HTML .= "\t\t". '<li>'. $list .'</li>'. "\n";
+	}
+
 	return $HTML;
 }
 
@@ -196,25 +196,25 @@ function loadCSS($CSS) {
 }
 
 function loadScript($js, $application = NULL, $external = FALSE) {
-	if(file_exists($js)) {		
-		return '<script type="text/javascript" src="'. _get("webURL") ."/". $js .'"></script>';
+	if(file_exists($js)) {
+	return '<script type="text/javascript" src="'. _get("webURL") ."/". $js .'"></script>';
 	} if($external) {
-		return '<script type="text/javascript" src="'. $js .'"></script>';
+	return '<script type="text/javascript" src="'. $js .'"></script>';
 	} else {
-		if(isset($application)) {
-			$file = "www/applications/$application/views/js/$js.js";
-			
-			if(file_exists($file)) {
-				return '<script type="text/javascript" src="'. _get("webURL") ."/". $file .'"></script>';
-			}
+	if(isset($application)) {
+		$file = "www/applications/$application/views/js/$js.js";
+
+		if(file_exists($file)) {
+		return '<script type="text/javascript" src="'. _get("webURL") ."/". $file .'"></script>';
 		}
+	}
 	}
 }
 
 function openUl($ID = NULL, $class = NULL) {
 	$ID    = (!is_null($ID))    ? ' id="'. $ID .'"'       : NULL;
-	$class = (!is_null($class)) ? ' class="'. $class .'"' : NULL; 
-	
+	$class = (!is_null($class)) ? ' class="'. $class .'"' : NULL;
+
 	return '<ul'. $ID . $class .'>' . char("\n");
 }
 
@@ -224,23 +224,23 @@ function closeUl() {
 
 function p($text, $class = "left") {
 	if(is_string($text)) {
-		return char("\n\t") . '<p class="'. $class .'">'. char("\n\t\t") . $text . char("\n\t") . '</p>' . char("\n");
+	return char("\n\t") . '<p class="'. $class .'">'. char("\n\t\t") . $text . char("\n\t") . '</p>' . char("\n");
 	} elseif($text === TRUE) {
-		return '<p class="'. $class .'">';
+	return '<p class="'. $class .'">';
 	} else {
-		return '</p>';
+	return '</p>';
 	}
 }
 
 function small($text) {
 	return '<span class="small">'. $text .'</span>';
-}	
+}
 
 function span($class, $value, $ID = FALSE) {
 	if($ID) {
-		$class = !is_null($class) ? ' class="'. $class .'"' : NULL;
-		
-		return '<span id="'. $ID .'"'. $class .'>'. $value .'</span>';	
+	$class = !is_null($class) ? ' class="'. $class .'"' : NULL;
+
+	return '<span id="'. $ID .'"'. $class .'>'. $value .'</span>';
 	}
 
 	return '<span class="'. $class .'">'. $value .'</span>';
@@ -249,21 +249,21 @@ function span($class, $value, $ID = FALSE) {
 function ul($list, $ID = NULL, $class = NULL) {
 	$ID    = (!is_null($ID))    ? ' id="'.$ID.'"'       : NULL;
 	$class = (!is_null($class)) ? ' class="'.$class.'"' : NULL;
-	
+
 	$HTML = '<ul' . $ID . $class . '>' . char("\t");
-		if(isMultiArray($list)) {
-			foreach($list as $li) {
-				$class = (isset($li["class"])) ? ' class="'.$li["class"].'"' : NULL;
-				
-				$HTML .= char("\t", 2) . '<li' . $class . '>' . $li["item"] . '</li>' . char("\n");
-			}
-		} elseif(is_array($list)) {
-			for($i = 0; $i <= count($list) - 1; $i++) {
-				$HTML .= char("\t", 2) . '<li>' . $list[$i] . '</li>' . char("\n");
-			}
+	if(isMultiArray($list)) {
+		foreach($list as $li) {
+		$class = (isset($li["class"])) ? ' class="'.$li["class"].'"' : NULL;
+
+		$HTML .= char("\t", 2) . '<li' . $class . '>' . $li["item"] . '</li>' . char("\n");
 		}
+	} elseif(is_array($list)) {
+		for($i = 0; $i <= count($list) - 1; $i++) {
+		$HTML .= char("\t", 2) . '<li>' . $list[$i] . '</li>' . char("\n");
+		}
+	}
 	$HTML .= char("\t") . '</ul>' . char("\n");
-	
+
 	return $HTML;
 }
 
@@ -271,34 +271,34 @@ function ul($list, $ID = NULL, $class = NULL) {
  * htmlTag
  *
  * Creates a html tag to the document
- * 
+ *
  * @author 	Jhon Klever (@elfoxero)
  * @param 	string $tag
  * @param 	(boolean|array|string) $attributes
  * @param 	string $content
  * @return 	string $html
- */ 
+ */
 
 function htmlTag($tag = NULL, $attributes = TRUE, $content = NULL) {
     if(is_null($tag)) return "";
-    
+
     if($attributes === TRUE) {
         return "<$tag>";
     } elseif($attributes === FALSE) {
         return "</$tag>";
     } elseif(is_array($attributes)) {
         $html = "<$tag";
-        
+
         foreach ($attributes as $attribute => $value) {
             $html .= " $attribute = \"$value\"";
         }
-        
+
         $html .= ">";
-        
+
         if (! is_null($content)) {
             $html .= "\n\t$content\n</$tag>";
         }
-        
+
         return $html;
     } else {
         return "<$tag>\n\t$attributes\n</$tag>";

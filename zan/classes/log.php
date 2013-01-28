@@ -20,7 +20,7 @@ class ZP_Log {
         $this->path = $this->parsePath($path);
         $this->config("log");
         $this->setLevel();
-    }   
+    }
 
     protected function parsePath($path) {
         $strLenght = strlen($path);
@@ -36,7 +36,7 @@ class ZP_Log {
 
     protected function save($line) {
         $fhandle = fopen($this->path, "a+");
-        
+
         fwrite($fhandle, $line);
         fclose($fhandle);
     }
@@ -65,7 +65,7 @@ class ZP_Log {
         $this->logLevel = 0;
      }
     }
- 
+
     public function fatal($event){
     	#Very severe error events that will presumably lead the application to abort.
     	if($this->logLevel <= 5){

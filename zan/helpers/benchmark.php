@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -22,7 +22,7 @@ if(!defined("_access")) {
 /**
  * Benchmark Helper
  *
- * The Helper Benchmarck contains an 
+ * The Helper Benchmarck contains an
  *
  * @package		ZanPHP
  * @subpackage	core
@@ -30,7 +30,7 @@ if(!defined("_access")) {
  * @author		MilkZoft Developer Team
  * @link		http://www.zanphp.com/documentation/en/helpers/benchmark_helper
  */
- 
+
 /**
  * A Benchmark utility to test Application Perfomance, Queries and Process
  *
@@ -39,13 +39,13 @@ if(!defined("_access")) {
  */
 function benchMarkEnd() {
 	global $startTime;
-	
+
 	echo '<p class="center small">'. __("Load time:") .' '. (microtime(TRUE) - $startTime) .' '. __("seconds") .'</p>';
 }
 
 
 function benchMarkStart() {
 	global $startTime;
-	
+
 	$startTime = microtime(TRUE);
 }

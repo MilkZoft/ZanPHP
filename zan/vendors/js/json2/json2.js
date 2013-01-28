@@ -46,9 +46,9 @@ if (!this.JSON) {
             '"' + string + '"';
     }
     function str(key, holder) {
-        var i,         
-            k,        
-            v,      
+        var i,
+            k,
+            v,
             length,
             mind = gap,
             partial,

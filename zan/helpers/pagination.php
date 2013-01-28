@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php:
  */
@@ -22,7 +22,7 @@ if(!defined("_access")) {
 /**
  * HTML Helper
  *
- * 
+ *
  *
  * @package		ZanPHP
  * @subpackage	core
@@ -38,61 +38,61 @@ function paginate($count, $end, $start, $URL, $anchor = "#top") {
 	$pageLast     = NULL;
 	$pageNext     = NULL;
 
-	if($count > $end) {				
-		$rest = $count % $end;	
+	if($count > $end) {
+	$rest = $count % $end;
 
-		if($rest === 0) {
-			$pages = $count / $end;
+	if($rest === 0) {
+		$pages = $count / $end;
+	} else {
+		$pages = (($count - $rest) / $end) + 1;
+	}
+
+	if($pages > 10) {
+		$currentPage = ($start / $end) + 1;
+
+		if($start === 0) {
+		$firstPage = 0;
+		$lastPage  = 10;
+		} elseif($currentPage >= 5 and $currentPage <= ($pages - 5)) {
+		$firstPage = $currentPage - 5;
+		$lastPage  = $currentPage + 5;
+		} elseif($currentPage < 5) {
+		$firstPage = 0;
+		$lastPage  = $currentPage + 5 + (5 - $currentPage);
 		} else {
-			$pages = (($count - $rest) / $end) + 1;
+		$firstPage = $currentPage - 5 - (($currentPage + 5) - $pages);
+		$lastPage	= $pages;
 		}
+	} else {
+		$firstPage = 0;
+		$lastPage  = $pages;
+	}
 
-		if($pages > 10) {	
-			$currentPage = ($start / $end) + 1;
+	for($i = $firstPage; $i < $lastPage; $i++) {
+		$pge  = $i + 1;
+		$next = $i * $end;
 
-			if($start === 0) {
-				$firstPage = 0;
-				$lastPage  = 10;
-			} elseif($currentPage >= 5 and $currentPage <= ($pages - 5)) {					
-				$firstPage = $currentPage - 5;
-				$lastPage  = $currentPage + 5;					
-			} elseif($currentPage < 5) {					
-				$firstPage = 0;
-				$lastPage  = $currentPage + 5 + (5 - $currentPage);					
-			} else {					
-				$firstPage = $currentPage - 5 - (($currentPage + 5) - $pages);
-				$lastPage	= $pages;					
-			}								
-		} else {			
-			$firstPage = 0;
-			$lastPage  = $pages;			
+		if($start == $next) {
+		$pageNav .= '<span class="current">'. $pge .'</span> ';
+		} else {
+		$pageNav .= '<span class="bold"><a href="'. $URL . $pge . "/" . $anchor .'" title="'. $pge .'">'. $pge .'</a></span> ';
 		}
+	}
 
-		for($i = $firstPage; $i < $lastPage; $i++) {
-			$pge  = $i + 1;
-			$next = $i * $end;		
+	if($start == 0) {
+		$currentPage = 1;
+	} else {
+		$currentPage = ($start / $end) + 1;
+	}
 
-			if($start == $next) {				
-				$pageNav .= '<span class="current">'. $pge .'</span> ';					
-			} else {				
-				$pageNav .= '<span class="bold"><a href="'. $URL . $pge . "/" . $anchor .'" title="'. $pge .'">'. $pge .'</a></span> ';
-			}
-		}
+	if($currentPage < $pages) {
+		$pageNext = '<a href="'. $URL . ($currentPage + 1) . "/" . $anchor .'" title="'. __("Next") .'">'. __("Next") .'</a> ';
+	}
 
-		if($start == 0) { 			
-			$currentPage = 1; 			
-		} else { 			
-			$currentPage = ($start / $end) + 1; 			
-		}
-
-		if($currentPage < $pages) {			
-			$pageNext = '<a href="'. $URL . ($currentPage + 1) . "/" . $anchor .'" title="'. __("Next") .'">'. __("Next") .'</a> ';
-		}
-
-		if($start > 0) {
-			$pagePrevious = '<a href="'. $URL . ($currentPage - 1) . "/" . $anchor .'" title="'. __("Previous") .'">'. __("Previous") .'</a> ';
-		}			
-	}		
+	if($start > 0) {
+		$pagePrevious = '<a href="'. $URL . ($currentPage - 1) . "/" . $anchor .'" title="'. __("Previous") .'">'. __("Previous") .'</a> ';
+	}
+	}
 
 	return '<div id="pagination">'. $pageFirst . $pagePrevious . $pageNav . $pageNext . $pageLast .'</div>';
 }

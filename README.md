@@ -13,18 +13,18 @@ Some of the advantages of ZanPHP are:
     Scalable applications and easy to maintain
     Documentation in English and Spanish
     Integration with jQuery and jQuery Mobile, Ajax and other new technologies
-    It is free software 
+    It is free software
 
 Server Requirements
 -------------------------
     PHP 5.1.X or higher
-    Databases supported: MySQL, MySQLi, MsSQL, Oracle, PostgreSQL and SQLite 
+    Databases supported: MySQL, MySQLi, MsSQL, Oracle, PostgreSQL and SQLite
 
 Credits
 -------------------------
 ZanPHP was developed by Carlos Santana (CEO of MilkZoft). ZanPHP was developed in 2009, but was until July 2011 that took the decision to release as free software.
 Currently developing ZanPHP is maintained by the development team and contributors of MilkZoft community.
-Is achieved by implementing best practices to develop applications faster and with higher quality. 
+Is achieved by implementing best practices to develop applications faster and with higher quality.
 
 Getting Started
 -------------------------
@@ -42,7 +42,7 @@ The first file to modify is the /core/config/config.constants.php which should c
     _webCharacters: allows to show the HTML with or without format (TRUE or FALSE).
     _defaultApplication: allows to configure the default web application
     _webState: toggles the access to the website (Active or Inactive)
-    _webLanguage: configure the default language of the website 
+    _webLanguage: configure the default language of the website
 
 The second file to configure is /core/config/config.database.php in the following constants:
 
@@ -52,9 +52,9 @@ The second file to configure is /core/config/config.database.php in the followin
     _dbPwd: password to connect to the database.
     _dbName: the name of the database to which we will connect.
     _dbPort: database port.
-    _dbPfx: the prefix our tables have. 
+    _dbPfx: the prefix our tables have.
 
-Once these steps, we have ZanPHP ready to work, just a matter of starting to create applications. 
+Once these steps, we have ZanPHP ready to work, just a matter of starting to create applications.
 
 Model View Controller
 -------------------------
@@ -72,7 +72,7 @@ Controller
 
 This class is the administrator of the application flow, is responsible for receiving user requests, identify, process, send call the methods of the model and return data to the user through a view.
 
-In ZanPHP the MVC applies within each application, you must create two files in the folder of the application: model.application.php controller.application.php and also the views should be within the "views" of each application , you must be named using the following convention: view.myview.php. 
+In ZanPHP the MVC applies within each application, you must create two files in the folder of the application: model.application.php controller.application.php and also the views should be within the "views" of each application , you must be named using the following convention: view.myview.php.
 
 Files Structure
 -------------------------
@@ -98,19 +98,19 @@ The first configuration file to analyze is: config.database.php, once the file i
     _dbPwd: password to connect to the database.
     _dbName: the name of the database to which we will connect.
     _dbPort: database port.
-    _dbPfx: the prefix our tables have. 
+    _dbPfx: the prefix our tables have.
 
 The second configuration file, will all those config.constants.php constant for the operation of our site, that is general constant, noting that there are some important constants configured for the proper functioning of the site and the framework, these include:
 
     _domain: serves to specify the domain that our site will have.
     _modRewrite: toggles the stylization of URLs (TRUE or FALSE).
-    _webURL: URL allows you to configure the general site will useful to load images, scripts, etc. 
+    _webURL: URL allows you to configure the general site will useful to load images, scripts, etc.
 
 Databases
 --------------------------
 Thanks to the design patterns implemented by ZanPHP, you can use more than one driver database on the websites, this means that we can work on a website under MySQL, SQL Server and PostgreSQL.
 
-For this, it is only necessary, modify the constant _dbController located in the file: /core/config/config.database.php. 
+For this, it is only necessary, modify the constant _dbController located in the file: /core/config/config.database.php.
 
 Applications
 --------------------------
@@ -118,7 +118,7 @@ Create an application with ZanPHP is very easy, you just need to create a direct
 
 Other aspects to consider, is that within the application directory 2 files should be mandatory, as well as a directory, which are: controller.application.php, model.application.php and /views.
 
-The contents of these files and the directory will be explained in the subsequent topics. 
+The contents of these files and the directory will be explained in the subsequent topics.
 
 Controllers
 --------------------------
@@ -127,23 +127,23 @@ The controllers are very important in ZanPHP they are indispensable for the use 
 However, this section will analyze the structure that a controller must have for proper operation:
 
     class MyApplication_Controller extends ZP_Controller {
-     
+
         public function __construct() {
             $this->Templates = $this->core("Templates");
-     
+
             $this->MyApplication_Model = $this->model("MyApplication_Model");
-     
+
             $this->helpers();
-     
+
             $this->application = $this->app("myapplication");
-     
+
             $this->Templates->theme(_webTheme);
         }
-     
+
         public function index() {
             print __("Hi, I'm MyApplication");
         }
-     
+
     }
 
 This is the basic structure that any controller should have and fulfill for the proper functioning of the framework.
@@ -154,7 +154,7 @@ The views are responsible for showing or request data to the user. The controlle
 
 Views should be named as follows: view.myview.php and must be located in the /views of each application.
 
-Another important aspect to mention about the directory /views, is that this can be created within the /css, /js or /images, where can be placed style sheets, scripts and images that will be used only by the application. 
+Another important aspect to mention about the directory /views, is that this can be created within the /css, /js or /images, where can be placed style sheets, scripts and images that will be used only by the application.
 
 Models
 ----------------------------
@@ -163,18 +163,18 @@ Models are a fundamental part of an application, since they are in charge of int
 Like the controllers, models have a basic structure that must be met to work correctly with ZanPHP:
 
     class MyApplication_Model extends ZP_Model {
-     
+
         public function __construct() {
             $this->Db = $this->db();
-     
+
             $this->helpers();
-     
+
             $this->table = "mytable";
         }
-     
+
     }
 
-This is the basic structure that any controller should have and fulfill for the proper functioning of the framework. 
+This is the basic structure that any controller should have and fulfill for the proper functioning of the framework.
 
 Translations
 ----------------------------
@@ -190,6 +190,6 @@ To complete the translation process, you must add the translation in the followi
         switch($text) {
             case "Some text to translate": return "Algún texto para traducir"; break;
         }
-     
+
         return $text;
     }

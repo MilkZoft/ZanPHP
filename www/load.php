@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Access from index.php:
  */
@@ -8,11 +8,11 @@ if(!defined("_access")) {
 
 include "requirements.php";
 
-$Load = new ZP_Load(); 
+$Load = new ZP_Load();
 
 $helpers = array("alerts", "config", "debugging", "exceptions", "i18n", "router", "benchmark", "string", "sessions", "security");
 
-$Load->helper($helpers); 
+$Load->helper($helpers);
 
 include "configuration.php";
 

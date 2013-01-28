@@ -11,7 +11,7 @@
  * @link		http://www.zanphp.com
  * @version		1.0
  */
- 
+
 /**
  * Access from index.php
  */
@@ -34,147 +34,147 @@ class ZP_PgSQL extends ZP_Load {
 
 	/**
 	 * Contains the connection of the database
-	 * 
+	 *
 	 * @var private static $connection
 	 */
 	private static $connection;
-	
+
 	/**
 	 * Contains the SQL query
-	 * 
+	 *
 	 * @var private $SQL
 	 */
 	private $SQL;
-	
+
     /**
      * Make connection
      *
      * @return object value
      */
 	public function connect() {
-		if(self::$connection === NULL) {
-			$dsn = "host=". _dbHost ." port=". _dbPort ." dbname=". _dbName ." user=". _dbUser ." password=". _dbPwd ."";
-			
-			self::$connection = pg_connect($dsn);
-		}
-		
-		return self::$connection;
+	if(self::$connection === NULL) {
+		$dsn = "host=". _dbHost ." port=". _dbPort ." dbname=". _dbName ." user=". _dbUser ." password=". _dbPwd ."";
+
+		self::$connection = pg_connect($dsn);
 	}
-	
+
+	return self::$connection;
+	}
+
 	/**
      * Execute query
      *
      * @return object value
-     */	
+     */
 	public function query($SQL) {
-		if($SQL !== "") {
-			$this->query = pg_query(self::$connection, $SQL);
-		}
+	if($SQL !== "") {
+		$this->query = pg_query(self::$connection, $SQL);
+	}
 
-		return ($this->query) ? $this->query : FALSE;
+	return ($this->query) ? $this->query : FALSE;
 	}
 
 	/**
      * Insert a row
      *
      * @return boolean value
-     */	
+     */
 	public function insert($table, $fields, $values) {
-		if(!$table or !$fields or !$values) {
-			return FALSE;
-		}
-		
-		$query = "INSERT INTO $table ($fields) VALUES ($values)";
-		
-		return ($this->query($query)) ? TRUE : FALSE;
+	if(!$table or !$fields or !$values) {
+		return FALSE;
+	}
+
+	$query = "INSERT INTO $table ($fields) VALUES ($values)";
+
+	return ($this->query($query)) ? TRUE : FALSE;
 	}
 
 	/**
      * Delete a row by primary key
      *
      * @return boolean value
-     */	
+     */
 	public function delete($table, $ID, $primaryKey) {
-		if(!$table or !$ID or !$primaryKey) {
-			return FALSE;		
-		}
-		
-		$query = "DELETE FROM $table WHERE $primaryKey = $ID";
-		
-		return ($this->query($query)) ? TRUE : FALSE;	
+	if(!$table or !$ID or !$primaryKey) {
+		return FALSE;
 	}
-	
+
+	$query = "DELETE FROM $table WHERE $primaryKey = $ID";
+
+	return ($this->query($query)) ? TRUE : FALSE;
+	}
+
 	/**
      * Delete rows by specific field and value
      *
      * @return boolean value
-     */	
-	public function deleteBy($table, $field, $value, $limit = "LIMIT 1") {	
-		if(!$table or !$field or !$value) {
-			return FALSE;
-		}
-		
-		if($limit > 1) {
-			$limit = "LIMIT $limit";
-		}
-		
-		$query = "DELETE FROM $table WHERE $field = '$value' $limit";
-		
-		return ($this->query($query)) ? TRUE : FALSE;
+     */
+	public function deleteBy($table, $field, $value, $limit = "LIMIT 1") {
+	if(!$table or !$field or !$value) {
+		return FALSE;
 	}
-		
+
+	if($limit > 1) {
+		$limit = "LIMIT $limit";
+	}
+
+	$query = "DELETE FROM $table WHERE $field = '$value' $limit";
+
+	return ($this->query($query)) ? TRUE : FALSE;
+	}
+
 	/**
      * Delete rows by SQL query
      *
      * @return boolean value
-     */	
+     */
 	public function deleteBySQL($table, $SQL) {
-		if(!$table or !$SQL) {
-			return FALSE;
-		}
-		
-		$query = "DELETE FROM $table WHERE $SQL";
-		
-		return ($this->query($query)) ? TRUE : FALSE;
-	}	
-	
+	if(!$table or !$SQL) {
+		return FALSE;
+	}
+
+	$query = "DELETE FROM $table WHERE $SQL";
+
+	return ($this->query($query)) ? TRUE : FALSE;
+	}
+
 	/**
      * Update a row by primary key
      *
      * @return boolean value
-     */	
+     */
 	public function update($table, $values, $ID, $primaryKey) {
-		if(!$table or !$values or !$ID or !$primaryKey) {
-			return FALSE;
-		}
-		
-		$query = "UPDATE $table SET $values WHERE $primaryKey = $ID";
-		
-		return ($this->query($query)) ? TRUE : FALSE;
+	if(!$table or !$values or !$ID or !$primaryKey) {
+		return FALSE;
+	}
+
+	$query = "UPDATE $table SET $values WHERE $primaryKey = $ID";
+
+	return ($this->query($query)) ? TRUE : FALSE;
 	}
 
 	/**
      * Update rows by SQL query
      *
      * @return boolean value
-     */	
+     */
 	public function updateBySQL($table, $values) {
-		if(!$table or !$values) {
-			return FALSE;		
-		}
-		
-		$query = "UPDATE $table SET $values"; 
-		
-		return ($this->query($query)) ? TRUE : FALSE;
-	}	
-	
+	if(!$table or !$values) {
+		return FALSE;
+	}
+
+	$query = "UPDATE $table SET $values";
+
+	return ($this->query($query)) ? TRUE : FALSE;
+	}
+
 	/**
      * Get an array from a SQL query
      *
      * @return array value
-     */	
-	public function fetch($type) {			
-		return (!$this->query) ? FALSE : pg_fetch_assoc($this->query);	
+     */
+	public function fetch($type) {
+	return (!$this->query) ? FALSE : pg_fetch_assoc($this->query);
 	}
 
 	/**
@@ -183,7 +183,7 @@ class ZP_PgSQL extends ZP_Load {
      * @return integer value
      */
 	public function rows() {
-		return (!$this->query) ? FALSE : (int) pg_num_rows($this->query);	
+	return (!$this->query) ? FALSE : (int) pg_num_rows($this->query);
 	}
 
 	/**
@@ -192,7 +192,7 @@ class ZP_PgSQL extends ZP_Load {
      * @return integer value
      */
 	public function insertID() {
-		return (!$this->query) ? FALSE : (int) pg_last_oid($this->query);
+	return (!$this->query) ? FALSE : (int) pg_last_oid($this->query);
 	}
 
 	/**
@@ -203,14 +203,14 @@ class ZP_PgSQL extends ZP_Load {
 	public function free() {
 	 	return (!$this->query) ? FALSE : pg_free_result($this->query);
 	}
-	
+
 	/**
      * Closes connection
      *
      * @return void
      */
 	public function close() {
-		return (!self::$connection) ? FALSE : pg_close(self::$connection); 	
-	}	
-	
+	return (!self::$connection) ? FALSE : pg_close(self::$connection);
+	}
+
 }
