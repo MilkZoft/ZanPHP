@@ -1,0 +1,10 @@
+pre {
+	background-color: #272822;		
+	color: #8F908A;
+	overflow: auto;
+	max-height: 600px;
+}
+pre ol {
+	margin-left: 50px;
+}
+.pln{color:#FFF}@media screen{.str{color:#e6db74}.kwd{color:#F92672}.com{color:#999 ! important;}.typ{color:#66d9ef}.lit{color:#ae81ff}.pun,.opn,.clo{color:#FFF}.tag{color:#F92672}.atn{color:#a6e22e}.atv{color:#e6db74}.dec,.var{color:#FFF}.fun{color:red}}@media print,projection{.str{color:#e6db74}.kwd{color:#006;font-weight:bold}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:bold}.lit{color:#044}.pun,.opn,.clo{color:#440}.tag{color:#006;font-weight:bold}.atn{color:#a6e22e}.atv{color:#060}}pre.prettyprint{padding:2px;border:1px solid #888}ol.linenums{margin-top:0;margin-bottom:0}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{}li.L1,li.L3,li.L5,li.L7,li.L9{background:#272822}

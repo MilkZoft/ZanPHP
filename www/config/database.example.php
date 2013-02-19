@@ -1,36 +1,32 @@
 <?php
-/* ex: set tabstop=2 noexpandtab: */
-/**
- * Access from index.php:
- */
-if(!defined("_access")) {
+if(!defined("ACCESS")) {
 	die("Error: You don't have permission to access here...");
 }
 
 /**
  *	SQL Databases
  */
-$ZP["db"]["dbPDO"] 	  = FALSE;
-$ZP["db"]["dbDriver"] = "mysqli";
-$ZP["db"]["dbHost"]   = "localhost";
-$ZP["db"]["dbUser"]   = "root";
-$ZP["db"]["dbPwd"] 	  = "";
-$ZP["db"]["dbName"]   = "zanphp";
-$ZP["db"]["dbPort"]   = 3306;
-$ZP["db"]["dbPfx"] 	  = "zan_";
-$ZP["db"]["dbSocket"] = NULL;
+define("DB_PDO", false);
+define("DB_DRIVER", "mysqli");
+define("DB_HOST", "localhost");
+define("DB_USER", "root");
+define("DB_PWD", "");
+define("DB_DATABASE", "");
+define("DB_PORT", 3306);
+define("DB_PREFIX", "muu_");
+define("DB_SOCKET", "");;
 
 /**
  *	SQLite Databases
  */
-$ZP["db"]["dbFilename"] = "mydatabase.db";
-$ZP["db"]["dbMode"]	    = 0666;
+define("DB_SQLITE_FILENAME", "mydatabase.db");
+define("DB_SQLITE_MODE", 0666);
 	
 /**
  *	NoSQL Databases
  */
-$ZP["db"]["dbNoSQLHost"]  	 = "localhost";
-$ZP["db"]["dbNoSQLPort"] 	 = 27017;
-$ZP["db"]["dbNoSQLUser"] 	 = ""; 
-$ZP["db"]["dbNoSQLPwd"]  	 = "";
-$ZP["db"]["dbNoSQLDatabase"] = "";
+define("DB_NOSQL_HOST", "localhost");
+define("DB_NOSQL_PORT", 27017);
+define("DB_NOSQL_USER", ""); 
+define("DB_NOSQL_PWD", "");
+define("DB_NOSQL_DATABASE", "");

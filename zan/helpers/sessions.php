@@ -1,116 +1,99 @@
 <?php
-/**
- * ZanPHP
- *
- * An open source agile and rapid development framework for PHP 5
- *
- * @package		ZanPHP
- * @author		MilkZoft Developer Team
- * @copyright	Copyright (c) 2011, MilkZoft, Inc.
- * @license		http://www.zanphp.com/documentation/en/license/
- * @link		http://www.zanphp.com
- * @version		1.0
- */
- 
-/**
- * Access from index.php:
- */
-if(!defined("_access")) {
+if (!defined("ACCESS")) {
 	die("Error: You don't have permission to access here...");
 }
 
-/**
- * Sessions Helper
- *
- * 
- *
- * @package		ZanPHP
- * @subpackage	core
- * @category	helpers
- * @author		MilkZoft Developer Team
- * @link		http://www.zanphp.com/documentation/en/helpers/security_helper
- */
-
-function COOKIE($cookie, $value = FALSE, $time = 300000, $redirect = FALSE, $URL = FALSE) {
-	if($value) {
-		setcookie($cookie, filter($value), time() + $time, "/");
-	
-		if($redirect) {
-			redirect(isset($URL) ? $URL : _get("webBase"));		
+if (!function_exists("COOKIE")) {
+	function COOKIE($cookie, $value = false, $time = 300000, $redirect = false, $URL = false)
+	{
+		if ($value) {
+			setcookie($cookie, filter($value), time() + $time, "/");
+		
+			if ($redirect) {
+				redirect(isset($URL) ? $URL : _get("webBase"));		
+			}
+		} else {	
+			return isset($_COOKIE[$cookie]) ? filter($_COOKIE[$cookie]) : false;
 		}
-	} else {
-		if(isset($_COOKIE[$cookie])) {
-			return filter($_COOKIE[$cookie]);
+	}
+}
+
+if (!function_exists("createLoginSessions")) {
+	function createLoginSessions($data, $redirect = true)
+	{
+		if (is_array($data)) {
+			SESSION("ZanUserServiceID", isset($data["ID_Service"]) ? (int) $data["ID_Service"] : false);
+			SESSION("ZanUser", $data["Username"]);
+			SESSION("ZanUserName", $data["Name"]);
+			SESSION("ZanUserPwd", $data["Pwd"]);
+			SESSION("ZanUserAvatar", $data["Avatar"]);
+			SESSION("ZanUserID", (int) $data["ID_User"]);
+			SESSION("ZanUserPrivilegeID", (int) $data["ID_Privilege"]);
+			SESSION("ZanUserBookmarks", (int) $data["Bookmarks"]);
+			SESSION("ZanUserCodes", (int) $data["Codes"]);
+			SESSION("ZanUserPosts", (int) $data["Posts"]);
+			SESSION("ZanUserRecommendation", (int) $data["Recommendation"]);
+
+			if ($redirect) {						
+				redirect(SESSION("lastURL"));
+			}
 		} else {
-			return FALSE;
-		}
+			redirect();
+		}	
+
+		return true;
 	}
 }
 
-/**
- * SESSION
- *
- * Returns a $_SESSION index variable value
- * 
- * @param string $session
- * @return mixed
- */ 
-function SESSION($session, $value = FALSE) {
-	if(!$value) {
-		if(isset($_SESSION[$session])) {
-			return $_SESSION[$session];
+if (!function_exists("SESSION")) { 
+	function SESSION($session, $value = false)
+	{
+		if (!$value) {
+			return isset($_SESSION[$session]) ? $_SESSION[$session] : false;			
 		} else {
-			return FALSE;
+			$_SESSION[$session] = filter($value);
 		}
-	} else {
-		$_SESSION[$session] = $value;
-	}
-	
-	return TRUE;
-}
-
-function isConnected($URL = FALSE) {
-	if(!SESSION("ZanUser")) {
-		redirect($URL);
-	} 
-
-	return TRUE;
-}
-
-/**
- * unsetCookie
- *
- * Removes a cookie
- * 
- * @param $cookie
- * @param $URL    = _webBase
- * @return void
- */ 
-function unsetCookie($cookie, $URL = FALSE) {
-	setcookie($cookie);	
-	
-	if($URL) {
-		redirect($URL);
-	} else {
-		redirect();
+		
+		return true;
 	}
 }
 
-/**
- * unsetSessions
- *
- * Unsets all started sessions variables
- * 
- * @param $URL    = _webBase
- * @return void
- */ 
-function unsetSessions($URL = FALSE) {
-	session_unset(); 
-	session_destroy();	
-	
-	if($URL) {
+if (!function_exists("isAdmin")) {
+	function isAdmin()
+	{
+		if (SESSION("ZanUserPrivilegeID") != 1) {
+			return false;
+		}
+
+		return true;
+	}
+}
+
+if (!function_exists("isConnected")) {
+	function isConnected($URL = false)
+	{
+		if (!SESSION("ZanUser")) {			
+			redirect(($URL !== false) ? $URL : path("users/login/?return_to=". urlencode(getURL())));
+		} 
+
+		return true;
+	}
+}
+
+if (!function_exists("unsetCookie")) {
+	function unsetCookie($cookie, $URL = false)
+	{
+		setcookie($cookie);
 		redirect($URL);
-	} else {
-		redirect();
+	}
+}
+
+if (!function_exists("unsetSessions")) {
+	function unsetSessions($URL = false)
+	{
+		$lastURL = SESSION("lastURL");
+		session_unset();
+		session_destroy();
+		redirect(($URL) ? $URL : $lastURL);	
 	}
 }

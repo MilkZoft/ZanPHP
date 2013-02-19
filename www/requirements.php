@@ -1,38 +1,35 @@
 <?php 
-/**
- * Access from index.php:
- */
-if(!defined("_access")) {
+if (!defined("ACCESS")) {
 	die("Error: You don't have permission to access here...");
 }
 
 ob_start(); 
 session_start();
 
-define("_dir", dirname(__FILE__));
+defined('__DIR__') or define('__DIR__', dirname(__FILE__));
 
-if(!version_compare(PHP_VERSION, "5.1.0", ">=")) {
+define("DIR", __DIR__);
+
+if (!version_compare(PHP_VERSION, "5.1.0", ">=")) {
 	die("ZanPHP needs PHP 5.1.X or higher to run.");
 }
 
-if(file_exists(_dir ."/config/config.php")) { 
+if (file_exists(DIR ."/config/config.php")) { 
 	include "config/config.php";
 } else { 
 	die("Error: config.php doesn't exists");
 }
 
-if($ZP["environment"] > 2) { 
-	error_reporting(FALSE);
-
-	ini_set("display_errors", FALSE); 
+if ($ZP["environment"] > 2) { 
+	ini_set("display_errors", false); 
 } else {
-	if(!headers_sent()) {
+	if (!headers_sent()) {
 		header("Cache-Control: no-cache, must-revalidate");
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
 		header("Content-type: text/html; charset=utf-8");
 	}
 
-	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+	error_reporting(E_ALL);
 }
 
-include _corePath ."/classes/load.php";
+include CORE_PATH ."/classes/load.php";

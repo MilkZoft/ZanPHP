@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="<?php print get("webLang"); ?>">
+<html lang="<?php echo _get("webLang"); ?>">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title><?php print $this->getTitle(); ?></title>
+		<title><?php echo $this->getTitle(); ?></title>
 		
-		<link href="<?php print path("vendors/css/frameworks/bootstrap/bootstrap.min.css", "zan"); ?>" rel="stylesheet">
-		<link href="<?php print $this->themePath; ?>/css/style.css" rel="stylesheet">
+		<link href="<?php echo path("vendors/css/frameworks/bootstrap/bootstrap.min.css", "zan"); ?>" rel="stylesheet">
+		<link href="<?php echo $this->themePath; ?>/css/style.css" rel="stylesheet">
 		
-		<?php print $this->getCSS(); ?>
+		<?php echo $this->getCSS(); ?>
 		
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 			<!--[if lt IE 9]>

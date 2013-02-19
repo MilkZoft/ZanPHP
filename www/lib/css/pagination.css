@@ -1,9 +1,9 @@
+/* Blue Style */
 #pagination {
 	font-family: Verdana, Tahoma, Arial, Helvetica, Sans-Serif;
-	font-size: 13px;
+	font-size: 70%;
 	text-align: center;
 	padding:4px 6px 4px 0;
-	background-color: #fff;
 	color: #313031;
 }
 
@@ -21,6 +21,10 @@
 	background-color: #d2eaf6;
 }
 
+#pagination a {
+	background-color: #fff;
+}
+
 #pagination span.current {
 	padding: 5px 6px 4px 5px;
 	margin: 0 3px 0 3px;
@@ -33,3 +37,41 @@
 #pagination span.disabled {
 	display: none;
 }
+
+/*
+#pagination {
+	padding:3px;
+	margin:3px;
+	text-align:center;
+}
+
+#pagination a {
+	padding: 2px 5px 2px 5px;
+	margin-right: 2px;
+	border: 1px solid #ddd;	
+	text-decoration: none; 
+	color: #88AF3F;
+}
+
+#pagination a:hover, div.pagination a:active {
+	border:1px solid #85BD1E;
+	color: #638425;
+	background-color: #F1FFD6;
+}
+
+#pagination span.current {
+	padding: 2px 5px 2px 5px;
+	margin-right: 2px;
+	border: 1px solid #B2E05D;
+	font-weight: bold;
+	background-color: #B2E05D;
+	color: #FFF;
+}
+
+#pagination span.disabled {
+	padding: 2px 5px 2px 5px;
+	margin-right: 2px;
+	border: 1px solid #f3f3f3;
+	color: #ccc;
+}
+*/

@@ -1,23 +1,24 @@
 <?php 
-class Gettext_Reader {
+class Gettext_Reader 
+{
 	public $error = 0;
 	public $BYTEORDER = 0;        
-	public $STREAM = NULL;
+	public $STREAM = null;
 	public $short_circuit = false;
 	public $enable_cache = false;
-	public $originals = NULL;     
-	public $translations = NULL;   
-	public $pluralheader = NULL;   
+	public $originals = null;     
+	public $translations = null;   
+	public $pluralheader = null;   
 	public $total = 0;          
-	public $table_originals = NULL;  
-	public $table_translations = NULL;  
-	public $cache_translations = NULL;  
+	public $table_originals = null;  
+	public $table_translations = null;  
+	public $cache_translations = null;  
 
-	public function __construct($language = FALSE, $enable_cache = true) {
-		if(!$language) {
-			$this->short_circuit = TRUE;
-			
-			return TRUE;
+	public function __construct($language = false, $enable_cache = true)
+	{
+		if (!$language) {
+			$this->short_circuit = true;		
+			return true;
 		}
     
 		$this->enable_cache = $enable_cache;
@@ -29,9 +30,9 @@ class Gettext_Reader {
 		
 		$magic = $this->readint();
     
-		if($magic == $MAGIC1) {
+		if ($magic == $MAGIC1) {
 			$this->BYTEORDER = 0;
-		} elseif($magic == $MAGIC2) {
+		} elseif ($magic == $MAGIC2) {
 			$this->BYTEORDER = 1;
 		} else {
 			$this->error = 1; 
@@ -45,109 +46,102 @@ class Gettext_Reader {
 		$this->translations = $this->readint();
 	}
 	
-	public function readint() {
-		if($this->BYTEORDER == 0) {
+	public function readint()
+	{
+		if ($this->BYTEORDER == 0) {
 			$read = @unpack('V', $this->STREAM->read(4));
-			
 			return @array_shift($read);
 		} else {
-			$read = @unpack('N', $this->STREAM->read(4));
-			
+			$read = @unpack('N', $this->STREAM->read(4));			
 			return @array_shift($read);
 		}
     }
 
-	public function readintarray($count) {
-		if($this->BYTEORDER == 0) {
+	public function readintarray($count)
+	{
+		if ($this->BYTEORDER == 0) {
 			return @unpack('V'.$count, $this->STREAM->read(4 * $count));
 		} else {
 			return @unpack('N'.$count, $this->STREAM->read(4 * $count));
 		}
 	}
   
-	public function load_tables() {
-		if(is_array($this->cache_translations) and is_array($this->table_originals) and is_array($this->table_translations)) {
-			return TRUE;
+	public function load_tables()
+	{
+		if (is_array($this->cache_translations) and is_array($this->table_originals) and is_array($this->table_translations)) {
+			return true;
 		}
 		
-		$this->STREAM->seekto($this->originals);
-		
-		$this->table_originals = $this->readintarray($this->total * 2);
-		
-		$this->STREAM->seekto($this->translations);
-		
+		$this->STREAM->seekto($this->originals);		
+		$this->table_originals = $this->readintarray($this->total * 2);		
+		$this->STREAM->seekto($this->translations);		
 		$this->table_translations = $this->readintarray($this->total * 2);  
     
-		if($this->enable_cache) {
+		if ($this->enable_cache) {
 			$this->cache_translations = array();
 			
-			for($i = 0; $i < $this->total; $i++) {
-				$this->STREAM->seekto($this->table_originals[$i * 2 + 2]);
-				
-				$original = $this->STREAM->read($this->table_originals[$i * 2 + 1]);
-        
-				$this->STREAM->seekto($this->table_translations[$i * 2 + 2]);
-        
-				$translation = $this->STREAM->read($this->table_translations[$i * 2 + 1]);
-				
+			for ($i = 0; $i < $this->total; $i++) {
+				$this->STREAM->seekto($this->table_originals[$i * 2 + 2]);				
+				$original = $this->STREAM->read($this->table_originals[$i * 2 + 1]);        
+				$this->STREAM->seekto($this->table_translations[$i * 2 + 2]);        
+				$translation = $this->STREAM->read($this->table_translations[$i * 2 + 1]);				
 				$this->cache_translations[$original] = $translation;
 			}
 		}
 	}
   
-	public function get_original_string($num) {
+	public function get_original_string($num)
+	{
 		$length = $this->table_originals[$num * 2 + 1];
 		$offset = $this->table_originals[$num * 2 + 2];
     
-		if(!$length) {
-			return NULL;
+		if (!$length) {
+			return null;
 		}
 		
-		$this->STREAM->seekto($offset);
-		
-		$data = $this->STREAM->read($length);
-		
+		$this->STREAM->seekto($offset);		
+		$data = $this->STREAM->read($length);		
 		return (string) $data;
 	}
   
-	public function get_translation_string($num) {
+	public function get_translation_string($num)
+	{
 		$length = $this->table_translations[$num * 2 + 1];
 		$offset = $this->table_translations[$num * 2 + 2];
 		
-		if(!$length) {
-			return NULL;
+		if (!$length) {
+			return null;
 		}
 		
-		$this->STREAM->seekto($offset);
-		
-		$data = $this->STREAM->read($length);
-		
+		$this->STREAM->seekto($offset);		
+		$data = $this->STREAM->read($length);		
 		return (string) $data;
 	}
   
-	public function find_string($string, $start = -1, $end = -1) {
-		if(($start == -1) or ($end == -1)) {
+	public function find_string($string, $start = -1, $end = -1)
+	{
+		if (($start == -1) or ($end == -1)) {
 			$start = 0;
-			$end   = $this->total;
+			$end = $this->total;
 		}
     
-		if(abs($start - $end) <= 1) {
+		if (abs($start - $end) <= 1) {
 			$txt = $this->get_original_string($start);
 			
-			if($string == $txt) {
+			if ($string == $txt) {
 				return $start;
 			} else {
 				return -1;
 			}
-		} elseif($start > $end) {
+		} elseif ($start > $end) {
 			return $this->find_string($string, $end, $start);
 		} else {
 			$half = (int) (($start + $end) / 2);
-			$cmp  = strcmp($string, $this->get_original_string($half));
+			$cmp = strcmp($string, $this->get_original_string($half));
 			
-			if($cmp == 0) {
+			if ($cmp == 0) {
 				return $half;
-			} elseif($cmp < 0) {
+			} elseif ($cmp < 0) {
 				return $this->find_string($string, $start, $half);
 			} else {
 				return $this->find_string($string, $half, $end);
@@ -155,15 +149,16 @@ class Gettext_Reader {
 		}
 	}
   
-	public function translate($string) {
-		if($this->short_circuit) {
+	public function translate($string)
+	{
+		if ($this->short_circuit) {
 			return $string;
 		}
 		
 		$this->load_tables();     
     
-		if($this->enable_cache) {
-			if(array_key_exists($string, $this->cache_translations)) {
+		if ($this->enable_cache) {
+			if (array_key_exists($string, $this->cache_translations)) {
 				return $this->cache_translations[$string];
 			} else {
 				return $string;
@@ -171,7 +166,7 @@ class Gettext_Reader {
 		} else {
 			$num = $this->find_string($string);
 			
-			if($num == -1) {
+			if ($num == -1) {
 				return $string;
 			} else {
 				return $this->get_translation_string($num);
@@ -179,17 +174,18 @@ class Gettext_Reader {
 		}
 	}
 
-	public function get_plural_forms() {
+	public function get_plural_forms()
+	{
 		$this->load_tables();
     
-		if(!is_string($this->pluralheader)) {
-			if($this->enable_cache) {
+		if (!is_string($this->pluralheader)) {
+			if ($this->enable_cache) {
 				$header = $this->cache_translations[""];
 			} else {
 				$header = $this->get_translation_string(0);
 			}
 			
-			if(preg_match("/(^|\n)plural-forms: ([^\n]*)\n/i", $header, $regs)) {
+			if (preg_match("/(^|\n)plural-forms: ([^\n]*)\n/i", $header, $regs)) {
 				$expr = $regs[1];
 			} else {
 				$expr = "nplurals=2; plural=n == 1 ? 0 : 1;";
@@ -201,7 +197,8 @@ class Gettext_Reader {
 		return $this->pluralheader;
   }
 
-	public function select_string($n) {
+	public function select_string($n)
+	{
 		$string = $this->get_plural_forms();
 		$string = str_replace('nplurals', "\$total", $string);
 		$string = str_replace("n", $n, $string);
@@ -211,16 +208,17 @@ class Gettext_Reader {
 		
 		eval("$string");
     
-		if($plural >= $total) {
+		if ($plural >= $total) {
 			$plural = $total - 1;
 		}
 		
 		return $plural;
 	}
 
-	public function ngettext($single, $plural, $number) {
-		if($this->short_circuit) {
-			if($number != 1) {
+	public function ngettext($single, $plural, $number)
+	{
+		if ($this->short_circuit) {
+			if ($number != 1) {
 				return $plural;
 			} else {
 				return $single;
@@ -228,10 +226,10 @@ class Gettext_Reader {
 		}
     
 		$select = $this->select_string($number); 
-		$key 	= $single . chr(0) . $plural;
+		$key = $single . chr(0) . $plural;
    
-		if($this->enable_cache) {
-			if(!array_key_exists($key, $this->cache_translations)) {
+		if ($this->enable_cache) {
+			if (!array_key_exists($key, $this->cache_translations)) {
 				return ($number != 1) ? $plural : $single;
 			} else {
 				$result = $this->cache_translations[$key];
@@ -242,7 +240,7 @@ class Gettext_Reader {
 		} else {
 			$num = $this->find_string($key);
       
-			if($num == -1) {
+			if ($num == -1) {
 				return ($number != 1) ? $plural : $single;
 			} else {
 				$result = $this->get_translation_string($num);

@@ -1,49 +1,8 @@
-/**
- * Flash datas
- */
-.flashdata {
-	background-position: 10px center;
-    background-repeat: no-repeat;
-    border: 1px solid;
-    margin: 10px 0px 5px;
-    padding: 15px 10px 15px 50px;
+.dotted {
+	border: 1px dotted #CCC; 
+	padding: 2px; 
 }
 
-.error {
-	color: #D8000C;
-	background-color: #FFBABA;
-	background-image: url('../images/icons/alerts/error.png');
-}
-
-.notice {
-	color: #006CFF;
-	background-color: #BFE3F2;
-	background-image: url('../images/icons/alerts/notice.png');
-}
-
-.success {
-	color: #4F8A10;
-	background-color: #DFF2BF; 
-	background-image: url('../images/icons/alerts/success.png');
-}
-
-.success a {
-	color: #4F8A10;
-}
-
-.success a:hover {
-	color: #64b70b;
-}
-
-.warning {
-	color: #9F6000;
-	background-color: #FEEFB3;
-	background-image: url('../images/icons/alerts/warning.png');
-}
-
-/**
- * Text classes
- */
 .center {
 	text-align: center;
 }
@@ -89,9 +48,7 @@
 .uppercase {
 	text-transform: uppercase;
 }
-/**
- * Lists
- */
+
 .blue {
 	color: #0088d9;
 }
@@ -100,16 +57,10 @@
 	color: #555;
 }
 
-/**
- * Lists
- */
 .no-list-style {
 	list-style: none;
 }
 
-/**
- * Floats
- */
 .float-left {
 	float: left;
 }
@@ -118,28 +69,72 @@
 	float: right;
 }
 
-/**
- * Fixes
- */
-.clear {
-	clear: both;
-}
-
-/**
- * General
- */
 .no-display {
-	display: none;
+	display: none !important;
 }
 
 .pointer {
 	cursor:pointer;
 }
 
-.extra {
-	width:740px;
-}
-
 .no-border {
 	border: none;
+}
+
+.image-center {
+	display: block;
+	margin: 0 auto;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.line {
+	width: 250px;
+	height: 2px;
+	background-image: url('../images/line.png');
+	margin-left: 10px;
+}
+
+.full-line {
+	width: 700px;
+	height: 2px;
+	background-image: url('../images/line.png');
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.clear {
+	clear: both;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: block;
+}
+
+.right {
+	text-align: right;
+}
+
+#alert-message {
+	width: 90%;
+}
+
+#alert-message.alert-error {
+	color: red;
+}
+
+#alert-message.alert-success {
+	color: green;
 }

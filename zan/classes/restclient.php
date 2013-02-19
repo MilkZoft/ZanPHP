@@ -1,76 +1,48 @@
 <?php
-/**
- * ZanPHP
- *
- * An open source agile and rapid development framework for PHP 5
- *
- * @package		ZanPHP
- * @author		MilkZoft Developer Team
- * @copyright	Copyright (c) 2011, MilkZoft, Inc.
- * @license		http://www.zanphp.com/documentation/en/license/
- * @link		http://www.zanphp.com
- * @version		1.0
- */
- 
-/**
- * Access from index.php
- */
-if(!defined("_access")) {
-	die("Error: You don't have permission to access here...");
+if (!defined("ACCESS")) {
+    die("Error: You don't have permission to access here...");
 }
 
-/**
- * ZanPHP Email Class
- *
- * This class allows to manipulate emails
- *
- * @package		ZanPHP
- * @subpackage	core
- * @category	classes
- * @author		MilkZoft Developer Team
- * @link		http://www.zanphp.com/documentation/en/classes/email_class
- */
-class ZP_RESTClient extends ZP_Load {
-	
-	private $auth = FALSE;
-	
-	public function DELETE($data = FALSE, $return = FALSE) {
-		if($data !== TRUE) {
+class ZP_RESTClient extends ZP_Load
+{	
+	private $auth = false;
+
+	public function DELETE($data = false, $return = false)
+	{
+		if ($data !== true) {
 			$data = is_array($data) ? http_build_query($data) : $data;
 		
-			if(is_null($this->URL) or is_null($data)) {
-				return FALSE;
+			if (is_null($this->URL) or is_null($data)) {
+				return false;
 			}
 		} else {
-			if(is_null($this->URL)) {
-				return FALSE;
+			if (is_null($this->URL)) {
+				return false;
 			}
 		}
 		
-		if($ch = curl_init($this->URL)) {
+		if ($ch = curl_init($this->URL)) {
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-			curl_setopt($ch, CURLOPT_HEADER, FALSE);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			
-			if($this->auth) {
+			if ($this->auth) {
 				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
 				curl_setopt($ch, CURLOPT_USERPWD, $this->username .":". $this->password);
 			}
         
 			$response = curl_exec($ch);
-			
 			$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			
 			curl_close($ch);
 			
-			if($status === 200) {
-				if($return) {
+			if ($status === 200) {
+				if ($return) {
 					return $response;
 				}
 				
-				if(strstr($response, "xml")) {
+				if (strstr($response, "xml")) {
 					return new SimpleXMLElement($response);
 				} else {
 					return json_decode($response);
@@ -78,126 +50,124 @@ class ZP_RESTClient extends ZP_Load {
 			} 
 		} 
 		
-		return FALSE;
+		return false;
 	}
 
-	public function GET($return = FALSE) {
-		if(is_null($this->URL)) { die("Si");
-			return FALSE;
+	public function GET($return = false)
+	{
+		if (is_null($this->URL)) {
+			return false;
 		}
 
 		$ch = curl_init($this->URL);
 		
-		if($ch) {
+		if ($ch) {
 			curl_setopt($ch, CURLOPT_URL, $this->URL);
-			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
 			
-			if($this->auth) {
+			if ($this->auth) {
 				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
 				curl_setopt($ch, CURLOPT_USERPWD, $this->username .":". $this->password);
 			}
 			
 			$response = curl_exec($ch);
-			
 			$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			
 			curl_close($ch);
 			
-			if($status === 200) {
-				if($return) {
+			if ($status === 200) {
+				if ($return) {
 					return $response;
 				}
-				
-				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, TRUE);				
+
+				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, true);				
 			}
 		} 
 		
-		return FALSE;
+		return false;
 	}
 
-	public function POST($data = NULL, $return = FALSE) {		
-		if(is_null($this->URL) or is_null($data)) {
-			return FALSE;
+	public function POST($data = null, $return = false)
+	{
+		if (is_null($this->URL) or is_null($data)) {
+			return false;
 		}
 		
-		if($ch = curl_init($this->URL)) {
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-			curl_setopt($ch, CURLOPT_POST, TRUE);
+		if ($ch = curl_init($this->URL)) {
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			
-			if($this->auth) {
+			if ($this->auth) {
 				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
 				curl_setopt($ch, CURLOPT_USERPWD, $this->username .":". $this->password);
 			}
 			
 			$response = curl_exec($ch);
-			
 			$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			
 			curl_close($ch);
 			
-			if($status === 200) {
-				if($return) {
+			if ($status === 200) {
+				if ($return) {
 					return $response;
 				}
 				
-				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, TRUE);
+				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, true);
 			}
 		} 
 		
-		return FALSE;
+		return false;
 	} 
 	
-	public function PUT($data = NULL, $return = FALSE) {
+	public function PUT($data = null, $return = false)
+	{
 		$data = is_array($data) ? http_build_query($data) : $data;
 		
-		if(is_null($this->URL) or is_null($data)) {
-			return FALSE;
+		if (is_null($this->URL) or is_null($data)) {
+			return false;
 		}
 		
-		if($ch = curl_init($this->URL)) {
+		if ($ch = curl_init($this->URL)) {
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Length: ". strlen($data)));
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			
-			if($this->auth) {
+			if ($this->auth) {
 				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
 				curl_setopt($ch, CURLOPT_USERPWD, $this->username .":". $this->password);
 			}
 			
 			$response = curl_exec($ch);
-
 			$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			
 			curl_close($ch);
 			
-			if($status === 200) {
-				if($return) {
+			if ($status === 200) {
+				if ($return) {
 					return $response;
 				}
-				
-				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, TRUE);
+
+				return (strstr($response, "xml")) ? new SimpleXMLElement($response) : json_decode($response, true);
 			}
 		} 
 		
-		return FALSE;
+		return false;
 	} 
 	
-	public function setAuth($username = NULL, $password = NULL) {
-		if(!is_null($username) and !is_null($password)) {
-			$this->auth	 	= TRUE;
+	public function setAuth($username = null, $password = null)
+	{
+		if (!is_null($username) and !is_null($password)) {
+			$this->auth	= true;
 			$this->username = $username;
 			$this->password = $password;
 		} else {
-			$this->auth	= FALSE;
+			$this->auth	= false;
 		}
 		
-		return FALSE;
+		return false;
 	}
 	
-	public function setURL($URL) {
+	public function setURL($URL)
+	{
 		$this->URL = $URL;
-	}
-		
+	}		
 }

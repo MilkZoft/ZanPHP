@@ -1,12 +1,43 @@
-.input {
-	width: 500px;
-	border: 1px solid #000;
-	background-color: #EEE;
+.form fieldset {
+	border: none;
 }
 
-.textarea {
-	width: 500px;
-	height: 300px;
-	border: 1px solid #000;
-	background-color: #EEE;
+.form .resalt {
+    color: #292929;
+    font-size: 160%;
+    letter-spacing: -0.06em;
+    line-height: 1.25em;
+    margin: 0 0 10px;
+}
+
+.form .required {
+	background-color: #ecf8ff;
+}
+
+.form input {
+	width: 250px;
+	border: 1px solid #d1d1d1;
+	color: #333;
+	margin-bottom: 5px;
+	height: 25px;
+	border-bottom-right-radius: 10px;
+}
+
+.form textarea {
+	font: Arial;
+	width: 250px;
+	height: 180px;
+	border: 1px solid #d1d1d1;		
+	margin-bottom: 5px;	
+	border-bottom-right-radius: 10px;
+}
+
+.form .submit {
+	width: 252px;
+	height: 30px;
+	border: 1px solid #ffe323;
+	color: #333;
+	margin-bottom: 5px;
+	background-color: #ffc600;
+	background: -moz-linear-gradient(center top , #ffc600 0pt, #ffe323 100%) repeat scroll 0 0 transparent;
 }

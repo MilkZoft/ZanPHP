@@ -1,21 +1,18 @@
 <?php 
-/**
- * Access from index.php:
- */
-if(!defined("_access")) {
+if (!defined("ACCESS")) {
 	die("Error: You don't have permission to access here...");
 }
 
-set("webLang", whichLanguage(FALSE));
+date_default_timezone_set(DEFAULT_TIMEZONE);
 
-if(_get("translation") === "gettext") {
-	$languageFile = _dir ."/lib/languages/gettext/". whichLanguage(TRUE, TRUE) .".mo";
-		
-	if(file_exists($languageFile)) { 			
-		$Load->library("streams", NULL, NULL, "gettext");
+set("webLang", whichLanguage(false));
 
-		$Gettext_Reader = $Load->library("gettext", "Gettext_Reader", array($languageFile), "gettext");
+if (_get("translation") === "gettext") {
+	$languageFile = DIR ."/lib/languages/gettext/". whichLanguage(true, true) .".mo";
 	
+	if (file_exists($languageFile)) { 			
+		$Load->library("streams", null, null, "gettext");
+		$Gettext_Reader = $Load->library("gettext", "Gettext_Reader", array($languageFile), "gettext");
 		$Gettext_Reader->load_tables();
 	}
 }

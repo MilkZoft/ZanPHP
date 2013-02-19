@@ -1,8 +1,5 @@
 <?php
-/**
- * Access from index.php:
- */
-if(!defined("_access")) {
+if(!defined("ACCESS")) {
 	die("Error: You don't have permission to access here...");
 }
 
@@ -12,6 +9,6 @@ $routes = array(
 		"application" => "default",
 		"controller"  => "default",
 		"method"	  => "test",
-		"params"	  => array()
+		"params"	  => array("Hi", "Goodbye")
 	),
 );
