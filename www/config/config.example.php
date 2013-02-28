@@ -1,12 +1,12 @@
 <?php
-if(!defined("ACCESS")) {
+if (!defined("ACCESS")) {
 	die("Error: You don't have permission to access here...");
 }
 
 /**
  * Website
  */
-$ZP["webURL"] = "http://localhost/zanphp";
+$ZP["webURL"] = "http://localhost:8887/ZanPHP";
 $ZP["webName"] = "ZanPHP";
 $ZP["webTheme"] = "default";
 $ZP["webSituation"] = "Active";

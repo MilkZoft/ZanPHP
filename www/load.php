@@ -6,7 +6,7 @@ if (!defined("ACCESS")) {
 include "requirements.php";
 
 $Load = new ZP_Load(); 
-$Load->helper(array("i18n", "sessions", "router", "string"));
+$Load->helper(array("exceptions", "i18n", "sessions", "router", "string"));
 
 include "configuration.php";
 

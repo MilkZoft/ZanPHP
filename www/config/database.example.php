@@ -1,5 +1,5 @@
 <?php
-if(!defined("ACCESS")) {
+if (!defined("ACCESS")) {
 	die("Error: You don't have permission to access here...");
 }
 
@@ -13,7 +13,7 @@ define("DB_USER", "root");
 define("DB_PWD", "");
 define("DB_DATABASE", "");
 define("DB_PORT", 3306);
-define("DB_PREFIX", "muu_");
+define("DB_PREFIX", "zan_");
 define("DB_SOCKET", "");;
 
 /**
