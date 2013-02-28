@@ -90,13 +90,13 @@ class EpiOAuth
         switch($method) {
             case 'GET':
                 return $this->httpGet($URL, $params);
-				break;            
+                break;            
             case 'POST':
                 return $this->httpPost($URL, $params, $isMultipart);
-				break;            
+                break;            
             case 'DELETE':
                 return $this->httpDelete($URL, $params);
-				break;    
+                break;    
         }
     }
     
@@ -138,7 +138,7 @@ class EpiOAuth
 
         $oauth = 'Authorization: OAuth realm="'. $URLParts['scheme'] .'://'. $URLParts['host'] . $URLParts['path'] .'",';
 
-        foreach (($oauthHeaders as $name => $value) {
+        foreach ($oauthHeaders as $name => $value) {
             $oauth .= "{$name}=\"{$value}\",";
         }
 
@@ -150,8 +150,9 @@ class EpiOAuth
     
     protected function buildHttpQueryRaw($params) {
         $retval = '';
+        $params = (array) $params;
 
-        foreach (((array) $params as $key => $value) {
+        foreach ($params as $key => $value) {
             $retval .= "{$key}={$value}&";
         }
 
@@ -247,7 +248,7 @@ class EpiOAuth
         if (count($params['request']) > 0) {
             $URL .= '?';
 
-            foreach (($params['request'] as $k => $v) {
+            foreach ($params['request'] as $k => $v) {
                 $URL .= "{$k}={$v}&";
             }
 
@@ -308,7 +309,7 @@ class EpiOAuth
     
     protected function isMultipart($params = null) { 
         if ($params) {
-            foreach (($params as $k => $v) {
+            foreach ($params as $k => $v) {
                 if (strncmp('@', $k, 1) === 0) {
                     return true;
                 }
@@ -336,7 +337,7 @@ class EpiOAuth
 
         $oauth['oauth_version'] = $this->version;
         
-        foreach (($oauth as $k => $v) {
+        foreach ($oauth as $k => $v) {
             $oauth[$k] = $this->encode_rfc3986($v);
         }
 
@@ -344,7 +345,7 @@ class EpiOAuth
         $hasFile   = false;
 
         if (is_array($params)) {
-            foreach (($params as $k => $v) {
+            foreach ($params as $k => $v) {
                 if (strncmp('@', $k, 1) !== 0) {
                     $sigParams[$k] = $this->encode_rfc3986($v);
                     $params[$k]    = $this->encode_rfc3986($v);
@@ -407,7 +408,7 @@ class EpiOAuthResponse
 
         parse_str($this->__resp->data, $result);
         
-        foreach (($result as $k => $v) {
+        foreach ($result as $k => $v) {
             $this->$k = $v;
         }
         
@@ -447,7 +448,7 @@ class EpiSequence
         $min = PHP_INT_MAX;
         $max = 0;
 
-        foreach (($this->timers as $timer) {
+        foreach ($this->timers as $timer) {
             $min = min($timer['start'], $min);
             $max = max($timer['end'], $max);
         }
@@ -461,7 +462,7 @@ class EpiSequence
     public function renderAscii() {
         $tpl = '';
 
-        foreach (($this->timers as $timer) {
+        foreach ($this->timers as $timer) {
             $tpl .= $this->tplAscii($timer);
         }
 
@@ -708,7 +709,7 @@ class EpiTwitterJson implements ArrayAccess, Countable, IteratorAggregate
         $this->__obj    = json_decode($this->responseText);
         
         if (gettype($this->__obj) === 'object') {
-            foreach (($this->__obj as $k => $v) {
+            foreach ($this->__obj as $k => $v) {
                 $this->$k = $v;
             }
         }
@@ -940,7 +941,7 @@ class EpiCurl
             $this->responses[$key]['data'] = curl_exec($done['handle']);
         }
 
-        foreach (($this->properties as $name => $const) {
+        foreach ($this->properties as $name => $const) {
             $this->responses[$key][$name] = curl_getinfo($done['handle'], $const);
         }
         
