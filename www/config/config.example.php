@@ -6,7 +6,7 @@ if (!defined("ACCESS")) {
 /**
  * Website
  */
-$ZP["webURL"] = "http://localhost:8887/ZanPHP";
+$ZP["webURL"] = "http://localhost/ZanPHP";
 $ZP["webName"] = "ZanPHP";
 $ZP["webTheme"] = "default";
 $ZP["webSituation"] = "Active";
