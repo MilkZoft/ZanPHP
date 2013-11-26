@@ -5,6 +5,8 @@ if (!defined("ACCESS")) {
 
 class ZP_Templates extends ZP_Load
 {
+	public $themePath;
+	public $themeRoute;
 	private $CSS = null;
 	private $topCSS = array();
 	private $bottomCSS = array();
@@ -12,13 +14,11 @@ class ZP_Templates extends ZP_Load
 	private $topJS = array();
 	private $bottomJS = array();
 	private $theme = null;
-	public $themePath;
-	public $themeRoute;
 	private $title;
 	private $meta;
 	private $vars = array();
 	private $ignoredSegments = array();
-	
+
 	public function CSS($CSS = null, $application = null, $print = false, $top = false)
 	{
 		if ($top) {
@@ -126,6 +126,7 @@ class ZP_Templates extends ZP_Load
 					}
 
 					$contents = compress($contents, $ext);
+		        	
 		        	file_put_contents($filename, $contents, LOCK_EX);
 				}
 
@@ -192,7 +193,6 @@ class ZP_Templates extends ZP_Load
 			$arrayJS = &$this->bottomJS;
 		}
 		
-
 		if ($js === "prettyphoto") {
 			$this->CSS("prettyphoto");
 
@@ -237,15 +237,19 @@ class ZP_Templates extends ZP_Load
 
 				if ($application === "full") {
 					$js .= "<script type=\"text/javascript\">
+								CKEDITOR.config.extraPlugins = 'codemirror,insertpre,doksoft_image,doksoft_preview,doksoft_resize';
 								CKEDITOR.config.insertpre_class = 'prettyprint';
 								CKEDITOR.config.insertpre_style = 'background-color:#F8F8F8;border:1px solid #DDD;padding:10px;';
+								CKEDITOR.config.filebrowserImageUploadUrl = '". path("vendors/js/editors/ckeditor/plugins/doksoft_uploader/uploader.php?type=Images", "zan") ."';
+								CKEDITOR.config.filebrowserImageThumbsUploadUrl = '". path("vendors/js/editors/ckeditor/plugins/doksoft_uploader/uploader.php?type=Images&makeThumb=true", "zan") ."';
+								CKEDITOR.config.filebrowserImageResizeUploadUrl = '". path("vendors/js/editors/ckeditor/plugins/doksoft_uploader/uploader.php?type=Images&resize=true", "zan") ."';
 
 								CKEDITOR.replace('editor', {
 									toolbar: [
 										{name:'group1', items:['Bold','Italic','Underline','StrikeThrough','PasteFromWord']},
 										{name:'group2', items:['Format']},
 										{name:'group3', items:['Outdent','Indent','NumberedList','BulletedList','Blockquote','PageBreak']},
-						   				{name:'group4', items:['Image','Link','Unlink','InsertPre','Source']}  
+						   				{name:'group4', items:['Image','Link','Unlink','InsertPre','Source','doksoft_image', 'doksoft_preview', 'doksoft_resize']}
 									]									
 								});
 							</script>";
@@ -290,10 +294,29 @@ class ZP_Templates extends ZP_Load
 		} elseif ($js === "codemirror") {
 			if ($getJs) {
 				$js = '<script type="text/javascript" src="'. path("vendors/js/codemirror/codemirror.js", "zan") .'"></script>';
-				$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/util/loadmode.js", "zan") .'"></script>';
+				if (is_null($application)) {
+					$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/util/loadmode.js", "zan") .'"></script>';
+				} elseif ($application === "php") {
+					$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/mode/htmlmixed.js", "zan") .'"></script>';
+					$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/mode/xml.js", "zan") .'"></script>';
+					$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/mode/javascript.js", "zan") .'"></script>';
+					$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/mode/css.js", "zan") .'"></script>';
+					$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/mode/clike.js", "zan") .'"></script>';
+					$js .= '<script type="text/javascript" src="'. path("vendors/js/codemirror/mode/php.js", "zan") .'"></script>';
+				}
 				return $js;
 			} else {
-				array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/codemirror.js', CORE_PATH .'/vendors/js/codemirror/util/loadmode.js');
+				array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/codemirror.js');
+				if (is_null($application)) {
+					array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/util/loadmode.js');
+				} elseif ($application === "php") {
+					array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/mode/htmlmixed.js');
+					array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/mode/xml.js');
+					array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/mode/javascript.js');
+					array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/mode/css.js');
+					array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/mode/clike.js');
+					array_push($arrayJS, CORE_PATH .'/vendors/js/codemirror/mode/php.js');
+				}
 			}
 		} elseif (file_exists($js)) {
 			if ($getJs) {

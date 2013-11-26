@@ -23,18 +23,19 @@ if (!function_exists("__")) {
 				include_once "www/lib/languages/". strtolower($language) .".php";
 			} 
 
-			$position = strtolower(str_replace(" ", "_", $text)); 
-			$position = strtolower(str_replace("?,", "", $position));
-			$position = strtolower(str_replace("?", "", $position));
-			$position = strtolower(str_replace("!", "", $position));
-			$position = strtolower(str_replace("¡", "", $position));
-			$position = strtolower(str_replace("¿", "", $position));
-			$position = strtolower(str_replace(",", "", $position));
-			$position = strtolower(str_replace(":", "", $position));
-			$position = strtolower(str_replace("'", "", $position));
-			$position = strtolower(str_replace('"', "", $position));
-			$position = strtolower(str_replace(".", "", $position));
-			$position = strtolower(str_replace("&", "-", $position));
+			$position = strtolower($text);
+			$position = str_replace(" ", "_", $position); 
+			$position = str_replace("?,", "", $position);
+			$position = str_replace("?", "", $position);
+			$position = str_replace("!", "", $position);
+			$position = str_replace("¡", "", $position);
+			$position = str_replace("¿", "", $position);
+			$position = str_replace(",", "", $position);
+			$position = str_replace(":", "", $position);
+			$position = str_replace("'", "", $position);
+			$position = str_replace('"', "", $position);
+			$position = str_replace(".", "", $position);
+			$position = str_replace("&", "-", $position);
 			
 			if (isset($phrase[$position])) {
 				return ($encode) ? encode($phrase[$position]) : $phrase[$position];
@@ -45,7 +46,7 @@ if (!function_exists("__")) {
 					$today = date("d/m/Y");
 
 					if (file_exists($logfile)) {
-						$content = @file_get_contents($logfile);
+						$content = file_get_contents($logfile);
 					}
 
 					$file = @fopen($logfile, "a+");
@@ -75,7 +76,7 @@ if (!function_exists("getLanguage")) {
 		foreach ($languages as $language) {
 			if ($flags) {
 				if ($language["language"] === $lang) {
-					return '<span class="flag '. strtolower($language["lang"]) .'-flag"></span>';	
+					return '<span title="'. __($lang) .'" class="flag '. strtolower($language["lang"]) .'-flag"></span>';	
 				}
 			} else {
 				if ($language["language"] === $lang) {

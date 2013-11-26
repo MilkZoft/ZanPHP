@@ -118,7 +118,7 @@ class ZP_Db extends ZP_Load
 				}
 			} else {
 				if (DB_DRIVER === "mysqli") {
-					$this->Database = $this->driver("MySQLi_Db");					
+					$this->Database = $this->driver("MySQLi_Db");
 					self::$connection = $this->Database->connect();
 				} elseif (DB_DRIVER === "mysql") {
 					$this->Database = $this->driver("MySQL_Db");					
@@ -466,10 +466,20 @@ class ZP_Db extends ZP_Load
 				$query = "$this->select FROM $this->from $this->join $this->where LIMIT $limit, $offset";
 			}
 		}
-		
-		$this->where = null;
+
+		$this->cleanUp();
 	
 		return $this->data($query);
+	}
+
+	public function cleanUp()
+	{
+		$this->select = null;
+		$this->from   = null;
+		$this->join   = null;
+		$this->where  = null;
+
+		return true;
 	}
 	
 	public function getTable($table)

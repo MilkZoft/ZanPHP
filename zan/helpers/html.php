@@ -235,12 +235,20 @@ if (!function_exists("closeUl")) {
 }
 
 if (!function_exists("p")) {
-	function p($text, $class = "left")
+	function p($text, $class = null)
 	{
 		if (is_string($text)) {
-			return '<p class="'. $class .'">'. $text .'</p>' ;
+			if (is_null($class)) {
+				return '<p>'. $text .'</p>';
+			} else {
+				return '<p class="'. $class .'">'. $text .'</p>' ;
+			}
 		} elseif ($text === true) {
-			return '<p class="'. $class .'">';
+			if (is_null($class)) {
+				return '<p>';
+			} else {
+				return '<p class="'. $class .'">';
+			}
 		} else {
 			return '</p>';
 		}
@@ -310,6 +318,8 @@ if (!function_exists("htmlTag")) {
 	        
 	        if (! is_null($content)) {
 	            $HTML .= "$content</$tag>";
+	        } elseif ($content === false) {
+	        	$HTML .= "</$tag>";
 	        }
 	        
 	        return $HTML;

@@ -31,3 +31,22 @@ if (!function_exists("string2Array")) {
 		return false;
 	}
 }
+
+if(!function_exists("arrayPushAfter")) {
+	function arrayPushAfter($src, $in, $pos)
+	{
+	    if (is_int($pos)) {
+	    	$r = array_merge(array_slice($src, 0, $pos + 1), $in, array_slice($src,$pos + 1));
+	    } else {
+	        foreach ($src as $k => $v) {
+	            $r[$k] = $v;
+	            
+	            if ($k == $pos) {
+	            	$r = array_merge($r, $in);
+	            }
+	        }
+	    }
+
+	    return $r;
+	}
+}

@@ -273,7 +273,7 @@ if (!function_exists("howLong")) {
 			}
 		}
 		
-		return encode($date);
+		return $date;
 	}
 }
 
@@ -334,6 +334,7 @@ if (!function_exists("now")) {
 				$hour = ($hours === 22) ? "10" : $hours;
 				$hour = ($hours === 23) ? "11" : $hours;
 				$hour = ($hours === 00) ? "12" : $hours;
+
 				return "$hour:$minutes P.M.";				
 			} 
 			
@@ -381,7 +382,22 @@ if (!function_exists("getAllDays")) {
 		$days = array();
 
 		while ($currentDate < $endDate) {
-			$days[] = date("l Y-n-d", $currentDate);
+			$day = date("l d \of F Y", $currentDate);
+			$day = str_replace("Saturday", __("Saturday"), $day);
+			$day = str_replace("January", __("January"), $day);
+			$day = str_replace("February", __("February"), $day);
+			$day = str_replace("March", __("March"), $day);
+			$day = str_replace("April", __("April"), $day);
+			$day = str_replace("May", __("May"), $day);
+			$day = str_replace("June", __("June"), $day);
+			$day = str_replace("July", __("July"), $day);
+			$day = str_replace("August", __("August"), $day);
+			$day = str_replace("September", __("September"), $day);
+			$day = str_replace("October", __("October"), $day);
+			$day = str_replace("November", __("November"), $day);
+			$day = str_replace("December", __("December"), $day);
+			$day = str_replace("of", __("of"), $day);
+			$days[] = $day;
 			$currentDate = strtotime("+1 week", $currentDate);
 		}
 

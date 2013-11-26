@@ -1,0 +1,1 @@
+<p style="color: red"><?php echo __("Message from the rewrite show view"); ?>: <?php echo $message; ?></p>

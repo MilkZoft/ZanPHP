@@ -29,29 +29,57 @@ class ZP_Cache extends ZP_Load
 
 	public function data($ID, $group = "default", $Class = false, $method = false, $params = array(), $time = CACHE_TIME)
 	{
-		if (CACHE_STATUS and $this->get($ID, $group)) {
-			$data = $this->get($ID, $group);
+		if (strtolower(CACHE_DRIVER) == "file") {
+			if (CACHE_STATUS and $this->get($ID, $group)) {
+				$data = $this->get($ID, $group);
 
-			if (!$data) {
+				if (!$data) {
+					if (!$Class or !$method) {
+						return false;
+					}
+					
+					$data = ($Class) ? call_user_func_array(array($Class, $method), is_array($params) ? $params : array()) : false;
+
+					if (CACHE_STATUS and $data) {
+						$this->save($data, $ID, $group, $time);
+					}
+				}
+			} else {
 				if (!$Class or !$method) {
 					return false;
 				}
 				
 				$data = ($Class) ? call_user_func_array(array($Class, $method), is_array($params) ? $params : array()) : false;
-
+				
 				if (CACHE_STATUS and $data) {
 					$this->save($data, $ID, $group, $time);
 				}
 			}
-		} else {
-			if (!$Class or !$method) {
-				return false;
-			}
-			
-			$data = ($Class) ? call_user_func_array(array($Class, $method), is_array($params) ? $params : array()) : false;
-			
-			if (CACHE_STATUS and $data) {
-				$this->save($data, $ID, $group, $time);
+		} elseif (strtolower(CACHE_DRIVER) == "apc") {
+			if (CACHE_STATUS and $this->get($ID, $group)) {
+				$data = $this->get($ID, $group);
+
+				if (!$data) {
+					if (!$Class or !$method) {
+						return false;
+					}
+					
+					$data = ($Class) ? call_user_func_array(array($Class, $method), is_array($params) ? $params : array()) : false;
+
+					if (CACHE_STATUS and $data) {
+						$this->save($data, $ID, $group, $time);
+					}
+				}
+			} else {
+				if (!$Class or !$method) {
+					return false;
+				}
+				
+				$data = ($Class) ? call_user_func_array(array($Class, $method), is_array($params) ? $params : array()) : false;
+				
+				if (CACHE_STATUS and $data) {
+					$this->save($data, $ID, $group, $time);
+				}
 			}
 		}
 
@@ -100,26 +128,35 @@ class ZP_Cache extends ZP_Load
 
 	public function get($ID, $groupID = "default")
 	{
-		if ($this->status) {
-			$this->setFileRoutes($ID, $groupID);
+		if (strtolower(CACHE_DRIVER) == "file") {
+			if ($this->status) {
+				$this->setFileRoutes($ID, $groupID);
 
-			if (!file_exists($this->file)) {
-				return false;
+				if (!file_exists($this->file)) {
+					return false;
+				}
+
+				$meta = @file_get_contents($this->filePath . $this->filename);
+				$meta = @unserialize($meta);
+				
+				$checkExpiration = $this->checkExpiration($meta["expiration_time"]);
+				$checkIntegrity	= $this->checkIntegrity($meta["integrity"], $meta["data"]);
+
+				if ($checkExpiration and $checkIntegrity) {
+					return @unserialize($meta["data"]);
+				} else {
+					return $this->remove($ID, $groupID);
+				}
 			}
 
-			$meta = @file_get_contents($this->filePath . $this->filename);
-			$meta = @unserialize($meta);
-			$checkExpiration = $this->checkExpiration($meta["expiration_time"]);
-			$checkIntegrity	= $this->checkIntegrity($meta["integrity"], $meta["data"]);
+			return false;
+		} elseif (strtolower(CACHE_DRIVER) == "apc") {
+			if ($data = apc_fetch($ID ."-". $groupID)) {
+				return $data;
+			} 
 
-			if ($checkExpiration and $checkIntegrity) {
-				return @unserialize($meta["data"]);
-			} else {
-				return $this->remove($ID, $groupID);
-			}
+			return false;
 		}
-
-		return false;
 	}
 
 	private function getKey($ID)
@@ -134,52 +171,72 @@ class ZP_Cache extends ZP_Load
 
 	public function remove($ID, $groupID = "default", $groupLevel = false)
 	{
-		$this->setFileRoutes($ID, $groupID);
+		if (strtolower(CACHE_DRIVER) == "file") {
+			$this->setFileRoutes($ID, $groupID);
 
-		if ($groupLevel and $groupID !== "default") {
-			if (!$this->groupPath or empty($this->groupPath)) {
+			if ($groupLevel and $groupID !== "default") {
+				if (!$this->groupPath or empty($this->groupPath)) {
+					return false;
+				}
+
+				return $this->delete($this->groupPath);
+			} elseif ($this->filePath and !empty($this->filePath)) {
+				return $this->delete($this->filePath);
+			} else {
 				return false;
 			}
-
-			return $this->delete($this->groupPath);
-		} elseif ($this->filePath and !empty($this->filePath)) {
-			return $this->delete($this->filePath);
-		} else {
-			return false;
+		} elseif (strtolower(CACHE_DRIVER) == "file") {
+			apc_delete($ID ."-". $groupID);
 		}
 	}
 
 	public function removeAll($groupID = "default")
 	{
-		$this->delete(CACHE_DIR . SH . $this->getKey($groupID) . SH);
+		if (strtolower(CACHE_DRIVER) == "file") {
+			$this->delete(CACHE_DIR . SH . $this->getKey($groupID) . SH);
+		} elseif (strtolower(CACHE_DRIVER) == "apc") {
+			apc_clear_cache("user");
+		}
 	}
 
 	public function save($data, $ID, $groupID = "default", $time = CACHE_TIME)
 	{
-		if ($this->status) { 
-			$this->setFileRoutes($ID, $groupID);
+		if (strtolower(CACHE_DRIVER) == "file") {
+			if ($this->status) { 
+				$this->setFileRoutes($ID, $groupID);
 
-			if (!is_dir($this->filePath)) {
-				if (!mkdir($this->filePath, 0777, true)) {
-					return false;
+				if (!is_dir($this->filePath)) {
+					if (!mkdir($this->filePath, 0777, true)) {
+						return false;
+					}
 				}
+
+				if (!is_array($data) and !is_object($data)) {
+					$data = array($data);
+				}
+
+				$data = serialize($data);
+				$hash = sha1($data);
+				
+				$meta["expiration_time"] = time() + $time;
+				$meta["integrity"] = $hash;
+				$meta["data"] = $data;
+
+				return @file_put_contents($this->file, serialize($meta), LOCK_EX);
 			}
 
-			if (!is_array($data) and !is_object($data)) {
-				$data = array($data);
+			return false;
+		} elseif (strtolower(CACHE_DRIVER) == "apc") {
+			if ($this->status) { 
+				if (!is_array($data) and !is_object($data)) {
+					$data = array($data);
+				}
+				
+				return apc_store($ID ."-". $groupID, $data, CACHE_TIME);
 			}
 
-			$data = serialize($data);
-			$hash = sha1($data);
-			
-			$meta["expiration_time"] = time() + $time;
-			$meta["integrity"] = $hash;
-			$meta["data"] = $data;
-
-			return @file_put_contents($this->file, serialize($meta), LOCK_EX);
+			return false;
 		}
-
-		return false;
 	}
 
 	private function setFileRoutes($ID, $groupID)

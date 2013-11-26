@@ -44,8 +44,8 @@ class ZP_Data extends ZP_Load
 				} elseif ($validation === "captcha?") {
 					if (!POST("captcha_token") or !POST("captcha_type")) {
 						return array("error" => getAlert(__(POST("captcha_type") === "aritmethic" ? "Please enter your answer again" : "Please type the characters you see in the picture")));
-					} elseif (POST("captcha_type") === "aritmethic") {
-						if (SESSION("ZanCaptcha". POST("captcha_token")) !== (int)POST($field)) {
+					} elseif (POST("captcha_type") === "aritmethic") {								
+						if (SESSION("ZanCaptcha". POST("captcha_token")) != POST($field)) {
 							return array("error" => getAlert(__("Your answer was incorrect")));
 						}
 					} else {
@@ -74,7 +74,7 @@ class ZP_Data extends ZP_Load
 					$count = ($count > 0) ? $count : 6;
 
 					if (strlen(POST($field)) < $count) {
-						return array("error" => getAlert(__("$field must have at least $count characters")));
+						return array("error" => getAlert( __("$field")." ".__("must have at least")." $count ".__("characters")));
 					}
 				} elseif (isset($field["exists"]) and isset($this->table)) {
 					if (is_array($validation)) {

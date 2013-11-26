@@ -22,8 +22,10 @@ class ZP_Load
 		return $this->application = $application;
 	}
 	
-	public function classes($name, $className = NULL, $params = array(), $application = NULL)
+	public function classes($name, $className = null, $params = array(), $application = null)
 	{
+		$name = strtolower($name);
+
 		if (file_exists("www/applications/$application/classes/$name.php")) {
 			include_once "www/applications/$application/classes/$name.php";
 		} elseif (file_exists("www/classes/$name.php")) {
@@ -50,7 +52,7 @@ class ZP_Load
 		}
 	}
 
-	public function controller($controller, $application = NULL)
+	public function controller($controller, $application = null)
 	{
 		$parts = explode("_", $controller);
 	
@@ -87,13 +89,13 @@ class ZP_Load
 		return ZP_Singleton::instance("ZP_$core");
 	}
 
-	public function CSS($CSS = NULL, $application = NULL, $print = false, $top = false)
+	public function CSS($CSS = null, $application = null, $print = false, $top = false)
 	{
 		$this->Templates = $this->core("Templates");
 		$this->Templates->CSS($CSS, $application, $print, $top);
 	}
 
-	public function driver($driver = NULL, $type = "db")
+	public function driver($driver = null, $type = "db")
 	{
 		if (file_exists(CORE_PATH ."/drivers/$type/". strtolower($driver) .".php")) {
 			$file = CORE_PATH ."/drivers/$type/". strtolower($driver) .".php";
@@ -114,11 +116,11 @@ class ZP_Load
 		if (strtolower($type) === "db") {
 			return $this->core("Db");
 		} elseif (strtolower($type) === "mongodb" or strtolower($type) === "mongo") {
-			return $this->core("MongoDB");
+			return (DB_NOSQL_ACTIVE) ? $this->core("MongoDB") : false;
 		} elseif (strtolower($type) === "couchdb" or strtolower($type) === "couch") {
-			return $this->core("CouchDB");
+			return (DB_NOSQL_ACTIVE) ? $this->core("CouchDB") : false;
 		} elseif (strtolower($type) === "cassandra") {
-			return $this->core("Cassandra");
+			return (DB_NOSQL_ACTIVE) ? $this->core("Cassandra") : false;
 		}
 	}
 
@@ -174,11 +176,11 @@ class ZP_Load
 		}		
 	}
 		
-	public function helper($helper, $application = NULL)
+	public function helper($helper, $application = null)
 	{
 		if (is_array($helper)) { 
 			for ($i = 0; $i <= count($helper) - 1; $i++) {
-				if ($application === NULL) {
+				if ($application === null) {
 					if (file_exists(CORE_PATH ."/helpers/". $helper[$i] .".php")) {
 						include_once CORE_PATH ."/helpers/". $helper[$i] .".php";
 					} elseif (file_exists("www/helpers/". $helper[$i] .".php")) {
@@ -213,7 +215,7 @@ class ZP_Load
 		}
 	}
 
-	public function hook($hook, $application = NULL)
+	public function hook($hook, $application = null)
 	{
 		if (is_array($hook)) {
 			for ($i = 0; $i <= count($hook) - 1; $i++) {
@@ -248,7 +250,7 @@ class ZP_Load
 		}
 	}
 
-	public function js($script, $application = NULL, $getJs = false, $top = false)
+	public function js($script, $application = null, $getJs = false, $top = false)
 	{
 		$this->Templates = $this->core("Templates");	
 		return $this->Templates->js($script, $application, $getJs, $top);
@@ -269,7 +271,7 @@ class ZP_Load
 		}
 	}
 
-	public function library($name, $className = NULL, $params = array(), $application = NULL)
+	public function library($name, $className = null, $params = array(), $application = null)
 	{	
 		if (file_exists(CORE_PATH ."/libraries/$application/$name.php")) {
 			include_once CORE_PATH ."/libraries/$application/$name.php";
@@ -393,7 +395,7 @@ class ZP_Load
 		}
 	}	
 
-	public function render($name, $vars = NULL)
+	public function render($name, $vars = null)
 	{
 		if (is_array($vars)) { 
 			if (count($this->views) === 0) {
@@ -421,7 +423,7 @@ class ZP_Load
 		$this->Templates->theme($theme);
 	}
 
-	public function title($title = NULL)
+	public function title($title = null)
 	{
 		$this->Templates = $this->core("Templates");
 		$this->Templates->title($title);
@@ -438,15 +440,22 @@ class ZP_Load
         $this->Templates->meta($tag, $value);
     }
 
-	public function view($name, $vars = NULL, $application = NULL, $return = false)
+	public function view($name, $vars = null, $application = null, $return = false)
 	{
 		if (is_null($application)) {
 			$application = whichApplication();
 		} 
 
 		if (!is_null($application) and is_string($application) and is_string($name)) {
-			$view = "www/applications/$application/views/$name.php";
-			$minView = "www/applications/$application/views/min/$name.php";
+			$theme = _get("webTheme");
+
+			if (file_exists("www/lib/themes/$theme/views/$application/$name.php")) { 
+				$view 	 = "www/lib/themes/$theme/views/$application/$name.php";
+				$minView = "www/lib/themes/$theme/views/$application/min/$name.php";
+			} else { 
+				$view 	 = "www/applications/$application/views/$name.php";
+				$minView = "www/applications/$application/views/min/$name.php";
+			}
 
 			if (_get("environment") > 2 and file_exists($minView)) {
 				$view = $minView;

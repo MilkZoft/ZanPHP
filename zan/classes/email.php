@@ -9,12 +9,46 @@ class ZP_Email extends ZP_Load
 	public $fromEmail;
 	public $fromName;
 	public $message;
+	public $messageText;
 	public $subject;
 	public $library = "PHPMailer";
 	
 	public function send()
 	{
-		if (strtolower($this->library) === "phpmailer") {
+		if (strtolower($this->library) === "elastic") {
+		    $response = "";
+
+		    $data  = "username=". urlencode(ELASTIC_USERNAME);
+		    $data .= "&api_key=". urlencode(ELASTIC_API_KEY);
+		    $data .= "&from=". urlencode($this->fromEmail);
+		    $data .= "&from_name=". urlencode($this->fromName);
+		    $data .= "&to=". urlencode($this->email);
+		    $data .= "&subject=". urlencode($this->subject);
+		    
+		    if ($this->message) {
+		    	$data .= "&body_html=". urlencode($this->message);
+		    }
+
+		    $header  = "POST /mailer/send HTTP/1.0\r\n";
+		    $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+		    $header .= "Content-Length: " . strlen($data) . "\r\n\r\n";
+		    
+		    $fp = fsockopen('ssl://api.elasticemail.com', 443, $errno, $errstr, 30);
+
+		    if(!$fp) {
+		    	return "ERROR. Could not open connection";
+		    } else {
+		      	fputs ($fp, $header . $data);
+		      
+		      	while (!feof($fp)) {
+		        	$response .= fread ($fp, 1024);
+		      	}
+		      	
+		      	fclose($fp);
+		    }
+		    
+		    return true;
+		} elseif (strtolower($this->library) === "phpmailer") {
 			$this->config("email");
 
 			$this->PHPMailer = $this->library("phpmailer", "PHPMailer");

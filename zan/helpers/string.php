@@ -221,7 +221,7 @@ if (!function_exists("like")) {
 	function like($ID = 0, $application = null, $likes = false)
 	{
 		if ($ID > 0 and !is_null($application)) {
-			return  '<a title="'. __("I Like") .'" href="'. path("$application/like/$ID") .'"><img src="'. path("www/lib/images/like.png", true) .'" /> '. __("I Like") . ($likes) ? " ($likes)" : null .'</a>';
+			return  '<a title="'. __("I Like") .'" href="'. path("$application/like/$ID") .'"><img src="'. path("www/lib/images/like.png", true) .'" /> '. __("I Like") . ($likes ? " ($likes)" : null) .'</a>';
 		}
 
 		return false;
@@ -233,7 +233,7 @@ if (!function_exists("dislike")) {
 	{
 		if ($ID > 0 and !is_null($application)) {
 			return '<a title="'. __("I Dislike") .'" href="'. path("$application/dislike/$ID") .'">
-						<img src="'. path("www/lib/images/dislike.png", true) .'" /> '. __("I Dislike") . ($dislikes) ? " ($dislikes)" : null .'
+						<img src="'. path("www/lib/images/dislike.png", true) .'" /> '. __("I Dislike") . ($dislikes ? " ($dislikes)" : null) .'
 					</a>';
 		}
 
@@ -396,10 +396,12 @@ if (!function_exists("getCode")) {
 
 	    foreach ($code as $line => $codeLine) {
 	        if (preg_match("/<\?(php)?[^[:graph:]]/", $codeLine)) {
-	        	$codeLine = str_replace("\\", "", $codeLine);
-	            $result .= htmlentities(stripslashes($codeLine)) ."<br />";
+	        	$codeLine = str_replace('\"', '"', $codeLine);
+	        	$codeLine = str_replace("\'", "'", $codeLine);
+	            $result .= htmlentities($codeLine) ."<br />";
 	        } else {
-	        	$codeLine = str_replace("\\", "", $codeLine);
+	        	$codeLine = str_replace('\"', '"', $codeLine);
+	        	$codeLine = str_replace("\'", "'", $codeLine);
 	            $result .= preg_replace("/(&lt;\?php&nbsp;)+/", "", htmlentities(stripslashes($codeLine)) ."<br />");
 	        }
 	    }
@@ -433,6 +435,15 @@ if (!function_exists("getAd")) {
 	}
 }
 
+if (!function_exists("removeRareChars")) {
+	function removeRareChars($content)
+	{
+		$content = str_replace("%u200B", "", $content);
+
+		return $content;
+	}
+}
+
 if (!function_exists("showContent")) {
 	function showContent($content)
 	{
@@ -445,10 +456,15 @@ if (!function_exists("showContent")) {
 		$content = str_replace("[Ad:336px]", '<p>'. getAd() .'</p>', $content);
 		$content = str_replace("[Ad:728px]", '<p>'. getAd("728px") .'</p>', $content);
 		$content = str_replace("[Ad:Block]", '<p>'. getAd() .'</p>', $content);
+		$content = str_replace("[Ad:Sky]",   '<p>'. getAd("728px") .'</p>', $content);
 		$content = str_replace("[ad:336px]", '<p>'. getAd() .'</p>', $content);
 		$content = str_replace("[ad:728px]", '<p>'. getAd("728px") .'</p>', $content);
 		$content = str_replace("[Ad:block]", '<p>'. getAd() .'</p>', $content);	
-		$content = str_replace("\\", "", $content);
+		$content = str_replace('\"', '"', $content);
+		$content = str_replace("\'", "'", $content);
+		$content = str_replace("<a ", '<a rel="nofollow" ', $content);
+		$content = removeRareChars($content);
+
 		return setCode($content);		
 	}
 }
@@ -468,7 +484,7 @@ if (!function_exists("setCode")) {
 					$code = explode("</pre>", $codes[$i]);
 
 			   		if (isset($code[0])) {
-			   			$code[0] = ($return) ? stripslashes(htmlspecialchars(getCode($code[0]))) : stripslashes(htmlspecialchars($code[0]));
+			   			$code[0] = ($return) ? htmlspecialchars(getCode($code[0])) : htmlspecialchars($code[0]);
 			   			$code[0] = str_replace("&amp;", "&", $code[0]);  	
 						$code[0] = str_replace("&nbsp;", " ", $code[0]);					
 			   		}
@@ -532,7 +548,7 @@ if (!function_exists("slug")) {
 }
 
 if (!function_exists("pageBreak")) {
-	function pageBreak($content, $URL = null)
+	function pageBreak($content, $URL = null, $label = null)
 	{
 		$content = str_replace("<p><!-- pagebreak --></p>", "<!---->", $content);
 		$content = str_replace('<p style="text-align: center;"><!-- pagebreak --></p>', "<!---->", $content);
@@ -555,8 +571,12 @@ if (!function_exists("pageBreak")) {
 		$content = str_replace('<hr>', "<!---->", $content);				
 		$parts = explode("<!---->", $content);
 
-		if (count($parts) > 1) {			
-			return is_null($URL) ? $parts[0] : $parts[0] .'<p><a href="'. $URL .'" title="'. __("Read more") .'">&raquo; '. __("Read more") .'...</a></p>';			
+		if (count($parts) > 1) {
+			if (is_null($URL)) {
+				return $parts[0];
+			} else {
+				return $parts[0] . (is_null($label) ? '<p><a href="'. $URL .'" title="'. __("Read more") .'">&raquo; '. __("Read more") .'...</a></p>' : $label);
+			}
 		}
 		
 		return $content;		
@@ -578,7 +598,7 @@ if (!function_exists("POST")) {
 		}
 
 		if ($coding === "clean") {
-			return $_POST[$position];
+			return isset($_POST[$position]) ? $_POST[$position] : FALSE;
 		} elseif ($position === true) {		
 			return $_POST;
 		} elseif (!$position) {

@@ -54,6 +54,14 @@ if (!function_exists("FILES")) {
     }
 }
 
+if (!function_exists("getExtension")) {
+    function getExtension($filename = false)
+    {
+        $extension = explode(".", $filename);
+        return end($extension);
+    }
+}
+
 if (!function_exists("getFilesFromMultimedia")) {
     function getFilesFromMultimedia($multimedia)
     {

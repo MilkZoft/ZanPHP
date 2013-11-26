@@ -30,11 +30,7 @@ if (!function_exists("encrypt")) {
 if (!function_exists("getIP")) {
 	function getIP()
 	{
-		if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-			return isset($_SERVER["HTTP_CLIENT_IP"]) ? $_SERVER["HTTP_CLIENT_IP"] : $_SERVER["REMOTE_ADDR"];
-		} else {
-			return isset($_SERVER["HTTP_CLIENT_IP"]) ? $_SERVER["HTTP_CLIENT_IP"] : $_SERVER["REMOTE_ADDR"];
-		}
+		return isset($_SERVER["HTTP_CLIENT_IP"]) ? $_SERVER["HTTP_CLIENT_IP"] : $_SERVER["REMOTE_ADDR"];
 	}
 }
 

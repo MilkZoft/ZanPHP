@@ -10,6 +10,23 @@ class ZP_Images extends ZP_Load
 
 	public function crop($rect = array(0, 0, 90, 90), $width = null, $height = null)
 	{
+		if ($rect === true) {
+			$h = $this->getHeight();
+			$w = $this->getWidth();
+
+			if ($h > $w) {
+				$x = 0;
+				$y = ($h - $w) / 2;
+				$size = $w;
+			} else {
+				$x = ($w - $h) / 2;
+				$y = 0;
+				$size = $h;
+			}
+
+			$rect = array($x, $y, $size, $size);
+		}
+
 		if (is_null($width)) {
 			$width = $rect[2];
 		}
@@ -18,9 +35,13 @@ class ZP_Images extends ZP_Load
 			$height = $rect[3];
 		}
 
-		$newImage = imagecreatetruecolor($width, $height);	
+		$newImage = imagecreatetruecolor($width, $height);
+		
 		imagecopyresampled($newImage, $this->image, 0, 0, $rect[0], $rect[1], $width, $height, $rect[2], $rect[3]);
-		$this->image = $newImage;   
+		
+		$this->image = $newImage;
+
+		return $rect;
 	}
 	
 	public function getHeight()
@@ -36,8 +57,10 @@ class ZP_Images extends ZP_Load
 			$filename = $parts[0];
 			$extension = $parts[1];
 		}
-		
-		if ($size === "large") {
+
+		if ($size === "original") {
+			$size = $dir . $filename .".". $extension;
+		} elseif ($size === "large") {
 			$size = $dir . $filename ."_l.". $extension;
 			$this->load($dir . $filename .".". $extension);
 
@@ -77,7 +100,7 @@ class ZP_Images extends ZP_Load
 		}
 
 		$this->save($size);
-
+		
 		return $size;
    	}
 

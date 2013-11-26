@@ -21,8 +21,6 @@ class ZP_Files extends ZP_Load
 	    if (!is_array($names) and !is_array($files) and !is_array($types)) {
 	        return false;
 	    }
-
-	    $this->Images = $this->core("Images");
 	    
 	    for($i = 0; $i <= count($files) - 1; $i++) {
 	        $data = $files[$i];
@@ -126,11 +124,13 @@ class ZP_Files extends ZP_Load
 
 	        file_put_contents("www/lib/files/$dir/$filename.$extension", $data);
 
-	        if (file_exists($file)) {
-		        $f[$i]["filename"] = $names[$i];
-		        $f[$i]["url"] = $file;
-		        $f[$i]["category"] = $dir;
-		        $f[$i]["size"] = $sizes[$i];
+	        if (file_exists("www/lib/files/$dir/$filename.$extension")) {
+		        $f[$i] = array(
+		        	"filename" => $names[$i],
+		        	"url" 	   => "www/lib/files/$dir/$filename.$extension",
+		        	"category" => $dir,
+		        	"size" 	   => $sizes[$i]
+		        );
 	        } else {
 	        	return false;
 	        }
@@ -142,7 +142,7 @@ class ZP_Files extends ZP_Load
 	public function deleteFiles($files) 
 	{
 		if (is_array($files)) {
-			foreach($files as $file) {
+			foreach ($files as $file) {
 				@unlink($file);
 			}
 
@@ -168,12 +168,12 @@ class ZP_Files extends ZP_Load
 			$file["name"] = $parts[0]; 
 			$file["extension"] = array_pop($parts);
 
-			$audio = array("wav", "midi", "mid", "mp3", "wma");
-			$codes = array("asp", "php", "c", "as", "html", "js", "css", "rb");
+			$audio 	  = array("wav", "midi", "mid", "mp3", "wma");
+			$codes 	  = array("asp", "php", "c", "as", "html", "js", "css", "rb");
 			$document = array("csv", "doc", "docx", "pdf", "ppt", "pptx", "txt", "xls", "xlsx");
-			$image = array("jpg", "jpeg", "png", "gif", "bmp");
+			$image 	  = array("jpg", "jpeg", "png", "gif", "bmp");
 			$programs = array("7z", "ai", "cdr", "fla", "exe", "dmg", "pkg", "iso", "msi", "psd", "rar", "svg", "swf", "zip");
-			$video = array("mpg", "mpeg", "avi", "wmv", "asf", "mp4", "flv", "mov");
+			$video    = array("mpg", "mpeg", "avi", "wmv", "asf", "mp4", "flv", "mov");
 
 			if (in_array(strtolower($file["extension"]), $audio)) {
 				$file["type"] = "audio";
@@ -217,6 +217,7 @@ class ZP_Files extends ZP_Load
 			foreach($icons as $extension => $icon) { 
 				if ($file["extension"] === $extension) {
 					$file["icon"] = $icon;
+					
 					break;
 				}
 			}	
@@ -239,33 +240,52 @@ class ZP_Files extends ZP_Load
 		if (!$file) {
 			$error["upload"] = false;
 			$error["message"] = "A problem occurred when trying to upload file";
+			
 			return $error;
 		}
 		
-		$filename = code(5, false) ."_". slug($file["name"]) .".". $file["extension"];
-		$URL = $path . $filename;	
+		if (strlen($file["name"]) > 50) {
+			$filename = code(5, false) ."_". slug($file["name"]) .".". $file["extension"];
+		} else {
+			$filename = slug($file["name"]) .".". $file["extension"];
+		}
+
+		$URL = $path . $filename;
 
 		if (file_exists($URL)) { 
-			$error["upload"] = false;
-			$error["message"] = "The file already exists";
-			$error["filename"] = $filename; 
+			$error = array(
+				"upload"   => false,
+				"message"  => "The file already exists",
+				"filename" => $filename
+			); 
 		} elseif ($this->fileSize > FILE_SIZE) { 
-			$error["upload"] = false;
-			$error["message"] = "The file size exceed the permited limit";
+			$error = array(
+				"upload"  => false,
+				"message" => "The file size exceed the permited limit"
+			);
 		} elseif ($this->fileError === 1) {
-			$error["upload"] = false;
-			$error["message"] = "An error has ocurred";
+			$error = array(
+				"upload"  => false,
+				"message" => "An error has ocurred"
+			);
 		} elseif ($file["type"] !== $type) {
-			$error["upload"] = false;
-			$error["message"] = "The file type is not permited";
+			$error = array(
+				"upload"  => false,
+				"message" => "The file type is not permited"
+			);
 		} elseif (move_uploaded_file($this->fileTmp, $URL)) {
 			chmod($URL, 0777);
-			$error["upload"] = true;
-			$error["message"] = "The file has been upload correctly";
-			$error["filename"] = $filename;
+			
+			$error = array(
+				"upload"   => true,
+				"message"  => "The file has been upload correctly",
+				"filename" => $filename
+			);
 		} else { 
-			$error["upload"] = false;
-			$error["message"] = "A problem occurred when trying to upload file";
+			$error = array(
+				"upload"  => false,
+				"message" => "A problem occurred when trying to upload file"
+			);
 		}
 		
 		return $error;
@@ -278,11 +298,11 @@ class ZP_Files extends ZP_Load
 		}
 		
 		if (FILES($name, "name")) {
-			$this->filename = FILES($name, "name");
-			$this->fileType = FILES($name, "type");
-			$this->fileSize = FILES($name, "size");
+			$this->filename  = FILES($name, "name");
+			$this->fileType  = FILES($name, "type");
+			$this->fileSize  = FILES($name, "size");
 			$this->fileError = FILES($name, "error");
-			$this->fileTmp = FILES($name, "tmp_name");
+			$this->fileTmp   = FILES($name, "tmp_name");
 		} else {
 			return false;
 		}
@@ -323,8 +343,11 @@ class ZP_Files extends ZP_Load
 		} elseif ($type === "mural") { 
 			if ($this->Images->getWidth() !== MURAL_WIDTH and $this->Images->getHeight() !== MURAL_HEIGHT) {
 				unlink($dir . $upload["filename"]); 
+				
 				$size = MURAL_WIDTH ."x". MURAL_HEIGHT . __(" exactly.");
+				
 				$alert["alert"] = getAlert(__("The mural image's resolution must be ") . $size);
+				
 				return $alert;
 			} else { 
 				return $dir . $upload["filename"];
@@ -335,10 +358,12 @@ class ZP_Files extends ZP_Load
 	public function resize($dir, $filename, $thumbnail = true, $small = true, $medium = true) 
 	{
 		$this->Images = $this->core("Images");
-		$size["thumbnail"] = ($thumbnail) ? $this->Images->getResize("thumbnail", $dir, $filename) : null;
-		$size["small"] = ($small) ? $this->Images->getResize("small", $dir, $filename) : null;
-		$size["medium"] = ($medium) ? $this->Images->getResize("medium", $dir, $filename) : null;
-		return $size;
+		
+		return array(
+			"thumbnail" => ($thumbnail) ? $this->Images->getResize("thumbnail", $dir, $filename) : null,
+			"small" 	=> ($small) ? $this->Images->getResize("small", $dir, $filename) : null,
+			"medium" 	=> ($medium) ? $this->Images->getResize("medium", $dir, $filename) : null
+		);
 	}
 
 	public function createFileFromBase64($data, $filename = false)
@@ -349,7 +374,9 @@ class ZP_Files extends ZP_Load
         $data = base64_decode($base64);
 
         if (is_string($filename)) {
-        	file_put_contents($filename, $data, LOCK_EX);
+        	if (file_put_contents($filename, $data, LOCK_EX) === false) {
+        		return false;
+        	}
         	
         	if (file_exists($filename)) {
         		return true;

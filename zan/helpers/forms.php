@@ -73,7 +73,7 @@ if (!function_exists("formInput")) {
 					$attrs .= ' required ';
 				} elseif ($attribute === "events") {
 					$attrs .= ' '. $value .' ';
-				} elseif ($attribute !== "type" and $attribute !== "p" and $attribute !== "field") {
+				} elseif ($attribute !== "type" and $attribute !== "p" and $attribute !== "field" and $attribute !== "checked") {
 					if (!preg_match('/"/', $value)) {
 						$attrs .= ' '. strtolower($attribute) .'="'. $value .'"';
 					} else {
@@ -83,6 +83,8 @@ if (!function_exists("formInput")) {
 					$$attribute = $value;
 				}
 			}
+
+			$check = (isset($checked) and $checked) ? ' checked="checked"' : null;
 			
 			if (isset($type)) {
 				if ($type === "text") {
@@ -94,9 +96,9 @@ if (!function_exists("formInput")) {
 				} elseif ($type === "button") {
 					$HTML = ' <input'. $attrs .' type="button" /> ';
 				} elseif ($type === "checkbox") {
-					$HTML = ' <input'. $attrs .' type="checkbox" /> ';
+					$HTML = ' <input'. $attrs .' type="checkbox"'. $check .'/> ';
 				} elseif ($type === "radio") {
-					$HTML = ' <input'. $attrs .' type="radio" /> ';
+					$HTML = ' <input'. $attrs .' type="radio"'. $check .' /> ';
 				} elseif ($type === "file") {
 					$HTML = ' <input'. $attrs .' type="file" /> ';
 				} elseif ($type === "hidden") {
@@ -316,7 +318,7 @@ if (!function_exists("formCaptcha")) {
 		
 		if (!$alphanumeric) {
 			$attributes["style"] = (isset($attributes["style"]) ? $attributes["style"] : '') ."max-width: 50px; text-align: center;";
-			$attributes["type"] = "number";
+			$attributes["type"]  = "number";
 
 			$num1 = rand(1, 9);
 			$num2 = rand(1, 9);
@@ -345,7 +347,7 @@ if (!function_exists("formCaptcha")) {
 			$HTML .= '<img src="'. path("captcha/$hash") .'" /><br />';
 		}
 
-		SESSION("ZanCaptcha$hash", $answer);
+		SESSION("ZanCaptcha". $hash, $answer);
 
 		if (isset($attributes) and is_array($attributes)) {
 			$attrs = null;

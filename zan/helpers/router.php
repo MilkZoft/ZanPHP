@@ -251,9 +251,10 @@ if (!function_exists("getURL")) {
 		for ($i = 0; $i <= segments() - 1; $i++) {		
 			$URL .= ($i === (segments() - 1)) ? segment($i) : segment($i) ."/";
 		}
+
+		$a = path($URL, false, false);
 		
-		$URL = _get("webBase") ."/$URL";		
-		return $URL;
+		return $a;
 	}
 }
 
@@ -326,6 +327,7 @@ if (!function_exists("path")) {
 		if ($lang) {
 			if ($lang !== true) {
 				$lang = getLang($lang);
+
 				return ($URL) ? _get("webURL") ."/". $path : _get("webBase") ."/". $lang ."/". $path . $anchor;
 			}
 
@@ -371,7 +373,7 @@ if (!function_exists("redirect")) {
 		if (!$time) {		
 			if (!$URL) {
 				header("location: ". path());
-			} elseif (substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {
+			} elseif (substr($URL, 0, 7) !== "http://" and substr($URL, 0, 8) !== "https://") {				
 				header("location: ". path($URL));				
 				exit;
 			} else {
@@ -382,6 +384,13 @@ if (!function_exists("redirect")) {
 			$time = $time * 1000;			
 			echo '<script type="text/javascript">function delayedRedirect() { window.location.replace("'. $URL .'"); } setTimeout("delayedRedirect()", '. $time .'); </script>';
 		}
+	}
+}
+
+if (!function_exists("returnTo")) {
+	function returnTo($path, $var = "return_to")
+	{
+		return "?$var=". encode($path, true);
 	}
 }
 

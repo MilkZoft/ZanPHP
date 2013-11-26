@@ -13,7 +13,7 @@ if (!function_exists("getTwitterUser")) {
 		SESSION("ZanUserServiceAccessToken", $accessToken->oauth_token);
 		SESSION("ZanUserServiceAccessTokenSecret", $accessToken->oauth_token_secret);
 		
-		$data = $Twitter->get_accountVerif y_credentials();
+		$data = $Twitter->get_accountVerify_credentials();
 		return array("service" => "twitter", "serviceID" => $data->id, "username" => $data->screen_name, "name"	=> $data->name, "email" => null, "birthday" => null, "avatar" => $data->profile_image_url_https);
 	}
 }
@@ -58,6 +58,6 @@ if (!function_exists("getTwitterCredentials")) {
 		
 		$Twitter = $Load->library("twitter", "EpiTwitter", array(TW_CONSUMER_KEY, TW_CONSUMER_SECRET));
 		
-		return $Twitter->get("/account/verif y_credentials.json"); 
+		return $Twitter->get("/account/verify_credentials.json"); 
 	}
 }
