@@ -492,9 +492,10 @@ class ZP_Db extends ZP_Load
 	}
 	
 	public function getWhere($table, $where, $limit = 0, $offset = 0)
-	{		
+	{	
+		$_where = '';	
 		foreach ($where as $field => $value) {
-			$_where = "$field = '$value' AND ";
+			$_where .= "$field = '$value' AND ";
 		}
 		
 		$_where = rtrim($_where, "AND ");
