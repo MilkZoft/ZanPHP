@@ -191,7 +191,7 @@ if (!function_exists("howLong")) {
 			}
 		}
 		
-		if ($time < 84600) {
+		if ($time < 86400) {
 			$rTime = round($time / 3600);
 					
 			if ($rTime > 1) {
