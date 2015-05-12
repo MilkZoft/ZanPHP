@@ -925,7 +925,7 @@ if (!function_exists("num2str")) {
 		}
 
 		if($function) {
-			$string = $funciont($string);
+			$string = $function($string);
 		}
 
 		return $string;
