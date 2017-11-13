@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMilkZoft%2FZanPHP.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FMilkZoft%2FZanPHP?ref=badge_shield)
+
 Introduction
 ------------------------
 ZanPHP is an agile Web application development framework written in PHP5 that uses different design patterns and best practices to create applications more quickly with good quality code.
@@ -25,3 +27,7 @@ Credits
 ZanPHP was developed by Carlos Santana (CEO of MilkZoft). ZanPHP was developed in 2009, but was until July 2011 that took the decision to release as free software.
 Currently developing ZanPHP is maintained by the development team and contributors of MilkZoft community.
 Is achieved by implementing best practices to develop applications faster and with higher quality.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMilkZoft%2FZanPHP.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FMilkZoft%2FZanPHP?ref=badge_large)
